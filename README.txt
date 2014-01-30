@@ -26,12 +26,10 @@ For the spectral methods:
   No installation required.
 
 For the CO method: 
-
   Navigate to the co/cpp directory.
   Run "make" command.
   
 For the tensor method:
-
   Navigate to the tensor/cpp directory.
   Run "make" command.
 
