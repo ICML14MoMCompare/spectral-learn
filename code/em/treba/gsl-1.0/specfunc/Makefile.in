@@ -1,0 +1,938 @@
+# Makefile.in generated automatically by automake 1.4-p5 from Makefile.am
+
+# Copyright (C) 1994, 1995-8, 1999, 2001 Free Software Foundation, Inc.
+# This Makefile.in is free software; the Free Software Foundation
+# gives unlimited permission to copy and/or distribute it,
+# with or without modifications, as long as this notice is preserved.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY, to the extent permitted by law; without
+# even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+# PARTICULAR PURPOSE.
+
+
+SHELL = @SHELL@
+
+srcdir = @srcdir@
+top_srcdir = @top_srcdir@
+VPATH = @srcdir@
+prefix = @prefix@
+exec_prefix = @exec_prefix@
+
+bindir = @bindir@
+sbindir = @sbindir@
+libexecdir = @libexecdir@
+datadir = @datadir@
+sysconfdir = @sysconfdir@
+sharedstatedir = @sharedstatedir@
+localstatedir = @localstatedir@
+libdir = @libdir@
+infodir = @infodir@
+mandir = @mandir@
+includedir = @includedir@
+oldincludedir = /usr/include
+
+DESTDIR =
+
+pkgdatadir = $(datadir)/@PACKAGE@
+pkglibdir = $(libdir)/@PACKAGE@
+pkgincludedir = $(includedir)/@PACKAGE@
+
+top_builddir = ..
+
+ACLOCAL = @ACLOCAL@
+AUTOCONF = @AUTOCONF@
+AUTOMAKE = @AUTOMAKE@
+AUTOHEADER = @AUTOHEADER@
+
+INSTALL = @INSTALL@
+INSTALL_PROGRAM = @INSTALL_PROGRAM@ $(AM_INSTALL_PROGRAM_FLAGS)
+INSTALL_DATA = @INSTALL_DATA@
+INSTALL_SCRIPT = @INSTALL_SCRIPT@
+transform = @program_transform_name@
+
+NORMAL_INSTALL = :
+PRE_INSTALL = :
+POST_INSTALL = :
+NORMAL_UNINSTALL = :
+PRE_UNINSTALL = :
+POST_UNINSTALL = :
+host_alias = @host_alias@
+host_triplet = @host@
+AR = @AR@
+AS = @AS@
+CC = @CC@
+CPP = @CPP@
+DLLTOOL = @DLLTOOL@
+ECHO = @ECHO@
+EXEEXT = @EXEEXT@
+GSL_CFLAGS = @GSL_CFLAGS@
+GSL_LIBS = @GSL_LIBS@
+HAVE_INLINE = @HAVE_INLINE@
+LIBTOOL = @LIBTOOL@
+LN_S = @LN_S@
+MAKEINFO = @MAKEINFO@
+OBJDUMP = @OBJDUMP@
+OBJEXT = @OBJEXT@
+PACKAGE = @PACKAGE@
+RANLIB = @RANLIB@
+STRIP = @STRIP@
+VERSION = @VERSION@
+
+noinst_LTLIBRARIES = libgslspecfunc.la 
+
+pkginclude_HEADERS = gsl_sf.h gsl_sf_airy.h gsl_sf_bessel.h gsl_sf_clausen.h gsl_sf_coulomb.h gsl_sf_coupling.h gsl_sf_dawson.h gsl_sf_debye.h gsl_sf_dilog.h gsl_sf_elementary.h gsl_sf_ellint.h gsl_sf_elljac.h gsl_sf_erf.h gsl_sf_exp.h gsl_sf_expint.h gsl_sf_fermi_dirac.h gsl_sf_gamma.h gsl_sf_gegenbauer.h gsl_sf_hyperg.h gsl_sf_laguerre.h gsl_sf_lambert.h gsl_sf_legendre.h gsl_sf_log.h gsl_sf_pow_int.h gsl_sf_psi.h gsl_sf_result.h gsl_sf_synchrotron.h gsl_sf_transport.h gsl_sf_trig.h gsl_sf_zeta.h gsl_specfunc.h
+
+noinst_HEADERS = bessel_amp_phase.h bessel_olver.h bessel_temme.h bessel.h hyperg.h legendre.h eval.h chebyshev.h cheb_eval.c cheb_eval_mode.c check.h error.h
+
+INCLUDES = -I$(top_builddir)
+
+libgslspecfunc_la_SOURCES = airy.c airy_der.c airy_zero.c atanint.c bessel.c bessel.h bessel_I0.c bessel_I1.c bessel_In.c bessel_Inu.c bessel_J0.c bessel_J1.c bessel_Jn.c bessel_Jnu.c bessel_K0.c bessel_K1.c bessel_Kn.c bessel_Knu.c bessel_Y0.c bessel_Y1.c bessel_Yn.c bessel_Ynu.c bessel_amp_phase.c bessel_amp_phase.h bessel_i.c bessel_j.c bessel_k.c bessel_olver.c bessel_temme.c bessel_y.c bessel_zero.c bessel_sequence.c beta.c beta_inc.c clausen.c coulomb.c coupling.c coulomb_bound.c dawson.c debye.c dilog.c elementary.c ellint.c elljac.c erfc.c exp.c expint.c expint3.c fermi_dirac.c gegenbauer.c gamma.c gamma_inc.c hyperg_0F1.c hyperg_2F0.c hyperg_1F1.c hyperg_2F1.c hyperg_U.c hyperg.c laguerre.c lambert.c legendre_H3d.c legendre_Qn.c legendre_con.c legendre_poly.c log.c poch.c pow_int.c psi.c recurse.h result.c shint.c sinint.c synchrotron.c transport.c trig.c zeta.c
+
+TESTS = test
+
+check_PROGRAMS = test
+
+test_LDADD = libgslspecfunc.la ../ieee-utils/libgslieeeutils.la ../sys/libgslsys.la ../err/libgslerr.la ../test/libgsltest.la ../utils/libutils.la
+
+test_SOURCES = test_sf.c test_sf.h test_airy.c test_bessel.c test_coulomb.c test_dilog.c test_gamma.c test_hyperg.c test_legendre.c
+mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
+CONFIG_HEADER = ../config.h
+CONFIG_CLEAN_FILES = 
+LTLIBRARIES =  $(noinst_LTLIBRARIES)
+
+
+DEFS = @DEFS@ -I. -I$(srcdir) -I..
+CPPFLAGS = @CPPFLAGS@
+LDFLAGS = @LDFLAGS@
+LIBS = @LIBS@
+libgslspecfunc_la_LDFLAGS = 
+libgslspecfunc_la_LIBADD = 
+libgslspecfunc_la_OBJECTS =  airy.lo airy_der.lo airy_zero.lo atanint.lo \
+bessel.lo bessel_I0.lo bessel_I1.lo bessel_In.lo bessel_Inu.lo \
+bessel_J0.lo bessel_J1.lo bessel_Jn.lo bessel_Jnu.lo bessel_K0.lo \
+bessel_K1.lo bessel_Kn.lo bessel_Knu.lo bessel_Y0.lo bessel_Y1.lo \
+bessel_Yn.lo bessel_Ynu.lo bessel_amp_phase.lo bessel_i.lo bessel_j.lo \
+bessel_k.lo bessel_olver.lo bessel_temme.lo bessel_y.lo bessel_zero.lo \
+bessel_sequence.lo beta.lo beta_inc.lo clausen.lo coulomb.lo \
+coupling.lo coulomb_bound.lo dawson.lo debye.lo dilog.lo elementary.lo \
+ellint.lo elljac.lo erfc.lo exp.lo expint.lo expint3.lo fermi_dirac.lo \
+gegenbauer.lo gamma.lo gamma_inc.lo hyperg_0F1.lo hyperg_2F0.lo \
+hyperg_1F1.lo hyperg_2F1.lo hyperg_U.lo hyperg.lo laguerre.lo \
+lambert.lo legendre_H3d.lo legendre_Qn.lo legendre_con.lo \
+legendre_poly.lo log.lo poch.lo pow_int.lo psi.lo result.lo shint.lo \
+sinint.lo synchrotron.lo transport.lo trig.lo zeta.lo
+check_PROGRAMS =  test$(EXEEXT)
+test_OBJECTS =  test_sf.$(OBJEXT) test_airy.$(OBJEXT) \
+test_bessel.$(OBJEXT) test_coulomb.$(OBJEXT) test_dilog.$(OBJEXT) \
+test_gamma.$(OBJEXT) test_hyperg.$(OBJEXT) test_legendre.$(OBJEXT)
+test_DEPENDENCIES =  libgslspecfunc.la ../ieee-utils/libgslieeeutils.la \
+../sys/libgslsys.la ../err/libgslerr.la ../test/libgsltest.la \
+../utils/libutils.la
+test_LDFLAGS = 
+CFLAGS = @CFLAGS@
+COMPILE = $(CC) $(DEFS) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+LTCOMPILE = $(LIBTOOL) --mode=compile $(CC) $(DEFS) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+CCLD = $(CC)
+LINK = $(LIBTOOL) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(LDFLAGS) -o $@
+HEADERS =  $(noinst_HEADERS) $(pkginclude_HEADERS)
+
+DIST_COMMON =  ChangeLog Makefile.am Makefile.in TODO
+
+
+DISTFILES = $(DIST_COMMON) $(SOURCES) $(HEADERS) $(TEXINFOS) $(EXTRA_DIST)
+
+TAR = tar
+GZIP_ENV = --best
+SOURCES = $(libgslspecfunc_la_SOURCES) $(test_SOURCES)
+OBJECTS = $(libgslspecfunc_la_OBJECTS) $(test_OBJECTS)
+
+all: all-redirect
+.SUFFIXES:
+.SUFFIXES: .S .c .lo .o .obj .s
+$(srcdir)/Makefile.in: Makefile.am $(top_srcdir)/configure.in $(ACLOCAL_M4) 
+	cd $(top_srcdir) && $(AUTOMAKE) --gnu --include-deps specfunc/Makefile
+
+Makefile: $(srcdir)/Makefile.in  $(top_builddir)/config.status
+	cd $(top_builddir) \
+	  && CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= $(SHELL) ./config.status
+
+
+mostlyclean-noinstLTLIBRARIES:
+
+clean-noinstLTLIBRARIES:
+	-test -z "$(noinst_LTLIBRARIES)" || rm -f $(noinst_LTLIBRARIES)
+
+distclean-noinstLTLIBRARIES:
+
+maintainer-clean-noinstLTLIBRARIES:
+
+.c.o:
+	$(COMPILE) -c $<
+
+# FIXME: We should only use cygpath when building on Windows,
+# and only if it is available.
+.c.obj:
+	$(COMPILE) -c `cygpath -w $<`
+
+.s.o:
+	$(COMPILE) -c $<
+
+.S.o:
+	$(COMPILE) -c $<
+
+mostlyclean-compile:
+	-rm -f *.o core *.core
+	-rm -f *.$(OBJEXT)
+
+clean-compile:
+
+distclean-compile:
+	-rm -f *.tab.c
+
+maintainer-clean-compile:
+
+.c.lo:
+	$(LIBTOOL) --mode=compile $(COMPILE) -c $<
+
+.s.lo:
+	$(LIBTOOL) --mode=compile $(COMPILE) -c $<
+
+.S.lo:
+	$(LIBTOOL) --mode=compile $(COMPILE) -c $<
+
+mostlyclean-libtool:
+	-rm -f *.lo
+
+clean-libtool:
+	-rm -rf .libs _libs
+
+distclean-libtool:
+
+maintainer-clean-libtool:
+
+libgslspecfunc.la: $(libgslspecfunc_la_OBJECTS) $(libgslspecfunc_la_DEPENDENCIES)
+	$(LINK)  $(libgslspecfunc_la_LDFLAGS) $(libgslspecfunc_la_OBJECTS) $(libgslspecfunc_la_LIBADD) $(LIBS)
+
+mostlyclean-checkPROGRAMS:
+
+clean-checkPROGRAMS:
+	-test -z "$(check_PROGRAMS)" || rm -f $(check_PROGRAMS)
+
+distclean-checkPROGRAMS:
+
+maintainer-clean-checkPROGRAMS:
+
+test$(EXEEXT): $(test_OBJECTS) $(test_DEPENDENCIES)
+	@rm -f test$(EXEEXT)
+	$(LINK) $(test_LDFLAGS) $(test_OBJECTS) $(test_LDADD) $(LIBS)
+
+install-pkgincludeHEADERS: $(pkginclude_HEADERS)
+	@$(NORMAL_INSTALL)
+	$(mkinstalldirs) $(DESTDIR)$(pkgincludedir)
+	@list='$(pkginclude_HEADERS)'; for p in $$list; do \
+	  if test -f "$$p"; then d= ; else d="$(srcdir)/"; fi; \
+	  echo " $(INSTALL_DATA) $$d$$p $(DESTDIR)$(pkgincludedir)/$$p"; \
+	  $(INSTALL_DATA) $$d$$p $(DESTDIR)$(pkgincludedir)/$$p; \
+	done
+
+uninstall-pkgincludeHEADERS:
+	@$(NORMAL_UNINSTALL)
+	list='$(pkginclude_HEADERS)'; for p in $$list; do \
+	  rm -f $(DESTDIR)$(pkgincludedir)/$$p; \
+	done
+
+tags: TAGS
+
+ID: $(HEADERS) $(SOURCES) $(LISP)
+	list='$(SOURCES) $(HEADERS)'; \
+	unique=`for i in $$list; do echo $$i; done | \
+	  awk '    { files[$$0] = 1; } \
+	       END { for (i in files) print i; }'`; \
+	here=`pwd` && cd $(srcdir) \
+	  && mkid -f$$here/ID $$unique $(LISP)
+
+TAGS:  $(HEADERS) $(SOURCES)  $(TAGS_DEPENDENCIES) $(LISP)
+	tags=; \
+	here=`pwd`; \
+	list='$(SOURCES) $(HEADERS)'; \
+	unique=`for i in $$list; do echo $$i; done | \
+	  awk '    { files[$$0] = 1; } \
+	       END { for (i in files) print i; }'`; \
+	test -z "$(ETAGS_ARGS)$$unique$(LISP)$$tags" \
+	  || (cd $(srcdir) && etags $(ETAGS_ARGS) $$tags  $$unique $(LISP) -o $$here/TAGS)
+
+mostlyclean-tags:
+
+clean-tags:
+
+distclean-tags:
+	-rm -f TAGS ID
+
+maintainer-clean-tags:
+
+distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
+
+subdir = specfunc
+
+distdir: $(DISTFILES)
+	@for file in $(DISTFILES); do \
+	  d=$(srcdir); \
+	  if test -d $$d/$$file; then \
+	    cp -pr $$d/$$file $(distdir)/$$file; \
+	  else \
+	    test -f $(distdir)/$$file \
+	    || ln $$d/$$file $(distdir)/$$file 2> /dev/null \
+	    || cp -p $$d/$$file $(distdir)/$$file || :; \
+	  fi; \
+	done
+airy.lo airy.o : airy.c ../config.h ../gsl/gsl_math.h ../gsl/gsl_sys.h \
+	../gsl/gsl_machine.h ../gsl/gsl_precision.h ../gsl/gsl_nan.h \
+	../gsl/gsl_pow_int.h ../gsl/gsl_errno.h gsl_sf_trig.h \
+	../gsl/gsl_sf_result.h gsl_sf_airy.h ../gsl/gsl_mode.h error.h \
+	check.h chebyshev.h cheb_eval_mode.c eval.h
+airy_der.lo airy_der.o : airy_der.c ../config.h ../gsl/gsl_math.h \
+	../gsl/gsl_sys.h ../gsl/gsl_machine.h ../gsl/gsl_precision.h \
+	../gsl/gsl_nan.h ../gsl/gsl_pow_int.h ../gsl/gsl_errno.h \
+	gsl_sf_exp.h ../gsl/gsl_sf_result.h gsl_sf_airy.h \
+	../gsl/gsl_mode.h error.h chebyshev.h cheb_eval_mode.c eval.h
+airy_zero.lo airy_zero.o : airy_zero.c ../config.h ../gsl/gsl_math.h \
+	../gsl/gsl_sys.h ../gsl/gsl_machine.h ../gsl/gsl_precision.h \
+	../gsl/gsl_nan.h ../gsl/gsl_pow_int.h ../gsl/gsl_errno.h \
+	gsl_sf_airy.h ../gsl/gsl_mode.h ../gsl/gsl_sf_result.h error.h \
+	eval.h
+atanint.lo atanint.o : atanint.c ../config.h ../gsl/gsl_math.h \
+	../gsl/gsl_sys.h ../gsl/gsl_machine.h ../gsl/gsl_precision.h \
+	../gsl/gsl_nan.h ../gsl/gsl_pow_int.h ../gsl/gsl_errno.h \
+	../gsl/gsl_mode.h gsl_sf_expint.h ../gsl/gsl_sf_result.h \
+	chebyshev.h cheb_eval.c eval.h
+bessel.lo bessel.o : bessel.c ../config.h ../gsl/gsl_math.h \
+	../gsl/gsl_sys.h ../gsl/gsl_machine.h ../gsl/gsl_precision.h \
+	../gsl/gsl_nan.h ../gsl/gsl_pow_int.h ../gsl/gsl_errno.h \
+	gsl_sf_airy.h ../gsl/gsl_mode.h ../gsl/gsl_sf_result.h \
+	gsl_sf_elementary.h gsl_sf_exp.h gsl_sf_gamma.h gsl_sf_trig.h \
+	error.h bessel_amp_phase.h chebyshev.h bessel_temme.h \
+	gsl_sf_result.h bessel.h
+bessel_I0.lo bessel_I0.o : bessel_I0.c ../config.h ../gsl/gsl_math.h \
+	../gsl/gsl_sys.h ../gsl/gsl_machine.h ../gsl/gsl_precision.h \
+	../gsl/gsl_nan.h ../gsl/gsl_pow_int.h ../gsl/gsl_errno.h \
+	gsl_sf_bessel.h ../gsl/gsl_mode.h ../gsl/gsl_sf_result.h \
+	error.h chebyshev.h cheb_eval.c eval.h
+bessel_I1.lo bessel_I1.o : bessel_I1.c ../config.h ../gsl/gsl_math.h \
+	../gsl/gsl_sys.h ../gsl/gsl_machine.h ../gsl/gsl_precision.h \
+	../gsl/gsl_nan.h ../gsl/gsl_pow_int.h ../gsl/gsl_errno.h \
+	gsl_sf_bessel.h ../gsl/gsl_mode.h ../gsl/gsl_sf_result.h \
+	error.h chebyshev.h cheb_eval.c eval.h
+bessel_In.lo bessel_In.o : bessel_In.c ../config.h ../gsl/gsl_math.h \
+	../gsl/gsl_sys.h ../gsl/gsl_machine.h ../gsl/gsl_precision.h \
+	../gsl/gsl_nan.h ../gsl/gsl_pow_int.h ../gsl/gsl_errno.h \
+	gsl_sf_bessel.h ../gsl/gsl_mode.h ../gsl/gsl_sf_result.h \
+	error.h bessel.h gsl_sf_result.h eval.h
+bessel_Inu.lo bessel_Inu.o : bessel_Inu.c ../config.h ../gsl/gsl_math.h \
+	../gsl/gsl_sys.h ../gsl/gsl_machine.h ../gsl/gsl_precision.h \
+	../gsl/gsl_nan.h ../gsl/gsl_pow_int.h ../gsl/gsl_errno.h \
+	gsl_sf_exp.h ../gsl/gsl_sf_result.h gsl_sf_gamma.h \
+	gsl_sf_bessel.h ../gsl/gsl_mode.h error.h bessel.h \
+	gsl_sf_result.h bessel_temme.h eval.h
+bessel_J0.lo bessel_J0.o : bessel_J0.c ../config.h ../gsl/gsl_math.h \
+	../gsl/gsl_sys.h ../gsl/gsl_machine.h ../gsl/gsl_precision.h \
+	../gsl/gsl_nan.h ../gsl/gsl_pow_int.h ../gsl/gsl_errno.h \
+	../gsl/gsl_mode.h bessel.h gsl_sf_result.h bessel_amp_phase.h \
+	chebyshev.h gsl_sf_trig.h ../gsl/gsl_sf_result.h \
+	gsl_sf_bessel.h cheb_eval.c eval.h
+bessel_J1.lo bessel_J1.o : bessel_J1.c ../config.h ../gsl/gsl_math.h \
+	../gsl/gsl_sys.h ../gsl/gsl_machine.h ../gsl/gsl_precision.h \
+	../gsl/gsl_nan.h ../gsl/gsl_pow_int.h ../gsl/gsl_errno.h \
+	gsl_sf_trig.h ../gsl/gsl_sf_result.h gsl_sf_bessel.h \
+	../gsl/gsl_mode.h error.h bessel.h gsl_sf_result.h \
+	bessel_amp_phase.h chebyshev.h cheb_eval.c eval.h
+bessel_Jn.lo bessel_Jn.o : bessel_Jn.c ../config.h ../gsl/gsl_math.h \
+	../gsl/gsl_sys.h ../gsl/gsl_machine.h ../gsl/gsl_precision.h \
+	../gsl/gsl_nan.h ../gsl/gsl_pow_int.h ../gsl/gsl_errno.h \
+	gsl_sf_pow_int.h ../gsl/gsl_sf_result.h bessel.h \
+	gsl_sf_result.h bessel_amp_phase.h chebyshev.h bessel_olver.h \
+	gsl_sf_bessel.h ../gsl/gsl_mode.h eval.h
+bessel_Jnu.lo bessel_Jnu.o : bessel_Jnu.c ../config.h ../gsl/gsl_math.h \
+	../gsl/gsl_sys.h ../gsl/gsl_machine.h ../gsl/gsl_precision.h \
+	../gsl/gsl_nan.h ../gsl/gsl_pow_int.h ../gsl/gsl_errno.h \
+	gsl_sf_bessel.h ../gsl/gsl_mode.h ../gsl/gsl_sf_result.h \
+	error.h bessel.h gsl_sf_result.h bessel_olver.h bessel_temme.h \
+	eval.h
+bessel_K0.lo bessel_K0.o : bessel_K0.c ../config.h ../gsl/gsl_math.h \
+	../gsl/gsl_sys.h ../gsl/gsl_machine.h ../gsl/gsl_precision.h \
+	../gsl/gsl_nan.h ../gsl/gsl_pow_int.h ../gsl/gsl_errno.h \
+	gsl_sf_exp.h ../gsl/gsl_sf_result.h gsl_sf_bessel.h \
+	../gsl/gsl_mode.h error.h chebyshev.h cheb_eval.c eval.h
+bessel_K1.lo bessel_K1.o : bessel_K1.c ../config.h ../gsl/gsl_math.h \
+	../gsl/gsl_sys.h ../gsl/gsl_machine.h ../gsl/gsl_precision.h \
+	../gsl/gsl_nan.h ../gsl/gsl_pow_int.h ../gsl/gsl_errno.h \
+	gsl_sf_exp.h ../gsl/gsl_sf_result.h gsl_sf_bessel.h \
+	../gsl/gsl_mode.h error.h chebyshev.h cheb_eval.c eval.h
+bessel_Kn.lo bessel_Kn.o : bessel_Kn.c ../config.h ../gsl/gsl_math.h \
+	../gsl/gsl_sys.h ../gsl/gsl_machine.h ../gsl/gsl_precision.h \
+	../gsl/gsl_nan.h ../gsl/gsl_pow_int.h ../gsl/gsl_errno.h \
+	gsl_sf_gamma.h ../gsl/gsl_sf_result.h gsl_sf_psi.h \
+	gsl_sf_bessel.h ../gsl/gsl_mode.h error.h bessel.h \
+	gsl_sf_result.h eval.h
+bessel_Knu.lo bessel_Knu.o : bessel_Knu.c ../config.h ../gsl/gsl_math.h \
+	../gsl/gsl_sys.h ../gsl/gsl_machine.h ../gsl/gsl_precision.h \
+	../gsl/gsl_nan.h ../gsl/gsl_pow_int.h ../gsl/gsl_errno.h \
+	gsl_sf_exp.h ../gsl/gsl_sf_result.h gsl_sf_gamma.h \
+	gsl_sf_bessel.h ../gsl/gsl_mode.h error.h bessel.h \
+	gsl_sf_result.h bessel_temme.h eval.h
+bessel_Y0.lo bessel_Y0.o : bessel_Y0.c ../config.h ../gsl/gsl_math.h \
+	../gsl/gsl_sys.h ../gsl/gsl_machine.h ../gsl/gsl_precision.h \
+	../gsl/gsl_nan.h ../gsl/gsl_pow_int.h ../gsl/gsl_errno.h \
+	gsl_sf_trig.h ../gsl/gsl_sf_result.h gsl_sf_bessel.h \
+	../gsl/gsl_mode.h error.h bessel.h gsl_sf_result.h \
+	bessel_amp_phase.h chebyshev.h cheb_eval.c eval.h
+bessel_Y1.lo bessel_Y1.o : bessel_Y1.c ../config.h ../gsl/gsl_math.h \
+	../gsl/gsl_sys.h ../gsl/gsl_machine.h ../gsl/gsl_precision.h \
+	../gsl/gsl_nan.h ../gsl/gsl_pow_int.h ../gsl/gsl_errno.h \
+	gsl_sf_trig.h ../gsl/gsl_sf_result.h gsl_sf_bessel.h \
+	../gsl/gsl_mode.h error.h bessel.h gsl_sf_result.h \
+	bessel_amp_phase.h chebyshev.h cheb_eval.c eval.h
+bessel_Yn.lo bessel_Yn.o : bessel_Yn.c ../config.h ../gsl/gsl_math.h \
+	../gsl/gsl_sys.h ../gsl/gsl_machine.h ../gsl/gsl_precision.h \
+	../gsl/gsl_nan.h ../gsl/gsl_pow_int.h ../gsl/gsl_errno.h \
+	gsl_sf_gamma.h ../gsl/gsl_sf_result.h gsl_sf_psi.h \
+	gsl_sf_bessel.h ../gsl/gsl_mode.h error.h bessel.h \
+	gsl_sf_result.h bessel_amp_phase.h chebyshev.h bessel_olver.h \
+	eval.h
+bessel_Ynu.lo bessel_Ynu.o : bessel_Ynu.c ../config.h ../gsl/gsl_math.h \
+	../gsl/gsl_sys.h ../gsl/gsl_machine.h ../gsl/gsl_precision.h \
+	../gsl/gsl_nan.h ../gsl/gsl_pow_int.h ../gsl/gsl_errno.h \
+	gsl_sf_bessel.h ../gsl/gsl_mode.h ../gsl/gsl_sf_result.h \
+	error.h bessel.h gsl_sf_result.h bessel_olver.h bessel_temme.h \
+	eval.h
+bessel_amp_phase.lo bessel_amp_phase.o : bessel_amp_phase.c ../config.h \
+	../gsl/gsl_math.h ../gsl/gsl_sys.h ../gsl/gsl_machine.h \
+	../gsl/gsl_precision.h ../gsl/gsl_nan.h ../gsl/gsl_pow_int.h \
+	../gsl/gsl_errno.h gsl_sf_bessel.h ../gsl/gsl_mode.h \
+	../gsl/gsl_sf_result.h bessel_amp_phase.h chebyshev.h
+bessel_i.lo bessel_i.o : bessel_i.c ../config.h ../gsl/gsl_math.h \
+	../gsl/gsl_sys.h ../gsl/gsl_machine.h ../gsl/gsl_precision.h \
+	../gsl/gsl_nan.h ../gsl/gsl_pow_int.h ../gsl/gsl_errno.h \
+	gsl_sf_pow_int.h ../gsl/gsl_sf_result.h gsl_sf_bessel.h \
+	../gsl/gsl_mode.h error.h bessel.h gsl_sf_result.h eval.h
+bessel_j.lo bessel_j.o : bessel_j.c ../config.h ../gsl/gsl_math.h \
+	../gsl/gsl_sys.h ../gsl/gsl_machine.h ../gsl/gsl_precision.h \
+	../gsl/gsl_nan.h ../gsl/gsl_pow_int.h ../gsl/gsl_errno.h \
+	gsl_sf_pow_int.h ../gsl/gsl_sf_result.h gsl_sf_trig.h \
+	gsl_sf_bessel.h ../gsl/gsl_mode.h error.h bessel.h \
+	gsl_sf_result.h bessel_olver.h eval.h
+bessel_k.lo bessel_k.o : bessel_k.c ../config.h ../gsl/gsl_math.h \
+	../gsl/gsl_sys.h ../gsl/gsl_machine.h ../gsl/gsl_precision.h \
+	../gsl/gsl_nan.h ../gsl/gsl_pow_int.h ../gsl/gsl_errno.h \
+	gsl_sf_pow_int.h ../gsl/gsl_sf_result.h gsl_sf_gamma.h \
+	gsl_sf_bessel.h ../gsl/gsl_mode.h error.h check.h bessel.h \
+	gsl_sf_result.h eval.h
+bessel_olver.lo bessel_olver.o : bessel_olver.c ../config.h \
+	../gsl/gsl_math.h ../gsl/gsl_sys.h ../gsl/gsl_machine.h \
+	../gsl/gsl_precision.h ../gsl/gsl_nan.h ../gsl/gsl_pow_int.h \
+	../gsl/gsl_errno.h gsl_sf_airy.h ../gsl/gsl_mode.h \
+	../gsl/gsl_sf_result.h error.h bessel.h gsl_sf_result.h \
+	bessel_olver.h chebyshev.h cheb_eval.c
+bessel_sequence.lo bessel_sequence.o : bessel_sequence.c ../config.h \
+	../gsl/gsl_math.h ../gsl/gsl_sys.h ../gsl/gsl_machine.h \
+	../gsl/gsl_precision.h ../gsl/gsl_nan.h ../gsl/gsl_pow_int.h \
+	../gsl/gsl_errno.h gsl_sf_bessel.h ../gsl/gsl_mode.h \
+	../gsl/gsl_sf_result.h
+bessel_temme.lo bessel_temme.o : bessel_temme.c ../config.h \
+	../gsl/gsl_math.h ../gsl/gsl_sys.h ../gsl/gsl_machine.h \
+	../gsl/gsl_precision.h ../gsl/gsl_nan.h ../gsl/gsl_pow_int.h \
+	../gsl/gsl_errno.h ../gsl/gsl_mode.h bessel_temme.h \
+	gsl_sf_result.h chebyshev.h cheb_eval.c
+bessel_y.lo bessel_y.o : bessel_y.c ../config.h ../gsl/gsl_math.h \
+	../gsl/gsl_sys.h ../gsl/gsl_machine.h ../gsl/gsl_precision.h \
+	../gsl/gsl_nan.h ../gsl/gsl_pow_int.h ../gsl/gsl_errno.h \
+	gsl_sf_pow_int.h ../gsl/gsl_sf_result.h gsl_sf_gamma.h \
+	gsl_sf_trig.h gsl_sf_bessel.h ../gsl/gsl_mode.h error.h \
+	bessel.h gsl_sf_result.h bessel_olver.h eval.h
+bessel_zero.lo bessel_zero.o : bessel_zero.c ../config.h \
+	../gsl/gsl_math.h ../gsl/gsl_sys.h ../gsl/gsl_machine.h \
+	../gsl/gsl_precision.h ../gsl/gsl_nan.h ../gsl/gsl_pow_int.h \
+	../gsl/gsl_errno.h gsl_sf_airy.h ../gsl/gsl_mode.h \
+	../gsl/gsl_sf_result.h gsl_sf_pow_int.h gsl_sf_bessel.h error.h \
+	bessel_olver.h gsl_sf_result.h eval.h
+beta.lo beta.o : beta.c ../config.h ../gsl/gsl_math.h ../gsl/gsl_sys.h \
+	../gsl/gsl_machine.h ../gsl/gsl_precision.h ../gsl/gsl_nan.h \
+	../gsl/gsl_pow_int.h ../gsl/gsl_errno.h gsl_sf_exp.h \
+	../gsl/gsl_sf_result.h gsl_sf_log.h gsl_sf_psi.h gsl_sf_gamma.h \
+	error.h eval.h
+beta_inc.lo beta_inc.o : beta_inc.c ../config.h ../gsl/gsl_math.h \
+	../gsl/gsl_sys.h ../gsl/gsl_machine.h ../gsl/gsl_precision.h \
+	../gsl/gsl_nan.h ../gsl/gsl_pow_int.h ../gsl/gsl_errno.h \
+	../gsl/gsl_sf_log.h ../gsl/gsl_sf_result.h ../gsl/gsl_sf_exp.h \
+	gsl_sf_gamma.h error.h check.h eval.h
+chebyshev.lo chebyshev.o : chebyshev.c ../config.h ../gsl/gsl_math.h \
+	../gsl/gsl_machine.h ../gsl/gsl_precision.h ../gsl/gsl_errno.h \
+	gsl_sf_chebyshev.h ../gsl/gsl_mode.h ../gsl/gsl_sf_result.h \
+	eval.h
+clausen.lo clausen.o : clausen.c ../config.h ../gsl/gsl_math.h \
+	../gsl/gsl_sys.h ../gsl/gsl_machine.h ../gsl/gsl_precision.h \
+	../gsl/gsl_nan.h ../gsl/gsl_pow_int.h ../gsl/gsl_errno.h \
+	gsl_sf_trig.h ../gsl/gsl_sf_result.h gsl_sf_clausen.h \
+	chebyshev.h cheb_eval.c eval.h
+coulomb.lo coulomb.o : coulomb.c ../config.h ../gsl/gsl_math.h \
+	../gsl/gsl_sys.h ../gsl/gsl_machine.h ../gsl/gsl_precision.h \
+	../gsl/gsl_nan.h ../gsl/gsl_pow_int.h ../gsl/gsl_errno.h \
+	gsl_sf_exp.h ../gsl/gsl_sf_result.h gsl_sf_psi.h gsl_sf_airy.h \
+	../gsl/gsl_mode.h gsl_sf_pow_int.h gsl_sf_gamma.h \
+	gsl_sf_coulomb.h error.h
+coulomb_bound.lo coulomb_bound.o : coulomb_bound.c ../config.h \
+	../gsl/gsl_math.h ../gsl/gsl_sys.h ../gsl/gsl_machine.h \
+	../gsl/gsl_precision.h ../gsl/gsl_nan.h ../gsl/gsl_pow_int.h \
+	../gsl/gsl_errno.h gsl_sf_exp.h ../gsl/gsl_sf_result.h \
+	gsl_sf_gamma.h gsl_sf_pow_int.h gsl_sf_laguerre.h \
+	gsl_sf_coulomb.h ../gsl/gsl_mode.h error.h check.h eval.h
+coupling.lo coupling.o : coupling.c ../config.h ../gsl/gsl_math.h \
+	../gsl/gsl_sys.h ../gsl/gsl_machine.h ../gsl/gsl_precision.h \
+	../gsl/gsl_nan.h ../gsl/gsl_pow_int.h ../gsl/gsl_errno.h \
+	gsl_sf_gamma.h ../gsl/gsl_sf_result.h gsl_sf_coupling.h error.h \
+	eval.h
+dawson.lo dawson.o : dawson.c ../config.h ../gsl/gsl_math.h \
+	../gsl/gsl_sys.h ../gsl/gsl_machine.h ../gsl/gsl_precision.h \
+	../gsl/gsl_nan.h ../gsl/gsl_pow_int.h ../gsl/gsl_errno.h \
+	gsl_sf_dawson.h ../gsl/gsl_sf_result.h error.h chebyshev.h \
+	cheb_eval.c eval.h
+debye.lo debye.o : debye.c ../config.h ../gsl/gsl_math.h \
+	../gsl/gsl_sys.h ../gsl/gsl_machine.h ../gsl/gsl_precision.h \
+	../gsl/gsl_nan.h ../gsl/gsl_pow_int.h ../gsl/gsl_errno.h \
+	gsl_sf_debye.h ../gsl/gsl_sf_result.h error.h check.h \
+	chebyshev.h cheb_eval.c eval.h
+dilog.lo dilog.o : dilog.c ../config.h ../gsl/gsl_math.h \
+	../gsl/gsl_sys.h ../gsl/gsl_machine.h ../gsl/gsl_precision.h \
+	../gsl/gsl_nan.h ../gsl/gsl_pow_int.h ../gsl/gsl_errno.h \
+	gsl_sf_clausen.h ../gsl/gsl_sf_result.h gsl_sf_trig.h \
+	gsl_sf_log.h gsl_sf_dilog.h eval.h
+elementary.lo elementary.o : elementary.c ../config.h ../gsl/gsl_math.h \
+	../gsl/gsl_sys.h ../gsl/gsl_machine.h ../gsl/gsl_precision.h \
+	../gsl/gsl_nan.h ../gsl/gsl_pow_int.h ../gsl/gsl_errno.h \
+	gsl_sf_elementary.h ../gsl/gsl_sf_result.h error.h check.h \
+	eval.h
+ellint.lo ellint.o : ellint.c ../config.h ../gsl/gsl_math.h \
+	../gsl/gsl_sys.h ../gsl/gsl_machine.h ../gsl/gsl_precision.h \
+	../gsl/gsl_nan.h ../gsl/gsl_pow_int.h ../gsl/gsl_errno.h \
+	gsl_sf_ellint.h ../gsl/gsl_mode.h ../gsl/gsl_sf_result.h \
+	error.h eval.h
+elljac.lo elljac.o : elljac.c ../config.h ../gsl/gsl_math.h \
+	../gsl/gsl_sys.h ../gsl/gsl_machine.h ../gsl/gsl_precision.h \
+	../gsl/gsl_nan.h ../gsl/gsl_pow_int.h ../gsl/gsl_errno.h \
+	gsl_sf_pow_int.h ../gsl/gsl_sf_result.h gsl_sf_elljac.h
+erfc.lo erfc.o : erfc.c ../config.h ../gsl/gsl_math.h ../gsl/gsl_sys.h \
+	../gsl/gsl_machine.h ../gsl/gsl_precision.h ../gsl/gsl_nan.h \
+	../gsl/gsl_pow_int.h ../gsl/gsl_errno.h gsl_sf_erf.h \
+	../gsl/gsl_sf_result.h check.h chebyshev.h cheb_eval.c eval.h
+exp.lo exp.o : exp.c ../config.h ../gsl/gsl_math.h ../gsl/gsl_sys.h \
+	../gsl/gsl_machine.h ../gsl/gsl_precision.h ../gsl/gsl_nan.h \
+	../gsl/gsl_pow_int.h ../gsl/gsl_errno.h gsl_sf_gamma.h \
+	../gsl/gsl_sf_result.h gsl_sf_exp.h error.h eval.h
+expint.lo expint.o : expint.c ../config.h ../gsl/gsl_math.h \
+	../gsl/gsl_sys.h ../gsl/gsl_machine.h ../gsl/gsl_precision.h \
+	../gsl/gsl_nan.h ../gsl/gsl_pow_int.h ../gsl/gsl_errno.h \
+	gsl_sf_expint.h ../gsl/gsl_sf_result.h error.h chebyshev.h \
+	cheb_eval.c eval.h
+expint3.lo expint3.o : expint3.c ../config.h ../gsl/gsl_math.h \
+	../gsl/gsl_sys.h ../gsl/gsl_machine.h ../gsl/gsl_precision.h \
+	../gsl/gsl_nan.h ../gsl/gsl_pow_int.h ../gsl/gsl_errno.h \
+	gsl_sf_expint.h ../gsl/gsl_sf_result.h error.h chebyshev.h \
+	cheb_eval.c eval.h
+fermi_dirac.lo fermi_dirac.o : fermi_dirac.c ../config.h \
+	../gsl/gsl_math.h ../gsl/gsl_sys.h ../gsl/gsl_machine.h \
+	../gsl/gsl_precision.h ../gsl/gsl_nan.h ../gsl/gsl_pow_int.h \
+	../gsl/gsl_errno.h gsl_sf_exp.h ../gsl/gsl_sf_result.h \
+	gsl_sf_gamma.h gsl_sf_hyperg.h gsl_sf_pow_int.h gsl_sf_zeta.h \
+	gsl_sf_fermi_dirac.h error.h chebyshev.h cheb_eval.c eval.h
+gamma.lo gamma.o : gamma.c ../config.h ../gsl/gsl_math.h \
+	../gsl/gsl_sys.h ../gsl/gsl_machine.h ../gsl/gsl_precision.h \
+	../gsl/gsl_nan.h ../gsl/gsl_pow_int.h ../gsl/gsl_errno.h \
+	gsl_sf_exp.h ../gsl/gsl_sf_result.h gsl_sf_log.h gsl_sf_psi.h \
+	gsl_sf_trig.h gsl_sf_gamma.h error.h check.h chebyshev.h \
+	cheb_eval.c eval.h
+gamma_inc.lo gamma_inc.o : gamma_inc.c ../config.h ../gsl/gsl_math.h \
+	../gsl/gsl_sys.h ../gsl/gsl_machine.h ../gsl/gsl_precision.h \
+	../gsl/gsl_nan.h ../gsl/gsl_pow_int.h ../gsl/gsl_errno.h \
+	gsl_sf_erf.h ../gsl/gsl_sf_result.h gsl_sf_exp.h gsl_sf_log.h \
+	gsl_sf_gamma.h error.h eval.h
+gegenbauer.lo gegenbauer.o : gegenbauer.c ../config.h ../gsl/gsl_math.h \
+	../gsl/gsl_sys.h ../gsl/gsl_machine.h ../gsl/gsl_precision.h \
+	../gsl/gsl_nan.h ../gsl/gsl_pow_int.h ../gsl/gsl_errno.h \
+	gsl_sf_gegenbauer.h ../gsl/gsl_sf_result.h error.h eval.h
+hyperg.lo hyperg.o : hyperg.c ../config.h ../gsl/gsl_math.h \
+	../gsl/gsl_sys.h ../gsl/gsl_machine.h ../gsl/gsl_precision.h \
+	../gsl/gsl_nan.h ../gsl/gsl_pow_int.h ../gsl/gsl_errno.h \
+	gsl_sf_exp.h ../gsl/gsl_sf_result.h gsl_sf_gamma.h error.h \
+	hyperg.h
+hyperg_0F1.lo hyperg_0F1.o : hyperg_0F1.c ../config.h ../gsl/gsl_math.h \
+	../gsl/gsl_sys.h ../gsl/gsl_machine.h ../gsl/gsl_precision.h \
+	../gsl/gsl_nan.h ../gsl/gsl_pow_int.h ../gsl/gsl_errno.h \
+	gsl_sf_exp.h ../gsl/gsl_sf_result.h gsl_sf_gamma.h \
+	gsl_sf_bessel.h ../gsl/gsl_mode.h gsl_sf_hyperg.h error.h \
+	eval.h
+hyperg_1F1.lo hyperg_1F1.o : hyperg_1F1.c ../config.h ../gsl/gsl_math.h \
+	../gsl/gsl_sys.h ../gsl/gsl_machine.h ../gsl/gsl_precision.h \
+	../gsl/gsl_nan.h ../gsl/gsl_pow_int.h ../gsl/gsl_errno.h \
+	gsl_sf_elementary.h ../gsl/gsl_sf_result.h gsl_sf_exp.h \
+	gsl_sf_bessel.h ../gsl/gsl_mode.h gsl_sf_gamma.h \
+	gsl_sf_laguerre.h gsl_sf_hyperg.h error.h hyperg.h eval.h
+hyperg_2F0.lo hyperg_2F0.o : hyperg_2F0.c ../config.h ../gsl/gsl_math.h \
+	../gsl/gsl_sys.h ../gsl/gsl_machine.h ../gsl/gsl_precision.h \
+	../gsl/gsl_nan.h ../gsl/gsl_pow_int.h ../gsl/gsl_errno.h \
+	gsl_sf_hyperg.h ../gsl/gsl_sf_result.h error.h hyperg.h eval.h
+hyperg_2F1.lo hyperg_2F1.o : hyperg_2F1.c ../config.h ../gsl/gsl_math.h \
+	../gsl/gsl_sys.h ../gsl/gsl_machine.h ../gsl/gsl_precision.h \
+	../gsl/gsl_nan.h ../gsl/gsl_pow_int.h ../gsl/gsl_errno.h \
+	gsl_sf_exp.h ../gsl/gsl_sf_result.h gsl_sf_pow_int.h \
+	gsl_sf_gamma.h gsl_sf_psi.h gsl_sf_hyperg.h error.h eval.h
+hyperg_U.lo hyperg_U.o : hyperg_U.c ../config.h ../gsl/gsl_math.h \
+	../gsl/gsl_sys.h ../gsl/gsl_machine.h ../gsl/gsl_precision.h \
+	../gsl/gsl_nan.h ../gsl/gsl_pow_int.h ../gsl/gsl_errno.h \
+	gsl_sf_exp.h ../gsl/gsl_sf_result.h gsl_sf_gamma.h \
+	gsl_sf_bessel.h ../gsl/gsl_mode.h gsl_sf_laguerre.h \
+	gsl_sf_pow_int.h gsl_sf_hyperg.h error.h hyperg.h eval.h
+laguerre.lo laguerre.o : laguerre.c ../config.h ../gsl/gsl_math.h \
+	../gsl/gsl_sys.h ../gsl/gsl_machine.h ../gsl/gsl_precision.h \
+	../gsl/gsl_nan.h ../gsl/gsl_pow_int.h ../gsl/gsl_errno.h \
+	gsl_sf_exp.h ../gsl/gsl_sf_result.h gsl_sf_gamma.h \
+	gsl_sf_laguerre.h error.h eval.h
+lambert.lo lambert.o : lambert.c ../config.h ../gsl/gsl_math.h \
+	../gsl/gsl_sys.h ../gsl/gsl_machine.h ../gsl/gsl_precision.h \
+	../gsl/gsl_nan.h ../gsl/gsl_pow_int.h ../gsl/gsl_errno.h \
+	gsl_sf_lambert.h ../gsl/gsl_sf_result.h eval.h
+legendre_H3d.lo legendre_H3d.o : legendre_H3d.c ../config.h \
+	../gsl/gsl_math.h ../gsl/gsl_sys.h ../gsl/gsl_machine.h \
+	../gsl/gsl_precision.h ../gsl/gsl_nan.h ../gsl/gsl_pow_int.h \
+	../gsl/gsl_errno.h gsl_sf_exp.h ../gsl/gsl_sf_result.h \
+	gsl_sf_gamma.h gsl_sf_trig.h gsl_sf_legendre.h error.h \
+	legendre.h eval.h
+legendre_Qn.lo legendre_Qn.o : legendre_Qn.c ../config.h \
+	../gsl/gsl_math.h ../gsl/gsl_sys.h ../gsl/gsl_machine.h \
+	../gsl/gsl_precision.h ../gsl/gsl_nan.h ../gsl/gsl_pow_int.h \
+	../gsl/gsl_errno.h gsl_sf_bessel.h ../gsl/gsl_mode.h \
+	../gsl/gsl_sf_result.h gsl_sf_elementary.h gsl_sf_exp.h \
+	gsl_sf_pow_int.h gsl_sf_legendre.h error.h eval.h
+legendre_con.lo legendre_con.o : legendre_con.c ../config.h \
+	../gsl/gsl_math.h ../gsl/gsl_sys.h ../gsl/gsl_machine.h \
+	../gsl/gsl_precision.h ../gsl/gsl_nan.h ../gsl/gsl_pow_int.h \
+	../gsl/gsl_errno.h ../gsl/gsl_poly.h ../gsl/gsl_complex.h \
+	gsl_sf_exp.h ../gsl/gsl_sf_result.h gsl_sf_trig.h \
+	gsl_sf_gamma.h gsl_sf_ellint.h ../gsl/gsl_mode.h \
+	gsl_sf_pow_int.h gsl_sf_bessel.h gsl_sf_hyperg.h \
+	gsl_sf_legendre.h error.h legendre.h eval.h
+legendre_poly.lo legendre_poly.o : legendre_poly.c ../config.h \
+	../gsl/gsl_math.h ../gsl/gsl_sys.h ../gsl/gsl_machine.h \
+	../gsl/gsl_precision.h ../gsl/gsl_nan.h ../gsl/gsl_pow_int.h \
+	../gsl/gsl_errno.h gsl_sf_bessel.h ../gsl/gsl_mode.h \
+	../gsl/gsl_sf_result.h gsl_sf_exp.h gsl_sf_gamma.h gsl_sf_log.h \
+	gsl_sf_pow_int.h gsl_sf_legendre.h error.h eval.h
+log.lo log.o : log.c ../config.h ../gsl/gsl_math.h ../gsl/gsl_sys.h \
+	../gsl/gsl_machine.h ../gsl/gsl_precision.h ../gsl/gsl_nan.h \
+	../gsl/gsl_pow_int.h ../gsl/gsl_errno.h gsl_sf_log.h \
+	../gsl/gsl_sf_result.h error.h chebyshev.h cheb_eval.c eval.h
+poch.lo poch.o : poch.c ../config.h ../gsl/gsl_math.h ../gsl/gsl_sys.h \
+	../gsl/gsl_machine.h ../gsl/gsl_precision.h ../gsl/gsl_nan.h \
+	../gsl/gsl_pow_int.h ../gsl/gsl_errno.h gsl_sf_exp.h \
+	../gsl/gsl_sf_result.h gsl_sf_log.h gsl_sf_pow_int.h \
+	gsl_sf_psi.h gsl_sf_gamma.h error.h eval.h
+poly.lo poly.o : poly.c ../config.h gsl_sf_poly.h
+pow_int.lo pow_int.o : pow_int.c ../config.h ../gsl/gsl_math.h \
+	../gsl/gsl_sys.h ../gsl/gsl_machine.h ../gsl/gsl_precision.h \
+	../gsl/gsl_nan.h ../gsl/gsl_pow_int.h ../gsl/gsl_errno.h \
+	gsl_sf_pow_int.h ../gsl/gsl_sf_result.h eval.h
+psi.lo psi.o : psi.c ../config.h ../gsl/gsl_math.h ../gsl/gsl_sys.h \
+	../gsl/gsl_machine.h ../gsl/gsl_precision.h ../gsl/gsl_nan.h \
+	../gsl/gsl_pow_int.h ../gsl/gsl_errno.h gsl_sf_exp.h \
+	../gsl/gsl_sf_result.h gsl_sf_gamma.h gsl_sf_zeta.h \
+	gsl_sf_psi.h error.h chebyshev.h cheb_eval.c eval.h
+result.lo result.o : result.c ../config.h ../gsl/gsl_math.h \
+	../gsl/gsl_sys.h ../gsl/gsl_machine.h ../gsl/gsl_precision.h \
+	../gsl/gsl_nan.h ../gsl/gsl_pow_int.h ../gsl/gsl_errno.h \
+	gsl_sf_exp.h ../gsl/gsl_sf_result.h gsl_sf_result.h
+shint.lo shint.o : shint.c ../config.h ../gsl/gsl_math.h \
+	../gsl/gsl_sys.h ../gsl/gsl_machine.h ../gsl/gsl_precision.h \
+	../gsl/gsl_nan.h ../gsl/gsl_pow_int.h ../gsl/gsl_errno.h \
+	gsl_sf_expint.h ../gsl/gsl_sf_result.h error.h chebyshev.h \
+	cheb_eval.c eval.h
+sinint.lo sinint.o : sinint.c ../config.h ../gsl/gsl_math.h \
+	../gsl/gsl_sys.h ../gsl/gsl_machine.h ../gsl/gsl_precision.h \
+	../gsl/gsl_nan.h ../gsl/gsl_pow_int.h ../gsl/gsl_errno.h \
+	gsl_sf_trig.h ../gsl/gsl_sf_result.h gsl_sf_expint.h error.h \
+	chebyshev.h cheb_eval.c eval.h
+synchrotron.lo synchrotron.o : synchrotron.c ../config.h \
+	../gsl/gsl_math.h ../gsl/gsl_sys.h ../gsl/gsl_machine.h \
+	../gsl/gsl_precision.h ../gsl/gsl_nan.h ../gsl/gsl_pow_int.h \
+	../gsl/gsl_errno.h gsl_sf_exp.h ../gsl/gsl_sf_result.h \
+	gsl_sf_pow_int.h gsl_sf_synchrotron.h error.h chebyshev.h \
+	cheb_eval.c eval.h
+test_airy.o: test_airy.c ../config.h ../gsl/gsl_test.h ../gsl/gsl_sf.h \
+	../gsl/gsl_sf_result.h ../gsl/gsl_sf_airy.h ../gsl/gsl_mode.h \
+	../gsl/gsl_sf_bessel.h ../gsl/gsl_precision.h \
+	../gsl/gsl_sf_clausen.h ../gsl/gsl_sf_coupling.h \
+	../gsl/gsl_sf_coulomb.h ../gsl/gsl_sf_dawson.h \
+	../gsl/gsl_sf_debye.h ../gsl/gsl_sf_dilog.h \
+	../gsl/gsl_sf_elementary.h ../gsl/gsl_sf_ellint.h \
+	../gsl/gsl_sf_elljac.h ../gsl/gsl_sf_erf.h ../gsl/gsl_sf_exp.h \
+	../gsl/gsl_math.h ../gsl/gsl_sys.h ../gsl/gsl_machine.h \
+	../gsl/gsl_nan.h ../gsl/gsl_pow_int.h ../gsl/gsl_errno.h \
+	../gsl/gsl_sf_expint.h ../gsl/gsl_sf_fermi_dirac.h \
+	../gsl/gsl_sf_gamma.h ../gsl/gsl_sf_gegenbauer.h \
+	../gsl/gsl_sf_hyperg.h ../gsl/gsl_sf_laguerre.h \
+	../gsl/gsl_sf_lambert.h ../gsl/gsl_sf_legendre.h \
+	../gsl/gsl_sf_log.h ../gsl/gsl_sf_pow_int.h ../gsl/gsl_sf_psi.h \
+	../gsl/gsl_sf_synchrotron.h ../gsl/gsl_sf_transport.h \
+	../gsl/gsl_sf_trig.h ../gsl/gsl_sf_zeta.h test_sf.h \
+	gsl_sf_result.h
+test_bessel.o: test_bessel.c ../config.h ../gsl/gsl_test.h \
+	../gsl/gsl_sf.h ../gsl/gsl_sf_result.h ../gsl/gsl_sf_airy.h \
+	../gsl/gsl_mode.h ../gsl/gsl_sf_bessel.h ../gsl/gsl_precision.h \
+	../gsl/gsl_sf_clausen.h ../gsl/gsl_sf_coupling.h \
+	../gsl/gsl_sf_coulomb.h ../gsl/gsl_sf_dawson.h \
+	../gsl/gsl_sf_debye.h ../gsl/gsl_sf_dilog.h \
+	../gsl/gsl_sf_elementary.h ../gsl/gsl_sf_ellint.h \
+	../gsl/gsl_sf_elljac.h ../gsl/gsl_sf_erf.h ../gsl/gsl_sf_exp.h \
+	../gsl/gsl_math.h ../gsl/gsl_sys.h ../gsl/gsl_machine.h \
+	../gsl/gsl_nan.h ../gsl/gsl_pow_int.h ../gsl/gsl_errno.h \
+	../gsl/gsl_sf_expint.h ../gsl/gsl_sf_fermi_dirac.h \
+	../gsl/gsl_sf_gamma.h ../gsl/gsl_sf_gegenbauer.h \
+	../gsl/gsl_sf_hyperg.h ../gsl/gsl_sf_laguerre.h \
+	../gsl/gsl_sf_lambert.h ../gsl/gsl_sf_legendre.h \
+	../gsl/gsl_sf_log.h ../gsl/gsl_sf_pow_int.h ../gsl/gsl_sf_psi.h \
+	../gsl/gsl_sf_synchrotron.h ../gsl/gsl_sf_transport.h \
+	../gsl/gsl_sf_trig.h ../gsl/gsl_sf_zeta.h test_sf.h \
+	gsl_sf_result.h
+test_coulomb.o: test_coulomb.c ../config.h ../gsl/gsl_test.h \
+	../gsl/gsl_sf.h ../gsl/gsl_sf_result.h ../gsl/gsl_sf_airy.h \
+	../gsl/gsl_mode.h ../gsl/gsl_sf_bessel.h ../gsl/gsl_precision.h \
+	../gsl/gsl_sf_clausen.h ../gsl/gsl_sf_coupling.h \
+	../gsl/gsl_sf_coulomb.h ../gsl/gsl_sf_dawson.h \
+	../gsl/gsl_sf_debye.h ../gsl/gsl_sf_dilog.h \
+	../gsl/gsl_sf_elementary.h ../gsl/gsl_sf_ellint.h \
+	../gsl/gsl_sf_elljac.h ../gsl/gsl_sf_erf.h ../gsl/gsl_sf_exp.h \
+	../gsl/gsl_math.h ../gsl/gsl_sys.h ../gsl/gsl_machine.h \
+	../gsl/gsl_nan.h ../gsl/gsl_pow_int.h ../gsl/gsl_errno.h \
+	../gsl/gsl_sf_expint.h ../gsl/gsl_sf_fermi_dirac.h \
+	../gsl/gsl_sf_gamma.h ../gsl/gsl_sf_gegenbauer.h \
+	../gsl/gsl_sf_hyperg.h ../gsl/gsl_sf_laguerre.h \
+	../gsl/gsl_sf_lambert.h ../gsl/gsl_sf_legendre.h \
+	../gsl/gsl_sf_log.h ../gsl/gsl_sf_pow_int.h ../gsl/gsl_sf_psi.h \
+	../gsl/gsl_sf_synchrotron.h ../gsl/gsl_sf_transport.h \
+	../gsl/gsl_sf_trig.h ../gsl/gsl_sf_zeta.h test_sf.h \
+	gsl_sf_result.h
+test_dilog.o: test_dilog.c ../config.h ../gsl/gsl_test.h ../gsl/gsl_sf.h \
+	../gsl/gsl_sf_result.h ../gsl/gsl_sf_airy.h ../gsl/gsl_mode.h \
+	../gsl/gsl_sf_bessel.h ../gsl/gsl_precision.h \
+	../gsl/gsl_sf_clausen.h ../gsl/gsl_sf_coupling.h \
+	../gsl/gsl_sf_coulomb.h ../gsl/gsl_sf_dawson.h \
+	../gsl/gsl_sf_debye.h ../gsl/gsl_sf_dilog.h \
+	../gsl/gsl_sf_elementary.h ../gsl/gsl_sf_ellint.h \
+	../gsl/gsl_sf_elljac.h ../gsl/gsl_sf_erf.h ../gsl/gsl_sf_exp.h \
+	../gsl/gsl_math.h ../gsl/gsl_sys.h ../gsl/gsl_machine.h \
+	../gsl/gsl_nan.h ../gsl/gsl_pow_int.h ../gsl/gsl_errno.h \
+	../gsl/gsl_sf_expint.h ../gsl/gsl_sf_fermi_dirac.h \
+	../gsl/gsl_sf_gamma.h ../gsl/gsl_sf_gegenbauer.h \
+	../gsl/gsl_sf_hyperg.h ../gsl/gsl_sf_laguerre.h \
+	../gsl/gsl_sf_lambert.h ../gsl/gsl_sf_legendre.h \
+	../gsl/gsl_sf_log.h ../gsl/gsl_sf_pow_int.h ../gsl/gsl_sf_psi.h \
+	../gsl/gsl_sf_synchrotron.h ../gsl/gsl_sf_transport.h \
+	../gsl/gsl_sf_trig.h ../gsl/gsl_sf_zeta.h test_sf.h \
+	gsl_sf_result.h
+test_gamma.o: test_gamma.c ../config.h ../gsl/gsl_test.h ../gsl/gsl_sf.h \
+	../gsl/gsl_sf_result.h ../gsl/gsl_sf_airy.h ../gsl/gsl_mode.h \
+	../gsl/gsl_sf_bessel.h ../gsl/gsl_precision.h \
+	../gsl/gsl_sf_clausen.h ../gsl/gsl_sf_coupling.h \
+	../gsl/gsl_sf_coulomb.h ../gsl/gsl_sf_dawson.h \
+	../gsl/gsl_sf_debye.h ../gsl/gsl_sf_dilog.h \
+	../gsl/gsl_sf_elementary.h ../gsl/gsl_sf_ellint.h \
+	../gsl/gsl_sf_elljac.h ../gsl/gsl_sf_erf.h ../gsl/gsl_sf_exp.h \
+	../gsl/gsl_math.h ../gsl/gsl_sys.h ../gsl/gsl_machine.h \
+	../gsl/gsl_nan.h ../gsl/gsl_pow_int.h ../gsl/gsl_errno.h \
+	../gsl/gsl_sf_expint.h ../gsl/gsl_sf_fermi_dirac.h \
+	../gsl/gsl_sf_gamma.h ../gsl/gsl_sf_gegenbauer.h \
+	../gsl/gsl_sf_hyperg.h ../gsl/gsl_sf_laguerre.h \
+	../gsl/gsl_sf_lambert.h ../gsl/gsl_sf_legendre.h \
+	../gsl/gsl_sf_log.h ../gsl/gsl_sf_pow_int.h ../gsl/gsl_sf_psi.h \
+	../gsl/gsl_sf_synchrotron.h ../gsl/gsl_sf_transport.h \
+	../gsl/gsl_sf_trig.h ../gsl/gsl_sf_zeta.h test_sf.h \
+	gsl_sf_result.h
+test_hyperg.o: test_hyperg.c ../config.h ../gsl/gsl_test.h \
+	../gsl/gsl_sf.h ../gsl/gsl_sf_result.h ../gsl/gsl_sf_airy.h \
+	../gsl/gsl_mode.h ../gsl/gsl_sf_bessel.h ../gsl/gsl_precision.h \
+	../gsl/gsl_sf_clausen.h ../gsl/gsl_sf_coupling.h \
+	../gsl/gsl_sf_coulomb.h ../gsl/gsl_sf_dawson.h \
+	../gsl/gsl_sf_debye.h ../gsl/gsl_sf_dilog.h \
+	../gsl/gsl_sf_elementary.h ../gsl/gsl_sf_ellint.h \
+	../gsl/gsl_sf_elljac.h ../gsl/gsl_sf_erf.h ../gsl/gsl_sf_exp.h \
+	../gsl/gsl_math.h ../gsl/gsl_sys.h ../gsl/gsl_machine.h \
+	../gsl/gsl_nan.h ../gsl/gsl_pow_int.h ../gsl/gsl_errno.h \
+	../gsl/gsl_sf_expint.h ../gsl/gsl_sf_fermi_dirac.h \
+	../gsl/gsl_sf_gamma.h ../gsl/gsl_sf_gegenbauer.h \
+	../gsl/gsl_sf_hyperg.h ../gsl/gsl_sf_laguerre.h \
+	../gsl/gsl_sf_lambert.h ../gsl/gsl_sf_legendre.h \
+	../gsl/gsl_sf_log.h ../gsl/gsl_sf_pow_int.h ../gsl/gsl_sf_psi.h \
+	../gsl/gsl_sf_synchrotron.h ../gsl/gsl_sf_transport.h \
+	../gsl/gsl_sf_trig.h ../gsl/gsl_sf_zeta.h test_sf.h \
+	gsl_sf_result.h
+test_legendre.o: test_legendre.c ../config.h ../gsl/gsl_test.h \
+	../gsl/gsl_sf.h ../gsl/gsl_sf_result.h ../gsl/gsl_sf_airy.h \
+	../gsl/gsl_mode.h ../gsl/gsl_sf_bessel.h ../gsl/gsl_precision.h \
+	../gsl/gsl_sf_clausen.h ../gsl/gsl_sf_coupling.h \
+	../gsl/gsl_sf_coulomb.h ../gsl/gsl_sf_dawson.h \
+	../gsl/gsl_sf_debye.h ../gsl/gsl_sf_dilog.h \
+	../gsl/gsl_sf_elementary.h ../gsl/gsl_sf_ellint.h \
+	../gsl/gsl_sf_elljac.h ../gsl/gsl_sf_erf.h ../gsl/gsl_sf_exp.h \
+	../gsl/gsl_math.h ../gsl/gsl_sys.h ../gsl/gsl_machine.h \
+	../gsl/gsl_nan.h ../gsl/gsl_pow_int.h ../gsl/gsl_errno.h \
+	../gsl/gsl_sf_expint.h ../gsl/gsl_sf_fermi_dirac.h \
+	../gsl/gsl_sf_gamma.h ../gsl/gsl_sf_gegenbauer.h \
+	../gsl/gsl_sf_hyperg.h ../gsl/gsl_sf_laguerre.h \
+	../gsl/gsl_sf_lambert.h ../gsl/gsl_sf_legendre.h \
+	../gsl/gsl_sf_log.h ../gsl/gsl_sf_pow_int.h ../gsl/gsl_sf_psi.h \
+	../gsl/gsl_sf_synchrotron.h ../gsl/gsl_sf_transport.h \
+	../gsl/gsl_sf_trig.h ../gsl/gsl_sf_zeta.h test_sf.h \
+	gsl_sf_result.h
+test_sf.o: test_sf.c ../config.h ../gsl/gsl_math.h ../gsl/gsl_sys.h \
+	../gsl/gsl_machine.h ../gsl/gsl_precision.h ../gsl/gsl_nan.h \
+	../gsl/gsl_pow_int.h ../gsl/gsl_errno.h ../gsl/gsl_ieee_utils.h \
+	../gsl/gsl_test.h ../gsl/gsl_sf.h ../gsl/gsl_sf_result.h \
+	../gsl/gsl_sf_airy.h ../gsl/gsl_mode.h ../gsl/gsl_sf_bessel.h \
+	../gsl/gsl_sf_clausen.h ../gsl/gsl_sf_coupling.h \
+	../gsl/gsl_sf_coulomb.h ../gsl/gsl_sf_dawson.h \
+	../gsl/gsl_sf_debye.h ../gsl/gsl_sf_dilog.h \
+	../gsl/gsl_sf_elementary.h ../gsl/gsl_sf_ellint.h \
+	../gsl/gsl_sf_elljac.h ../gsl/gsl_sf_erf.h ../gsl/gsl_sf_exp.h \
+	../gsl/gsl_sf_expint.h ../gsl/gsl_sf_fermi_dirac.h \
+	../gsl/gsl_sf_gamma.h ../gsl/gsl_sf_gegenbauer.h \
+	../gsl/gsl_sf_hyperg.h ../gsl/gsl_sf_laguerre.h \
+	../gsl/gsl_sf_lambert.h ../gsl/gsl_sf_legendre.h \
+	../gsl/gsl_sf_log.h ../gsl/gsl_sf_pow_int.h ../gsl/gsl_sf_psi.h \
+	../gsl/gsl_sf_synchrotron.h ../gsl/gsl_sf_transport.h \
+	../gsl/gsl_sf_trig.h ../gsl/gsl_sf_zeta.h test_sf.h \
+	gsl_sf_result.h
+transport.lo transport.o : transport.c ../config.h ../gsl/gsl_math.h \
+	../gsl/gsl_sys.h ../gsl/gsl_machine.h ../gsl/gsl_precision.h \
+	../gsl/gsl_nan.h ../gsl/gsl_pow_int.h ../gsl/gsl_errno.h \
+	gsl_sf_transport.h ../gsl/gsl_sf_result.h error.h check.h \
+	chebyshev.h cheb_eval.c eval.h
+trig.lo trig.o : trig.c ../config.h ../gsl/gsl_math.h ../gsl/gsl_sys.h \
+	../gsl/gsl_machine.h ../gsl/gsl_precision.h ../gsl/gsl_nan.h \
+	../gsl/gsl_pow_int.h ../gsl/gsl_errno.h gsl_sf_log.h \
+	../gsl/gsl_sf_result.h gsl_sf_trig.h error.h chebyshev.h \
+	cheb_eval.c eval.h
+zeta.lo zeta.o : zeta.c ../config.h ../gsl/gsl_math.h ../gsl/gsl_sys.h \
+	../gsl/gsl_machine.h ../gsl/gsl_precision.h ../gsl/gsl_nan.h \
+	../gsl/gsl_pow_int.h ../gsl/gsl_errno.h gsl_sf_elementary.h \
+	../gsl/gsl_sf_result.h gsl_sf_exp.h gsl_sf_gamma.h \
+	gsl_sf_pow_int.h gsl_sf_zeta.h error.h chebyshev.h cheb_eval.c \
+	eval.h
+
+check-TESTS: $(TESTS)
+	@failed=0; all=0; \
+	srcdir=$(srcdir); export srcdir; \
+	for tst in $(TESTS); do \
+	  if test -f $$tst; then dir=.; \
+	  else dir="$(srcdir)"; fi; \
+	  if $(TESTS_ENVIRONMENT) $$dir/$$tst; then \
+	    all=`expr $$all + 1`; \
+	    echo "PASS: $$tst"; \
+	  elif test $$? -ne 77; then \
+	    all=`expr $$all + 1`; \
+	    failed=`expr $$failed + 1`; \
+	    echo "FAIL: $$tst"; \
+	  fi; \
+	done; \
+	if test "$$failed" -eq 0; then \
+	  banner="All $$all tests passed"; \
+	else \
+	  banner="$$failed of $$all tests failed"; \
+	fi; \
+	dashes=`echo "$$banner" | sed s/./=/g`; \
+	echo "$$dashes"; \
+	echo "$$banner"; \
+	echo "$$dashes"; \
+	test "$$failed" -eq 0
+info-am:
+info: info-am
+dvi-am:
+dvi: dvi-am
+check-am: all-am
+	$(MAKE) $(AM_MAKEFLAGS) $(check_PROGRAMS)
+	$(MAKE) $(AM_MAKEFLAGS) check-TESTS
+check: check-am
+installcheck-am:
+installcheck: installcheck-am
+install-exec-am:
+install-exec: install-exec-am
+
+install-data-am: install-pkgincludeHEADERS
+install-data: install-data-am
+
+install-am: all-am
+	@$(MAKE) $(AM_MAKEFLAGS) install-exec-am install-data-am
+install: install-am
+uninstall-am: uninstall-pkgincludeHEADERS
+uninstall: uninstall-am
+all-am: Makefile $(LTLIBRARIES) $(HEADERS)
+all-redirect: all-am
+install-strip:
+	$(MAKE) $(AM_MAKEFLAGS) AM_INSTALL_PROGRAM_FLAGS=-s install
+installdirs:
+	$(mkinstalldirs)  $(DESTDIR)$(pkgincludedir)
+
+
+mostlyclean-generic:
+
+clean-generic:
+
+distclean-generic:
+	-rm -f Makefile $(CONFIG_CLEAN_FILES)
+	-rm -f config.cache config.log stamp-h stamp-h[0-9]*
+
+maintainer-clean-generic:
+mostlyclean-am:  mostlyclean-noinstLTLIBRARIES mostlyclean-compile \
+		mostlyclean-libtool mostlyclean-checkPROGRAMS \
+		mostlyclean-tags mostlyclean-generic
+
+mostlyclean: mostlyclean-am
+
+clean-am:  clean-noinstLTLIBRARIES clean-compile clean-libtool \
+		clean-checkPROGRAMS clean-tags clean-generic \
+		mostlyclean-am
+
+clean: clean-am
+
+distclean-am:  distclean-noinstLTLIBRARIES distclean-compile \
+		distclean-libtool distclean-checkPROGRAMS \
+		distclean-tags distclean-generic clean-am
+	-rm -f libtool
+
+distclean: distclean-am
+
+maintainer-clean-am:  maintainer-clean-noinstLTLIBRARIES \
+		maintainer-clean-compile maintainer-clean-libtool \
+		maintainer-clean-checkPROGRAMS maintainer-clean-tags \
+		maintainer-clean-generic distclean-am
+	@echo "This command is intended for maintainers to use;"
+	@echo "it deletes files that may require special tools to rebuild."
+
+maintainer-clean: maintainer-clean-am
+
+.PHONY: mostlyclean-noinstLTLIBRARIES distclean-noinstLTLIBRARIES \
+clean-noinstLTLIBRARIES maintainer-clean-noinstLTLIBRARIES \
+mostlyclean-compile distclean-compile clean-compile \
+maintainer-clean-compile mostlyclean-libtool distclean-libtool \
+clean-libtool maintainer-clean-libtool mostlyclean-checkPROGRAMS \
+distclean-checkPROGRAMS clean-checkPROGRAMS \
+maintainer-clean-checkPROGRAMS uninstall-pkgincludeHEADERS \
+install-pkgincludeHEADERS tags mostlyclean-tags distclean-tags \
+clean-tags maintainer-clean-tags distdir check-TESTS info-am info \
+dvi-am dvi check check-am installcheck-am installcheck install-exec-am \
+install-exec install-data-am install-data install-am install \
+uninstall-am uninstall all-redirect all-am all installdirs \
+mostlyclean-generic distclean-generic clean-generic \
+maintainer-clean-generic clean mostlyclean distclean maintainer-clean
+
+
+# Tell versions [3.59,3.63) of GNU make to not export all variables.
+# Otherwise a system limit (for SysV at least) may be exceeded.
+.NOEXPORT:

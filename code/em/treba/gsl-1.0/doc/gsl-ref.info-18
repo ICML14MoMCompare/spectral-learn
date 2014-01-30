@@ -1,0 +1,1112 @@
+This is gsl-ref.info, produced by makeinfo version 4.0 from
+gsl-ref.texi.
+
+INFO-DIR-SECTION Scientific software
+START-INFO-DIR-ENTRY
+* gsl-ref: (gsl-ref).                   GNU Scientific Library - Reference
+END-INFO-DIR-ENTRY
+
+   This file documents the GNU Scientific Library.
+
+   Copyright (C) 1996, 1997, 1998, 1999, 2000, 2001 The GSL Team.
+
+   Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.1 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.  A
+copy of the license is included in the section entitled "GNU Free
+Documentation License".
+
+
+File: gsl-ref.info,  Node: Volume,  Next: Mass and Weight,  Prev: Printers Units,  Up: Physical Constants
+
+Volume
+======
+
+`GSL_CONST_MKS_ACRE'
+     The area of 1 acre.
+
+`GSL_CONST_MKS_LITER'
+     The volume of 1 liter.
+
+`GSL_CONST_MKS_US_GALLON'
+     The volume of 1 US gallon.
+
+`GSL_CONST_MKS_CANADIAN_GALLON'
+     The volume of 1 Canadian gallon.
+
+`GSL_CONST_MKS_UK_GALLON'
+     The volume of 1 UK gallon.
+
+`GSL_CONST_MKS_QUART'
+     The volume of 1 quart.
+
+`GSL_CONST_MKS_PINT'
+     The volume of 1 pint.
+
+
+File: gsl-ref.info,  Node: Mass and Weight,  Next: Thermal Energy and Power,  Prev: Volume,  Up: Physical Constants
+
+Mass and Weight
+===============
+
+`GSL_CONST_MKS_POUND_MASS'
+     The mass of 1 pound.
+
+`GSL_CONST_MKS_OUNCE_MASS'
+     The mass of 1 ounce.
+
+`GSL_CONST_MKS_TON'
+     The mass of 1 ton.
+
+`GSL_CONST_MKS_METRIC_TON'
+     The mass of 1 metric ton (1000 kg).
+
+`GSL_CONST_MKS_UK_TON'
+     The mass of 1 UK ton.
+
+`GSL_CONST_MKS_TROY_OUNCE'
+     The mass of 1 troy ounce.
+
+`GSL_CONST_MKS_CARAT'
+     The mass of 1 carat.
+
+`GSL_CONST_MKS_GRAM_FORCE'
+     The force of 1 gram weight.
+
+`GSL_CONST_MKS_POUND_FORCE'
+     The force of 1 pound weight.
+
+`GSL_CONST_MKS_KILOPOUND_FORCE'
+     The force of 1 kilopound weight.
+
+`GSL_CONST_MKS_POUNDAL'
+     The force of 1 poundal.
+
+
+File: gsl-ref.info,  Node: Thermal Energy and Power,  Next: Pressure,  Prev: Mass and Weight,  Up: Physical Constants
+
+Thermal Energy and Power
+========================
+
+`GSL_CONST_MKS_CALORIE'
+     The energy of 1 calorie.
+
+`GSL_CONST_MKS_BTU'
+     The energy of 1 British Thermal Unit, btu.
+
+`GSL_CONST_MKS_THERM'
+     The energy of 1 Therm.
+
+`GSL_CONST_MKS_HORSEPOWER'
+     The power of 1 horsepower.
+
+
+File: gsl-ref.info,  Node: Pressure,  Next: Viscosity,  Prev: Thermal Energy and Power,  Up: Physical Constants
+
+Pressure
+========
+
+`GSL_CONST_MKS_BAR'
+     The pressure of 1 bar.
+
+`GSL_CONST_MKS_STD_ATMOSPHERE'
+     The pressure of 1 standard atmosphere.
+
+`GSL_CONST_MKS_TORR'
+     The pressure of 1 torr.
+
+`GSL_CONST_MKS_METER_OF_MERCURY'
+     The pressure of 1 meter of mercury.
+
+`GSL_CONST_MKS_INCH_OF_MERCURY'
+     The pressure of 1 inch of mercury.
+
+`GSL_CONST_MKS_INCH_OF_WATER'
+     The pressure of 1 inch of water.
+
+`GSL_CONST_MKS_PSI'
+     The pressure of 1 pound per square inch.
+
+
+File: gsl-ref.info,  Node: Viscosity,  Next: Light and Illumination,  Prev: Pressure,  Up: Physical Constants
+
+Viscosity
+=========
+
+`GSL_CONST_MKS_POISE'
+     The dynamic viscosity of 1 poise.
+
+`GSL_CONST_MKS_STOKES'
+     The kinematic viscosity of 1 stokes.
+
+
+File: gsl-ref.info,  Node: Light and Illumination,  Next: Radioactivity,  Prev: Viscosity,  Up: Physical Constants
+
+Light and Illumination
+======================
+
+`GSL_CONST_MKS_STILB'
+     The luminance of 1 stilb.
+
+`GSL_CONST_MKS_LUMEN'
+     The luminous flux of 1 lumen.
+
+`GSL_CONST_MKS_LUX'
+     The illuminance of 1 lux.
+
+`GSL_CONST_MKS_PHOT'
+     The illuminance of 1 phot.
+
+`GSL_CONST_MKS_FOOTCANDLE'
+     The illuminance of 1 footcandle.
+
+`GSL_CONST_MKS_LAMBERT'
+     The luminance of 1 lambert.
+
+`GSL_CONST_MKS_FOOTLAMBERT'
+     The luminance of 1 footlambert.
+
+
+File: gsl-ref.info,  Node: Radioactivity,  Next: Physical Constant Examples,  Prev: Light and Illumination,  Up: Physical Constants
+
+Radioactivity
+=============
+
+`GSL_CONST_MKS_CURIE'
+     The activity of 1 curie.
+
+`GSL_CONST_MKS_ROENTGEN'
+     The exposure of 1 roentgen.
+
+`GSL_CONST_MKS_RAD'
+     The absorbed dose of 1 rad.
+
+
+File: gsl-ref.info,  Node: Physical Constant Examples,  Next: Physical Constant References and Further Reading,  Prev: Radioactivity,  Up: Physical Constants
+
+Examples
+========
+
+   The following program demonstrates the use of the physical constants
+in a calculation.  In this case, the goal is to calculate the range of
+light-travel times from Earth to Mars.
+
+   The required data is the average distance of each planet from the
+Sun in astronomical units (the eccentricities of the orbits will be
+neglected for the purposes of this calculation).  The average radius of
+the orbit of Mars is 1.52 astronomical units, and for the orbit of
+Earth it is 1 astronomical unit (by definition).  These values are
+combined with the MKS values of the constants for the speed of light
+and the length of an astronomical unit to produce a result for the
+shortest and longest light-travel times in seconds.  The figures are
+converted into minutes before being displayed.
+
+     #include <stdio.h>
+     #include <gsl/gsl_const_mks.h>
+     
+     int
+     main (void)
+     {
+       double c  = GSL_CONST_MKS_SPEED_OF_LIGHT;
+       double au = GSL_CONST_MKS_ASTRONOMICAL_UNIT;
+       double minutes = GSL_CONST_MKS_MINUTE;
+     
+       /* distance stored in meters */
+       double r_earth = 1.00 * au;
+       double r_mars  = 1.52 * au;
+     
+       double t_min, t_max;
+     
+       t_min = (r_mars - r_earth) / c;
+       t_max = (r_mars + r_earth) / c;
+     
+       printf("light travel time from Earth to Mars:\n");
+       printf("minimum = %.1f minutes\n", t_min / minutes);
+       printf("maximum = %.1f minutes\n", t_max / minutes);
+     
+       return 0;
+     }
+
+Here is the output from the program,
+
+     light travel time from Earth to Mars:
+     minimum = 4.3 minutes
+     maximum = 21.0 minutes
+
+
+File: gsl-ref.info,  Node: Physical Constant References and Further Reading,  Prev: Physical Constant Examples,  Up: Physical Constants
+
+References and Further Reading
+==============================
+
+Further information on the values of physical constants is available
+from the NIST website,
+
+     <http://www.physics.nist.gov/cuu/Constants/index.html>
+
+
+File: gsl-ref.info,  Node: IEEE floating-point arithmetic,  Next: Debugging Numerical Programs,  Prev: Physical Constants,  Up: Top
+
+IEEE floating-point arithmetic
+******************************
+
+   This chapter describes functions for examining the representation of
+floating point numbers and controlling the floating point environment of
+your program.  The functions described in this chapter are declared in
+the header file `gsl_ieee_utils.h'.
+
+* Menu:
+
+* Representation of floating point numbers::
+* Setting up your IEEE environment::
+* IEEE References and Further Reading::
+
+
+File: gsl-ref.info,  Node: Representation of floating point numbers,  Next: Setting up your IEEE environment,  Up: IEEE floating-point arithmetic
+
+Representation of floating point numbers
+========================================
+
+   The IEEE Standard for Binary Floating-Point Arithmetic defines binary
+formats for single and double precision numbers.  Each number is
+composed of three parts: a "sign bit" (s), an "exponent" (E) and a
+"fraction" (f).  The numerical value of the combination (s,E,f) is
+given by the following formula,
+
+     (-1)^s (1.fffff...) 2^E
+
+The sign bit is either zero or one.  The exponent ranges from a minimum
+value E_min to a maximum value E_max depending on the precision.  The
+exponent is converted to an unsigned number e, known as the "biased
+exponent", for storage by adding a "bias" parameter, e = E + bias.  The
+sequence fffff... represents the digits of the binary fraction f.  The
+binary digits are stored in "normalized form", by adjusting the
+exponent to give a leading digit of 1.  Since the leading digit is
+always 1 for normalized numbers it is assumed implicitly and does not
+have to be stored.  Numbers smaller than 2^(E_min) are be stored in
+"denormalized form" with a leading zero,
+
+     (-1)^s (0.fffff...) 2^(E_min)
+
+This allows gradual underflow down to 2^(E_min - p) for p bits of
+precision.  A zero is encoded with the special exponent of 2^(E_min -
+1) and infinities with the exponent of 2^(E_max + 1).
+
+The format for single precision numbers uses 32 bits divided in the
+following way,
+
+     seeeeeeeefffffffffffffffffffffff
+     
+     s = sign bit, 1 bit
+     e = exponent, 8 bits  (E_min=-126, E_max=127, bias=127)
+     f = fraction, 23 bits
+
+The format for double precision numbers uses 64 bits divided in the
+following way,
+
+     seeeeeeeeeeeffffffffffffffffffffffffffffffffffffffffffffffffffff
+     
+     s = sign bit, 1 bit
+     e = exponent, 11 bits  (E_min=-1022, E_max=1023, bias=1023)
+     f = fraction, 52 bits
+
+It is often useful to be able to investigate the behavior of a
+calculation at the bit-level and the library provides functions for
+printing the IEEE representations in a human-readable form.
+
+ - Function: void gsl_ieee_fprintf_float (FILE * STREAM, const float *
+          X)
+ - Function: void gsl_ieee_fprintf_double (FILE * STREAM, const double
+          * X)
+     These functions output a formatted version of the IEEE
+     floating-point number pointed to by X to the stream STREAM. A
+     pointer is used to pass the number indirectly, to avoid any
+     undesired promotion from `float' to `double'.  The output takes
+     one of the following forms,
+
+    `NaN'
+          the Not-a-Number symbol
+
+    `Inf, -Inf'
+          positive or negative infinity
+
+    `1.fffff...*2^E, -1.fffff...*2^E'
+          a normalized floating point number
+
+    `0.fffff...*2^E, -0.fffff...*2^E'
+          a denormalized floating point number
+
+    `0, -0'
+          positive or negative zero
+
+     The output can be used directly in GNU Emacs Calc mode by
+     preceding it with `2#' to indicate binary.
+
+ - Function: void gsl_ieee_printf_float (const float * X)
+ - Function: void gsl_ieee_printf_double (const double * X)
+     These functions output a formatted version of the IEEE
+     floating-point number pointed to by X to the stream `stdout'.
+
+The following program demonstrates the use of the functions by printing
+the single and double precision representations of the fraction 1/3.
+For comparison the representation of the value promoted from single to
+double precision is also printed.
+
+     #include <stdio.h>
+     #include <gsl/gsl_ieee_utils.h>
+     
+     int
+     main (void)
+     {
+       float f = 1.0/3.0;
+       double d = 1.0/3.0;
+     
+       double fd = f; /* promote from float to double */
+     
+       printf(" f="); gsl_ieee_printf_float(&f);
+       printf("\n");
+     
+       printf("fd="); gsl_ieee_printf_double(&fd);
+       printf("\n");
+     
+       printf(" d="); gsl_ieee_printf_double(&d);
+       printf("\n");
+     
+       return 0;
+     }
+
+The binary representation of 1/3 is 0.01010101... .  The output below
+shows that the IEEE format normalizes this fraction to give a leading
+digit of 1,
+
+      f= 1.01010101010101010101011*2^-2
+     fd= 1.0101010101010101010101100000000000000000000000000000*2^-2
+      d= 1.0101010101010101010101010101010101010101010101010101*2^-2
+
+The output also shows that a single-precision number is promoted to
+double-precision by adding zeros in the binary representation.
+
+
+File: gsl-ref.info,  Node: Setting up your IEEE environment,  Next: IEEE References and Further Reading,  Prev: Representation of floating point numbers,  Up: IEEE floating-point arithmetic
+
+Setting up your IEEE environment
+================================
+
+   The IEEE standard defines several "modes" for controlling the
+behavior of floating point operations.  These modes specify the
+important properties of computer arithmetic: the direction used for
+rounding (e.g.  whether numbers should be rounded up, down or to the
+nearest number), the rounding precision and how the program should
+handle arithmetic exceptions, such as division by zero.
+
+   Many of these features can now be controlled via standard functions
+such as `fpsetround', which should be used whenever they are available.
+Unfortunately in the past there has been no universal API for
+controlling their behavior - each system has had its own way of
+accessing them.  For example, the Linux kernel provides the function
+`__setfpucw' ("set-fpu-control-word") to set IEEE modes, while HP-UX
+and Solaris use the functions `fpsetround' and `fpsetmask'.  To help
+you write portable programs GSL allows you to specify modes in a
+platform-independent way using the environment variable
+`GSL_IEEE_MODE'.  The library then takes care of all the necessary
+machine-specific initializations for you when you call the function
+`gsl_ieee_env_setup'.
+
+ - Function: void gsl_ieee_env_setup ()
+     This function reads the environment variable `GSL_IEEE_MODE' and
+     attempts to set up the corresponding specified IEEE modes.  The
+     environment variable should be a list of keywords, separated by
+     commas, like this,
+
+          `GSL_IEEE_MODE' = "KEYWORD,KEYWORD,..."
+
+     where KEYWORD is one of the following mode-names,
+
+          `single-precision'
+
+          `double-precision'
+
+          `extended-precision'
+
+          `round-to-nearest'
+
+          `round-down'
+
+          `round-up'
+
+          `round-to-zero'
+
+          `mask-all'
+
+          `mask-invalid'
+
+          `mask-denormalized'
+
+          `mask-division-by-zero'
+
+          `mask-overflow'
+
+          `mask-underflow'
+
+          `trap-inexact'
+
+          `trap-common'
+
+     If `GSL_IEEE_MODE' is empty or undefined then the function returns
+     immediately and no attempt is made to change the system's IEEE
+     mode.  When the modes from `GSL_IEEE_MODE' are turned on the
+     function prints a short message showing the new settings to remind
+     you that the results of the program will be affected.
+
+     If the requested modes are not supported by the platform being
+     used then the function calls the error handler and returns an
+     error code of `GSL_EUNSUP'.
+
+     The following combination of modes is convenient for many purposes,
+
+          GSL_IEEE_MODE="double-precision,"\
+                          "mask-underflow,"\
+                            "mask-denormalized"
+
+     This choice ignores any errors relating to small numbers (either
+     denormalized, or underflowing to zero) but traps overflows,
+     division by zero and invalid operations.
+
+To demonstrate the effects of different rounding modes consider the
+following program which computes e, the base of natural logarithms, by
+summing a rapidly-decreasing series,
+
+     e = 1 + 1/2! + 1/3! + 1/4! + ...
+       = 2.71828182846...
+
+     #include <math.h>
+     #include <stdio.h>
+     #include <gsl/gsl_ieee_utils.h>
+     
+     int
+     main (void)
+     {
+       double x = 1, oldsum = 0, sum = 0;
+       int i = 0;
+     
+       gsl_ieee_env_setup (); /* read GSL_IEEE_MODE */
+     
+       do
+         {
+           i++;
+     
+           oldsum = sum;
+           sum += x;
+           x = x / i;
+     
+           printf("i=%2d sum=%.18f error=%g\n",
+                  i, sum, sum - M_E);
+     
+           if (i > 30)
+              break;
+         }
+       while (sum != oldsum);
+     
+       return 0;
+     }
+
+Here are the results of running the program in `round-to-nearest' mode.
+This is the IEEE default so it isn't really necessary to specify it
+here,
+
+     GSL_IEEE_MODE="round-to-nearest" ./a.out
+     i= 1 sum=1.000000000000000000 error=-1.71828
+     i= 2 sum=2.000000000000000000 error=-0.718282
+     ....
+     i=18 sum=2.718281828459045535 error=4.44089e-16
+     i=19 sum=2.718281828459045535 error=4.44089e-16
+
+After nineteen terms the sum converges to within 4 \times 10^-16 of the
+correct value.  If we now change the rounding mode to `round-down' the
+final result is less accurate,
+
+     GSL_IEEE_MODE="round-down" ./a.out
+     i= 1 sum=1.000000000000000000 error=-1.71828
+     ....
+     i=19 sum=2.718281828459041094 error=-3.9968e-15
+
+The result is about 4 \times 10^-15 below the correct value, an order
+of magnitude worse than the result obtained in the `round-to-nearest'
+mode.
+
+   If we change to rounding mode to `round-up' then the series no
+longer converges (the reason is that when we add each term to the sum
+the final result is always rounded up.  This is guaranteed to increase
+the sum by at least one tick on each iteration).  To avoid this problem
+we would need to use a safer converge criterion, such as `while
+(fabs(sum - oldsum) > epsilon)', with a suitably chosen value of
+epsilon.
+
+   Finally we can see the effect of computing the sum using
+single-precision rounding, in the default `round-to-nearest' mode.  In
+this case the program thinks it is still using double precision numbers
+but the CPU rounds the result of each floating point operation to
+single-precision accuracy.  This simulates the effect of writing the
+program using single-precision `float' variables instead of `double'
+variables.  The iteration stops after about half the number of
+iterations and the final result is much less accurate,
+
+     GSL_IEEE_MODE="single-precision" ./a.out
+     ....
+     i=12 sum=2.718281984329223633 error=1.5587e-07
+
+with an error of O(10^-7), which corresponds to single precision
+accuracy (about 1 part in 10^7).  Continuing the iterations further
+does not decrease the error because all the subsequent results are
+rounded to the same value.
+
+
+File: gsl-ref.info,  Node: IEEE References and Further Reading,  Prev: Setting up your IEEE environment,  Up: IEEE floating-point arithmetic
+
+References and Further Reading
+==============================
+
+The reference for the IEEE standard is,
+
+     ANSI/IEEE Std 754-1985, IEEE Standard for Binary Floating-Point
+     Arithmetic
+
+A more pedagogical introduction to the standard can be found in the
+paper "What Every Computer Scientist Should Know About Floating-Point
+Arithmetic".
+
+     David Goldberg: What Every Computer Scientist Should Know About
+     Floating-Point Arithmetic. `ACM Computing Surveys', Vol. 23, No. 1
+     (March 1991), pages 5-48
+
+     Corrigendum: `ACM Computing Surveys', Vol. 23, No. 3 (September
+     1991), page 413.
+
+     See also the sections by B. A. Wichmann and Charles B. Dunham in
+     Surveyor's Forum: "What Every Computer Scientist Should Know About
+     Floating-Point Arithmetic". `ACM Computing Surveys', Vol. 24, No.
+     3 (September 1992), page 319
+
+
+File: gsl-ref.info,  Node: Debugging Numerical Programs,  Next: Contributors to GSL,  Prev: IEEE floating-point arithmetic,  Up: Top
+
+Debugging Numerical Programs
+****************************
+
+This chapter describes some tips and tricks for debugging numerical
+programs which use GSL.
+
+* Menu:
+
+* Using gdb::
+* Examining floating point registers::
+* Handling floating point exceptions::
+* GCC warning options for numerical programs::
+* Debugging References::
+
+
+File: gsl-ref.info,  Node: Using gdb,  Next: Examining floating point registers,  Up: Debugging Numerical Programs
+
+Using gdb
+=========
+
+   Any errors reported by the library are passed to the function
+`gsl_error'.  By running your programs under gdb and setting a
+breakpoint in this function you can automatically catch any library
+errors.  You can add a breakpoint for every session by putting
+
+     break gsl_error
+
+into your `.gdbinit' file in the directory where your program is
+started.
+
+   If the breakpoint catches an error then you can use a backtrace
+(`bt') to see the call-tree, and the arguments which possibly caused
+the error.  By moving up into the calling function you can investigate
+the values of variable at that point.  Here is an example from the
+program `fft/test_trap', which contains the following line,
+
+     status = gsl_fft_complex_wavetable_alloc (0, &complex_wavetable);
+
+The function `gsl_fft_complex_wavetable_alloc' takes the length of an
+FFT as its first argument.  When this line is executed an error will be
+generated because the length of an FFT is not allowed to be zero.
+
+   To debug this problem we start `gdb', using the file `.gdbinit' to
+define a breakpoint in `gsl_error',
+
+     bash$ gdb test_trap
+     
+     GDB is free software and you are welcome to distribute copies
+     of it under certain conditions; type "show copying" to see
+     the conditions.  There is absolutely no warranty for GDB;
+     type "show warranty" for details.  GDB 4.16 (i586-debian-linux),
+     Copyright 1996 Free Software Foundation, Inc.
+     
+     Breakpoint 1 at 0x8050b1e: file error.c, line 14.
+
+When we run the program this breakpoint catches the error and shows the
+reason for it.
+
+     (gdb) run
+     Starting program: test_trap
+     
+     Breakpoint 1, gsl_error (reason=0x8052b0d
+         "length n must be positive integer",
+         file=0x8052b04 "c_init.c", line=108, gsl_errno=1)
+         at error.c:14
+     14        if (gsl_error_handler)
+
+The first argument of `gsl_error' is always a string describing the
+error.  Now we can look at the backtrace to see what caused the problem,
+
+     (gdb) bt
+     #0  gsl_error (reason=0x8052b0d
+         "length n must be positive integer",
+         file=0x8052b04 "c_init.c", line=108, gsl_errno=1)
+         at error.c:14
+     #1  0x8049376 in gsl_fft_complex_wavetable_alloc (n=0,
+         wavetable=0xbffff778) at c_init.c:108
+     #2  0x8048a00 in main (argc=1, argv=0xbffff9bc)
+         at test_trap.c:94
+     #3  0x80488be in ___crt_dummy__ ()
+
+We can see that the error was generated in the function
+`gsl_fft_complex_wavetable_alloc' when it was called with an argument
+of N=0.  The original call came from line 94 in the file `test_trap.c'.
+
+   By moving up to the level of the original call we can find the line
+that caused the error,
+
+     (gdb) up
+     #1  0x8049376 in gsl_fft_complex_wavetable_alloc (n=0,
+         wavetable=0xbffff778) at c_init.c:108
+     108   GSL_ERROR ("length n must be positive integer", GSL_EDOM);
+     (gdb) up
+     #2  0x8048a00 in main (argc=1, argv=0xbffff9bc)
+         at test_trap.c:94
+     94    status = gsl_fft_complex_wavetable_alloc (0,
+             &complex_wavetable);
+
+Thus we have found the line that caused the problem.  From this point we
+could also print out the values of other variables such as
+`complex_wavetable'.
+
+
+File: gsl-ref.info,  Node: Examining floating point registers,  Next: Handling floating point exceptions,  Prev: Using gdb,  Up: Debugging Numerical Programs
+
+Examining floating point registers
+==================================
+
+   The contents of floating point registers can be examined using the
+command `info float' (not available on all platforms).
+
+     (gdb) info float
+          st0: 0xc4018b895aa17a945000  Valid Normal -7.838871e+308
+          st1: 0x3ff9ea3f50e4d7275000  Valid Normal 0.0285946
+          st2: 0x3fe790c64ce27dad4800  Valid Normal 6.7415931e-08
+          st3: 0x3ffaa3ef0df6607d7800  Spec  Normal 0.0400229
+          st4: 0x3c028000000000000000  Valid Normal 4.4501477e-308
+          st5: 0x3ffef5412c22219d9000  Zero  Normal 0.9580257
+          st6: 0x3fff8000000000000000  Valid Normal 1
+          st7: 0xc4028b65a1f6d243c800  Valid Normal -1.566206e+309
+        fctrl: 0x0272 53 bit; NEAR; mask DENOR UNDER LOS;
+        fstat: 0xb9ba flags 0001; top 7; excep DENOR OVERF UNDER LOS
+         ftag: 0x3fff
+          fip: 0x08048b5c
+          fcs: 0x051a0023
+       fopoff: 0x08086820
+       fopsel: 0x002b
+
+Individual registers can be examined using the variables $REG, where
+REG is the register name.
+
+     (gdb) p $st1
+     $1 = 0.02859464454261210347719
+
+
+File: gsl-ref.info,  Node: Handling floating point exceptions,  Next: GCC warning options for numerical programs,  Prev: Examining floating point registers,  Up: Debugging Numerical Programs
+
+Handling floating point exceptions
+==================================
+
+   It is possible to stop the program whenever a `SIGFPE' floating
+point exception occurs.  This can be useful for finding the cause of an
+unexpected infinity or `NaN'.  The current handler settings can be
+shown with the command `info signal SIGFPE'.
+
+     (gdb) info signal SIGFPE
+     Signal  Stop  Print  Pass to program Description
+     SIGFPE  Yes   Yes    Yes             Arithmetic exception
+
+Unless the program uses a signal handler the default setting should be
+changed so that SIGFPE is not passed to the program, as this would cause
+it to exit.  The command `handle SIGFPE stop nopass' prevents this.
+
+     (gdb) handle SIGFPE stop nopass
+     Signal  Stop  Print  Pass to program Description
+     SIGFPE  Yes   Yes    No              Arithmetic exception
+
+Depending on the platform it may be necessary to instruct the kernel to
+generate signals for floating point exceptions.  For programs using GSL
+this can be achieved using the `GSL_IEEE_MODE' environment variable in
+conjunction with the function `gsl_ieee_env_setup()' as described in
+*note IEEE floating-point arithmetic::.
+
+     (gdb) set env GSL_IEEE_MODE=double-precision
+
+
+File: gsl-ref.info,  Node: GCC warning options for numerical programs,  Next: Debugging References,  Prev: Handling floating point exceptions,  Up: Debugging Numerical Programs
+
+GCC warning options for numerical programs
+==========================================
+
+   Writing reliable numerical programs in C requires great care.  The
+following GCC warning options are recommended when compiling numerical
+programs:
+
+     gcc -ansi -pedantic -Werror -Wall -W
+       -Wmissing-prototypes -Wstrict-prototypes
+       -Wtraditional -Wconversion -Wshadow
+       -Wpointer-arith -Wcast-qual -Wcast-align
+       -Wwrite-strings -Wnested-externs
+       -fshort-enums -fno-common -Dinline= -g -O4
+
+For details of each option consult the manual `Using and Porting GCC'.
+The following table gives a brief explanation of what types of errors
+these options catch.
+
+`-ansi -pedantic'
+     Use ANSI C, and reject any non-ANSI extensions.  These flags help
+     in writing portable programs that will compile on other systems.
+
+`-Werror'
+     Consider warnings to be errors, so that compilation stops.  This
+     prevents warnings from scrolling off the top of the screen and
+     being lost.  You won't be able to compile the program until it is
+     completely warning-free.
+
+`-Wall'
+     This turns on a set of warnings for common programming problems.
+     You need `-Wall', but it is not enough on its own.
+
+`-O4'
+     Turn on optimization.  The warnings for uninitialized variables in
+     `-Wall' rely on the optimizer to analyze the code.  If there is no
+     optimization then the warnings aren't generated.
+
+`-W'
+     This turns on some extra warnings not included in `-Wall', such as
+     missing return values and comparisons between signed and unsigned
+     integers.
+
+`-Wmissing-prototypes -Wstrict-prototypes'
+     Warn if there are any missing or inconsistent prototypes.  Without
+     prototypes it is harder to detect problems with incorrect
+     arguments.
+
+`-Wtraditional'
+     This warns about certain constructs that behave differently in
+     traditional and ANSI C. Whether the traditional or ANSI
+     interpretation is used might be unpredictable on other compilers.
+
+`-Wconversion'
+     The main use of this option is to warn about conversions from
+     signed to unsigned integers.  For example, `unsigned int x = -1'.
+     If you need to perform such a conversion you can use an explicit
+     cast.
+
+`-Wshadow'
+     This warns whenever a local variable shadows another local
+     variable.  If two variables have the same name then it is a
+     potential source of confusion.
+
+`-Wpointer-arith -Wcast-qual -Wcast-align'
+     These options warn if you try to do pointer arithmetic for types
+     which don't have a size, such as `void', if you remove a `const'
+     cast from a pointer, or if you cast a pointer to a type which has a
+     different size, causing an invalid alignment.
+
+`-Wwrite-strings'
+     This option gives string constants a `const' qualifier so that it
+     will be a compile-time error to attempt to overwrite them.
+
+`-fshort-enums'
+     This option makes the type of `enum' as short as possible.
+     Normally this makes an `enum' different from an `int'.
+     Consequently any attempts to assign a pointer-to-int to a
+     pointer-to-enum will generate a cast-alignment warning.
+
+`-fno-common'
+     This option prevents global variables being simultaneously defined
+     in different object files (you get an error at link time).  Such a
+     variable should be defined in one file and referred to in other
+     files with an `extern' declaration.
+
+`-Wnested-externs'
+     This warns if an `extern' declaration is encountered within an
+     function.
+
+`-Dinline='
+     The `inline' keyword is not part of ANSI C. Thus if you want to use
+     `-ansi' with a program which uses inline functions you can use this
+     preprocessor definition to remove the `inline' keywords.
+
+`-g'
+     It always makes sense to put debugging symbols in the executable
+     so that you can debug it using `gdb'.  The only effect of
+     debugging symbols is to increase the size of the file, and you can
+     use the `strip' command to remove them later if necessary.
+
+
+File: gsl-ref.info,  Node: Debugging References,  Prev: GCC warning options for numerical programs,  Up: Debugging Numerical Programs
+
+References and Further Reading
+==============================
+
+The following books are essential reading for anyone writing and
+debugging numerical programs with GCC and GDB.
+
+     R.M. Stallman, `Using and Porting GNU CC', Free Software
+     Foundation, ISBN 1882114388
+
+     R.M. Stallman, R.H. Pesch, `Debugging with GDB: The GNU
+     Source-Level Debugger', Free Software Foundation, ISBN 1882114779
+
+
+File: gsl-ref.info,  Node: Contributors to GSL,  Next: Autoconf Macros,  Prev: Debugging Numerical Programs,  Up: Top
+
+Contributors to GSL
+*******************
+
+   (See the AUTHORS file in the distribution for up-to-date
+information.)
+
+*Mark Galassi*
+     Conceived GSL (with James Theiler) and wrote the design document.
+     Wrote the simulated annealing package and the relevant chapter in
+     the manual.
+
+*James Theiler*
+     Conceived GSL (with Mark Galassi).  Wrote the random number
+     generators and the relevant chapter in this manual.
+
+*Jim Davies*
+     Wrote the statistical routines and the relevant chapter in this
+     manual.
+
+*Brian Gough*
+     FFTs, numerical integration, random number generators and
+     distributions, root finding, minimization and fitting, polynomial
+     solvers, complex numbers, physical constants, permutations, vector
+     and matrix functions, histograms, statistics, ieee-utils, revised
+     CBLAS Level 2 & 3, matrix decompositions and eigensystems.
+
+*Reid Priedhorsky*
+     Wrote and documented the initial version of the root finding
+     routines while at Los Alamos National Laboratory, Mathematical
+     Modeling and Analysis Group.
+
+*Gerard Jungman*
+     Series acceleration, ODEs, BLAS, Linear Algebra, Eigensystems,
+     Hankel Transforms.
+
+*Mike Booth*
+     Wrote the Monte Carlo library.
+
+*Jorma Olavi Ta"htinen*
+     Wrote the initial complex arithmetic functions.
+
+*Thomas Walter*
+     Wrote the initial heapsort routines and cholesky decomposition.
+
+*Fabrice Rossi*
+     Multidimensional minimization.
+
+
+File: gsl-ref.info,  Node: Autoconf Macros,  Next: GSL CBLAS Library,  Prev: Contributors to GSL,  Up: Top
+
+Autoconf Macros
+***************
+
+The following autoconf test will check for extern inline,
+
+     dnl Check for "extern inline", using a modified version
+     dnl of the test for AC_C_INLINE from acspecific.mt
+     dnl
+     AC_CACHE_CHECK([for extern inline], ac_cv_c_extern_inline,
+     [ac_cv_c_extern_inline=no
+     AC_TRY_COMPILE([extern $ac_cv_c_inline double foo(double x);
+     extern $ac_cv_c_inline double foo(double x) { return x+1.0; };
+     double foo (double x) { return x + 1.0; };],
+     [  foo(1.0)  ],
+     [ac_cv_c_extern_inline="yes"])
+     ])
+     
+     if test "$ac_cv_c_extern_inline" != no ; then
+       AC_DEFINE(HAVE_INLINE,1)
+       AC_SUBST(HAVE_INLINE)
+     fi
+
+
+File: gsl-ref.info,  Node: GSL CBLAS Library,  Next: GNU General Public License,  Prev: Autoconf Macros,  Up: Top
+
+GSL CBLAS Library
+*****************
+
+   The prototypes for the low-level CBLAS functions are declared in the
+file `gsl_cblas.h'.  For the definition of the functions consult the
+documentation available from Netlib (*note BLAS References and Further
+Reading::).
+
+* Menu:
+
+* Level 1 CBLAS Functions::
+* Level 2 CBLAS Functions::
+* Level 3 CBLAS Functions::
+* GSL CBLAS Examples::
+
+
+File: gsl-ref.info,  Node: Level 1 CBLAS Functions,  Next: Level 2 CBLAS Functions,  Up: GSL CBLAS Library
+
+Level 1
+=======
+
+ - Function: float cblas_sdsdot (const int N, const float ALPHA, const
+          float *X, const int INCX, const float *Y, const int INCY)
+
+ - Function: double cblas_dsdot (const int N, const float *X, const int
+          INCX, const float *Y, const int INCY)
+
+ - Function: float cblas_sdot (const int N, const float *X, const int
+          INCX, const float *Y, const int INCY)
+
+ - Function: double cblas_ddot (const int N, const double *X, const int
+          INCX, const double *Y, const int INCY)
+
+ - Function: void cblas_cdotu_sub (const int N, const void *X, const
+          int INCX, const void *Y, const int INCY, void *DOTU)
+
+ - Function: void cblas_cdotc_sub (const int N, const void *X, const
+          int INCX, const void *Y, const int INCY, void *DOTC)
+
+ - Function: void cblas_zdotu_sub (const int N, const void *X, const
+          int INCX, const void *Y, const int INCY, void *DOTU)
+
+ - Function: void cblas_zdotc_sub (const int N, const void *X, const
+          int INCX, const void *Y, const int INCY, void *DOTC)
+
+ - Function: float cblas_snrm2 (const int N, const float *X, const int
+          INCX)
+
+ - Function: float cblas_sasum (const int N, const float *X, const int
+          INCX)
+
+ - Function: double cblas_dnrm2 (const int N, const double *X, const
+          int INCX)
+
+ - Function: double cblas_dasum (const int N, const double *X, const
+          int INCX)
+
+ - Function: float cblas_scnrm2 (const int N, const void *X, const int
+          INCX)
+
+ - Function: float cblas_scasum (const int N, const void *X, const int
+          INCX)
+
+ - Function: double cblas_dznrm2 (const int N, const void *X, const int
+          INCX)
+
+ - Function: double cblas_dzasum (const int N, const void *X, const int
+          INCX)
+
+ - Function: CBLAS_INDEX cblas_isamax (const int N, const float *X,
+          const int INCX)
+
+ - Function: CBLAS_INDEX cblas_idamax (const int N, const double *X,
+          const int INCX)
+
+ - Function: CBLAS_INDEX cblas_icamax (const int N, const void *X,
+          const int INCX)
+
+ - Function: CBLAS_INDEX cblas_izamax (const int N, const void *X,
+          const int INCX)
+
+ - Function: void cblas_sswap (const int N, float *X, const int INCX,
+          float *Y, const int INCY)
+
+ - Function: void cblas_scopy (const int N, const float *X, const int
+          INCX, float *Y, const int INCY)
+
+ - Function: void cblas_saxpy (const int N, const float ALPHA, const
+          float *X, const int INCX, float *Y, const int INCY)
+
+ - Function: void cblas_dswap (const int N, double *X, const int INCX,
+          double *Y, const int INCY)
+
+ - Function: void cblas_dcopy (const int N, const double *X, const int
+          INCX, double *Y, const int INCY)
+
+ - Function: void cblas_daxpy (const int N, const double ALPHA, const
+          double *X, const int INCX, double *Y, const int INCY)
+
+ - Function: void cblas_cswap (const int N, void *X, const int INCX,
+          void *Y, const int INCY)
+
+ - Function: void cblas_ccopy (const int N, const void *X, const int
+          INCX, void *Y, const int INCY)
+
+ - Function: void cblas_caxpy (const int N, const void *ALPHA, const
+          void *X, const int INCX, void *Y, const int INCY)
+
+ - Function: void cblas_zswap (const int N, void *X, const int INCX,
+          void *Y, const int INCY)
+
+ - Function: void cblas_zcopy (const int N, const void *X, const int
+          INCX, void *Y, const int INCY)
+
+ - Function: void cblas_zaxpy (const int N, const void *ALPHA, const
+          void *X, const int INCX, void *Y, const int INCY)
+
+ - Function: void cblas_srotg (float *A, float *B, float *C, float *S)
+
+ - Function: void cblas_srotmg (float *D1, float *D2, float *B1, const
+          float B2, float *P)
+
+ - Function: void cblas_srot (const int N, float *X, const int INCX,
+          float *Y, const int INCY, const float C, const float S)
+
+ - Function: void cblas_srotm (const int N, float *X, const int INCX,
+          float *Y, const int INCY, const float *P)
+
+ - Function: void cblas_drotg (double *A, double *B, double *C, double
+          *S)
+
+ - Function: void cblas_drotmg (double *D1, double *D2, double *B1,
+          const double B2, double *P)
+
+ - Function: void cblas_drot (const int N, double *X, const int INCX,
+          double *Y, const int INCY, const double C, const double S)
+
+ - Function: void cblas_drotm (const int N, double *X, const int INCX,
+          double *Y, const int INCY, const double *P)
+
+ - Function: void cblas_sscal (const int N, const float ALPHA, float
+          *X, const int INCX)
+
+ - Function: void cblas_dscal (const int N, const double ALPHA, double
+          *X, const int INCX)
+
+ - Function: void cblas_cscal (const int N, const void *ALPHA, void *X,
+          const int INCX)
+
+ - Function: void cblas_zscal (const int N, const void *ALPHA, void *X,
+          const int INCX)
+
+ - Function: void cblas_csscal (const int N, const float ALPHA, void
+          *X, const int INCX)
+
+ - Function: void cblas_zdscal (const int N, const double ALPHA, void
+          *X, const int INCX)
+

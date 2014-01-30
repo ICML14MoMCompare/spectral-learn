@@ -1,0 +1,331 @@
+@cindex permutations
+
+This chapter describes functions for creating and manipulating
+permutations. A permutation @math{p} is represented by an array of
+@math{n} integers in the range 0 .. @math{n-1}, where each value
+@math{p_i} occurs once and only once.  The application of a permutation
+@math{p} to a vector @math{v} yields a new vector @math{v'} where
+@c{$v'_i = v_{p_i}$}
+@math{v'_i = v_@{p_i@}}. 
+For example, the array @math{(0,1,3,2)} represents a permutation
+which exchanges the last two elements of a four element vector.
+The corresponding identity permutation is @math{(0,1,2,3)}.   
+
+Note that the permutations produced by the linear algebra routines
+correspond to the exchange of matrix columns, and so should be considered
+as applying to row-vectors in the form @math{v' = v P} rather than
+column-vectors, when permuting the elements of a vector.
+
+The functions described in this chapter are defined in the header file
+@file{gsl_permutation.h}.
+
+@menu
+* The Permutation struct::      
+* Permutation allocation::      
+* Accessing permutation elements::  
+* Permutation properties::      
+* Permutation functions::       
+* Applying Permutations::       
+* Reading and writing permutations::  
+* Permutation Examples::        
+* Permutation References and Further Reading::  
+@end menu
+
+@node The Permutation struct
+@section The Permutation struct
+
+A permutation is stored by a structure containing two components, the size
+of the permutation and a pointer to the permutation array.  The elements
+of the permutation array are all of type @code{size_t}.  The
+@code{gsl_permutation} structure looks like this,
+
+@example
+typedef struct
+@{
+  size_t size;
+  size_t * data;
+@} gsl_permutation;
+@end example
+@comment
+@noindent
+
+@node Permutation allocation
+@section Permutation allocation
+
+@deftypefun {gsl_permutation *} gsl_permutation_alloc (size_t @var{n})
+This function allocates memory for a new permutation of size @var{n}.
+The permutation is not initialized and its elements are undefined.  Use
+the function @code{gsl_permutation_calloc} if you want to create a
+permutation which is initialized to the identity. A null pointer is
+returned if insufficient memory is available to create the permutation.
+@end deftypefun
+
+@deftypefun {gsl_permutation *} gsl_permutation_calloc (size_t @var{n})
+This function allocates memory for a new permutation of size @var{n} and
+initializes it to the identity. A null pointer is returned if
+insufficient memory is available to create the permutation.
+@end deftypefun
+
+@deftypefun void gsl_permutation_init (gsl_permutation * @var{p})
+@cindex identity permutation
+This function initializes the permutation @var{p} to the identity, i.e.
+@math{(0,1,2,...,n-1)}.
+@end deftypefun
+
+@deftypefun void gsl_permutation_free (gsl_permutation * @var{p})
+This function frees all the memory used by the permutation @var{p}.
+@end deftypefun
+
+@node Accessing permutation elements
+@section Accessing permutation elements
+
+The following functions can be used to access and manipulate
+permutations.
+
+@deftypefun size_t gsl_permutation_get (const gsl_permutation * @var{p}, const size_t @var{i})
+This function returns the value of the @var{i}-th element of the
+permutation @var{p}.  If @var{i} lies outside the allowed range of 0 to
+@var{n}-1 then the error handler is invoked and 0 is returned.
+@end deftypefun
+
+@deftypefun int gsl_permutation_swap (gsl_permutation * @var{p}, const size_t @var{i}, const size_t @var{j})
+@cindex exchanging permutation elements
+@cindex swapping permutation elements
+This function exchanges the @var{i}-th and @var{j}-th elements of the
+permutation @var{p}.
+@end deftypefun
+
+@node Permutation properties
+@section Permutation properties
+
+@deftypefun size_t gsl_permutation_size (const gsl_permutation * @var{p})
+This function returns the size of the permutation @var{p}.
+@end deftypefun
+
+@deftypefun {size_t *} gsl_permutation_data (const gsl_permutation * @var{p})
+This function returns a pointer to the array of elements in the
+permutation @var{p}.
+@end deftypefun
+
+@deftypefun int gsl_permutation_valid (gsl_permutation * @var{p})
+@cindex checking permutation for validity
+@cindex testing permutation for validity
+This function checks that the permutation @var{p} is valid.  The @var{n}
+elements should contain each of the numbers 0 .. @var{n}-1 once and only
+once.
+@end deftypefun
+
+@node Permutation functions
+@section Permutation functions
+
+@deftypefun void gsl_permutation_reverse (gsl_permutation * @var{p})
+@cindex reversing a permutation
+This function reverses the elements of the permutation @var{p}.
+@end deftypefun
+
+@deftypefun int gsl_permutation_inverse (gsl_permutation * @var{inv}, const gsl_permutation * @var{p})
+@cindex inverting a permutation
+This function computes the inverse of the permutation @var{p}, storing
+the result in @var{inv}.
+@end deftypefun
+
+@deftypefun int gsl_permutation_next (gsl_permutation * @var{p})
+@cindex iterating through permutations
+This function advances the permutation @var{p} to the next permutation
+in lexicographic order and returns @code{GSL_SUCCESS}.  If no further
+permutations are available it returns @code{GSL_FAILURE} and leaves
+@var{p} unmodified.  Starting with the identity permutation and
+repeatedly applying this function will iterate through all possible
+permutations of a given order.
+@end deftypefun
+
+@deftypefun int gsl_permutation_prev (gsl_permutation * @var{p})
+This function steps backwards from the permutation @var{p} to the
+previous permutation in lexicographic order, returning
+@code{GSL_SUCCESS}.  If no previous permutation is available it returns
+@code{GSL_FAILURE} and leaves @var{p} unmodified.
+@end deftypefun
+
+@node Applying Permutations
+@section Applying Permutations
+
+@deftypefun int gsl_permute (const size_t * @var{p}, double * @var{data}, size_t @var{stride}, size_t @var{n})
+This function applies the permutation @var{p} to the array @var{data} of
+size @var{n} with stride @var{stride}.
+@end deftypefun
+
+@deftypefun int gsl_permute_inverse (const size_t * @var{p}, double * @var{data}, size_t @var{stride}, size_t @var{n})
+This function applies the inverse of the permutation @var{p} to the
+array @var{data} of size @var{n} with stride @var{stride}.
+@end deftypefun
+
+@deftypefun int gsl_permute_vector (const gsl_permutation * @var{p}, gsl_vector * @var{v})
+This function applies the permutation @var{p} to the elements of the
+vector @var{v}, considered as a row-vector acted on by a permutation
+matrix from the right, @math{v' = v P}.  The @math{j}-th column of the
+permutation matrix @math{P} is given by the @math{p_j}-th column of the
+identity matrix. The permutation @var{p} and the vector @var{v} must
+have the same length.
+@end deftypefun
+
+@deftypefun int gsl_permute_vector_inverse (const gsl_permutation * @var{p}, gsl_vector * @var{v})
+This function applies the inverse of the permutation @var{p} to the
+elements of the vector @var{v}, considered as a row-vector acted on by
+an inverse permutation matrix from the right, @math{v' = v P^T}.  Note
+that for permutation matrices the inverse is the same as the transpose.
+The @math{j}-th column of the permutation matrix @math{P} is given by
+the @math{p_j}-th column of the identity matrix. The permutation @var{p}
+and the vector @var{v} must have the same length.
+@end deftypefun
+
+@node Reading and writing permutations
+@section Reading and writing permutations
+
+The library provides functions for reading and writing permutations to a
+file as binary data or formatted text.
+
+@deftypefun int gsl_permutation_fwrite (FILE * @var{stream}, const gsl_permutation * @var{p})
+This function writes the elements of the permutation @var{p} to the
+stream @var{stream} in binary format.  The function returns
+@code{GSL_EFAILED} if there was a problem writing to the file.  Since the
+data is written in the native binary format it may not be portable
+between different architectures.
+@end deftypefun
+
+@deftypefun int gsl_permutation_fread (FILE * @var{stream}, gsl_permutation * @var{p})
+This function reads into the permutation @var{p} from the open stream
+@var{stream} in binary format.  The permutation @var{p} must be
+preallocated with the correct length since the function uses the size of
+@var{p} to determine how many bytes to read.  The function returns
+@code{GSL_EFAILED} if there was a problem reading from the file.  The
+data is assumed to have been written in the native binary format on the
+same architecture.
+@end deftypefun
+
+@deftypefun int gsl_permutation_fprintf (FILE * @var{stream}, const gsl_permutation * @var{p}, const char *@var{format})
+This function writes the elements of the permutation @var{p}
+line-by-line to the stream @var{stream} using the format specifier
+@var{format}, which should be suitable for a type of @var{size_t}.  On a
+GNU system the type modifier @code{Z} represents @code{size_t}, so
+@code{"%Zu\n"} is a suitable format.  The function returns
+@code{GSL_EFAILED} if there was a problem writing to the file.
+@end deftypefun
+
+@deftypefun int gsl_permutation_fscanf (FILE * @var{stream}, gsl_permutation * @var{p})
+This function reads formatted data from the stream @var{stream} into the
+permutation @var{p}.  The permutation @var{p} must be preallocated with
+the correct length since the function uses the size of @var{p} to
+determine how many numbers to read.  The function returns
+@code{GSL_EFAILED} if there was a problem reading from the file.
+@end deftypefun
+
+@node Permutation Examples
+@section Examples
+The example program below creates a random permutation by shuffling and
+finds its inverse.
+
+@example
+#include <stdio.h>
+#include <gsl/gsl_rng.h>
+#include <gsl/gsl_randist.h>
+#include <gsl/gsl_permutation.h>
+
+int
+main (void) 
+@{
+  const size_t N = 10;
+  const gsl_rng_type * T;
+  gsl_rng * r;
+
+  gsl_permutation * p = gsl_permutation_alloc (N);
+  gsl_permutation * q = gsl_permutation_alloc (N);
+
+  gsl_rng_env_setup();
+  T = gsl_rng_default;
+  r = gsl_rng_alloc (T);
+
+  printf("initial permutation:");  
+  gsl_permutation_init (p);
+  gsl_permutation_fprintf (stdout, p, " %u");
+  printf("\n");
+
+  printf(" random permutation:");  
+  gsl_ran_shuffle (r, p->data, N, sizeof(size_t));
+  gsl_permutation_fprintf (stdout, p, " %u");
+  printf("\n");
+
+  printf("inverse permutation:");  
+  gsl_permutation_invert (q, p);
+  gsl_permutation_fprintf (stdout, q, " %u");
+  printf("\n");
+
+  return 0;
+@}
+@end example
+@noindent
+Here is the output from the program,
+
+@example
+bash$ ./a.out 
+initial permutation: 0 1 2 3 4 5 6 7 8 9
+ random permutation: 1 3 5 2 7 6 0 4 9 8
+inverse permutation: 6 0 3 1 7 2 5 4 9 8
+@end example
+@noindent
+The random permutation @code{p[i]} and its inverse @code{q[i]} are
+related through the identity @code{p[q[i]] = i}, which can be verified
+from the output.
+
+The next example program steps forwards through all possible 3-rd order
+permutations, starting from the identity,
+
+@example
+#include <stdio.h>
+#include <gsl/gsl_permutation.h>
+
+int
+main (void) 
+@{
+  gsl_permutation * p = gsl_permutation_alloc (3);
+
+  gsl_permutation_init (p);
+
+  do 
+   @{
+      gsl_permutation_fprintf (stdout, p, " %u");
+      printf("\n");
+   @}
+  while (gsl_permutation_next(p) == GSL_SUCCESS);
+
+  return 0;
+@}
+@end example
+@noindent
+Here is the output from the program,
+
+@example
+bash$ ./a.out 
+ 0 1 2
+ 0 2 1
+ 1 0 2
+ 1 2 0
+ 2 0 1
+ 2 1 0
+@end example
+@noindent
+All 6 permutations are generated in lexicographic order.  To reverse the
+sequence, begin with the final permutation (which is the reverse of the
+identity) and replace @code{gsl_permutation_next} with
+@code{gsl_permutation_prev}.
+
+@node Permutation References and Further Reading
+@section References and Further Reading
+@noindent
+The subject of permutations is covered extensively in Knuth's
+@cite{Sorting and Searching},
+
+@itemize @asis
+@item
+Donald E. Knuth, @cite{The Art of Computer Programming: Sorting and
+Searching} (Vol 3, 3rd Ed, 1997), Addison-Wesley, ISBN 0201896850.
+@end itemize

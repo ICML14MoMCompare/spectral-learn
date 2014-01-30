@@ -1,0 +1,478 @@
+dnl Process this file with autoconf to produce a configure script.
+AC_INIT(gsl_math.h)
+
+AM_INIT_AUTOMAKE(gsl,"1.0")
+AM_CONFIG_HEADER(config.h)
+
+dnl things required by automake
+AC_ARG_PROGRAM
+AC_PROG_MAKE_SET
+
+dnl Check for which system.
+AC_CANONICAL_HOST
+
+dnl Checks for programs.
+AC_PROG_CC
+AC_PROG_CPP
+AC_PROG_INSTALL
+AC_PROG_LN_S
+AC_CHECK_TOOL(RANLIB, ranlib, :)
+AC_CHECK_TOOL(AR, ar, :)
+#AC_PROG_RANLIB
+AM_PROG_LIBTOOL
+
+dnl Early versions of gcc-2.95.2 for PPC have a bug when passing lots
+dnl of arguments; test for this...
+dnl (This test assumes cross-compiling is okay: ...? )
+
+case "$host" in
+    powerpc-*-linux*) 
+         if test x"$ac_cv_prog_gcc" = xyes; then
+          AC_MSG_CHECKING([for PPC gcc bug])
+
+          AC_TRY_RUN([
+           #include<stdlib.h>
+           int test4bug (void* v1,void* v2,void* v3,void* v4,
+                         void* v5,void* v6,void* v7,
+                         double* ptr_1,void* v8,double d,double* ptr_2)
+           { return ((ptr_1 == ptr_2) ? 0 : 1); }
+           int main ()
+           { double ptr[] = {0}; exit (test4bug (0,0,0,0,0,0,0,ptr,0,0.0,ptr)); }
+          ],
+          ac_ppc_gcc_bug=no,
+          ac_ppc_gcc_bug=yes,
+          ac_ppc_gcc_bug=no)
+
+          if test $ac_ppc_gcc_bug = yes; then
+           AC_MSG_RESULT(yes)
+           AC_MSG_ERROR([known compiler bug -- gsl will not compile correctly; please update your compiler -- See MACHINES file for more info])
+          else
+           AC_MSG_RESULT(no)
+          fi
+         fi
+        ;;
+esac
+
+dnl Check compiler features
+AC_TYPE_SIZE_T
+AC_C_CONST
+AC_C_INLINE
+
+dnl Check for "extern inline", using a modified version of the test
+dnl for AC_C_INLINE from acspecific.mt
+dnl
+AC_CACHE_CHECK([for extern inline], ac_cv_c_extern_inline,
+[ac_cv_c_extern_inline=no
+AC_TRY_COMPILE([extern $ac_cv_c_inline double foo(double x);
+extern $ac_cv_c_inline double foo(double x) { return x + 1.0 ; } ;
+double foo (double x) { return x + 1.0 ; };], 
+[  foo(1.0)  ],
+[ac_cv_c_extern_inline="yes"])
+])
+
+if test "$ac_cv_c_extern_inline" != no ; then
+  AC_DEFINE(HAVE_INLINE,1)
+  AC_SUBST(HAVE_INLINE)
+fi
+
+dnl This does not seem to be used anywhere so I have commented it out. BJG
+dnl
+dnl dnl some magic to get a full path to the working directory
+dnl full_top_srcdir=`cd $srcdir; pwd`
+dnl full_top_builddir=`pwd`
+dnl echo srcdir is $srcdir
+dnl echo full_top_srcdir is $full_top_srcdir
+dnl echo full_top_builddir is $full_top_builddir
+dnl AC_SUBST(full_top_srcdir)
+dnl AC_SUBST(full_top_builddir)
+
+dnl Checks for header files.
+
+dnl Checks for typedefs, structures, and compiler characteristics.
+
+dnl Checks for library functions.
+
+dnl Use alternate libm if specified by user
+
+if test "x$LIBS" != "x" ; then
+  AC_MSG_CHECKING([for math library])
+  AC_MSG_RESULT([$LIBS])
+else
+  AC_CHECK_LIB(m, main)
+fi
+
+AC_CHECK_FUNCS(hypot)
+AC_CHECK_FUNCS(expm1)
+AC_CHECK_FUNCS(acosh)
+AC_CHECK_FUNCS(asinh)
+AC_CHECK_FUNCS(atanh)
+
+AC_CHECK_FUNCS(isinf, ,[
+    AC_MSG_CHECKING([for isinf with <math.h>])
+    AC_TRY_LINK([#include <math.h>], [float f = 0.0; isinf(f)],[
+        AC_MSG_RESULT(yes)
+        AC_DEFINE(HAVE_ISINF)],
+        AC_MSG_RESULT(no))])
+
+AC_CHECK_FUNCS(finite, ,[
+    AC_MSG_CHECKING([for finite with <math.h>])
+    AC_TRY_LINK([#include <math.h>], [float f = 0.0; finite(f)],[
+        AC_MSG_RESULT(yes)
+        AC_DEFINE(HAVE_FINITE)
+        ac_cv_func_finite=yes],
+        AC_MSG_RESULT(no))])
+
+if test "x${ac_cv_func_finite}" != "xyes" ; then 
+  AC_CHECK_FUNCS(isfinite, ,[
+      AC_MSG_CHECKING([for isfinite with <math.h>])
+      AC_TRY_LINK([#include <math.h>], [float f = 0.0; isfinite(f)],[
+          AC_MSG_RESULT(yes)
+          AC_DEFINE(HAVE_ISFINITE)],
+          AC_MSG_RESULT(no))])
+fi
+
+AC_CHECK_FUNCS(isnan, ,[
+    AC_MSG_CHECKING([for isnan with <math.h>])
+    AC_TRY_LINK([#include <math.h>], [float f = 0.0; isnan(f)],[
+        AC_MSG_RESULT(yes)
+        AC_DEFINE(HAVE_ISNAN)],
+        AC_MSG_RESULT(no))])
+
+dnl OpenBSD has a broken implementation of log1p.
+case "$host" in
+    *-*-*openbsd*)
+       AC_MSG_RESULT([avoiding OpenBSD system log1p - using gsl version])
+       ;;
+    *)
+       AC_CHECK_FUNCS(log1p)
+       ;;
+esac
+
+
+dnl AC_FUNC_ALLOCA
+AC_FUNC_VPRINTF
+
+dnl strcasecmp, strerror, xmalloc, xrealloc, probably others should be added.
+dnl removed strerror from this list, it's hardcoded in the err/ directory
+dnl Any functions which appear in this list of functions should be provided
+dnl in the utils/ directory
+dnl xmalloc is not used, removed (bjg)
+AC_REPLACE_FUNCS(memcpy memmove strdup strtol strtoul)
+
+
+AC_CHECK_FUNCS(clock)
+
+AC_CACHE_CHECK(for CLOCKS_PER_SEC,
+ac_cv_decl_clocks_per_sec,
+AC_EGREP_CPP(yes,
+[
+#include <time.h>
+#ifdef CLOCKS_PER_SEC
+yes
+#endif
+], 
+ac_cv_decl_clocks_per_sec=yes,
+ac_cv_decl_clocks_per_sec=no)
+)
+
+if test "$ac_cv_decl_clocks_per_sec" = yes ; then
+  AC_DEFINE(HAVE_CLOCKS_PER_SEC)
+else
+AC_MSG_CHECKING(whether CLOCKS_PER_SEC is known for $host_os)
+  case "$host" in
+    *-*-sunos4.*) 
+        AC_DEFINE(HAVE_GUESSED_CLOCKS_PER_SEC,1000000)
+	AC_MSG_RESULT([yes (microseconds)]) 
+        ;;
+    *-*-nextstep*) 
+	dnl 
+	dnl Nextstep3 defines CLK_TCK 64 in /usr/include/ansi/time.h,
+	dnl which seems to agree with observation of clock().
+	dnl 
+        AC_DEFINE(HAVE_GUESSED_CLOCKS_PER_SEC,64)
+	AC_MSG_RESULT([yes (15.625 milliseconds)]) 
+        ;;
+    *) 
+        AC_DEFINE(HAVE_GUESSED_CLOCKS_PER_SEC,1000000)
+        AC_MSG_RESULT([no, assuming microseconds]) 
+        ;;
+  esac
+fi
+
+AC_CACHE_CHECK(for EXIT_SUCCESS and EXIT_FAILURE,
+ac_cv_decl_exit_success_and_failure,
+AC_EGREP_CPP(yes,
+[
+#include <stdlib.h>
+#ifdef EXIT_SUCCESS
+yes
+#endif
+], 
+ac_cv_decl_exit_success_and_failure=yes,
+ac_cv_decl_exit_success_and_failure=no)
+)
+
+if test "$ac_cv_decl_exit_success_and_failure" = yes ; then
+  AC_DEFINE(HAVE_EXIT_SUCCESS_AND_FAILURE)
+fi ;
+
+
+AC_MSG_CHECKING(for IEEE arithmetic interface type)
+case "$host" in
+    sparc-*-linux*) 
+	AC_DEFINE(HAVE_SPARCLINUX_IEEE_INTERFACE)
+	AC_MSG_RESULT([sparclinux]) 
+        ;;
+    m68k-*-linux*) 
+	AC_DEFINE(HAVE_M68KLINUX_IEEE_INTERFACE)
+	AC_DEFINE(HAVE_EXTENDED_PRECISION_REGISTERS)
+	AC_MSG_RESULT([m68klinux]) 
+        ;;
+    powerpc-*-linux*) 
+	AC_DEFINE(HAVE_PPCLINUX_IEEE_INTERFACE)
+	AC_MSG_RESULT([ppclinux]) 
+        ;;
+    *86-*-linux*) 
+	AC_DEFINE(HAVE_X86LINUX_IEEE_INTERFACE)
+	AC_MSG_RESULT([x86linux]) 
+        ;;
+    *-*-sunos4*) 
+        AC_DEFINE(HAVE_SUNOS4_IEEE_INTERFACE)
+	AC_MSG_RESULT([sunos4]) 
+        ;;
+    *-*-solaris*) 
+        AC_DEFINE(HAVE_SOLARIS_IEEE_INTERFACE)
+        AC_MSG_RESULT([solaris]) 
+        ;;
+    *-*-hpux11*) 
+        AC_DEFINE(HAVE_HPUX11_IEEE_INTERFACE)
+        AC_MSG_RESULT([hpux11]) 
+        ;;
+    *-*-hpux*) 
+        AC_DEFINE(HAVE_HPUX_IEEE_INTERFACE)
+        AC_MSG_RESULT([hpux]) 
+        ;;
+    *-*-osf*) 
+        AC_DEFINE(HAVE_TRU64_IEEE_INTERFACE)
+        AC_MSG_RESULT([osf/tru64]) 
+	need_fp_rnd_rn=yes
+        ;;
+    *-*-aix*) 
+        AC_DEFINE(HAVE_AIX_IEEE_INTERFACE)
+        AC_MSG_RESULT([aix]) 
+        ;;
+    *-*-irix*) 
+        AC_DEFINE(HAVE_IRIX_IEEE_INTERFACE)
+        AC_MSG_RESULT([irix]) 
+        ;;
+    *-*-*darwin*) 
+        AC_DEFINE(HAVE_DARWIN_IEEE_INTERFACE)
+        AC_MSG_RESULT([darwin]) 
+        ;;
+    *-*-*netbsd*) 
+        AC_DEFINE(HAVE_NETBSD_IEEE_INTERFACE)
+        AC_MSG_RESULT([netbsd]) 
+        ;;
+    *-*-*openbsd*)  
+        AC_DEFINE(HAVE_OPENBSD_IEEE_INTERFACE)
+        AC_MSG_RESULT([openbsd]) 
+        ;;
+    *-*-*bsd*) 
+        AC_DEFINE(HAVE_FREEBSD_IEEE_INTERFACE)
+        AC_MSG_RESULT([freebsd]) 
+        ;;
+    *-*-os2*)
+        AC_DEFINE(HAVE_OS2EMX_IEEE_INTERFACE)
+        AC_MSG_RESULT([os2emx]) 
+        ;;
+    *)
+        AC_MSG_RESULT([unknown])
+        ;;
+esac
+
+AC_MSG_CHECKING(for cpu with extended floating point registers)
+case "$host" in
+    *sparc*-*-*)
+	AC_MSG_RESULT([sparc, no]) 
+        ;;     
+    *powerpc*-*-*)
+	AC_MSG_RESULT([powerpc, no]) 
+        ;;      
+    *hppa*-*-*)
+	AC_MSG_RESULT([hppa, no]) 
+        ;;      
+    *alpha*-*-*)
+	AC_MSG_RESULT([alpha, no]) 
+        ;;      
+    *68k*-*-*)
+	AC_MSG_RESULT([68k, yes]) 
+	AC_DEFINE(HAVE_EXTENDED_PRECISION_REGISTERS)
+        ;;      
+    *86*-*-*)
+	AC_MSG_RESULT([x86, yes]) 
+	AC_DEFINE(HAVE_EXTENDED_PRECISION_REGISTERS)
+        ;;      
+    *) 
+	AC_DEFINE(HAVE_EXTENDED_PRECISION_REGISTERS)
+	AC_MSG_RESULT([unknown, assuming yes]) 
+        ;;
+esac
+
+
+# On some systems requiring symbols FP_RND_{RN,RM,RP,RZ} for setting the 
+# floating-point rounding strategy, the symbols are defined in 
+# /usr/include/float.h.  However, some versions of GCC do not have
+# the symbols in the `fixed' version of float.h, so simply including
+# <float.h> does not find the symbols.  We detect this and work around
+# it in ieee-utils/fp-foo.c
+#
+if test "x$need_fp_rnd_rn" = xyes; then
+    AC_MSG_CHECKING(for FP_RND_RN in <float.h>)
+    AC_TRY_COMPILE( [#include <float.h>],
+		    [unsigned int rnd = FP_RND_RN;],
+	            result=yes, result=no )
+    AC_MSG_RESULT($result)
+    if test "$result" = no; then
+	AC_MSG_CHECKING(for FP_RND_RN in /usr/include/float.h)
+        AC_TRY_COMPILE( [#include "/usr/include/float.h"],
+	                [unsigned int rnd = FP_RND_RN;],
+                        AC_MSG_RESULT(yes),
+		        AC_MSG_ERROR([cannot find required FP_RND_* macros]) )
+        AC_DEFINE(FIND_FP_RND_IN_USR_INCLUDE_FLOAT_H)
+    fi
+fi        
+
+
+AC_MSG_CHECKING([for rounding-control compiler flags])
+save_cflags="$CFLAGS"
+case "$host" in
+    alpha*-*-*) 
+		if test X"$GCC" = Xyes ; then
+			ieee_alpha_options='-mfp-rounding-mode=d'
+			CFLAGS="$ieee_alpha_options $CFLAGS"
+		else
+			# This assumes Compaq's C compiler, which is probably
+			# a pretty bad assumption.  Improvements welcome.
+			ieee_alpha_options='-fprm d'
+			CFLAGS="$ieee_alpha_options $CFLAGS"
+		fi
+		#
+		# now see if the option we think should be accepted actually is
+		#
+		AC_TRY_COMPILE( ,[ int foo; ],[
+			AC_MSG_RESULT([$ieee_alpha_options])
+			dnl
+			dnl after the check is over, CFLAGS will become save_cflags,
+			dnl which has just acquired the additional flag.
+			dnl
+			save_cflags="$CFLAGS"
+			],[
+			AC_MSG_RESULT([unknown!])
+			AC_MSG_WARN(
+			[I don't know how to enable dynamic rounding with your compiler]
+			)
+			]
+		)	dnl here ends our AC_TRY_COMPILE
+        ;;
+    *)
+        AC_MSG_RESULT([none])
+        ;;
+esac
+# Now restore our (possibly augmented) CFLAGS.
+CFLAGS="$save_cflags"
+GSL_CFLAGS="-I$includedir"
+GSL_LIBS="-L$libdir -lgsl"
+
+AC_SUBST(GSL_CFLAGS)
+AC_SUBST(GSL_LIBS)
+
+
+AC_MSG_CHECKING([for IEEE-conformance compiler flags])
+save_cflags="$CFLAGS"
+case "$host" in
+    alpha*-*-*) 
+		if test X"$GCC" = Xyes ; then
+			ieee_alpha_options='-mieee'
+			CFLAGS="$ieee_alpha_options $CFLAGS"
+		else
+			# This assumes Compaq's C compiler, which is probably
+			# a pretty bad assumption.  Improvements welcome.
+			ieee_alpha_options='-ieee'
+			CFLAGS="$ieee_alpha_options $CFLAGS"
+		fi
+		#
+		# now see if the option we think should be accepted actually is
+		#
+		AC_TRY_COMPILE( ,[ int foo; ],[
+			AC_MSG_RESULT([$ieee_alpha_options])
+			dnl
+			dnl after the check is over, CFLAGS will become save_cflags,
+			dnl which has just acquired the additional flag.
+			dnl
+			save_cflags="$CFLAGS"
+			],[
+			AC_MSG_RESULT([unknown!])
+			AC_MSG_WARN(
+			[I don't know how to enable full IEEE mode with your compiler]
+			)
+			]
+		)	dnl here ends our AC_TRY_COMPILE
+        ;;
+    *)
+        AC_MSG_RESULT([none])
+        ;;
+esac
+# Now restore our (possibly augmented) CFLAGS.
+CFLAGS="$save_cflags"
+
+
+dnl AC_ARG_ENABLE(exceptions,[exceptions],AC_PROG_CXX)
+
+dnl
+dnl FIXME: on Solaris we will need a prototype for hypot, since it is 
+dnl missing from their math.h according to Jerry.
+dnl
+dnl extern double hypot(double, double);
+dnl
+
+AC_MSG_CHECKING([whether printf/scanf works with long double])
+AC_TRY_RUN([
+#include <stdlib.h>
+#include <stdio.h>
+int main (void) 
+{ 
+const char * s = "5678"; long double x = 1.234 ; 
+fprintf(stderr,"%Lg\n",x) ; 
+sscanf(s, "%Lg", &x);
+if (x == 5678) {exit (0);} else {exit(1); };
+}],
+ac_cv_func_printf_longdouble=yes, 
+ac_cv_func_printf_longdouble=no, 
+ac_cv_func_printf_longdouble=no) 
+
+if test $ac_cv_func_printf_longdouble = yes; then
+  AC_DEFINE(HAVE_PRINTF_LONGDOUBLE)
+  AC_MSG_RESULT(yes)
+else
+  AC_MSG_RESULT(no)
+fi
+
+dnl
+AC_OUTPUT(gsl-config gsl.pc gsl_version.h gsl.spec gsl/Makefile test/Makefile err/Makefile sys/Makefile utils/Makefile const/Makefile min/Makefile multimin/Makefile ieee-utils/Makefile fft/Makefile specfunc/Makefile dht/Makefile fit/Makefile multifit/Makefile statistics/Makefile sum/Makefile roots/Makefile multiroots/Makefile ntuple/Makefile poly/Makefile qrng/Makefile rng/Makefile randist/Makefile siman/Makefile integration/Makefile interpolation/Makefile doc/Makefile block/Makefile vector/Makefile matrix/Makefile histogram/Makefile monte/Makefile ode-initval/Makefile cblas/Makefile blas/Makefile linalg/Makefile eigen/Makefile permutation/Makefile sort/Makefile complex/Makefile diff/Makefile cheb/Makefile Makefile)
+
+dnl Warning for OS/2 Makefiles
+dnl
+case "$host" in
+        *-*-os2_emx) 
+        cat <<EOF
+*** WARNING: standard Makefiles do not work on OS/2
+*** 
+*** A compatibility script 'os2makefiles.pl' is available from Henry
+*** Sobotka.  You will need to download this script separately. See
+*** http://sources.redhat.com/gsl/ for a link to it.
+***
+*** Run os2makefiles.pl        to create OS/2 Makefiles
+***     os2makefiles.pl -help  for options
+EOF
+        ;;
+esac

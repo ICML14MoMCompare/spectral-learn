@@ -1,0 +1,4 @@
+Problem: 29
+Algorithm: WFA, tau= 0.001, basis size=201
+WER: 0.671405057609
+Runtime: 22.4764285714

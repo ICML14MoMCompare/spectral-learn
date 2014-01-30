@@ -1,0 +1,113 @@
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/SparseLU
+END
+SparseLU_pivotL.h
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/SparseLU/SparseLU_pivotL.h
+END
+SparseLU.h
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/SparseLU/SparseLU.h
+END
+SparseLU_kernel_bmod.h
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/SparseLU/SparseLU_kernel_bmod.h
+END
+SparseLU_gemm_kernel.h
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/SparseLU/SparseLU_gemm_kernel.h
+END
+SparseLU_column_dfs.h
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/SparseLU/SparseLU_column_dfs.h
+END
+SparseLU_panel_dfs.h
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/SparseLU/SparseLU_panel_dfs.h
+END
+SparseLU_copy_to_ucol.h
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/SparseLU/SparseLU_copy_to_ucol.h
+END
+SparseLU_column_bmod.h
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/SparseLU/SparseLU_column_bmod.h
+END
+SparseLU_panel_bmod.h
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/SparseLU/SparseLU_panel_bmod.h
+END
+SparseLU_heap_relax_snode.h
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/SparseLU/SparseLU_heap_relax_snode.h
+END
+SparseLU_Utils.h
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/SparseLU/SparseLU_Utils.h
+END
+SparseLU_SupernodalMatrix.h
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/SparseLU/SparseLU_SupernodalMatrix.h
+END
+SparseLUImpl.h
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/SparseLU/SparseLUImpl.h
+END
+SparseLU_relax_snode.h
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/SparseLU/SparseLU_relax_snode.h
+END
+SparseLU_pruneL.h
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/SparseLU/SparseLU_pruneL.h
+END
+SparseLU_Structs.h
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/SparseLU/SparseLU_Structs.h
+END
+SparseLU_Memory.h
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/SparseLU/SparseLU_Memory.h
+END
+CMakeLists.txt
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/SparseLU/CMakeLists.txt
+END

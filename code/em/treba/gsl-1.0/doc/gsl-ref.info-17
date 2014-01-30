@@ -1,0 +1,1423 @@
+This is gsl-ref.info, produced by makeinfo version 4.0 from
+gsl-ref.texi.
+
+INFO-DIR-SECTION Scientific software
+START-INFO-DIR-ENTRY
+* gsl-ref: (gsl-ref).                   GNU Scientific Library - Reference
+END-INFO-DIR-ENTRY
+
+   This file documents the GNU Scientific Library.
+
+   Copyright (C) 1996, 1997, 1998, 1999, 2000, 2001 The GSL Team.
+
+   Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.1 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.  A
+copy of the license is included in the section entitled "GNU Free
+Documentation License".
+
+
+File: gsl-ref.info,  Node: Multimin Examples,  Next: Multimin References and Further Reading,  Prev: Multimin Algorithms,  Up: Multidimensional Minimization
+
+Examples
+========
+
+   This example program finds the minimum of the paraboloid function
+defined earlier.  The location of the minimum is offset from the origin
+in x and y, and the function value at the minimum is non-zero. The main
+program is given below, it requires the example function given earlier
+in this chapter.
+
+     int
+     main (void)
+     {
+       size_t iter = 0;
+       int status;
+     
+       const gsl_multimin_fdfminimizer_type *T;
+       gsl_multimin_fdfminimizer *s;
+     
+       /* Position of the minimum (1,2). */
+       double par[2] = { 1.0, 2.0 };
+     
+       gsl_vector *x;
+       gsl_multimin_function_fdf my_func;
+     
+       my_func.f = &my_f;
+       my_func.df = &my_df;
+       my_func.fdf = &my_fdf;
+       my_func.n = 2;
+       my_func.params = &par;
+     
+       /* Starting point, x = (5,7) */
+     
+       x = gsl_vector_alloc (2);
+       gsl_vector_set (x, 0, 5.0);
+       gsl_vector_set (x, 1, 7.0);
+     
+       T = gsl_multimin_fdfminimizer_conjugate_fr;
+       s = gsl_multimin_fdfminimizer_alloc (T, 2);
+     
+       gsl_multimin_fdfminimizer_set (s, &my_func, x, 0.01, 1e-4);
+     
+       do
+         {
+           iter++;
+           status = gsl_multimin_fdfminimizer_iterate (s);
+     
+           if (status)
+             break;
+     
+           status = gsl_multimin_test_gradient (s->gradient, 1e-3);
+     
+           if (status == GSL_SUCCESS)
+             printf ("Minimum found at:\n");
+     
+           printf ("%5d %.5f %.5f %10.5f\n", iter,
+                   gsl_vector_get (s->x, 0),
+                   gsl_vector_get (s->x, 1),
+                   s->f);
+     
+         }
+       while (status == GSL_CONTINUE && iter < 100);
+     
+       gsl_multimin_fdfminimizer_free (s);
+       gsl_vector_free (x);
+     
+       return 0;
+     }
+
+The initial step-size is chosen as 0.01, a conservative estimate in this
+case, and the line minimization parameter is set at 0.0001.  The program
+terminates when the norm of the gradient has been reduced below 0.001.
+The output of the program is shown below,
+
+              x       y         f
+         1 4.99629 6.99072  687.84780
+         2 4.98886 6.97215  683.55456
+         3 4.97400 6.93501  675.01278
+         4 4.94429 6.86073  658.10798
+         5 4.88487 6.71217  625.01340
+         6 4.76602 6.41506  561.68440
+         7 4.52833 5.82083  446.46694
+         8 4.05295 4.63238  261.79422
+         9 3.10219 2.25548   75.49762
+        10 2.85185 1.62963   67.03704
+        11 2.19088 1.76182   45.31640
+        12 0.86892 2.02622   30.18555
+     Minimum found at:
+        13 1.00000 2.00000   30.00000
+
+Note that the algorithm gradually increases the step size as it
+successfully moves downhill, as can be seen by plotting the successive
+points.
+
+The conjugate gradient algorithm finds the minimum on its second
+direction because the function is purely quadratic. Additional
+iterations would be needed for a more complicated function.
+
+
+File: gsl-ref.info,  Node: Multimin References and Further Reading,  Prev: Multimin Examples,  Up: Multidimensional Minimization
+
+References and Further Reading
+==============================
+
+A brief description of multidimensional minimization algorithms and
+further references can be found in the following book,
+
+     C.W. Ueberhuber, `Numerical Computation (Volume 2)', Chapter 14,
+     Section 4.4 "Minimization Methods", p. 325--335, Springer (1997),
+     ISBN 3-540-62057-5.
+
+
+File: gsl-ref.info,  Node: Least-Squares Fitting,  Next: Nonlinear Least-Squares Fitting,  Prev: Multidimensional Minimization,  Up: Top
+
+Least-Squares Fitting
+*********************
+
+This chapter describes routines for performing least squares fits to
+experimental data using linear combinations of functions. The data may
+be weighted or unweighted.  For weighted data the functions compute the
+best fit parameters and their associated covariance matrix.  For
+unweighted data the covariance matrix is estimated from the scatter of
+the points, giving a variance-covariance matrix. The functions are
+divided into separate versions for simple one- or two-parameter
+regression and multiple-parameter fits.  The functions are declared in
+the header file `gsl_fit.h'
+
+* Menu:
+
+* Linear regression::
+* Linear fitting without a constant term::
+* Multi-parameter fitting::
+* Fitting Examples::
+* Fitting References and Further Reading::
+
+
+File: gsl-ref.info,  Node: Linear regression,  Next: Linear fitting without a constant term,  Up: Least-Squares Fitting
+
+Linear regression
+=================
+
+   The functions described in this section can be used to perform
+least-squares fits to a straight line model, Y = c_0 + c_1 X.  For
+weighted data the best-fit is found by minimizing the weighted sum of
+squared residuals, \chi^2,
+
+     \chi^2 = \sum_i w_i (y_i - (c_0 + c_1 x_i))^2
+
+for the parameters c_0, c_1.  For unweighted data the sum is computed
+with w_i = 1.
+
+ - Function: int gsl_fit_linear (const double * X, const size_t
+          XSTRIDE, const double * Y, const size_t YSTRIDE, size_t N,
+          double * C0, double * C1, double * COV00, double * COV01,
+          double * COV11, double * SUMSQ)
+     This function computes the best-fit linear regression coefficients
+     (C0,C1) of the model Y = c_0 + c_1 X for the datasets (X, Y), two
+     vectors of length N with strides XSTRIDE and YSTRIDE.  The
+     variance-covariance matrix for the parameters (C0, C1) is
+     estimated from the scatter of the points around the best-fit line
+     and returned via the parameters (COV00, COV01, COV11).  The sum of
+     squares of the residuals from the best-fit line is returned in
+     SUMSQ.
+
+ - Function: int gsl_fit_wlinear (const double * X, const size_t
+          XSTRIDE, const double * W, const size_t WSTRIDE, const double
+          * Y, const size_t YSTRIDE, size_t N, double * C0, double *
+          C1, double * COV00, double * COV01, double * COV11, double *
+          CHISQ)
+     This function computes the best-fit linear regression coefficients
+     (C0,C1) of the model Y = c_0 + c_1 X for the weighted datasets (X,
+     Y), two vectors of length N with strides XSTRIDE and YSTRIDE.  The
+     vector W, of length N and stride WSTRIDE, specifies the weight of
+     each datapoint. The weight is the reciprocal of the variance for
+     each datapoint in Y.
+
+     The covariance matrix for the parameters (C0, C1) is estimated
+     from weighted data and returned via the parameters (COV00, COV01,
+     COV11).  The weighted sum of squares of the residuals from the
+     best-fit line, \chi^2, is returned in CHISQ.
+
+ - Function: int gsl_fit_linear_est (double X, double C0, double C1,
+          double C00, double C01, double C11, double *Y, double *Y_ERR)
+     This function uses the best-fit linear regression coefficients
+     C0,C1 and their estimated covariance COV00,COV01,COV11 to compute
+     the fitted function Y and its standard deviation Y_ERR for the
+     model Y = c_0 + c_1 X at the point X.
+
+
+File: gsl-ref.info,  Node: Linear fitting without a constant term,  Next: Multi-parameter fitting,  Prev: Linear regression,  Up: Least-Squares Fitting
+
+Linear fitting without a constant term
+======================================
+
+   The functions described in this section can be used to perform
+least-squares fits to a straight line model without a constant term, Y
+= c_1 X.  For weighted data the best-fit is found by minimizing the
+weighted sum of squared residuals, \chi^2,
+
+     \chi^2 = \sum_i w_i (y_i - c_1 x_i)^2
+
+for the parameter c_1.  For unweighted data the sum is computed with
+w_i = 1.
+
+ - Function: int gsl_fit_mul (const double * X, const size_t XSTRIDE,
+          const double * Y, const size_t YSTRIDE, size_t N, double *
+          C1, double * COV11, double * SUMSQ)
+     This function computes the best-fit linear regression coefficient
+     C1 of the model Y = c_1 X for the datasets (X, Y), two vectors of
+     length N with strides XSTRIDE and YSTRIDE.  The variance of the
+     parameter C1 is estimated from the scatter of the points around
+     the best-fit line and returned via the parameter COV11.  The sum
+     of squares of the residuals from the best-fit line is returned in
+     SUMSQ.
+
+ - Function: int gsl_fit_wmul (const double * X, const size_t XSTRIDE,
+          const double * W, const size_t WSTRIDE, const double * Y,
+          const size_t YSTRIDE, size_t N, double * C1, double * COV11,
+          double * SUMSQ)
+     This function computes the best-fit linear regression coefficient
+     C1 of the model Y = c_1 X for the weighted datasets (X, Y), two
+     vectors of length N with strides XSTRIDE and YSTRIDE.  The vector
+     W, of length N and stride WSTRIDE, specifies the weight of each
+     datapoint. The weight is the reciprocal of the variance for each
+     datapoint in Y.
+
+     The variance of the parameter C1 is estimated from the weighted
+     data and returned via the parameters COV11.  The weighted sum of
+     squares of the residuals from the best-fit line, \chi^2, is
+     returned in CHISQ.
+
+ - Function: int gsl_fit_mul_est (double X, double C1, double C11,
+          double *Y, double *Y_ERR)
+     This function uses the best-fit linear regression coefficient C1
+     and its estimated covariance COV11 to compute the fitted function
+     Y and its standard deviation Y_ERR for the model Y = c_1 X at the
+     point X.
+
+
+File: gsl-ref.info,  Node: Multi-parameter fitting,  Next: Fitting Examples,  Prev: Linear fitting without a constant term,  Up: Least-Squares Fitting
+
+Multi-parameter fitting
+=======================
+
+   The functions described in this section perform least-squares fits
+to a general linear model, y = X c where y is a vector of n
+observations, X is an n by p matrix of predictor variables, and c are
+the p unknown best-fit parameters, which are to be estimated.
+
+   The best-fit is found by minimizing the weighted sums of squared
+residuals, \chi^2,
+
+     \chi^2 = (y - X c)^T W (y - X c)
+
+with respect to the parameters c. The weights are specified by the
+diagonal elements of the n by n matrix W.  For unweighted data W is
+replaced by the identity matrix.
+
+   This formulation can be used for fits to any number of functions
+and/or variables by preparing the n-by-p matrix X appropriately.  For
+example, to fit to a p-th order polynomial in X, use the following
+matrix,
+
+     X_{ij} = x_i^j
+
+where the index i runs over the observations and the index j runs from
+0 to p-1.
+
+   To fit to a set of p sinusoidal functions with fixed frequencies
+\omega_1, \omega_2, ..., \omega_p, use,
+
+     X_{ij} = sin(\omega_j x_i)
+
+To fit to p independent variables x_1, x_2, ..., x_p, use,
+
+     X_{ij} = x_j(i)
+
+where x_j(i) is the i-th value of the predictor variable x_j.
+
+   The functions described in this section are declared in the header
+file `gsl_multifit.h'.
+
+   The solution of the general linear least-squares system requires an
+additional working space for intermediate results, such as the singular
+value decomposition of the matrix X.
+
+ - Function: gsl_multifit_linear_workspace * gsl_multifit_linear_alloc
+          (size_t N, size_t P)
+     This function allocates a workspace for fitting a model to N
+     observations using P parameters.
+
+ - Function: void gsl_multifit_linear_free
+          (gsl_multifit_linear_workspace * WORK)
+     This function frees the memory associated with the workspace W.
+
+ - Function: int gsl_multifit_linear (const gsl_matrix * X, const
+          gsl_vector * Y, gsl_vector * C, gsl_matrix * COV, double *
+          CHISQ, gsl_multifit_linear_workspace * WORK)
+     This function computes the best-fit parameters C of the model y =
+     X c for the observations Y and the matrix of predictor variables
+     X.  The variance-covariance matrix of the model parameters COV is
+     estimated from the scatter of the observations about the best-fit.
+     The sum of squares of the residuals from the best-fit, \chi^2, is
+     returned in CHISQ.
+
+     The best-fit is found by singular value decomposition of the matrix
+     X using the preallocated workspace provided in WORK. The modified
+     Golub-Reinsch SVD algorithm is used, with column scaling to
+     improve the accuracy of the singular values. Any components which
+     have zero singular value (to machine precision) are discarded from
+     the fit.
+
+ - Function: int gsl_multifit_wlinear (const gsl_matrix * X, const
+          gsl_vector * W, const gsl_vector * Y, gsl_vector * C,
+          gsl_matrix * COV, double * CHISQ,
+          gsl_multifit_linear_workspace * WORK)
+     This function computes the best-fit parameters C of the model y =
+     X c for the observations Y and the matrix of predictor variables
+     X.  The covariance matrix of the model parameters COV is estimated
+     from the weighted data.  The weighted sum of squares of the
+     residuals from the best-fit, \chi^2, is returned in CHISQ.
+
+     The best-fit is found by singular value decomposition of the matrix
+     X using the preallocated workspace provided in WORK. Any
+     components which have zero singular value (to machine precision)
+     are discarded from the fit.
+
+
+File: gsl-ref.info,  Node: Fitting Examples,  Next: Fitting References and Further Reading,  Prev: Multi-parameter fitting,  Up: Least-Squares Fitting
+
+Examples
+========
+
+   The following program computes a least squares straight-line fit to a
+simple (fictitious) dataset, and outputs the best-fit line and its
+associated one standard-deviation error bars.
+
+     #include <stdio.h>
+     #include <gsl/gsl_fit.h>
+     
+     int
+     main (void)
+     {
+       int i, n = 4;
+       double x[4] = { 1970, 1980, 1990, 2000 };
+       double y[4] = {   12,   11,   14,   13 };
+       double w[4] = {  0.1,  0.2,  0.3,  0.4 };
+     
+       double c0, c1, cov00, cov01, cov11, chisq;
+     
+       gsl_fit_wlinear (x, 1, w, 1, y, 1, n,
+                        &c0, &c1, &cov00, &cov01, &cov11,
+                        &chisq);
+     
+       printf("# best fit: Y = %g + %g X\n", c0, c1);
+       printf("# covariance matrix:\n");
+       printf("# [ %g, %g\n#   %g, %g]\n",
+              cov00, cov01, cov01, cov11);
+       printf("# chisq = %g\n", chisq);
+     
+       for (i = 0; i < n; i++)
+         printf("data: %g %g %g\n",
+                       x[i], y[i], 1/sqrt(w[i]));
+     
+       printf("\n");
+     
+       for (i = -30; i < 130; i++)
+         {
+           double xf = x[0] + (i/100.0) * (x[n-1] - x[0]);
+           double yf, yf_err;
+     
+           gsl_fit_linear_est (xf,
+                               c0, c1,
+                               cov00, cov01, cov11,
+                               &yf, &yf_err);
+     
+           printf("fit: %g %g\n", xf, yf);
+           printf("hi : %g %g\n", xf, yf + yf_err);
+           printf("lo : %g %g\n", xf, yf - yf_err);
+         }
+       return 0;
+     }
+
+The following commands extract the data from the output of the program
+and display it using the GNU plotutils `graph' utility,
+
+     $ ./demo > tmp
+     $ more tmp
+     # best fit: Y = -106.6 + 0.06 X
+     # covariance matrix:
+     # [ 39602, -19.9
+     #   -19.9, 0.01]
+     # chisq = 0.8
+     
+     $ for n in data fit hi lo ;
+        do
+          grep "^$n" tmp | cut -d: -f2 > $n ;
+        done
+     $ graph -T X -X x -Y y -y 0 20 -m 0 -S 2 -Ie data
+          -S 0 -I a -m 1 fit -m 2 hi -m 2 lo
+
+   The next program performs a quadratic fit y = c_0 + c_1 x + c_2 x^2
+to a weighted dataset using the generalised linear fitting function
+`gsl_multifit_wlinear'.  The model matrix X for a quadratic fit is
+given by,
+
+     X = [ 1   , x_0  , x_0^2 ;
+           1   , x_1  , x_1^2 ;
+           1   , x_2  , x_2^2 ;
+           ... , ...  , ...   ]
+
+where the column of ones corresponds to the constant term c_0.  The two
+remaining columns corresponds to the terms c_1 x and and c_2 x^2.
+
+   The program reads N lines of data in the format (X, Y, ERR) where
+ERR is the error (standard deviation) in the value Y.
+
+     #include <stdio.h>
+     #include <gsl/gsl_multifit.h>
+     
+     int
+     main (int argc, char **argv)
+     {
+       int i, n;
+       double xi, yi, ei, chisq;
+       gsl_matrix *X, *cov;
+       gsl_vector *y, *w, *c;
+     
+       if (argc != 2)
+         {
+           fprintf(stderr,"usage: fit n < data\n");
+           exit (-1);
+         }
+     
+       n = atoi(argv[1]);
+     
+       X = gsl_matrix_alloc (n, 3);
+       y = gsl_vector_alloc (n);
+       w = gsl_vector_alloc (n);
+     
+       c = gsl_vector_alloc (3);
+       cov = gsl_matrix_alloc (3, 3);
+     
+       for (i = 0; i < n; i++)
+         {
+           int count = fscanf(stdin, "%lg %lg %lg",
+                              &xi, &yi, &ei);
+     
+           if (count != 3)
+             {
+               fprintf(stderr, "error reading file\n");
+               exit(-1);
+             }
+     
+           printf("%g %g +/- %g\n", xi, yi, ei);
+     
+           gsl_matrix_set (X, i, 0, 1.0);
+           gsl_matrix_set (X, i, 1, xi);
+           gsl_matrix_set (X, i, 2, xi*xi);
+     
+           gsl_vector_set (y, i, yi);
+           gsl_vector_set (w, i, 1.0/(ei*ei));
+         }
+     
+       {
+         gsl_multifit_linear_workspace * work
+           = gsl_multifit_linear_alloc (n, 3);
+         gsl_multifit_wlinear (X, w, y, c, cov,
+                               &chisq, work);
+         gsl_multifit_linear_free (work);
+       }
+     
+     #define C(i) (gsl_vector_get(c,(i)))
+     #define COV(i,j) (gsl_matrix_get(cov,(i),(j)))
+     
+       {
+         printf("# best fit: Y = %g + %g X + %g X^2\n",
+                C(0), C(1), C(2));
+     
+         printf("# covariance matrix:\n");
+         printf("[ %+.5e, %+.5e, %+.5e  \n",
+                   COV(0,0), COV(0,1), COV(0,2));
+         printf("  %+.5e, %+.5e, %+.5e  \n",
+                   COV(1,0), COV(1,1), COV(1,2));
+         printf("  %+.5e, %+.5e, %+.5e ]\n",
+                   COV(2,0), COV(2,1), COV(2,2));
+         printf("# chisq = %g\n", chisq);
+       }
+       return 0;
+     }
+
+A suitable set of data for fitting can be generated using the following
+program.  It outputs a set of points with gaussian errors from the curve
+y = e^x in the region 0 < x < 2.
+
+     #include <stdio.h>
+     #include <math.h>
+     #include <gsl/gsl_randist.h>
+     
+     int
+     main (void)
+     {
+       double x;
+       const gsl_rng_type * T;
+       gsl_rng * r;
+     
+       gsl_rng_env_setup();
+     
+       T = gsl_rng_default;
+       r = gsl_rng_alloc(T);
+     
+       for (x = 0.1; x < 2; x+= 0.1)
+         {
+           double y0 = exp(x);
+           double sigma = 0.1*y0;
+           double dy = gsl_ran_gaussian(r, sigma)
+     
+           printf("%g %g %g\n", x, y0 + dy, sigma);
+         }
+       return 0;
+     }
+
+The data can be prepared by running the resulting executable program,
+
+     $ ./generate > exp.dat
+     $ more exp.dat
+     0.1 0.97935 0.110517
+     0.2 1.3359 0.12214
+     0.3 1.52573 0.134986
+     0.4 1.60318 0.149182
+     0.5 1.81731 0.164872
+     0.6 1.92475 0.182212
+     ....
+
+To fit the data use the previous program, with the number of data points
+given as the first argument.  In this case there are 19 data points.
+
+     $ ./fit 19 < exp.dat
+     0.1 0.97935 +/- 0.110517
+     0.2 1.3359 +/- 0.12214
+     ...
+     # best fit: Y = 1.02318 + 0.956201 X + 0.876796 X^2
+     # covariance matrix:
+     [ +1.25612e-02, -3.64387e-02, +1.94389e-02
+       -3.64387e-02, +1.42339e-01, -8.48761e-02
+       +1.94389e-02, -8.48761e-02, +5.60243e-02 ]
+     # chisq = 23.0987
+
+The parameters of the quadratic fit match the coefficients of the
+expansion of e^x, taking into account the errors on the parameters and
+the O(x^3) difference between the exponential and quadratic functions
+for the larger values of x.  The errors on the parameters are given by
+the square-root of the corresponding diagonal elements of the
+covariance matrix.  The chi-squared per degree of freedom is 1.4,
+indicating a reasonable fit to the data.
+
+
+File: gsl-ref.info,  Node: Fitting References and Further Reading,  Prev: Fitting Examples,  Up: Least-Squares Fitting
+
+References and Further Reading
+==============================
+
+A summary of formulas and techniques for least squares fitting can be
+found in the "Statistics" chapter of the Annual Review of Particle
+Physics prepared by the Particle Data Group.
+
+     `Review of Particle Properties' R.M. Barnett et al., Physical
+     Review D54, 1 (1996) <http://pdg.lbl.gov/>
+
+The Review of Particle Physics is available online at the website given
+above.
+
+The tests used to prepare these routines are based on the NIST
+Statistical Reference Datasets. The datasets and their documentation are
+available from NIST at the following website,
+
+           <http://www.nist.gov/itl/div898/strd/index.html>.
+
+
+File: gsl-ref.info,  Node: Nonlinear Least-Squares Fitting,  Next: Physical Constants,  Prev: Least-Squares Fitting,  Up: Top
+
+Nonlinear Least-Squares Fitting
+*******************************
+
+   This chapter describes functions for multidimensional nonlinear
+least-squares fitting.  The library provides low level components for a
+variety of iterative solvers and convergence tests.  These can be
+combined by the user to achieve the desired solution, with full access
+to the intermediate steps of the iteration.  Each class of methods uses
+the same framework, so that you can switch between solvers at runtime
+without needing to recompile your program.  Each instance of a solver
+keeps track of its own state, allowing the solvers to be used in
+multi-threaded programs.
+
+   The header file `gsl_multifit_nlin.h' contains prototypes for the
+multidimensional nonlinear fitting functions and related declarations.
+
+* Menu:
+
+* Overview of Nonlinear Least-Squares Fitting::
+* Initializing the Nonlinear Least-Squares Solver::
+* Providing the Function to be Minimized::
+* Iteration of the Minimization Algorithm::
+* Search Stopping Parameters for Minimization Algorithms::
+* Minimization Algorithms using Derivatives::
+* Minimization Algorithms without Derivatives::
+* Computing the covariance matrix of best fit parameters::
+* Example programs for Nonlinear Least-Squares Fitting::
+* References and Further Reading for Nonlinear Least-Squares Fitting::
+
+
+File: gsl-ref.info,  Node: Overview of Nonlinear Least-Squares Fitting,  Next: Initializing the Nonlinear Least-Squares Solver,  Up: Nonlinear Least-Squares Fitting
+
+Overview
+========
+
+   The problem of multidimensional nonlinear least-squares fitting
+requires the minimization of the squared residuals of n functions, f_i,
+in p parameters, x_i,
+
+     \Phi(x) = (1/2) \sum_{i=1}^{n} f_i(x_1, ..., x_p)^2
+             = (1/2) || F(x) ||^2
+
+All algorithms proceed from an initial guess using the linearization,
+
+     \psi(p) = || F(x+p) || ~=~ || F(x) + J p ||
+
+where x is the initial point, p is the proposed step and J is the
+Jacobian matrix J_{ij} = d f_i / d x_j.  Additional strategies are used
+to enlarge the region of convergence.  These include requiring a
+decrease in the norm ||F|| on each step or using a trust region to
+avoid steps which fall outside the linear regime.
+
+
+File: gsl-ref.info,  Node: Initializing the Nonlinear Least-Squares Solver,  Next: Providing the Function to be Minimized,  Prev: Overview of Nonlinear Least-Squares Fitting,  Up: Nonlinear Least-Squares Fitting
+
+Initializing the Solver
+=======================
+
+ - Function: gsl_multifit_fsolver * gsl_multifit_fsolver_alloc (const
+          gsl_multifit_fsolver_type * T, size_t N, size_t P)
+     This function returns a pointer to a a newly allocated instance of
+     a solver of type T for N observations and P parameters.
+
+     If there is insufficient memory to create the solver then the
+     function returns a null pointer and the error handler is invoked
+     with an error code of `GSL_ENOMEM'.
+
+ - Function: gsl_multifit_fdfsolver * gsl_multifit_fdfsolver_alloc
+          (const gsl_multifit_fdfsolver_type * T, size_t N, size_t P)
+     This function returns a pointer to a a newly allocated instance of
+     a derivative solver of type T for N observations and P parameters.
+     For example, the following code creates an instance of a
+     Levenberg-Marquardt solver for 100 data points and 3 parameters,
+
+          const gsl_multifit_fdfsolver_type * T
+              = gsl_multifit_fdfsolver_lmder;
+          gsl_multifit_fdfsolver * s
+              = gsl_multifit_fdfsolver_alloc (T, 100, 3);
+
+     If there is insufficient memory to create the solver then the
+     function returns a null pointer and the error handler is invoked
+     with an error code of `GSL_ENOMEM'.
+
+ - Function: int gsl_multifit_fsolver_set (gsl_multifit_fsolver * S,
+          gsl_multifit_function * F, gsl_vector * X)
+     This function initializes, or reinitializes, an existing solver S
+     to use the function F and the initial guess X.
+
+ - Function: int gsl_multifit_fdfsolver_set (gsl_multifit_fdfsolver *
+          S, gsl_function_fdf * FDF, gsl_vector * X)
+     This function initializes, or reinitializes, an existing solver S
+     to use the function and derivative FDF and the initial guess X.
+
+ - Function: void gsl_multifit_fsolver_free (gsl_multifit_fsolver * S)
+ - Function: void gsl_multifit_fdfsolver_free (gsl_multifit_fdfsolver *
+          S)
+     These functions free all the memory associated with the solver S.
+
+ - Function: const char * gsl_multifit_fsolver_name (const
+          gsl_multifit_fdfsolver * S)
+ - Function: const char * gsl_multifit_fdfsolver_name (const
+          gsl_multifit_fdfsolver * S)
+     These functions return a pointer to the name of the solver.  For
+     example,
+
+          printf("s is a '%s' solver\n",
+                 gsl_multifit_fdfsolver_name (s));
+
+     would print something like `s is a 'lmder' solver'.
+
+
+File: gsl-ref.info,  Node: Providing the Function to be Minimized,  Next: Iteration of the Minimization Algorithm,  Prev: Initializing the Nonlinear Least-Squares Solver,  Up: Nonlinear Least-Squares Fitting
+
+Providing the Function to be Minimized
+======================================
+
+   You must provide n functions of p variables for the minimization
+algorithms to operate on.  In order to allow for general parameters the
+functions are defined by the following data types:
+
+ - Data Type: gsl_multifit_function
+     This data type defines a general system of functions with
+     parameters.
+
+    `int (* f) (const gsl_vector * X, void * PARAMS, gsl_vector * F)'
+          this function should store the vector result f(x,params) in F
+          for argument X and parameters PARAMS, returning an
+          appropriate error code if the function cannot be computed.
+
+    `size_t N'
+          the number of functions, i.e. the number of components of the
+          vector F
+
+    `size_t P'
+          the number of independent variables, i.e. the number of
+          components of the vectors X
+
+    `void * PARAMS'
+          a pointer to the parameters of the function
+
+ - Data Type: gsl_multifit_function_fdf
+     This data type defines a general system of functions with
+     parameters and the corresponding Jacobian matrix of derivatives,
+
+    `int (* f) (const gsl_vector * X, void * PARAMS, gsl_vector * F)'
+          this function should store the vector result f(x,params) in F
+          for argument X and parameters PARAMS, returning an
+          appropriate error code if the function cannot be computed.
+
+    `int (* df) (const gsl_vector * X, void * PARAMS, gsl_matrix * J)'
+          this function should store the N-by-P matrix result J_ij = d
+          f_i(x,params) / d x_j in J for argument X and parameters
+          PARAMS, returning an appropriate error code if the function
+          cannot be computed.
+
+    `int (* fdf) (const gsl_vector * X, void * PARAMS, gsl_vector * F, gsl_matrix * J)'
+          This function should set the values of the F and J as above,
+          for arguments X and parameters PARAMS.  This function provides
+          an optimization of the separate functions for f(x) and J(x) -
+          it is always faster to compute the function and its
+          derivative at the same time.
+
+    `size_t N'
+          the number of functions, i.e. the number of components of the
+          vector F
+
+    `size_t P'
+          the number of independent variables, i.e. the number of
+          components of the vectors X
+
+    `void * PARAMS'
+          a pointer to the parameters of the function
+
+
+File: gsl-ref.info,  Node: Iteration of the Minimization Algorithm,  Next: Search Stopping Parameters for Minimization Algorithms,  Prev: Providing the Function to be Minimized,  Up: Nonlinear Least-Squares Fitting
+
+Iteration
+=========
+
+   The following functions drive the iteration of each algorithm.  Each
+function performs one iteration to update the state of any solver of the
+corresponding type.  The same functions work for all solvers so that
+different methods can be substituted at runtime without modifications to
+the code.
+
+ - Function: int gsl_multifit_fsolver_iterate (gsl_multifit_fsolver * S)
+ - Function: int gsl_multifit_fdfsolver_iterate (gsl_multifit_fdfsolver
+          * S)
+     These functions perform a single iteration of the solver S.  If
+     the iteration encounters an unexpected problem then an error code
+     will be returned.  The solver maintains a current estimate of the
+     best-fit parameters at all times. This information can be accessed
+     with the following auxiliary functions,
+
+ - Function: gsl_vector * gsl_multifit_fsolver_position (const
+          gsl_multifit_fsolver * S)
+ - Function: gsl_vector * gsl_multifit_fdfsolver_position (const
+          gsl_multifit_fdfsolver * S)
+     These functions return the current position (i.e. best-fit
+     parameters) of the solver S.
+
+
+File: gsl-ref.info,  Node: Search Stopping Parameters for Minimization Algorithms,  Next: Minimization Algorithms using Derivatives,  Prev: Iteration of the Minimization Algorithm,  Up: Nonlinear Least-Squares Fitting
+
+Search Stopping Parameters
+==========================
+
+   A minimization procedure should stop when one of the following
+conditions is true:
+
+   * A minimum has been found to within the user-specified precision.
+
+   * A user-specified maximum number of iterations has been reached.
+
+   * An error has occurred.
+
+The handling of these conditions is under user control.  The functions
+below allow the user to test the current estimate of the best-fit
+parameters in several standard ways.
+
+ - Function: int gsl_multifit_test_delta (const gsl_vector * DX, const
+          gsl_vector * X, double EPSABS, double EPSREL)
+     This function tests for the convergence of the sequence by
+     comparing the last step DX with the absolute error EPSABS and
+     relative error EPSREL to the current position X.  The test returns
+     `GSL_SUCCESS' if the following condition is achieved,
+
+          |dx_i| < epsabs + epsrel |x_i|
+
+     for each component of X and returns `GSL_CONTINUE' otherwise.
+
+ - Function: int gsl_multifit_test_gradient (const gsl_vector * G,
+          double EPSABS)
+     This function tests the residual gradient G against the absolute
+     error bound EPSABS.  Mathematically, the gradient should be
+     exactly zero at the minimum. The test returns `GSL_SUCCESS' if the
+     following condition is achieved,
+
+          \sum_i |g_i| < epsabs
+
+     and returns `GSL_CONTINUE' otherwise.  This criterion is suitable
+     for situations where the the precise location of the minimum, x,
+     is unimportant provided a value can be found where the gradient is
+     small enough.
+
+ - Function: int gsl_multifit_gradient (const gsl_matrix * J, const
+          gsl_vector * F, gsl_vector * G)
+     This function computes the gradient G of \Phi(x) = (1/2)
+     ||F(x)||^2 from the Jacobian matrix J and the function values F,
+     using the formula g = J^T f.
+
+
+File: gsl-ref.info,  Node: Minimization Algorithms using Derivatives,  Next: Minimization Algorithms without Derivatives,  Prev: Search Stopping Parameters for Minimization Algorithms,  Up: Nonlinear Least-Squares Fitting
+
+Minimization Algorithms using Derivatives
+=========================================
+
+   The minimization algorithms described in this section make use of
+both the function and its derivative.  They require an initial guess
+for the location of the minimum. There is no absolute guarantee of
+convergence - the function must be suitable for this technique and the
+initial guess must be sufficiently close to the minimum for it to work.
+
+ - Derivative Solver: gsl_multifit_fdfsolver_lmsder
+     This is a robust and efficient version of the Levenberg-Marquardt
+     algorithm as implemented in the scaled LMDER routine in MINPACK.
+     Minpack was written by Jorge J. More', Burton S. Garbow and
+     Kenneth E. Hillstrom.
+
+     The algorithm uses a generalized trust region to keep each step
+     under control.  In order to be accepted a proposed new position x'
+     must satisfy the condition |D (x' - x)| < \delta, where D is a
+     diagonal scaling matrix and \delta is the size of the trust
+     region.  The components of D are computed internally, using the
+     column norms of the Jacobian to estimate the sensitivity of the
+     residual to each component of x.  This improves the behavior of the
+     algorithm for badly scaled functions.
+
+     On each iteration the algorithm attempts to minimize the linear
+     system |F + J p| subject to the constraint |D p| < \Delta.  The
+     solution to this constrained linear system is found using the
+     Levenberg-Marquardt method.
+
+     The proposed step is now tested by evaluating the function at the
+     resulting point, x'.  If the step reduces the norm of the function
+     sufficiently, and follows the predicted behavior of the function
+     within the trust region. then it is accepted and size of the trust
+     region is increased.  If the proposed step fails to improve the
+     solution, or differs significantly from the expected behavior
+     within the trust region, then the size of the trust region is
+     decreased and another trial step is computed.
+
+     The algorithm also monitors the progress of the solution and
+     returns an error if the changes in the solution are smaller than
+     the machine precision.  The possible error codes are,
+
+    `GSL_ETOLF'
+          the decrease in the function falls below machine precision
+
+    `GSL_ETOLX'
+          the change in the position vector falls below machine
+          precision
+
+    `GSL_ETOLG'
+          the norm of the gradient, relative to the norm of the
+          function, falls below machine precision
+
+     These error codes indicate that further iterations will be
+     unlikely to change the solution from its current value.
+
+
+ - Derivative Solver: gsl_multifit_fdfsolver_lmder
+     This is an unscaled version of the LMDER algorithm.  The elements
+     of the diagonal scaling matrix D are set to 1.  This algorithm may
+     be useful in circumstances where the scaled version of LMDER
+     converges too slowly, or the function is already scaled
+     appropriately.
+
+
+File: gsl-ref.info,  Node: Minimization Algorithms without Derivatives,  Next: Computing the covariance matrix of best fit parameters,  Prev: Minimization Algorithms using Derivatives,  Up: Nonlinear Least-Squares Fitting
+
+Minimization Algorithms without Derivatives
+===========================================
+
+   There are no algorithms implemented in this section at the moment.
+
+
+File: gsl-ref.info,  Node: Computing the covariance matrix of best fit parameters,  Next: Example programs for Nonlinear Least-Squares Fitting,  Prev: Minimization Algorithms without Derivatives,  Up: Nonlinear Least-Squares Fitting
+
+Computing the covariance matrix of best fit parameters
+======================================================
+
+ - Function: int gsl_multifit_covar (const gsl_matrix * J, double
+          EPSREL, gsl_matrix * COVAR)
+     This function uses the Jacobian matrix J to compute the covariance
+     matrix of the best-fit parameters, COVAR.  The parameter EPSREL is
+     used to remove linear-dependent columns when J is rank deficient.
+
+     The covariance matrix is given by,
+
+          covar = (J^T J)^{-1}
+
+     and is computed by QR decomposition of J with column-pivoting.  Any
+     columns of R which satisfy
+
+          |R_{kk}| <= epsrel |R_{11}|
+
+     are considered linearly-dependent and are excluded from the
+     covariance matrix (the corresponding rows and columns of the
+     covariance matrix are set to zero).
+
+
+File: gsl-ref.info,  Node: Example programs for Nonlinear Least-Squares Fitting,  Next: References and Further Reading for Nonlinear Least-Squares Fitting,  Prev: Computing the covariance matrix of best fit parameters,  Up: Nonlinear Least-Squares Fitting
+
+Examples
+========
+
+   The following example program fits a weighted exponential model with
+background to experimental data, Y = A \exp(-\lambda t) + b. The first
+part of the program sets up the functions `expb_f' and `expb_df' to
+calculate the model and its Jacobian.  The appropriate fitting function
+is given by,
+
+     f_i = ((A \exp(-\lambda t_i) + b) - y_i)/\sigma_i
+
+where we have chosen t_i = i.  The Jacobian matrix J is the derivative
+of these functions with respect to the three parameters (A, \lambda,
+b).  It is given by,
+
+     J_{ij} = d f_i / d x_j
+
+where x_0 = A, x_1 = \lambda and x_2 = b.
+
+     #include <stdlib.h>
+     #include <stdio.h>
+     #include <gsl/gsl_rng.h>
+     #include <gsl/gsl_randist.h>
+     #include <gsl/gsl_vector.h>
+     #include <gsl/gsl_blas.h>
+     #include <gsl/gsl_multifit_nlin.h>
+     
+     struct data {
+       size_t n;
+       double * y;
+       double * sigma;
+     };
+     
+     int
+     expb_f (const gsl_vector * x, void *params,
+             gsl_vector * f)
+     {
+       size_t n = ((struct data *)params)->n;
+       double *y = ((struct data *)params)->y;
+       double *sigma = ((struct data *) params)->sigma;
+     
+       double A = gsl_vector_get (x, 0);
+       double lambda = gsl_vector_get (x, 1);
+       double b = gsl_vector_get (x, 2);
+     
+       size_t i;
+     
+       for (i = 0; i < n; i++)
+         {
+           /* Model Yi = A * exp(-lambda * i) + b */
+           double t = i;
+           double Yi = A * exp (-lambda * t) + b;
+           gsl_vector_set (f, i, (Yi - y[i])/sigma[i]);
+         }
+     
+       return GSL_SUCCESS;
+     }
+     
+     int
+     expb_df (const gsl_vector * x, void *params,
+              gsl_matrix * J)
+     {
+       size_t n = ((struct data *)params)->n;
+       double *sigma = ((struct data *) params)->sigma;
+     
+       double A = gsl_vector_get (x, 0);
+       double lambda = gsl_vector_get (x, 1);
+     
+       size_t i;
+     
+       for (i = 0; i < n; i++)
+         {
+           /* Jacobian matrix J(i,j) = dfi / dxj, */
+           /* where fi = (Yi - yi)/sigma[i],      */
+           /*       Yi = A * exp(-lambda * i) + b  */
+           /* and the xj are the parameters (A,lambda,b) */
+           double t = i;
+           double s = sigma[i];
+           double e = exp(-lambda * t);
+           gsl_matrix_set (J, i, 0, e/s);
+           gsl_matrix_set (J, i, 1, -t * A * e/s);
+           gsl_matrix_set (J, i, 2, 1/s);
+     
+     
+         }
+       return GSL_SUCCESS;
+     }
+     
+     int
+     expb_fdf (const gsl_vector * x, void *params,
+               gsl_vector * f, gsl_matrix * J)
+     {
+       expb_f (x, params, f);
+       expb_df (x, params, J);
+     
+       return GSL_SUCCESS;
+     }
+
+The main part of the program sets up a Levenberg-Marquardt solver and
+some simulated random data. The data uses the known parameters
+(1.0,5.0,0.1) combined with gaussian noise (standard deviation = 0.1)
+over a range of 40 timesteps. The initial guess for the parameters is
+chosen as (0.0, 1.0, 0.0).
+
+     int
+     main (void)
+     {
+       const gsl_multifit_fdfsolver_type *T;
+       gsl_multifit_fdfsolver *s;
+     
+       int status;
+       size_t i, iter = 0;
+     
+       const size_t n = 40;
+       const size_t p = 3;
+     
+       gsl_matrix *covar = gsl_matrix_alloc (p, p);
+     
+       double y[n], sigma[n];
+     
+       struct data d = { n, y, sigma};
+     
+       gsl_multifit_function_fdf f;
+     
+       double x_init[3] = { 1.0, 0.0, 0.0 };
+     
+       gsl_vector_view x = gsl_vector_view_array (x_init, p);
+     
+       const gsl_rng_type * type;
+       gsl_rng * r;
+     
+       gsl_rng_env_setup();
+     
+       type = gsl_rng_default;
+       r = gsl_rng_alloc (type);
+     
+       f.f = &expb_f;
+       f.df = &expb_df;
+       f.fdf = &expb_fdf;
+       f.n = n;
+       f.p = p;
+       f.params = &d;
+     
+       /* This is the data to be fitted */
+     
+       for (i = 0; i < n; i++)
+         {
+           double t = i;
+           y[i] = 1.0 + 5 * exp (-0.1 * t)
+                      + gsl_ran_gaussian(r, 0.1);
+           sigma[i] = 0.1;
+           printf("data: %d %g %g\n", i, y[i], sigma[i]);
+         };
+     
+     
+       T = gsl_multifit_fdfsolver_lmsder;
+       s = gsl_multifit_fdfsolver_alloc (T, n, p);
+       gsl_multifit_fdfsolver_set (s, &f, &x.vector);
+     
+       print_state (iter, s);
+     
+       do
+         {
+           iter++;
+           status = gsl_multifit_fdfsolver_iterate (s);
+     
+           printf ("status = %s\n", gsl_strerror (status));
+     
+           print_state (iter, s);
+     
+           if (status)
+             break;
+     
+           status = gsl_multifit_test_delta (s->dx, s->x,
+                                             1e-4, 1e-4);
+         }
+       while (status == GSL_CONTINUE && iter < 500);
+     
+       gsl_multifit_covar (s->J, 0.0, covar);
+     
+       gsl_matrix_fprintf (stdout, covar, "%g");
+     
+     #define FIT(i) gsl_vector_get(s->x, i)
+     #define ERR(i) sqrt(gsl_matrix_get(covar,i,i))
+     
+       printf("A      = %.5f +/- %.5f\n", FIT(0), ERR(0));
+       printf("lambda = %.5f +/- %.5f\n", FIT(1), ERR(1));
+       printf("b      = %.5f +/- %.5f\n", FIT(2), ERR(2));
+     
+       printf ("status = %s\n", gsl_strerror (status));
+     
+       gsl_multifit_fdfsolver_free (s);
+       return 0;
+     }
+     
+     int
+     print_state (size_t iter, gsl_multifit_fdfsolver * s)
+     {
+       printf ("iter: %3u x = % 15.8f % 15.8f % 15.8f "
+               "|f(x)| = %g\n",
+               iter,
+               gsl_vector_get (s->x, 0),
+               gsl_vector_get (s->x, 1),
+               gsl_vector_get (s->x, 2),
+               gsl_blas_dnrm2 (s->f));
+     }
+
+The iteration terminates when the change in x is smaller than 0.0001, as
+both an absolute and relative change.  Here are the results of running
+the program,
+
+     iter: 0 x = 1.00000000 0.00000000 0.00000000 |f(x)| = 118.574
+     iter: 1 x = 1.64919392 0.01780040 0.64919392 |f(x)| = 77.2068
+     iter: 2 x = 2.86269020 0.08032198 1.45913464 |f(x)| = 38.0579
+     iter: 3 x = 4.97908864 0.11510525 1.06649948 |f(x)| = 10.1548
+     iter: 4 x = 5.03295496 0.09912462 1.00939075 |f(x)| = 6.4982
+     iter: 5 x = 5.05811477 0.10055914 0.99819876 |f(x)| = 6.33121
+     iter: 6 x = 5.05827645 0.10051697 0.99756444 |f(x)| = 6.33119
+     iter: 7 x = 5.05828006 0.10051819 0.99757710 |f(x)| = 6.33119
+     
+     A      = 5.05828 +/- 0.05983
+     lambda = 0.10052 +/- 0.00309
+     b      = 0.99758 +/- 0.03944
+     status = success
+
+The approximate values of the parameters are found correctly.  The
+errors on the parameters are given by the square roots of the diagonal
+elements of the covariance matrix.
+
+
+File: gsl-ref.info,  Node: References and Further Reading for Nonlinear Least-Squares Fitting,  Prev: Example programs for Nonlinear Least-Squares Fitting,  Up: Nonlinear Least-Squares Fitting
+
+References and Further Reading
+==============================
+
+The MINPACK algorithm is described in the following article,
+
+     J.J. More', `The Levenberg-Marquardt Algorithm: Implementation and
+     Theory', Lecture Notes in Mathematics, v630 (1978), ed G. Watson.
+
+The following paper is also relevant to the algorithms described in this
+section,
+
+     J.J. More', B.S. Garbow, K.E. Hillstrom, "Testing Unconstrained
+     Optimization Software", ACM Transactions on Mathematical Software,
+     Vol 7, No 1 (1981), p 17-41
+
+
+File: gsl-ref.info,  Node: Physical Constants,  Next: IEEE floating-point arithmetic,  Prev: Nonlinear Least-Squares Fitting,  Up: Top
+
+Physical Constants
+******************
+
+   This chapter describes macros for the values of physical constants,
+such as the speed of light, c, and gravitational constant, G.  The
+values are available in different unit systems, including the standard
+MKS system (meters, kilograms, seconds) and the CGS system
+(centimeters, grams, seconds), which is commonly used in Astronomy.
+
+   The definitions of constants in the MKS system are available in the
+file `gsl_const_mks.h'.  The constants in the CGS system are defined in
+`gsl_const_cgs.h'.  Dimensionless constants, such as the fine structure
+constant, which are pure numbers are defined in `gsl_const_num.h'.
+
+* Menu:
+
+* Fundamental Constants::
+* Astronomy and Astrophysics::
+* Atomic and Nuclear Physics::
+* Measurement of Time::
+* Imperial Units ::
+* Nautical Units::
+* Printers Units::
+* Volume::
+* Mass and Weight ::
+* Thermal Energy and Power::
+* Pressure::
+* Viscosity::
+* Light and Illumination::
+* Radioactivity::
+* Physical Constant Examples::
+* Physical Constant References and Further Reading::
+
+   The full list of constants is described briefly below.  Consult the
+header files themselves for the values of the constants used in the
+library.
+
+
+File: gsl-ref.info,  Node: Fundamental Constants,  Next: Astronomy and Astrophysics,  Up: Physical Constants
+
+Fundamental Constants
+=====================
+
+`GSL_CONST_MKS_SPEED_OF_LIGHT'
+     The speed of light in vacuum, c.
+
+`GSL_CONST_NUM_AVOGADRO'
+     Avogadro's number, N_a.
+
+`GSL_CONST_MKS_FARADAY'
+     The molar charge of 1 Faraday.
+
+`GSL_CONST_MKS_BOLTZMANN'
+     The Boltzmann constant, k.
+
+`GSL_CONST_MKS_MOLAR_GAS'
+     The molar gas constant, R_0.
+
+`GSL_CONST_MKS_STANDARD_GAS_VOLUME'
+     The standard gas volume, V_0.
+
+`GSL_CONST_MKS_GAUSS'
+     The magnetic field of 1 Gauss.
+
+`GSL_CONST_MKS_MICRON'
+     The length of 1 micron.
+
+`GSL_CONST_MKS_HECTARE'
+     The area of 1 hectare.
+
+`GSL_CONST_MKS_MILES_PER_HOUR'
+     The speed of 1 mile per hour.
+
+`GSL_CONST_MKS_KILOMETERS_PER_HOUR'
+     The speed of 1 kilometer per hour.
+
+
+File: gsl-ref.info,  Node: Astronomy and Astrophysics,  Next: Atomic and Nuclear Physics,  Prev: Fundamental Constants,  Up: Physical Constants
+
+Astronomy and Astrophysics
+==========================
+
+`GSL_CONST_MKS_ASTRONOMICAL_UNIT'
+     The length of 1 astronomical unit (mean earth-sun distance), au.
+
+`GSL_CONST_MKS_GRAVITATIONAL_CONSTANT'
+     The gravitational constant, G.
+
+`GSL_CONST_MKS_LIGHT_YEAR'
+     The distance of 1 light-year, ly.
+
+`GSL_CONST_MKS_PARSEC'
+     The distance of 1 parsec, pc.
+
+`GSL_CONST_MKS_GRAV_ACCEL'
+     The standard gravitational acceleration on Earth, g.
+
+`GSL_CONST_MKS_SOLAR_MASS'
+     The mass of the Sun.
+
+
+File: gsl-ref.info,  Node: Atomic and Nuclear Physics,  Next: Measurement of Time,  Prev: Astronomy and Astrophysics,  Up: Physical Constants
+
+Atomic and Nuclear Physics
+==========================
+
+`GSL_CONST_MKS_ELECTRON_CHARGE'
+     The charge of the electron, e.
+
+`GSL_CONST_MKS_ELECTRON_VOLT'
+     The energy of 1 electron volt, eV.
+
+`GSL_CONST_MKS_UNIFIED_ATOMIC_MASS'
+     The unified atomic mass, amu.
+
+`GSL_CONST_MKS_MASS_ELECTRON'
+     The mass of the electron, m_e.
+
+`GSL_CONST_MKS_MASS_MUON'
+     The mass of the muon, m_\mu.
+
+`GSL_CONST_MKS_MASS_PROTON'
+     The mass of the proton, m_p.
+
+`GSL_CONST_MKS_MASS_NEUTRON'
+     The mass of the neutron, m_n.
+
+`GSL_CONST_NUM_FINE_STRUCTURE'
+     The electromagnetic fine structure constant \alpha.
+
+`GSL_CONST_MKS_RYDBERG'
+     The Rydberg constant, Ry.
+
+`GSL_CONST_MKS_ANGSTROM'
+     The length of 1 angstrom.
+
+`GSL_CONST_MKS_BARN'
+     The area of 1 barn.
+
+`GSL_CONST_MKS_BOHR_MAGNETON'
+     The Bohr Magneton, \mu_B.
+
+`GSL_CONST_MKS_NUCLEAR_MAGNETON'
+     The Nuclear Magneton, \mu_N.
+
+`GSL_CONST_MKS_ELECTRON_MAGNETIC_MOMENT'
+     The magnetic moment of the electron, \mu_e.
+
+`GSL_CONST_MKS_PROTON_MAGNETIC_MOMENT'
+     The magnetic moment of the proton, \mu_p.
+
+
+File: gsl-ref.info,  Node: Measurement of Time,  Next: Imperial Units,  Prev: Atomic and Nuclear Physics,  Up: Physical Constants
+
+Measurement of Time
+===================
+
+`GSL_CONST_MKS_MINUTE'
+     The number of seconds in 1 minute.
+
+`GSL_CONST_MKS_HOUR'
+     The number of seconds in 1 hour.
+
+`GSL_CONST_MKS_DAY'
+     The number of seconds in 1 day.
+
+`GSL_CONST_MKS_WEEK'
+     The number of seconds in 1 week.
+
+
+File: gsl-ref.info,  Node: Imperial Units,  Next: Nautical Units,  Prev: Measurement of Time,  Up: Physical Constants
+
+Imperial Units
+==============
+
+`GSL_CONST_MKS_INCH'
+     The length of 1 inch.
+
+`GSL_CONST_MKS_FOOT'
+     The length of 1 foot.
+
+`GSL_CONST_MKS_YARD'
+     The length of 1 yard.
+
+`GSL_CONST_MKS_MILE'
+     The length of 1 mile.
+
+`GSL_CONST_MKS_MIL'
+     The length of 1 mil (1/1000th of an inch).
+
+
+File: gsl-ref.info,  Node: Nautical Units,  Next: Printers Units,  Prev: Imperial Units,  Up: Physical Constants
+
+Nautical Units
+==============
+
+`GSL_CONST_MKS_NAUTICAL_MILE'
+     The length of 1 nautical mile.
+
+`GSL_CONST_MKS_FATHOM'
+     The length of 1 fathom.
+
+`GSL_CONST_MKS_KNOT'
+     The speed of 1 knot.
+
+
+File: gsl-ref.info,  Node: Printers Units,  Next: Volume,  Prev: Nautical Units,  Up: Physical Constants
+
+Printers Units
+==============
+
+`GSL_CONST_MKS_POINT'
+     The length of 1 printer's point (1/72 inch).
+
+`GSL_CONST_MKS_TEXPOINT'
+     The length of 1 TeX point (1/72.27 inch).
+

@@ -1,0 +1,4 @@
+Problem: 1
+Algorithm: string, size= 72, basis size=10001
+WER: 0.803169824686
+Runtime: 12.6740740741

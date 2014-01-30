@@ -1,0 +1,4 @@
+Problem: tree
+Algorithm: PNFA, tau= 0.001, basis size=51
+KL: 4.39901262158e+15
+Runtime: 0

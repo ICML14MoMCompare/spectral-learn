@@ -1,0 +1,1248 @@
+This is gsl-ref.info, produced by makeinfo version 4.0 from
+gsl-ref.texi.
+
+INFO-DIR-SECTION Scientific software
+START-INFO-DIR-ENTRY
+* gsl-ref: (gsl-ref).                   GNU Scientific Library - Reference
+END-INFO-DIR-ENTRY
+
+   This file documents the GNU Scientific Library.
+
+   Copyright (C) 1996, 1997, 1998, 1999, 2000, 2001 The GSL Team.
+
+   Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.1 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.  A
+copy of the license is included in the section entitled "GNU Free
+Documentation License".
+
+
+File: gsl-ref.info,  Node: Irregular Bessel Functions - Fractional Order,  Next: Regular Modified Bessel Functions - Fractional Order,  Prev: Regular Bessel Function - Fractional Order,  Up: Bessel Functions
+
+Irregular Bessel Functions - Fractional Order
+---------------------------------------------
+
+ - Function: double gsl_sf_bessel_Ynu (double NU, double X)
+ - Function: int gsl_sf_bessel_Ynu_e (double NU, double X,
+          gsl_sf_result * RESULT)
+     These routines compute the irregular cylindrical Bessel function of
+     fractional order nu, Y_\nu(x).
+
+
+File: gsl-ref.info,  Node: Regular Modified Bessel Functions - Fractional Order,  Next: Irregular Modified Bessel Functions - Fractional Order,  Prev: Irregular Bessel Functions - Fractional Order,  Up: Bessel Functions
+
+Regular Modified Bessel Functions - Fractional Order
+----------------------------------------------------
+
+ - Function: double gsl_sf_bessel_Inu (double NU, double X)
+ - Function: int gsl_sf_bessel_Inu_e (double NU, double X,
+          gsl_sf_result * RESULT)
+     These routines compute the regular modified Bessel function of
+     fractional order nu, I_\nu(x) for x>0, \nu>0.
+
+ - Function: double gsl_sf_bessel_Inu_scaled (double NU, double X)
+ - Function: int gsl_sf_bessel_Inu_scaled_e (double NU, double X,
+          gsl_sf_result * RESULT)
+     These routines compute the scaled regular modified Bessel function
+     of fractional order nu, \exp(-|x|)I_\nu(x) for x>0, \nu>0.
+
+
+File: gsl-ref.info,  Node: Irregular Modified Bessel Functions - Fractional Order,  Next: Zeros of Regular Bessel Functions,  Prev: Regular Modified Bessel Functions - Fractional Order,  Up: Bessel Functions
+
+Irregular Modified Bessel Functions - Fractional Order
+------------------------------------------------------
+
+ - Function: double gsl_sf_bessel_Knu (double NU, double X)
+ - Function: int gsl_sf_bessel_Knu_e (double NU, double X,
+          gsl_sf_result * RESULT)
+     These routines compute the irregular modified Bessel function of
+     fractional order nu, K_\nu(x) for x>0, \nu>0.
+
+ - Function: double gsl_sf_bessel_lnKnu (double NU, double X)
+ - Function: int gsl_sf_bessel_lnKnu_e (double NU, double X,
+          gsl_sf_result * RESULT)
+     These routines compute the logarithm of the irregular modified
+     Bessel function of fractional order nu, \ln(K_\nu(x)) for x>0,
+     \nu>0.
+
+ - Function: double gsl_sf_bessel_Knu_scaled (double NU, double X)
+ - Function: int gsl_sf_bessel_Knu_scaled_e (double NU, double X,
+          gsl_sf_result * RESULT)
+     These routines compute the scaled irregular modified Bessel
+     function of fractional order nu, \exp(+|x|) K_\nu(x) for x>0,
+     \nu>0.
+
+
+File: gsl-ref.info,  Node: Zeros of Regular Bessel Functions,  Prev: Irregular Modified Bessel Functions - Fractional Order,  Up: Bessel Functions
+
+Zeros of Regular Bessel Functions
+---------------------------------
+
+ - Function: double gsl_sf_bessel_zero_J0 (unsigned int S)
+ - Function: int gsl_sf_bessel_zero_J0_e (unsigned int S, gsl_sf_result
+          * RESULT)
+     These routines compute the location of the S-th positive zero of
+     the Bessel function J_0(x).
+
+ - Function: double gsl_sf_bessel_zero_J1 (unsigned int S)
+ - Function: int gsl_sf_bessel_zero_J1_e (unsigned int S, gsl_sf_result
+          * RESULT)
+     These routines compute the location of the S-th positive zero of
+     the Bessel function J_1(x).
+
+ - Function: double gsl_sf_bessel_zero_Jnu (double NU, unsigned int S)
+ - Function: int gsl_sf_bessel_zero_Jnu_e (double NU, unsigned int S,
+          gsl_sf_result * RESULT)
+     These routines compute the location of the S-th positive zero of
+     the Bessel function J_\nu(x).
+
+
+File: gsl-ref.info,  Node: Clausen Functions,  Next: Coulomb Functions,  Prev: Bessel Functions,  Up: Special Functions
+
+Clausen Functions
+=================
+
+   The Clausen function is defined by the following integral,
+     Cl_2(x) = - \int_0^x dt \log(2 \sin(t/2))
+
+It is related to the dilogarithm by Cl_2(\theta) = \Im Li_2(\exp(i
+\theta)).  The Clausen functions are declared in the header file
+`gsl_sf_clausen.h'.
+
+ - Function: double gsl_sf_clausen (double X)
+ - Function: int gsl_sf_clausen_e (double X, gsl_sf_result * RESULT)
+     These routines compute the Clausen integral Cl_2(x).
+
+
+File: gsl-ref.info,  Node: Coulomb Functions,  Next: Coupling Coefficients,  Prev: Clausen Functions,  Up: Special Functions
+
+Coulomb Functions
+=================
+
+   The Coulomb functions are declared in the header file
+`gsl_sf_coulomb.h'.  Both bound state and scattering solutions are
+available.
+
+* Menu:
+
+* Normalized Hydrogenic Bound States::
+* Coulomb Wave Functions::
+* Coulomb Wave Function Normalization Constant::
+
+
+File: gsl-ref.info,  Node: Normalized Hydrogenic Bound States,  Next: Coulomb Wave Functions,  Up: Coulomb Functions
+
+Normalized Hydrogenic Bound States
+----------------------------------
+
+ - Function: double gsl_sf_hydrogenicR_1 (double Z, double R)
+ - Function: int gsl_sf_hydrogenicR_1_e (double Z, double R,
+          gsl_sf_result * RESULT)
+     These routines compute the lowest-order normalized hydrogenic bound
+     state radial wavefunction R_1 := 2Z \sqrt{Z} \exp(-Z r).
+
+ - Function: double gsl_sf_hydrogenicR (int N, int L, double Z, double
+          R)
+ - Function: int gsl_sf_hydrogenicR_e (int N, int L, double Z, double
+          R, gsl_sf_result * RESULT)
+     These routines compute the N-th normalized hydrogenic bound state
+     radial wavefunction,
+          R_n := 2 (Z^{3/2}/n^2) \sqrt{(n-l-1)!/(n+l)!} \exp(-Z r/n) (2Z/n)^l
+                    L^{2l+1}_{n-l-1}(2Z/n r).
+
+     The normalization is chosen such that the wavefunction \psi is
+     given by \psi(n,l,r) = R_n Y_{lm}.
+
+
+File: gsl-ref.info,  Node: Coulomb Wave Functions,  Next: Coulomb Wave Function Normalization Constant,  Prev: Normalized Hydrogenic Bound States,  Up: Coulomb Functions
+
+Coulomb Wave Functions
+----------------------
+
+   The Coulomb wave functions F_L(\eta,x), G_L(\eta,x) are described in
+Abramowitz & Stegun, Chapter 14.  Because there can be a large dynamic
+range of values for these functions, overflows are handled gracefully.
+If an overflow occurs, `GSL_EOVRFLW' is signalled and exponent(s) are
+returned through the modifiable parameters EXP_F, EXP_G. The full
+solution can be reconstructed from the following relations,
+
+     F_L(eta,x)  =  fc[k_L] * exp(exp_F)
+     G_L(eta,x)  =  gc[k_L] * exp(exp_G)
+     
+     F_L'(eta,x) = fcp[k_L] * exp(exp_F)
+     G_L'(eta,x) = gcp[k_L] * exp(exp_G)
+
+ - Function: int gsl_sf_coulomb_wave_FG_e (double ETA, double X, double
+          L_F, int K, gsl_sf_result * F, gsl_sf_result * FP,
+          gsl_sf_result * G, gsl_sf_result * GP, double * EXP_F, double
+          * EXP_G)
+     This function computes the coulomb wave functions F_L(\eta,x),
+     G_{L-k}(\eta,x) and their derivatives with respect to x,
+     F'_L(\eta,x) G'_{L-k}(\eta,x).  The parameters are restricted to L,
+     L-k > -1/2, x > 0 and integer k.  Note that L itself is not
+     restricted to being an integer. The results are stored in the
+     parameters F, G for the function values and FP, GP for the
+     derivative values.  If an overflow occurs, `GSL_EOVRFLW' is
+     returned and scaling exponents are stored in the modifiable
+     parameters EXP_F, EXP_G.
+
+ - Function: int gsl_sf_coulomb_wave_F_array (double L_MIN, int KMAX,
+          double ETA, double X, double FC_ARRAY[], double * F_EXPONENT)
+     This function computes the function F_L(eta,x) for L = Lmin \dots
+     Lmin + kmax storing the results in FC_ARRAY.  In the case of
+     overflow the exponent is stored in F_EXPONENT.
+
+ - Function: int gsl_sf_coulomb_wave_FG_array (double L_MIN, int KMAX,
+          double ETA, double X, double FC_ARRAY[], double GC_ARRAY[],
+          double * F_EXPONENT, double * G_EXPONENT)
+     This function computes the functions F_L(\eta,x), G_L(\eta,x) for
+     L = Lmin \dots Lmin + kmax storing the results in FC_ARRAY and
+     GC_ARRAY.  In the case of overflow the exponents are stored in
+     F_EXPONENT and G_EXPONENT.
+
+ - Function: int gsl_sf_coulomb_wave_FGp_array (double L_MIN, int KMAX,
+          double ETA, double X, double FC_ARRAY[], double FCP_ARRAY[],
+          double GC_ARRAY[], double GCP_ARRAY[], double * F_EXPONENT,
+          double * G_EXPONENT)
+     This function computes the functions F_L(\eta,x), G_L(\eta,x) and
+     their derivatives F'_L(\eta,x), G'_L(\eta,x) for L = Lmin \dots
+     Lmin + kmax storing the results in FC_ARRAY, GC_ARRAY, FCP_ARRAY
+     and GCP_ARRAY.  In the case of overflow the exponents are stored
+     in F_EXPONENT and G_EXPONENT.
+
+ - Function: int gsl_sf_coulomb_wave_sphF_array (double L_MIN, int
+          KMAX, double ETA, double X, double FC_ARRAY[], double
+          F_EXPONENT[])
+     This function computes the Coulomb wave function divided by the
+     argument F_L(\eta, x)/x for L = Lmin \dots Lmin + kmax, storing the
+     results in FC_ARRAY.  In the case of overflow the exponent is
+     stored in F_EXPONENT. This function reduces to spherical Bessel
+     functions in the limit \eta \to 0.
+
+
+File: gsl-ref.info,  Node: Coulomb Wave Function Normalization Constant,  Prev: Coulomb Wave Functions,  Up: Coulomb Functions
+
+Coulomb Wave Function Normalization Constant
+--------------------------------------------
+
+   The Coulomb wave function normalization constant is defined in
+Abramowitz 14.1.7.
+
+ - Function: int gsl_sf_coulomb_CL_e (double L, double ETA,
+          gsl_sf_result * RESULT)
+     This function computes the Coulomb wave function normalization
+     constant C_L(\eta) for L > -1.
+
+ - Function: int gsl_sf_coulomb_CL_array (double LMIN, int KMAX, double
+          ETA, double CL[])
+     This function computes the coulomb wave function normalization
+     constant C_L(\eta) for L = Lmin \dots Lmin + kmax, Lmin > -1.
+
+
+File: gsl-ref.info,  Node: Coupling Coefficients,  Next: Dawson Function,  Prev: Coulomb Functions,  Up: Special Functions
+
+Coupling Coefficients
+=====================
+
+   The Wigner 3-j, 6-j and 9-j symbols give the coupling coefficients
+for combined angular momentum vectors.  Since the arguments of the
+standard coupling coefficient functions are integer or half-integer, the
+arguments of the following functions are, by convention, integers equal
+to twice the actual spin value.  For information on the 3-j coefficients
+see Abramowitz & Stegun, Section 27.9.  The functions described in this
+section are declared in the header file `gsl_sf_coupling.h'.
+
+* Menu:
+
+* 3-j Symbols::
+* 6-j Symbols::
+* 9-j Symbols::
+
+
+File: gsl-ref.info,  Node: 3-j Symbols,  Next: 6-j Symbols,  Up: Coupling Coefficients
+
+3-j Symbols
+-----------
+
+ - Function: double gsl_sf_coupling_3j (int TWO_JA, int TWO_JB, int
+          TWO_JC, int TWO_MA, int TWO_MB, int TWO_MC)
+ - Function: int gsl_sf_coupling_3j_e (int TWO_JA, int TWO_JB, int
+          TWO_JC, int TWO_MA, int TWO_MB, int TWO_MC, gsl_sf_result *
+          RESULT)
+     These routines compute the Wigner 3-j coefficient,
+
+          (ja jb jc
+           ma mb mc)
+
+     where the arguments are given in half-integer units, ja =
+     TWO_JA/2, ma = TWO_MA/2, etc.
+
+
+File: gsl-ref.info,  Node: 6-j Symbols,  Next: 9-j Symbols,  Prev: 3-j Symbols,  Up: Coupling Coefficients
+
+6-j Symbols
+-----------
+
+ - Function: double gsl_sf_coupling_6j (int TWO_JA, int TWO_JB, int
+          TWO_JC, int TWO_JD, int TWO_JE, int TWO_JF)
+ - Function: int gsl_sf_coupling_6j_e (int TWO_JA, int TWO_JB, int
+          TWO_JC, int TWO_JD, int TWO_JE, int TWO_JF, gsl_sf_result *
+          RESULT)
+     These routines compute the Wigner 6-j coefficient,
+
+          (ja jb jc
+           jd je jf)
+
+     where the arguments are given in half-integer units, ja =
+     TWO_JA/2, ma = TWO_MA/2, etc.
+
+
+File: gsl-ref.info,  Node: 9-j Symbols,  Prev: 6-j Symbols,  Up: Coupling Coefficients
+
+9-j Symbols
+-----------
+
+ - Function: double gsl_sf_coupling_9j (int TWO_JA, int TWO_JB, int
+          TWO_JC, int TWO_JD, int TWO_JE, int TWO_JF, int TWO_JG, int
+          TWO_JH, int TWO_JI)
+ - Function: int gsl_sf_coupling_9j_e (int TWO_JA, int TWO_JB, int
+          TWO_JC, int TWO_JD, int TWO_JE, int TWO_JF, int TWO_JG, int
+          TWO_JH, int TWO_JI, gsl_sf_result * RESULT)
+     These routines compute the Wigner 9-j coefficient,
+
+          (ja jb jc
+           jd je jf
+           jg jh ji)
+
+     where the arguments are given in half-integer units, ja =
+     TWO_JA/2, ma = TWO_MA/2, etc.
+
+
+File: gsl-ref.info,  Node: Dawson Function,  Next: Debye Functions,  Prev: Coupling Coefficients,  Up: Special Functions
+
+Dawson Function
+===============
+
+   The Dawson integral is defined by \exp(-x^2) \int_0^x dt \exp(t^2).
+A table of Dawson's integral can be found in Abramowitz & Stegun, Table
+7.5.  The Dawson functions are declared in the header file
+`gsl_sf_dawson.h'.
+
+ - Function: double gsl_sf_dawson (double X)
+ - Function: int gsl_sf_dawson_e (double X, gsl_sf_result * RESULT)
+     These routines compute the value of Dawson's integral for X.
+
+
+File: gsl-ref.info,  Node: Debye Functions,  Next: Dilogarithm,  Prev: Dawson Function,  Up: Special Functions
+
+Debye Functions
+===============
+
+   The Debye functions are defined by the integral D_n(x) = n/x^n
+\int_0^x dt (t^n/(e^t - 1)).  For further information see Abramowitz &
+Stegun, Section 27.1.  The Debye functions are declared in the header
+file `gsl_sf_debye.h'.
+
+ - Function: double gsl_sf_debye_1 (double X)
+ - Function: int gsl_sf_debye_1_e (double X, gsl_sf_result * RESULT)
+     These routines compute the first-order Debye function D_1(x) =
+     (1/x) \int_0^x dt (t/(e^t - 1)).
+
+ - Function: double gsl_sf_debye_2 (double X)
+ - Function: int gsl_sf_debye_2_e (double X, gsl_sf_result * RESULT)
+     These routines compute the second-order Debye function D_2(x) =
+     (2/x^2) \int_0^x dt (t^2/(e^t - 1)).
+
+ - Function: double gsl_sf_debye_3 (double X)
+ - Function: int gsl_sf_debye_3_e (double X, gsl_sf_result * RESULT)
+     These routines compute the third-order Debye function D_3(x) =
+     (3/x^3) \int_0^x dt (t^3/(e^t - 1)).
+
+ - Function: double gsl_sf_debye_4 (double X)
+ - Function: int gsl_sf_debye_4_e (double X, gsl_sf_result * RESULT)
+     These routines compute the fourth-order Debye function D_4(x) =
+     (4/x^4) \int_0^x dt (t^4/(e^t - 1)).
+
+
+File: gsl-ref.info,  Node: Dilogarithm,  Next: Elementary Operations,  Prev: Debye Functions,  Up: Special Functions
+
+Dilogarithm
+===========
+
+   The functions described in this section are declared in the header
+file `gsl_sf_dilog.h'.
+
+* Menu:
+
+* Real Argument::
+* Complex Argument::
+
+
+File: gsl-ref.info,  Node: Real Argument,  Next: Complex Argument,  Up: Dilogarithm
+
+Real Argument
+-------------
+
+ - Function: double gsl_sf_dilog (double X)
+ - Function: int gsl_sf_dilog_e (double X, gsl_sf_result * RESULT)
+     These routines compute the dilogarithm for a real argument. In
+     Lewin's notation this is Li_2(x), the real part of the dilogarithm
+     of a real x.  It is defined by the integral representation Li_2(x)
+     = - \Re \int_0^x ds \log(1-s) / s.  Note that \Im(Li_2(x)) = 0 for
+     x <= 1, and -\pi\log(x) for x > 1.
+
+
+
+File: gsl-ref.info,  Node: Complex Argument,  Prev: Real Argument,  Up: Dilogarithm
+
+Complex Argument
+----------------
+
+ - Function: int gsl_sf_complex_dilog_e (double R, double THETA,
+          gsl_sf_result * RESULT_RE, gsl_sf_result * RESULT_IM)
+     This function computes the full complex-valued dilogarithm for the
+     complex argument z = r \exp(i \theta). The real and imaginary
+     parts of the result are returned in RESULT_RE, RESULT_IM.
+
+
+File: gsl-ref.info,  Node: Elementary Operations,  Next: Elliptic Integrals,  Prev: Dilogarithm,  Up: Special Functions
+
+Elementary Operations
+=====================
+
+   The following functions allow for the propagation of errors when
+combining quantities by multiplication.  The functions are declared in
+the header file `gsl_sf_elementary.h'.
+
+ - Function: int gsl_sf_multiply_e (double X, double Y, gsl_sf_result *
+          RESULT)
+     This function multiplies X and Y storing the product and its
+     associated error in RESULT.
+
+ - Function: int gsl_sf_multiply_err_e (double X, double DX, double Y,
+          double DY, gsl_sf_result * RESULT)
+     This function multiplies X and Y with associated absolute errors
+     DX and DY.  The product xy +/- xy \sqrt((dx/x)^2 +(dy/y)^2) is
+     stored in RESULT.
+
+
+File: gsl-ref.info,  Node: Elliptic Integrals,  Next: Elliptic Functions (Jacobi),  Prev: Elementary Operations,  Up: Special Functions
+
+Elliptic Integrals
+==================
+
+   The functions described in this section are declared in the header
+file `gsl_sf_ellint.h'.
+
+* Menu:
+
+* Definition of Legendre Forms::
+* Definition of Carlson Forms::
+* Legendre Form of Complete Elliptic Integrals::
+* Legendre Form of Incomplete Elliptic Integrals::
+* Carlson Forms::
+
+
+File: gsl-ref.info,  Node: Definition of Legendre Forms,  Next: Definition of Carlson Forms,  Up: Elliptic Integrals
+
+Definition of Legendre Forms
+----------------------------
+
+   The Legendre forms of elliptic integrals F(\phi,k), E(\phi,k) and
+P(\phi,k,n) are defined by,
+
+       F(\phi,k) = \int_0^\phi dt 1/\sqrt((1 - k^2 \sin^2(t)))
+     
+       E(\phi,k) = \int_0^\phi dt   \sqrt((1 - k^2 \sin^2(t)))
+     
+     P(\phi,k,n) = \int_0^\phi dt 1/((1 + n \sin^2(t))\sqrt(1 - k^2 \sin^2(t)))
+
+The complete Legendre forms are denoted by K(k) = F(\pi/2, k) and E(k)
+= E(\pi/2, k).  Further information on the Legendre forms of elliptic
+integrals can be found in Abramowitz & Stegun, Chapter 17.  The
+notation used here is based on Carlson, `Numerische Mathematik' 33
+(1979) 1 and differs slightly from that used by Abramowitz & Stegun.
+
+
+File: gsl-ref.info,  Node: Definition of Carlson Forms,  Next: Legendre Form of Complete Elliptic Integrals,  Prev: Definition of Legendre Forms,  Up: Elliptic Integrals
+
+Definition of Carlson Forms
+---------------------------
+
+   The Carlson symmetric forms of elliptical integrals RC(x,y),
+RD(x,y,z), RF(x,y,z) and RJ(x,y,z,p) are defined by,
+
+         RC(x,y) = 1/2 \int_0^\infty dt (t+x)^(-1/2) (t+y)^(-1)
+     
+       RD(x,y,z) = 3/2 \int_0^\infty dt (t+x)^(-1/2) (t+y)^(-1/2) (t+z)^(-3/2)
+     
+       RF(x,y,z) = 1/2 \int_0^\infty dt (t+x)^(-1/2) (t+y)^(-1/2) (t+z)^(-1/2)
+     
+     RJ(x,y,z,p) = 3/2 \int_0^\infty dt
+                      (t+x)^(-1/2) (t+y)^(-1/2) (t+z)^(-1/2) (t+p)^(-1)
+
+
+File: gsl-ref.info,  Node: Legendre Form of Complete Elliptic Integrals,  Next: Legendre Form of Incomplete Elliptic Integrals,  Prev: Definition of Carlson Forms,  Up: Elliptic Integrals
+
+Legendre Form of Complete Elliptic Integrals
+--------------------------------------------
+
+ - Function: double gsl_sf_ellint_Kcomp (double K, gsl_mode_t MODE)
+ - Function: int gsl_sf_ellint_Kcomp_e (double K, gsl_mode_t MODE,
+          gsl_sf_result * RESULT)
+     These routines compute the complete elliptic integral K(k) to the
+     accuracy specified by the mode variable MODE.
+
+ - Function: double gsl_sf_ellint_Ecomp (double K, gsl_mode_t MODE)
+ - Function: int gsl_sf_ellint_Ecomp_e (double K, gsl_mode_t MODE,
+          gsl_sf_result * RESULT)
+     These routines compute the complete elliptic integral E(k) to the
+     accuracy specified by the mode variable MODE.
+
+
+File: gsl-ref.info,  Node: Legendre Form of Incomplete Elliptic Integrals,  Next: Carlson Forms,  Prev: Legendre Form of Complete Elliptic Integrals,  Up: Elliptic Integrals
+
+Legendre Form of Incomplete Elliptic Integrals
+----------------------------------------------
+
+ - Function: double gsl_sf_ellint_F (double PHI, double K, gsl_mode_t
+          MODE)
+ - Function: int gsl_sf_ellint_F_e (double PHI, double K, gsl_mode_t
+          MODE, gsl_sf_result * RESULT)
+     These routines compute the incomplete elliptic integral F(\phi,k)
+     to the accuracy specified by the mode variable MODE.
+
+ - Function: double gsl_sf_ellint_E (double PHI, double K, gsl_mode_t
+          MODE)
+ - Function: int gsl_sf_ellint_E_e (double PHI, double K, gsl_mode_t
+          MODE, gsl_sf_result * RESULT)
+     These routines compute the incomplete elliptic integral E(\phi,k)
+     to the accuracy specified by the mode variable MODE.
+
+ - Function: double gsl_sf_ellint_P (double PHI, double K, double N,
+          gsl_mode_t MODE)
+ - Function: int gsl_sf_ellint_P_e (double PHI, double K, double N,
+          gsl_mode_t MODE, gsl_sf_result * RESULT)
+     These routines compute the incomplete elliptic integral P(\phi,k,n)
+     to the accuracy specified by the mode variable MODE.
+
+ - Function: double gsl_sf_ellint_D (double PHI, double K, double N,
+          gsl_mode_t MODE)
+ - Function: int gsl_sf_ellint_D_e (double PHI, double K, double N,
+          gsl_mode_t MODE, gsl_sf_result * RESULT)
+     These functions compute the incomplete elliptic integral
+     D(\phi,k,n) which is defined through the Carlson form RD(x,y,z) by
+     the following relation,
+          D(\phi,k,n) = RD (1-\sin^2(\phi), 1-k^2 \sin^2(\phi), 1).
+
+
+
+File: gsl-ref.info,  Node: Carlson Forms,  Prev: Legendre Form of Incomplete Elliptic Integrals,  Up: Elliptic Integrals
+
+Carlson Forms
+-------------
+
+ - Function: double gsl_sf_ellint_RC (double X, double Y, gsl_mode_t
+          MODE)
+ - Function: int gsl_sf_ellint_RC_e (double X, double Y, gsl_mode_t
+          MODE, gsl_sf_result * RESULT)
+     These routines compute the incomplete elliptic integral RC(x,y) to
+     the accuracy specified by the mode variable MODE.
+
+ - Function: double gsl_sf_ellint_RD (double X, double Y, double Z,
+          gsl_mode_t MODE)
+ - Function: int gsl_sf_ellint_RD_e (double X, double Y, double Z,
+          gsl_mode_t MODE, gsl_sf_result * RESULT)
+     These routines compute the incomplete elliptic integral RD(x,y,z)
+     to the accuracy specified by the mode variable MODE.
+
+ - Function: double gsl_sf_ellint_RF (double X, double Y, double Z,
+          gsl_mode_t MODE)
+ - Function: int gsl_sf_ellint_RF_e (double X, double Y, double Z,
+          gsl_mode_t MODE, gsl_sf_result * RESULT)
+     These routines compute the incomplete elliptic integral RF(x,y,z)
+     to the accuracy specified by the mode variable MODE.
+
+ - Function: double gsl_sf_ellint_RJ (double X, double Y, double Z,
+          double P, gsl_mode_t MODE)
+ - Function: int gsl_sf_ellint_RJ_e (double X, double Y, double Z,
+          double P, gsl_mode_t MODE, gsl_sf_result * RESULT)
+     These routines compute the incomplete elliptic integral RJ(x,y,z,p)
+     to the accuracy specified by the mode variable MODE.
+
+
+File: gsl-ref.info,  Node: Elliptic Functions (Jacobi),  Next: Error Functions,  Prev: Elliptic Integrals,  Up: Special Functions
+
+Elliptic Functions (Jacobi)
+===========================
+
+   The Jacobian Elliptic functions are defined in Abramowitz & Stegun,
+Chapter 16.  The functions are declared in the header file
+`gsl_sf_elljac.h'.
+
+ - Function: int gsl_sf_elljac_e (double U, double M, double * SN,
+          double * CN, double * DN)
+     This function computes the Jacobian elliptic functions sn(u|m),
+     cn(u|m), dn(u|m) by descending Landen transformations.
+
+
+File: gsl-ref.info,  Node: Error Functions,  Next: Exponential Functions,  Prev: Elliptic Functions (Jacobi),  Up: Special Functions
+
+Error Functions
+===============
+
+   The error function is described in Abramowitz & Stegun, Chapter 7.
+The functions in this section are declared in the header file
+`gsl_sf_erf.h'.
+
+* Menu:
+
+* Error Function::
+* Complementary Error Function::
+* Log Complementary Error Function::
+* Probability functions::
+
+
+File: gsl-ref.info,  Node: Error Function,  Next: Complementary Error Function,  Up: Error Functions
+
+Error Function
+--------------
+
+ - Function: double gsl_sf_erf (double X)
+ - Function: int gsl_sf_erf_e (double X, gsl_sf_result * RESULT)
+     These routines compute the error function erf(x) = (2/\sqrt(\pi))
+     \int_0^x dt \exp(-t^2).
+
+
+
+File: gsl-ref.info,  Node: Complementary Error Function,  Next: Log Complementary Error Function,  Prev: Error Function,  Up: Error Functions
+
+Complementary Error Function
+----------------------------
+
+ - Function: double gsl_sf_erfc (double X)
+ - Function: int gsl_sf_erfc_e (double X, gsl_sf_result * RESULT)
+     These routines compute the complementary error function erfc(x) =
+     1 - erf(x) = (2/\sqrt(\pi)) \int_x^\infty \exp(-t^2).
+
+
+
+File: gsl-ref.info,  Node: Log Complementary Error Function,  Next: Probability functions,  Prev: Complementary Error Function,  Up: Error Functions
+
+Log Complementary Error Function
+--------------------------------
+
+ - Function: double gsl_sf_log_erfc (double X)
+ - Function: int gsl_sf_log_erfc_e (double X, gsl_sf_result * RESULT)
+     These routines compute the logarithm of the complementary error
+     function \log(\erfc(x)).
+
+
+File: gsl-ref.info,  Node: Probability functions,  Prev: Log Complementary Error Function,  Up: Error Functions
+
+Probability functions
+---------------------
+
+   The probability functions for the Normal or Gaussian distribution are
+described in Abramowitz & Stegun, Section 26.2.
+
+ - Function: double gsl_sf_erf_Z (double X)
+ - Function: int gsl_sf_erf_Z_e (double X, gsl_sf_result * RESULT)
+     These routines compute the Gaussian probability function Z(x) =
+     (1/(2\pi)) \exp(-x^2/2).
+
+ - Function: double gsl_sf_erf_Q (double X)
+ - Function: int gsl_sf_erf_Q_e (double X, gsl_sf_result * RESULT)
+     These routines compute the upper tail of the Gaussian probability
+     function Q(x) = (1/(2\pi)) \int_x^\infty dt \exp(-t^2/2).
+
+
+File: gsl-ref.info,  Node: Exponential Functions,  Next: Exponential Integrals,  Prev: Error Functions,  Up: Special Functions
+
+Exponential Functions
+=====================
+
+   The functions described in this section are declared in the header
+file `gsl_sf_exp.h'.
+
+* Menu:
+
+* Exponential Function::
+* Relative Exponential Functions::
+* Exponentiation With Error Estimate::
+
+
+File: gsl-ref.info,  Node: Exponential Function,  Next: Relative Exponential Functions,  Up: Exponential Functions
+
+Exponential Function
+--------------------
+
+ - Function: double gsl_sf_exp (double X)
+ - Function: int gsl_sf_exp_e (double X, gsl_sf_result * RESULT)
+     These routines provide an exponential function \exp(x) using GSL
+     semantics and error checking.
+
+ - Function: int gsl_sf_exp_e10_e (double X, gsl_sf_result_e10 * RESULT)
+     This function computes the exponential \exp(x) using the
+     `gsl_sf_result_e10' type to return a result with extended range.
+     This function may be useful if the value of \exp(x) would overflow
+     the  numeric range of `double'.
+
+ - Function: double gsl_sf_exp_mult (double X, double Y)
+ - Function: int gsl_sf_exp_mult_e (double X, double Y, gsl_sf_result *
+          RESULT)
+     These routines exponentiate X and multiply by the factor Y to
+     return the product y \exp(x).
+
+ - Function: int gsl_sf_exp_mult_e10_e (const double X, const double Y,
+          gsl_sf_result_e10 * RESULT)
+     This function computes the product y \exp(x) using the
+     `gsl_sf_result_e10' type to return a result with extended numeric
+     range.
+
+
+File: gsl-ref.info,  Node: Relative Exponential Functions,  Next: Exponentiation With Error Estimate,  Prev: Exponential Function,  Up: Exponential Functions
+
+Relative Exponential Functions
+------------------------------
+
+ - Function: double gsl_sf_expm1 (double X)
+ - Function: int gsl_sf_expm1_e (double X, gsl_sf_result * RESULT)
+     These routines compute the quantity \exp(x)-1 using an algorithm
+     that is accurate for small x.
+
+ - Function: double gsl_sf_exprel (double X)
+ - Function: int gsl_sf_exprel_e (double X, gsl_sf_result * RESULT)
+     These routines compute the quantity (\exp(x)-1)/x using an
+     algorithm that is accurate for small x.  For small x the algorithm
+     is based on the expansion (\exp(x)-1)/x = 1 + x/2 + x^2/(2*3) +
+     x^3/(2*3*4) + \dots.
+
+ - Function: double gsl_sf_exprel_2 (double X)
+ - Function: int gsl_sf_exprel_2_e (double X, gsl_sf_result * RESULT)
+     These routines compute the quantity 2(\exp(x)-1-x)/x^2 using an
+     algorithm that is accurate for small x.  For small x the algorithm
+     is based on the expansion 2(\exp(x)-1-x)/x^2 = 1 + x/3 + x^2/(3*4)
+     + x^3/(3*4*5) + \dots.
+
+ - Function: double gsl_sf_exprel_n (int N, double X)
+ - Function: int gsl_sf_exprel_n_e (int N, double X, gsl_sf_result *
+          RESULT)
+     These routines compute the N-relative exponential, which is the
+     N-th generalization of the functions `gsl_sf_exprel' and
+     `gsl_sf_exprel2'.  The N-relative exponential is given by,
+
+          exprel_N(x) = N!/x^N (\exp(x) - \sum_{k=0}^{N-1} x^k/k!)
+                      = 1 + x/(N+1) + x^2/((N+1)(N+2)) + ...
+                      = 1F1 (1,1+N,x)
+
+
+File: gsl-ref.info,  Node: Exponentiation With Error Estimate,  Prev: Relative Exponential Functions,  Up: Exponential Functions
+
+Exponentiation With Error Estimate
+----------------------------------
+
+ - Function: int gsl_sf_exp_err_e (double X, double DX, gsl_sf_result *
+          RESULT)
+     This function exponentiates X with an associated absolute error DX.
+
+ - Function: int gsl_sf_exp_err_e10_e (double X, double DX,
+          gsl_sf_result_e10 * RESULT)
+     This functions exponentiate a quantity X with an associated
+     absolute error DX using the `gsl_sf_result_e10' type to return a
+     result with extended range.
+
+ - Function: int gsl_sf_exp_mult_err_e (double X, double DX, double Y,
+          double DY, gsl_sf_result * RESULT)
+     This routine computes the product y \exp(x) for the quantities X,
+     Y with associated absolute errors DX, DY.
+
+ - Function: int gsl_sf_exp_mult_err_e10_e (double X, double DX, double
+          Y, double DY, gsl_sf_result_e10 * RESULT)
+     This routine computes the product y \exp(x) for the quantities X,
+     Y with associated absolute errors DX, DY using the
+     `gsl_sf_result_e10' type to return a result with extended range.
+
+
+File: gsl-ref.info,  Node: Exponential Integrals,  Next: Fermi-Dirac Function,  Prev: Exponential Functions,  Up: Special Functions
+
+Exponential Integrals
+=====================
+
+   Information on the exponential integrals can be found in Abramowitz &
+Stegun, Chapter 5.  These functions are declared in the header file
+`gsl_sf_expint.h'.
+
+* Menu:
+
+* Exponential Integral::
+* Ei(x)::
+* Hyperbolic Integrals::
+* Ei_3(x)::
+* Trigonometric Integrals::
+* Arctangent Integral::
+
+
+File: gsl-ref.info,  Node: Exponential Integral,  Next: Ei(x),  Up: Exponential Integrals
+
+Exponential Integral
+--------------------
+
+ - Function: double gsl_sf_expint_E1 (double X)
+ - Function: int gsl_sf_expint_E1_e (double X, gsl_sf_result * RESULT)
+     These routines compute the exponential integral E_1(x),
+          E_1(x) := Re \int_1^\infty dt \exp(-xt)/t.
+
+
+ - Function: double gsl_sf_expint_E2 (double X)
+ - Function: int gsl_sf_expint_E2_e (double X, gsl_sf_result * RESULT)
+     These routines compute the second-order exponential integral
+     E_2(x),
+          E_2(x) := \Re \int_1^\infty dt \exp(-xt)/t^2.
+
+
+
+File: gsl-ref.info,  Node: Ei(x),  Next: Hyperbolic Integrals,  Prev: Exponential Integral,  Up: Exponential Integrals
+
+Ei(x)
+-----
+
+ - Function: double gsl_sf_expint_Ei (double X)
+ - Function: int gsl_sf_expint_Ei_e (double X, gsl_sf_result * RESULT)
+     These routines compute the exponential integral E_i(x),
+          Ei(x) := PV(\int_{-x}^\infty dt \exp(-t)/t)
+
+     where PV denotes the principal value of the integral.
+
+
+File: gsl-ref.info,  Node: Hyperbolic Integrals,  Next: Ei_3(x),  Prev: Ei(x),  Up: Exponential Integrals
+
+Hyperbolic Integrals
+--------------------
+
+ - Function: double gsl_sf_Shi (double X)
+ - Function: int gsl_sf_Shi_e (double X, gsl_sf_result * RESULT)
+     These routines compute the integral Shi(x) = \int_0^x dt
+     \sinh(t)/t.
+
+ - Function: double gsl_sf_Chi (double X)
+ - Function: int gsl_sf_Chi_e (double X, gsl_sf_result * RESULT)
+     These routines compute the integral  Chi(x) := Re[ \gamma_E +
+     \log(x) + \int_0^x dt (\cosh[t]-1)/t] , where \gamma_E is the
+     Euler constant (available as the macro `M_EULER').
+
+
+File: gsl-ref.info,  Node: Ei_3(x),  Next: Trigonometric Integrals,  Prev: Hyperbolic Integrals,  Up: Exponential Integrals
+
+Ei_3(x)
+-------
+
+ - Function: double gsl_sf_expint_3 (double X)
+ - Function: int gsl_sf_expint_3_e (double X, gsl_sf_result * RESULT)
+     These routines compute the exponential integral Ei_3(x) = \int_0^x
+     dt \exp(-t^3) for x >= 0.
+
+
+File: gsl-ref.info,  Node: Trigonometric Integrals,  Next: Arctangent Integral,  Prev: Ei_3(x),  Up: Exponential Integrals
+
+Trigonometric Integrals
+-----------------------
+
+ - Function: double gsl_sf_Si (const double X)
+ - Function: int gsl_sf_Si_e (double X, gsl_sf_result * RESULT)
+     These routines compute the Sine integral Si(x) = \int_0^x dt
+     \sin(t)/t.
+
+ - Function: double gsl_sf_Ci (const double X)
+ - Function: int gsl_sf_Ci_e (double X, gsl_sf_result * RESULT)
+     These routines compute the Cosine integral Ci(x) = -\int_x^\infty
+     dt \cos(t)/t for x > 0.
+
+
+File: gsl-ref.info,  Node: Arctangent Integral,  Prev: Trigonometric Integrals,  Up: Exponential Integrals
+
+Arctangent Integral
+-------------------
+
+ - Function: double gsl_sf_atanint (double X)
+ - Function: int gsl_sf_atanint_e (double X, gsl_sf_result * RESULT)
+     These routines compute the Arctangent integral AtanInt(x) =
+     \int_0^x dt \arctan(t)/t.
+
+
+File: gsl-ref.info,  Node: Fermi-Dirac Function,  Next: Gamma Function,  Prev: Exponential Integrals,  Up: Special Functions
+
+Fermi-Dirac Function
+====================
+
+   The functions described in this section are declared in the header
+file `gsl_sf_fermi_dirac.h'.
+
+* Menu:
+
+* Complete Fermi-Dirac Integrals::
+* Incomplete Fermi-Dirac Integrals::
+
+
+File: gsl-ref.info,  Node: Complete Fermi-Dirac Integrals,  Next: Incomplete Fermi-Dirac Integrals,  Up: Fermi-Dirac Function
+
+Complete Fermi-Dirac Integrals
+------------------------------
+
+   The complete Fermi-Dirac integral F_j(x) is given by,
+
+     F_j(x)   := (1/r\Gamma(j+1)) \int_0^\infty (t^j / (\exp(t-x) + 1))
+
+ - Function: double gsl_sf_fermi_dirac_m1 (double X)
+ - Function: int gsl_sf_fermi_dirac_m1_e (double X, gsl_sf_result *
+          RESULT)
+     These routines compute the complete Fermi-Dirac integral with an
+     index of -1.  This integral is given by F_{-1}(x) = e^x / (1 +
+     e^x).
+
+ - Function: double gsl_sf_fermi_dirac_0 (double X)
+ - Function: int gsl_sf_fermi_dirac_0_e (double X, gsl_sf_result *
+          RESULT)
+     These routines compute the complete Fermi-Dirac integral with an
+     index of 0.  This integral is given by F_0(x) = \ln(1 + e^x).
+
+ - Function: double gsl_sf_fermi_dirac_1 (double X)
+ - Function: int gsl_sf_fermi_dirac_1_e (double X, gsl_sf_result *
+          RESULT)
+     These routines compute the complete Fermi-Dirac integral with an
+     index of 1, F_1(x) = \int_0^\infty dt (t /(\exp(t-x)+1)).
+
+ - Function: double gsl_sf_fermi_dirac_2 (double X)
+ - Function: int gsl_sf_fermi_dirac_2_e (double X, gsl_sf_result *
+          RESULT)
+     These routines compute the complete Fermi-Dirac integral with an
+     index of 2, F_2(x) = (1/2) \int_0^\infty dt (t^2 /(\exp(t-x)+1)).
+
+ - Function: double gsl_sf_fermi_dirac_int (int J, double X)
+ - Function: int gsl_sf_fermi_dirac_int_e (int J, double X,
+          gsl_sf_result * RESULT)
+     These routines compute the complete Fermi-Dirac integral with an
+     integer index of j, F_j(x) = (1/\Gamma(j+1)) \int_0^\infty dt (t^j
+     /(\exp(t-x)+1)).
+
+ - Function: double gsl_sf_fermi_dirac_mhalf (double X)
+ - Function: int gsl_sf_fermi_dirac_mhalf_e (double X, gsl_sf_result *
+          RESULT)
+     These routines compute the complete Fermi-Dirac integral
+     F_{-1/2}(x).
+
+ - Function: double gsl_sf_fermi_dirac_half (double X)
+ - Function: int gsl_sf_fermi_dirac_half_e (double X, gsl_sf_result *
+          RESULT)
+     These routines compute the complete Fermi-Dirac integral
+     F_{1/2}(x).
+
+ - Function: double gsl_sf_fermi_dirac_3half (double X)
+ - Function: int gsl_sf_fermi_dirac_3half_e (double X, gsl_sf_result *
+          RESULT)
+     These routines compute the complete Fermi-Dirac integral
+     F_{3/2}(x).
+
+
+File: gsl-ref.info,  Node: Incomplete Fermi-Dirac Integrals,  Prev: Complete Fermi-Dirac Integrals,  Up: Fermi-Dirac Function
+
+Incomplete Fermi-Dirac Integrals
+--------------------------------
+
+   The incomplete Fermi-Dirac integral F_j(x,b) is given by,
+
+     F_j(x,b)   := (1/\Gamma(j+1)) \int_b^\infty (t^j / (\Exp(t-x) + 1))
+
+ - Function: double gsl_sf_fermi_dirac_inc_0 (double X, double B)
+ - Function: int gsl_sf_fermi_dirac_inc_0_e (double X, double B,
+          gsl_sf_result * RESULT)
+     These routines compute the incomplete Fermi-Dirac integral with an
+     index of zero, F_0(x,b) = \ln(1 + e^{b-x}) - (b-x).
+
+
+File: gsl-ref.info,  Node: Gamma Function,  Next: Gegenbauer Functions,  Prev: Fermi-Dirac Function,  Up: Special Functions
+
+Gamma Function
+==============
+
+   The Gamma function is defined by the following integral,
+
+     \Gamma(x) = \int_0^t dt  t^{x-1} \exp(-t)
+
+Further information on the Gamma function can be found in Abramowitz &
+Stegun, Chapter 6.  The  functions described in this section are
+declared in the header file `gsl_sf_gamma.h'.
+
+ - Function: double gsl_sf_gamma (double X)
+ - Function: int gsl_sf_gamma_e (double X, gsl_sf_result * RESULT)
+     These routines compute the Gamma function \Gamma(x), subject to x
+     not being a negative integer.  The function is computed using the
+     real Lanczos method. The maximum value of x such that \Gamma(x) is
+     not considered an overflow is given by the macro
+     `GSL_SF_GAMMA_XMAX' and is 171.0.
+
+ - Function: double gsl_sf_lngamma (double X)
+ - Function: int gsl_sf_lngamma_e (double X, gsl_sf_result * RESULT)
+     These routines compute the logarithm of the Gamma function,
+     \log(\Gamma(x)), subject to x not a being negative integer.  For
+     x<0 the real part of \log(\Gamma(x)) is returned, which is
+     equivalent to \log(|\Gamma(x)|).  The function is computed using
+     the real Lanczos method.
+
+ - Function: int gsl_sf_lngamma_sgn_e (double X, gsl_sf_result *
+          RESULT_LG, double * SGN)
+     This routine computes the sign of the gamma function and the
+     logarithm its magnitude, subject to x not being a negative
+     integer.  The function is computed using the real Lanczos method.
+     The value of the gamma function can be reconstructed using the
+     relation \Gamma(x) = sgn * \exp(resultlg).
+
+ - Function: double gsl_sf_gammastar (double X)
+ - Function: int gsl_sf_gammastar_e (double X, gsl_sf_result * RESULT)
+     These routines compute the regulated Gamma Function \Gamma^*(x)
+     for x > 0. The regulated gamma function is given by,
+
+          \Gamma^*(x) = \Gamma(x)/(\sqrt{2\pi} x^{(x-1/2)} \exp(-x))
+                      = (1 + (1/12x) + ...)  for x \to \infty
+     and is a useful suggestion of Temme.
+
+ - Function: double gsl_sf_gammainv (double X)
+ - Function: int gsl_sf_gammainv_e (double X, gsl_sf_result * RESULT)
+     These routines compute the reciprocal of the gamma function,
+     1/\Gamma(x) using the real Lanczos method.
+
+ - Function: int gsl_sf_lngamma_complex_e (double ZR, double ZI,
+          gsl_sf_result * LNR, gsl_sf_result * ARG)
+     This routine computes \log(\Gamma(z)) for complex z=z_r+i z_i and
+     z not a negative integer, using the complex Lanczos method.  The
+     returned parameters are lnr = \log|\Gamma(z)| and arg =
+     \arg(\Gamma(z)) in (-\pi,\pi].  Note that the phase part (ARG) is
+     not well-determined when |z| is very large, due to inevitable
+     roundoff in restricting to (-\pi,\pi].  This will result in a
+     `GSL_ELOSS' error when it occurs.  The absolute value part (LNR),
+     however, never suffers from loss of precision.
+
+ - Function: double gsl_sf_taylorcoeff (int N, double X)
+ - Function: int gsl_sf_taylorcoeff_e (int N, double X, gsl_sf_result *
+          RESULT)
+     These routines compute the Taylor coefficient x^n / n! for x >= 0,
+     n >= 0.
+
+ - Function: double gsl_sf_fact (unsigned int N)
+ - Function: int gsl_sf_fact_e (unsigned int N, gsl_sf_result * RESULT)
+     These routines compute the factorial n!.  The factorial is related
+     to the Gamma function by n! = \Gamma(n+1).
+
+ - Function: double gsl_sf_doublefact (unsigned int N)
+ - Function: int gsl_sf_doublefact_e (unsigned int N, gsl_sf_result *
+          RESULT)
+     These routines compute the double factorial n!! = n(n-2)(n-4)
+     \dots.
+
+ - Function: double gsl_sf_lnfact (unsigned int N)
+ - Function: int gsl_sf_lnfact_e (unsigned int N, gsl_sf_result *
+          RESULT)
+     These routines compute the logarithm of the factorial of N,
+     \log(n!).  The algorithm is faster than computing \ln(\Gamma(n+1))
+     via `gsl_sf_lngamma' for n < 170, but defers for larger N.
+
+ - Function: double gsl_sf_lndoublefact (unsigned int N)
+ - Function: int gsl_sf_lndoublefact_e (unsigned int N, gsl_sf_result *
+          RESULT)
+     These routines compute the logarithm of the double factorial of N,
+     \log(n!!).
+
+ - Function: double gsl_sf_choose (unsigned int N, unsigned int M)
+ - Function: int gsl_sf_choose_e (unsigned int N, unsigned int M,
+          gsl_sf_result * RESULT)
+     These routines compute the combinatorial factor `n choose m' =
+     n!/(m!(n-m)!)
+
+ - Function: double gsl_sf_lnchoose (unsigned int N, unsigned int M)
+ - Function: int gsl_sf_lnchoose_e (unsigned int N, unsigned int M,
+          gsl_sf_result * RESULT)
+     These routines compute the logarithm of `n choose m'.  This is
+     equivalent to the sum \log(n!) - \log(m!) - \log((n-m)!).
+
+ - Function: double gsl_sf_poch (double A, double X)
+ - Function: int gsl_sf_poch_e (double A, double X, gsl_sf_result *
+          RESULT)
+     These routines compute the Pochhammer symbol (a)_x := \Gamma(a +
+     x)/\Gamma(x), subject to a and a+x not being negative integers.
+     The Pochhammer symbol is also known as the Apell symbol.
+
+ - Function: double gsl_sf_lnpoch (double A, double X)
+ - Function: int gsl_sf_lnpoch_e (double A, double X, gsl_sf_result *
+          RESULT)
+     These routines compute the logarithm of the Pochhammer symbol,
+     \log((a)_x) = \log(\Gamma(a + x)/\Gamma(a)) for a > 0, a+x > 0.
+
+ - Function: int gsl_sf_lnpoch_sgn_e (double A, double X, gsl_sf_result
+          * RESULT, double * SGN)
+     These routines compute the sign of the Pochhammer symbol and the
+     logarithm of its magnitude.  The computed parameters are result =
+     \log(|(a)_x|) and sgn = sgn((a)_x) where (a)_x := \Gamma(a +
+     x)/\Gamma(a), subject to a, a+x not being negative integers.
+
+ - Function: double gsl_sf_pochrel (double A, double X)
+ - Function: int gsl_sf_pochrel_e (double A, double X, gsl_sf_result *
+          RESULT)
+     These routines compute the relative Pochhammer symbol ((a,x) -
+     1)/x where (a,x) = (a)_x := \Gamma(a + x)/\Gamma(a).
+
+ - Function: double gsl_sf_gamma_inc_Q (double A, double X)
+ - Function: int gsl_sf_gamma_inc_Q_e (double A, double X,
+          gsl_sf_result * RESULT)
+     These routines compute the normalized incomplete Gamma Function
+     P(a,x) = 1/\Gamma(a) \int_x\infty dt t^{a-1} \exp(-t) for a > 0, x
+     >= 0.
+
+ - Function: double gsl_sf_gamma_inc_P (double A, double X)
+ - Function: int gsl_sf_gamma_inc_P_e (double A, double X,
+          gsl_sf_result * RESULT)
+     These routines compute the complementary normalized incomplete
+     Gamma Function P(a,x) = 1/\Gamma(a) \int_0^x dt t^{a-1} \exp(-t)
+     for a > 0, x >= 0.
+
+ - Function: double gsl_sf_beta (double A, double B)
+ - Function: int gsl_sf_beta_e (double A, double B, gsl_sf_result *
+          RESULT)
+     These routines compute the Beta Function, B(a,b) =
+     \Gamma(a)\Gamma(b)/\Gamma(a+b) for a > 0, b > 0.
+
+ - Function: double gsl_sf_lnbeta (double A, double B)
+ - Function: int gsl_sf_lnbeta_e (double A, double B, gsl_sf_result *
+          RESULT)
+     These routines compute the logarithm of the Beta Function,
+     \log(B(a,b)) for a > 0, b > 0.
+
+ - Function: double gsl_sf_beta_inc (double A, double B, double X)
+ - Function: int gsl_sf_beta_inc_e (double A, double B, double X,
+          gsl_sf_result * RESULT)
+     These routines compute the normalize incomplete Beta function
+     B_x(a,b)/B(a,b) for a > 0, b > 0, and 0 <= x <= 1.
+
+
+File: gsl-ref.info,  Node: Gegenbauer Functions,  Next: Hypergeometric Functions,  Prev: Gamma Function,  Up: Special Functions
+
+Gegenbauer Functions
+====================
+
+   The Gegenbauer polynomials are defined in Abramowitz & Stegun,
+Chapter 22, where they are known as Ultraspherical polynomials.  The
+functions described in this section are declared in the header file
+`gsl_sf_gegenbauer.h'.
+
+ - Function: double gsl_sf_gegenpoly_1 (double LAMBDA, double X)
+ - Function: double gsl_sf_gegenpoly_2 (double LAMBDA, double X)
+ - Function: double gsl_sf_gegenpoly_3 (double LAMBDA, double X)
+ - Function: int gsl_sf_gegenpoly_1_e (double LAMBDA, double X,
+          gsl_sf_result * RESULT)
+ - Function: int gsl_sf_gegenpoly_2_e (double LAMBDA, double X,
+          gsl_sf_result * RESULT)
+ - Function: int gsl_sf_gegenpoly_3_e (double LAMBDA, double X,
+          gsl_sf_result * RESULT)
+     These functions evaluate the Gegenbauer polynomials
+     C^{(\lambda)}_n(x) using explicit representations for n =1, 2, 3.
+
+ - Function: double gsl_sf_gegenpoly_n (int N, double LAMBDA, double X)
+ - Function: int gsl_sf_gegenpoly_n_e (int N, double LAMBDA, double X,
+          gsl_sf_result * RESULT)
+     These functions evaluate the Gegenbauer polynomial
+     C^{(\lambda)}_n(x) for a specific value of N, LAMBDA, X subject to
+     \lambda > -1/2, n >= 0.
+
+ - Function: int gsl_sf_gegenpoly_array (int NMAX, double LAMBDA,
+          double X, double RESULT_ARRAY[])
+     This function computes an array of Gegenbauer polynomials
+     C^{(\lambda)}_n(x) for n = 0, 1, 2, \dots, nmax, subject to
+     \lambda > -1/2, nmax >= 0.
+
+
+File: gsl-ref.info,  Node: Hypergeometric Functions,  Next: Laguerre Functions,  Prev: Gegenbauer Functions,  Up: Special Functions
+
+Hypergeometric Functions
+========================
+
+   Hypergeometric functions are described in Abramowitz & Stegun,
+Chapters 13 and 15.  These functions are declared in the header file
+`gsl_sf_hyperg.h'.
+
+ - Function: double gsl_sf_hyperg_0F1 (double C, double X)
+ - Function: int gsl_sf_hyperg_0F1_e (double C, double X, gsl_sf_result
+          * RESULT)
+     These routines compute the hypergeometric function 0F1(c,x).
+
+ - Function: double gsl_sf_hyperg_1F1_int (int M, int N, double X)
+ - Function: int gsl_sf_hyperg_1F1_int_e (int M, int N, double X,
+          gsl_sf_result * RESULT)
+     These routines compute the confluent hypergeometric function
+     1F1(m,n,x) = M(m,n,x) for integer parameters M, N.
+
+ - Function: double gsl_sf_hyperg_1F1 (double A, double B, double X)
+ - Function: int gsl_sf_hyperg_1F1_e (double A, double B, double X,
+          gsl_sf_result * RESULT)
+     These routines compute the confluent hypergeometric function
+     1F1(a,b,x) = M(a,b,x) for general parameters A, B.
+
+ - Function: double gsl_sf_hyperg_U_int (int M, int N, double X)
+ - Function: int gsl_sf_hyperg_U_int_e (int M, int N, double X,
+          gsl_sf_result * RESULT)
+     These routines compute the confluent hypergeometric function
+     U(m,n,x) for integer parameters M, N.
+
+ - Function: int gsl_sf_hyperg_U_int_e10_e (int M, int N, double X,
+          gsl_sf_result_e10 * RESULT)
+     This routine computes the confluent hypergeometric function
+     U(m,n,x) for integer parameters M, N using the `gsl_sf_result_e10'
+     type to return a result with extended range.
+
+ - Function: double gsl_sf_hyperg_U (double A, double B, double X)
+ - Function: int gsl_sf_hyperg_U_e (double A, double B, double X)
+     These routines compute the confluent hypergeometric function
+     U(a,b,x).
+
+ - Function: int gsl_sf_hyperg_U_e10_e (double A, double B, double X,
+          gsl_sf_result_e10 * RESULT)
+     This routine computes the confluent hypergeometric function
+     U(a,b,x) using the `gsl_sf_result_e10' type to return a result
+     with extended range.
+
+ - Function: double gsl_sf_hyperg_2F1 (double A, double B, double C,
+          double X)
+ - Function: int gsl_sf_hyperg_2F1_e (double A, double B, double C,
+          double X, gsl_sf_result * RESULT)
+     These routines compute the Gauss hypergeometric function
+     2F1(a,b,c,x) for |x| < 1.
+
+ - Function: double gsl_sf_hyperg_2F1_conj (double AR, double AI,
+          double C, double X)
+ - Function: int gsl_sf_hyperg_2F1_conj_e (double AR, double AI, double
+          C, double X, gsl_sf_result * RESULT)
+     These routines compute the Gauss hypergeometric function 2F1(a_R +
+     i a_I, a_R - i a_I, c, x) with complex parameters for |x| < 1.
+     exceptions:
+
+ - Function: double gsl_sf_hyperg_2F1_renorm (double A, double B,
+          double C, double X)
+ - Function: int gsl_sf_hyperg_2F1_renorm_e (double A, double B, double
+          C, double X, gsl_sf_result * RESULT)
+     These routines compute the renormalized Gauss hypergeometric
+     function 2F1(a,b,c,x) / \Gamma(c) for |x| < 1.
+
+ - Function: double gsl_sf_hyperg_2F1_conj_renorm (double AR, double
+          AI, double C, double X)
+ - Function: int gsl_sf_hyperg_2F1_conj_renorm_e (double AR, double AI,
+          double C, double X, gsl_sf_result * RESULT)
+     These routines compute the renormalized Gauss hypergeometric
+     function 2F1(a_R + i a_I, a_R - i a_I, c, x) / \Gamma(c) for |x| <
+     1.
+
+ - Function: double gsl_sf_hyperg_2F0 (double A, double B, double X)
+ - Function: int gsl_sf_hyperg_2F0_e (double A, double B, double X,
+          gsl_sf_result * RESULT)
+     These routines compute the hypergeometric function 2F0(a,b,x).
+     The series representation is a divergent hypergeometric series.
+     However, for x < 0 we have 2F0(a,b,x) = (-1/x)^a U(a,1+a-b,-1/x)
+

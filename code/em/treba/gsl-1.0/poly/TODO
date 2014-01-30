@@ -1,0 +1,41 @@
+* Newton-Maehly (Newton with implicit deflation)
+
+* Jenkins-Traub
+
+* Brian Smith's adaptation of Laguerre's method
+
+* Hirano's method, SIAM J Num Anal 19 (1982) 793-99 by Murota
+
+* Carstensen, Petkovic, "On iteration methods without derivatives for
+the simultaneous determination of polynomial zeros", J. Comput. Appl.
+Math., 45 (1993) 251-267
+
+* Investigate this,
+
+ > NA Digest   Sunday, July 11, 1999   Volume 99 : Issue 28
+ > 
+ > From: Murakami Hiroshi <nadigest@tmca.ac.jp>
+ > Date: Sun, 11 Jul 1999 18:56:54 +0900 (JST)
+ > Subject: Code for Wilf's Complex Bisection Method
+ > 
+ >   A sample demo source of root finding method for the general complex 
+ > coefficient polynomial is placed to URL <ftp://ftp.tmca.ac.jp/wilf.taz>. 
+ > It is about 8KB in size and is a tar and gnu-zipped file.
+ > The algorithm is taken from the following reference: 
+ >     HERBERT S.WILF,"A Global Bisection Algorithm for Computing the Zeros 
+ >     of Polynomials in the Complex Plane",ACM.vol.25,No.3,July 1978,pp.415-420.
+ > 
+ >   The Wilf's method is the complex plane version of the Sturm bi-section 
+ > method for the real polynomial. And theoretically very interesting.
+ > For the given complex interval (complex rectilinear region and sides are 
+ > parallel to the x-y axis), the procedure gives the count of the complex 
+ > roots of the polynomial inside the interval. Thus, successive bi-section
+ > or quad-section of the interval can give the sequence of the shrinking 
+ > intervals containing the root inside to attain the required accuracies.
+ >   The source code is written mostly Fortran77 language, however some 
+ > violations are intensionally left as: 1: The DO-ENDDO loop structure.
+ > 2: The longer than 6 letter names. 3: The use of under-score letter. 
+ > 4: The use of include statement.
+ >   The code will be placed in the public domain.
+ > 
+

@@ -1,0 +1,303 @@
+\.TH treba 1 "November 27, 2013"
+.SH NAME
+treba \- probabilistic finite-state automaton training and decoding
+.SH SYNOPSIS
+.B treba [options] [
+.I OBSERVATIONS-FILE
+.B ]
+.SH DESCRIPTION
+.B treba
+is a tool for training, decoding, and calculating with weighted (probabilistic) finite state automata and hidden Markov models (HMMs).  Training algorithms include Baum-Welch (EM), Viterbi training, Gibbs sampling, merge-based algorithms (ALERGIA, MDI et al.), and Baum-Welch augmented with deterministic annealing.  Training algorithms can be run multi-threaded (EM/hard EM/Variational Bayes) on hardware with multiple cores/CPUs, or with NVIDIA GPUs (Gibbs sampler).  Forward, backward, and Viterbi decoding are supported.  Automata/HMMs for training/decoding are read from a text file, or can be generated randomly or with uniform transition probabilities with different topologies (ergodic or fully connected, Bakis or left-to-right, or deterministic).  Observations used for training or decoding are read from text files.  The resulting automata, path calculations, or probability calculations are printed to standard output. 
+
+.SH BASIC OPTIONS
+The program has four main modes of operation: training (the 
+.B --train
+option), decoding (the
+.B --decode
+option), likelihood calculation (the
+.B --likelihood
+option), and sequence generation (the
+.B --generate
+option).  All modes except generation depend on an observations file and possibly a finite-state automaton or HMM file (if not initialized randomly for training). 
+The observations file is a text file and is assumed to consist of whitespace-separated sequences of integers, one observation sequence on each line.  Empty lines correspond to the empty string and are acceptable.  All output is directed to the standard output: when run in training mode, the output will consist of a FSA/HMM in a text format (see below); when run in decoding mode, the output will be a string of whitespace-separated integers representing the most probable path through a given FSA or HMM, one path for each observation; when run in likelihood calculation mode, the output will be one probability for each line in the observations file.
+
+.SH OBSERVATION FILES
+Observations files are assumed to contain one observation on each line, separated by whitespace.  Each observation is a sequence of integers, representing symbols.  It is assumed that the lowest numbered symbol is 0, and that the "alphabet" contains no gaps.  The following illustrates an observations file with three observations:
+
+.PP
+\f(CW      1 7 4 3 6 3 9 7 8 10 11 1 1  \fR\br
+\f(CW      3 4 3 2 \fR\br
+\f(CW      5 5 5 1 0 0 1 0 \fR\br
+
+Lines beginning with the #-symbols are assumed to be comments and are ignored in all inputs (observations or automata/HMM specifications).
+
+.SH DETAILED OPTIONS
+
+.TP
+.B \--hmm
+Use HMMs instead of the default input/output which is probabilistic finite automata
+.TP
+.B \--cuda
+Enable NVIDIA-CUDA for Gibbs sampling (if compiled in and NVIDIA-card is present)
+
+.TP
+.B \--train=merge|mdi|bw|dabw|gs|vb|vit|vitbw
+Train a model with one of the algorithms 
+.B merge
+(ALERGIA and variants),
+.B mdi
+(MDI),
+.B bw
+(Baum-Welch),
+.B dabw
+(Baum-Welch with deterministic annealing),
+.B gs
+(Gibbs sampler),
+.B vb
+Variational Bayes (EM),
+.B vit
+(Viterbi training/hard EM), or
+.B vitbw
+(Viterbi training followed by Baum-Welch).
+.TP
+.B \--decode=f|b|vit[,p]
+Decode (find the best path) through the automaton/HMM for each word in obervation-file using either the forward path (
+.B f
+)
+, the backward path (
+.B b
+), or the Viterbi path (
+.B vit
+).  The optional 
+.B ,p
+will also print out the respective probability together with the path.  Note that forward and backward decoding chooses the most probable state for each point in time and so the path may or may not correspond to an actually valid path in the automaton.  For example, 
+.B --decode=vit,p 
+will calculate the Viterbi path and print its probability.
+.TP
+.B \--likelihood=f|vit
+Calculate the likelihood (probability) for each observation in observation-file using forward probability, or the Viterbi probability.
+.TP
+.BI \--generate=NUM
+Generate NUM random sequences from FSA/HMM.  Randomness is weighted by transition probabilities.  The sequences are output in three TAB-separated fields: (1) the sequence probability; (2) the symbol sequence itself; (3) the state sequence.
+
+.TP
+.BI \--input-format=FORMAT
+Set format of probabilities in input automata (real numbers or logs or negative logs in various bases), one of 
+.B real, log10, ln, log2, nlog10, nln, nlog2.
+Default is 
+.B real.
+.TP
+.BI \--output-format=FORMAT
+Set format of probabilities related to output automata or results of decoding and likelihood calculations (real numbers or logs or negative logs in various bases), one of 
+.B real, log10, ln, log2, nlog10, nln, nlog2.
+Default is 
+.B real.
+.TP
+.BI \--file=FILENAME
+Specify finite state automaton or HMM file.  Each line in the automaton file consists of one to four numbers: a four-number line 
+S1 S2 A P
+indicates a transition from S1 to S2 with symbol 
+.I A 
+and probability 
+.I P
+whereas a line of the format
+S P
+indicates the final probability at state
+.I S.
+Three-number and one-number lines are identical to the above, with an implicit probabibility
+.I P 
+of one.  The initial state is always state number 0.  The format is identical to the text formats accepted by the AT&T FSM toolkit or OpenFST, with the exception that strings are not allowed to represent symbols or states: all symbols and states need to be integers.
+
+The following snippet illustrates a typical FSA file of two states with an alphabet size of three using real-valued probabilities:
+
+.PP
+\f(CW      0 0 0 0.25 \fR\br
+\f(CW      0 0 1 0.25 \fR\br
+\f(CW      0 1 0 0.2 \fR\br
+\f(CW      0 1 1 0.1 \fR\br
+\f(CW      0 1 2 0.1 \fR\br
+\f(CW      1 0 0 0.15 \fR\br
+\f(CW      1 0 1 0.15 \fR\br
+\f(CW      1 1 0 0.3 \fR\br
+\f(CW      1 1 1 0.1 \fR\br
+\f(CW      1 1 2 0.1 \fR\br
+\f(CW      0 0.1\fR\br
+\f(CW      1 0.2\fR\br
+.PP
+
+The following illustrates a HMM:
+
+.PP
+\f(CW      0 > 1 0.44 \fR\br
+\f(CW      0 > 2 0.03 \fR\br
+\f(CW      0 > 3 0.53 \fR\br
+\f(CW      1 > 1 0.11 \fR\br
+\f(CW      1 > 2 0.08 \fR\br
+\f(CW      1 > 3 0.81 \fR\br
+\f(CW      2 > 1 0.48 \fR\br
+\f(CW      2 > 2 0.25\fR\br
+\f(CW      2 > 3 0.27 \fR\br
+\f(CW      1 0 0.21 \fR\br
+\f(CW      1 1 0.79\fR\br
+\f(CW      2 0 0.92\fR\br
+\f(CW      2 1 0.08\fR\br
+.PP
+
+That is, transitions in HMMs are specified with lines of the format SOURCE-STATE > TARGET-STATE TRANSITION-PROBABILITY, and emissions with lines of the format STATE SYMBOL EMISSION-PROBABILITY.
+
+.TP
+.BI \--initialize=TYPE-NUMSTATES[,NUMSYMBOLS]
+Generate an initial automaton of type
+.I type
+for training.  The type is a combination of an option letter and the number of the states and the alphabet of the format
+.B [b|d]#states(,#numsymbols)
+Here, 
+.B b 
+will generate a Bakis (left-to-right) automaton, 
+.B d 
+a deterministic automaton, and 
+the default with no specification generates a fully connected (ergodic) nondeterministic automaton.  If
+.B numsymbols 
+is omitted, the necessary alphabet size will be deduced from the observation file.  For example, 
+.B --initialize=20
+will generate an initial fully connected random automaton with 20 states, inferring the necessary alphabet size from the data while
+.B --initialize=20,10
+will generate an initial fully connected random automaton with 20 states and force the alphabet to be of size 10 symbols whereas
+.B --initialize=b10
+will generate a Bakis automaton with 10 states, and the alphabet size is deduced from the largest symbol in the observations file.
+.TP
+.BI \--uniform
+This option sets all initially generated automata with the 
+.B --initialize
+option to have uniform probabilities instead of randomly assigned ones.
+.TP
+.BI \--help
+print help and exit
+.TP
+.BI \--version
+print version and exit
+
+.SH TRAINING OPTIONS
+.TP
+.BI \--max-delta=MAXDELTA
+Maximum delta (change in log likelihood between training iterations) to use for convergence.  Default is 0.1.  Note that treba will output the result of training calculations so far if CTRL-C is pressed without the need to wait for convergence.
+.TP
+.BI \--max-iter=NUM
+Maximum number of iterations in training.  Default is 20000.  Note that treba will output the result of training calculations so far if CTRL-C is pressed without the need to wait for convergence.
+.TP
+.BI \--prior=PRIOR1[,PRIOR2]
+Priors to use in various contexts: the Dirichlet prior in Gibbs sampling, a smoothing prior in merging algorithms, or pseudocounts to use in Viterbi training to prevent paths of probability zero. For HMMs, two priors are usually specified, where the first one is state-to-state transition prior, and the second one is the emission prior, e.g. --prior=0.1,0.2
+.BI \--merge=ALGORITHM
+Choose merging algorithm, one of alergia,chi2,lr,binomial,exactm,exact (ALERGIA default Hoeffding bound, chi-squared test, likelihood ratio, binomial test, exact multinomial test, exact test).
+.BI \--alpha=VALUE
+This is the main parameter for state merging algorithms. Default is 0.05.
+.BI \--t0=VALUE
+The t0-parameter for ALERGIA/MDI.
+.BI \--recursive-merge
+Enables recursive compatibility checks for state merging algorithms. Default: OFF.
+.TP
+.B \--restarts=OPT
+where OPT=numrestarts,iterations-per-restart. Sets Baum-Welch to restart itself 
+.B restarts 
+times running for
+.B iterations-per-restart 
+iterations each restart.  After all random restarts have been run, the fsm with the best log likelihood is chosen and Baum-Welch proceeds as normal.
+
+.TP
+.B \--annealopts=betamin,betamax,alpha
+Controls the parameters for deterministic annealing when run with 
+.B -T dabw
+setting the initial beta value to 
+.B betamin,
+the maximum beta value to 
+.B betamax
+and the multiplier 
+.B alpha 
+by which beta in increased each time Baum-Welch converges.  The default values are 0.02, 1.0, and 1.01.
+.TP
+.BI \--threads=NUM
+Number of threads to launch in Baum-Welch training.  The value 
+.B num-threads 
+can be optionally prefixed by
+.B c 
+or 
+.B c/
+to use 
+.B c-n 
+threads or 
+.B c/n 
+threads, where 
+.B c 
+is the number of logical CPUs on the system.  To use half the available processors one would issue the flag
+.B --threads=c/2 
+and likewise 
+.B --threads=c1 
+to use all but one of the available CPUs/cores. Default value is 1.
+.SH EXAMPLE USAGE
+.IP "treba --train=bw --initialize=10 sentences.txt"
+Reads all the sentences from sentences.txt and trains a 10-state probabilistic automaton using Baum-Welch using the default training parameters.  The initial automaton has random probabilities on its transitions and fully connected.
+.IP "treba --hmm --train=bw --initialize=25 sentences.txt"
+Reads all the sentences from sentences.txt and trains a 25-state HMM using Baum-Welch using the default training parameters.  The initial automaton has random probabilities on its transitions and fully connected.
+.IP "treba --hmm --train=gs --initialize=n20 sentences.txt"
+Reads all the sentences from sentences.txt and trains a 20-state HMM with Gibbs sampling using the default parameters of burn-in, lag, and maximum iterations.
+.IP "treba --cuda --train=gs --initialize=n40 --burnin=1000 --lag=100 --max-iter=10000 sentences.txt"
+Reads all the sentences from sentences.txt and trains a 40-state PFSA with Gibbs sampling using a burn-in of 1000, and then collecting samples each 100 iterations, running for a total of 10000 iterations.  The --cuda option forces the GPU implementation to be used (only available if compiled in and an NVIDIA card is present).
+.IP "treba --train=bw --threads=c/2 --initialize=b100 sentences.txt"
+Reads all the sentences from sentences.txt and trains a 100-state probabilistic automaton using Baum-Welch.  The initial automaton is left-to-right.  During training, half the available CPUs will be used. 
+.IP "treba --train=merge --alpha=0.01 sentences.txt"
+Reads all the sentences from sentences.txt and infers an deterministic probabilistic finite automaton using the ALERGIA algorithm, with the alpha parameter set to 0.01.
+.IP "treba --train=dabw --threads=8 --file=initial.fsm sentences.txt"
+Reads all the sentences from sentences.txt and trains a probabilistic automaton using Baum-Welch with deterministic annealing.  The initial automaton is read from initial.fsm.  A total of 8 threads will be launched in parallel for Baum-Welch.
+.IP "treba --train=vit --initialize=b25,5 --maxiter=10 sentences.txt"
+Reads all the sentences from sentences.txt and trains a 25-state probabilistic automaton with an alphabet size of 5 using Viterbi training running a maximum of 10 iterations.  The initial automaton is random and left-to-right (Bakis).
+.IP "treba --likelihood=f --file=myfsm.fsm sentences.txt"
+Reads sentences.txt and calculates for each observation line the forward probability in the automaton in myfsm.fsm.
+.IP "treba --decode=vit --file=myfsm.fsm sentences.txt"
+Reads sentences.txt and calculates for each observation line the most probable path (the Viterbi path) in the automaton myfsm.fsm.
+.IP "treba --decode=vit,p --file=myfsm.fsm sentences.txt"
+Reads sentences.txt and calculates for each observation line the most probable path through the automaton in myfsm.fsm.  The probability of the path is also printed.
+.IP "treba --generate=100 --output-format=log10 --file=myfsm.fsm"
+Generate 100 random sequences (weighted by transition probabilities) from myfsm.fsm.  Output probability scores are log10 and myfsm.fsm has real-valued transitions (default).
+.IP "treba --input-format=real --output-format=nln --file=myfsm.fsm"
+No real action: myfsm.fsm is read (inputs are real-valued) and converted to negative logprobs (aka weights) with the base e and output to stdout.  This can be used to export an FSA for processing with e.g. the AT&T tools or OpenFST.  Not issuing any of the flags --train, --decode or --likelihood, will simply output the input FSA, performing a possible conversion depending on the input and output specifiers.
+
+.SH "SEE ALSO"
+
+http://treba.googlecode.com
+
+Baum, L. E., T. Petrie, G. Soules, and N. Weiss. (1970). A maximization technique occurring in the statistical analysis of probabilistic functions of Markov chains. Annals of Mathematical Statistics, vol. 41, no. 1, pages. 164\(en171.
+
+Carrasco, R. C., & Oncina, J. (1994). Learning stochastic regular grammars by means of a state merging method. In Grammatical Inference and Applications (pp. 139\(en-152). Springer.
+
+de la Higuera, C. (2010). Grammatical Inference: Learning Automata and Grammars.  Cambridge University Press.
+
+Dempster, A., N. Laird, and D. Rubin. (1977). Maximum likelihood estimation from incomplete data via the EM algorithm. Journal of the Royal Statistical Society B, 39:1\(en38.
+
+Hulden, M. (2012). Treba: Efficient Numerically Stable EM for PFA. Journal of Machine Learning Research Workshop and Conference Proceedings, Vol. 21: ICGI 2012: 249\(en-253.
+
+MacKay, D. J. (1997). Ensemble learning for hidden Markov models. Technical report, Cavendish Laboratory, University of Cambridge.
+
+Rabiner, L. R. (1989). A tutorial on Hidden Markov Models and selected applications in speech recognition.  Proc. of the IEEE, 77(2):257\(en286.
+
+Rao, A. and K. Rose. (2001). Deterministically annealed design of Hidden Markov Model speech recognizers. IEEE Transactions on Speech and Audio Processing, 9(2):111\(en126.
+
+Rose, K. (1998). Deterministic annealing for clustering, compression, classification, regression, and related optimization problems. Proc. of the IEEE, 86(11):2210\(en2239.
+
+Shibata, C., & Yoshinaka, R. (2012). Marginalizing Out Transition Probabilities for Several Subclasses of PFAs. Journal of Machine Learning Research Workshop and Conference Proceedings, Vol. 21: ICGI 2012: 259\(en-263.
+
+Thollard, F., P. Dupont, and C. de la Higuera. (2000). Probabilistic DFA inference using Kullback-Leibler divergence and minimality. In Proceedings of the 17th International Conference on Machine Learning:975\(en–982. Morgan Kaufmann: San Francisco.
+
+Ueda, N. and Nakano, R. (1998). Deterministic annealing EM algorithm. Neural Networks, 11(2):271\(en282.
+
+Verwer, S., Eyraud, R., and de la Higuera, C. (2012). Pautomac: a PFA/HMM learning competition. In Proceedings of the 11th International Conference on Grammatical Inference.
+
+Smith, N. A. and Eisner, J. (2004). Annealing techniques for unsupervised statistical language learning. In Proc. of the ACL, pages 486\(en493.
+
+.BR fsm (1)
+
+.SH BUGS
+Many and hairy. This is academic code. Don't build Mars rovers with it.
+
+.SH AUTHOR
+.LP
+Mans Hulden <mans.hulden@gmail.com>

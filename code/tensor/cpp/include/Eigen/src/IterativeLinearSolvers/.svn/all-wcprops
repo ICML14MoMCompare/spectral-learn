@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/IterativeLinearSolvers
+END
+BasicPreconditioners.h
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/IterativeLinearSolvers/BasicPreconditioners.h
+END
+ConjugateGradient.h
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/IterativeLinearSolvers/ConjugateGradient.h
+END
+BiCGSTAB.h
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/IterativeLinearSolvers/BiCGSTAB.h
+END
+IterativeSolverBase.h
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/IterativeLinearSolvers/IterativeSolverBase.h
+END
+IncompleteLUT.h
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/IterativeLinearSolvers/IncompleteLUT.h
+END
+CMakeLists.txt
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/IterativeLinearSolvers/CMakeLists.txt
+END

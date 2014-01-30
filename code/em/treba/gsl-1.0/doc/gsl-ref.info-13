@@ -1,0 +1,1248 @@
+This is gsl-ref.info, produced by makeinfo version 4.0 from
+gsl-ref.texi.
+
+INFO-DIR-SECTION Scientific software
+START-INFO-DIR-ENTRY
+* gsl-ref: (gsl-ref).                   GNU Scientific Library - Reference
+END-INFO-DIR-ENTRY
+
+   This file documents the GNU Scientific Library.
+
+   Copyright (C) 1996, 1997, 1998, 1999, 2000, 2001 The GSL Team.
+
+   Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.1 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.  A
+copy of the license is included in the section entitled "GNU Free
+Documentation License".
+
+
+File: gsl-ref.info,  Node: Closing an ntuple file,  Next: Histogramming ntuple values,  Prev: Reading ntuples,  Up: N-tuples
+
+Closing an ntuple file
+======================
+
+ - Function: int gsl_ntuple_close (gsl_ntuple * NTUPLE)
+     This function closes the ntuple file NTUPLE and frees its
+     associated allocated memory.
+
+
+File: gsl-ref.info,  Node: Histogramming ntuple values,  Next: Example ntuple programs,  Prev: Closing an ntuple file,  Up: N-tuples
+
+Histogramming ntuple values
+===========================
+
+   Once an ntuple has been created its contents can be histogrammed in
+various ways using the function `gsl_ntuple_project'.  Two user-defined
+functions must be provided, a function to select events and a function
+to compute scalar values. The selection function and the value function
+both accept the ntuple row as a first argument and other parameters as
+a second argument.
+
+   The "selection function" determines which ntuple rows are selected
+for histogramming.  It is defined by the following struct,
+     typedef struct {
+       int (* function) (void * ntuple_data, void * params);
+       void * params;
+     } gsl_ntuple_select_fn;
+
+The struct component FUNCTION should return a non-zero value for each
+ntuple row that is to be included in the histogram.
+
+   The "value function" computes scalar values for those ntuple rows
+selected by the selection function,
+     typedef struct {
+       double (* function) (void * ntuple_data, void * params);
+       void * params;
+     } gsl_ntuple_value_fn;
+
+In this case the struct component FUNCTION should return the value to
+be added to the histogram for the ntuple row.
+
+ - Function: int gsl_ntuple_project (gsl_histogram * H, gsl_ntuple *
+          NTUPLE, gsl_ntuple_value_fn *VALUE_FUNC, gsl_ntuple_select_fn
+          *SELECT_FUNC)
+     This function updates the histogram H from the ntuple NTUPLE using
+     the functions VALUE_FUNC and SELECT_FUNC. For each ntuple row
+     where the selection function SELECT_FUNC is non-zero the
+     corresponding value of that row is computed using the function
+     VALUE_FUNC and added to the histogram.  Those ntuple rows where
+     SELECT_FUNC returns zero are ignored.  New entries are added to
+     the histogram, so subsequent calls can be used to accumulate
+     further data in the same histogram.
+
+
+File: gsl-ref.info,  Node: Example ntuple programs,  Next: Ntuple References and Further Reading,  Prev: Histogramming ntuple values,  Up: N-tuples
+
+Example programs
+================
+
+   The following example programs demonstrate the use of ntuples in
+managing a large dataset.  The first program creates a set of 100,000
+simulated "events", each with 3 associated values (x,y,z).  These are
+generated from a gaussian distribution with unit variance, for
+demonstration purposes, and written to the ntuple file `test.dat'.
+
+     #include <config.h>
+     #include <gsl/gsl_ntuple.h>
+     #include <gsl/gsl_rng.h>
+     #include <gsl/gsl_randist.h>
+     
+     struct data
+     {
+       double x;
+       double y;
+       double z;
+     };
+     
+     int
+     main (void)
+     {
+       const gsl_rng_type * T;
+       gsl_rng * r;
+     
+       struct data ntuple_row;
+       int i;
+     
+       gsl_ntuple *ntuple
+         = gsl_ntuple_create ("test.dat", &ntuple_row,
+                              sizeof (ntuple_row));
+     
+       gsl_rng_env_setup();
+     
+       T = gsl_rng_default;
+       r = gsl_rng_alloc (T);
+     
+       for (i = 0; i < 10000; i++)
+         {
+           ntuple_row.x = gsl_ran_ugaussian (r);
+           ntuple_row.y = gsl_ran_ugaussian (r);
+           ntuple_row.z = gsl_ran_ugaussian (r);
+     
+           gsl_ntuple_write (ntuple);
+         }
+     
+       gsl_ntuple_close(ntuple);
+       return 0;
+     }
+
+The next program analyses the ntuple data in the file `test.dat'.  The
+analysis procedure is to compute the squared-magnitude of each event,
+E^2=x^2+y^2+z^2, and select only those which exceed a lower limit of
+1.5.  The selected events are then histogrammed using their E^2 values.
+
+     #include <config.h>
+     #include <math.h>
+     #include <gsl/gsl_ntuple.h>
+     #include <gsl/gsl_histogram.h>
+     
+     struct data
+     {
+       double x;
+       double y;
+       double z;
+     };
+     
+     int sel_func (void *ntuple_data, void *params);
+     double val_func (void *ntuple_data, void *params);
+     
+     int
+     main (void)
+     {
+       struct data ntuple_row;
+       int i;
+     
+       gsl_ntuple *ntuple
+         = gsl_ntuple_open ("test.dat", &ntuple_row,
+                            sizeof (ntuple_row));
+       double lower = 1.5;
+     
+       gsl_ntuple_select_fn S;
+       gsl_ntuple_value_fn V;
+     
+       gsl_histogram *h = gsl_histogram_alloc (100);
+       gsl_histogram_set_ranges_uniform(h, 0.0, 10.0);
+     
+       S.function = &sel_func;
+       S.params = &lower;
+     
+       V.function = &val_func;
+       V.params = 0;
+     
+       gsl_ntuple_project (h, ntuple, &V, &S);
+     
+       gsl_histogram_fprintf (stdout, h, "%f", "%f");
+     
+       gsl_histogram_free (h);
+     
+       gsl_ntuple_close (ntuple);
+       return 0;
+     }
+     
+     int
+     sel_func (void *ntuple_data, void *params)
+     {
+       double x, y, z, E, scale;
+       scale = *(double *) params;
+     
+       x = ((struct data *) ntuple_data)->x;
+       y = ((struct data *) ntuple_data)->y;
+       z = ((struct data *) ntuple_data)->z;
+     
+       E2 = x * x + y * y + z * z;
+     
+       return E2 > scale;
+     }
+     
+     double
+     val_func (void *ntuple_data, void *params)
+     {
+       double x, y, z;
+     
+       x = ((struct data *) ntuple_data)->x;
+       y = ((struct data *) ntuple_data)->y;
+       z = ((struct data *) ntuple_data)->z;
+     
+       return x * x + y * y + z * z;
+     }
+
+   The following plot shows the distribution of the selected events.
+Note the cut-off at the lower bound.
+
+
+File: gsl-ref.info,  Node: Ntuple References and Further Reading,  Prev: Example ntuple programs,  Up: N-tuples
+
+References and Further Reading
+==============================
+
+Further information on the use of ntuples can be found in the
+documentation for the CERN packages PAW and HBOOK (available online).
+
+
+File: gsl-ref.info,  Node: Monte Carlo Integration,  Next: Simulated Annealing,  Prev: N-tuples,  Up: Top
+
+Monte Carlo Integration
+***********************
+
+   This chapter describes routines for multidimensional Monte Carlo
+integration.  These include the traditional Monte Carlo method and
+adaptive algorithms such as VEGAS and MISER which use importance
+sampling and stratified sampling techniques. Each algorithm computes an
+estimate of a multidimensional definite integral of the form,
+
+     I = \int_xl^xu dx \int_yl^yu  dy ...  f(x, y, ...)
+
+over a hypercubic region ((x_l,x_u), (y_l,y_u), ...) using a fixed
+number of function calls.  The routines also provide a statistical
+estimate of the error on the result.  This error estimate should be
+taken as a guide rather than as a strict error bound -- random sampling
+of the region may not uncover all the important features of the
+function, resulting in an underestimate of the error.
+
+   The functions are defined in separate header files for each routine,
+`gsl_monte_plain.h', `gsl_monte_miser.h' and `gsl_monte_vegas.h'.
+
+* Menu:
+
+* Monte Carlo Interface::
+* PLAIN Monte Carlo::
+* MISER::
+* VEGAS::
+* Monte Carlo Examples::
+* Monte Carlo Integration References and Further Reading::
+
+
+File: gsl-ref.info,  Node: Monte Carlo Interface,  Next: PLAIN Monte Carlo,  Up: Monte Carlo Integration
+
+Interface
+=========
+
+   All of the Monte Carlo integration routines use the same interface.
+There is an allocator to allocate memory for control variables and
+workspace, a routine to initialize those control variables, the
+integrator itself, and a function to free the space when done.
+
+   Each integration function requires a random number generator to be
+supplied, and returns an estimate of the integral and its standard
+deviation.  The accuracy of the result is determined by the number of
+function calls specified by the user.  If a known level of accuracy is
+required this can be achieved by calling the integrator several times
+and averaging the individual results until the desired accuracy is
+obtained.
+
+   Random sample points used within the Monte Carlo routines are always
+chosen strictly within the integration region, so that endpoint
+singularities are automatically avoided.
+
+   The function to be integrated has its own datatype, defined in the
+header file `gsl_monte.h'.
+
+ - Data Type: gsl_monte_function
+     This data type defines a general function with parameters for Monte
+     Carlo integration.
+
+    `double (* FUNCTION) (double * X, size_t DIM, void * PARAMS)'
+          this function should return the value f(x,params) for
+          argument X and parameters PARAMS, where X is an array of size
+          DIM giving the coordinates of the point where the function is
+          to be evaluated.
+
+    `size_t DIM'
+          the number of dimensions for X
+
+    `void * PARAMS'
+          a pointer to the parameters of the function
+
+Here is an example for a quadratic function in two dimensions,
+
+     f(x,y) = a x^2 + b x y + c y^2
+
+with a = 3, b = 2, c = 1.  The following code defines a
+`gsl_monte_function' `F' which you could pass to an integrator:
+
+     struct my_f_params { double a; double b; double c; };
+     
+     double
+     my_f (double x, size_t dim, void * p) {
+        struct my_f_params * fp = (struct my_f_params *)p;
+     
+        if (dim != 2)
+           {
+             fprintf(stderr, "error: dim != 2");
+             abort();
+           }
+     
+        return  fp->a * x[0] * x[0]
+                  + fp->b * x[0] * x[1]
+                    + fp->c * x[1] * x[1];
+     }
+     
+     gsl_monte_function F;
+     struct my_f_params params = { 3.0, 2.0, 1.0 };
+     
+     F.function = &my_f;
+     F.dim = 2;
+     F.params = &params;
+
+The function f(x) can be evaluated using the following macro,
+
+     #define GSL_MONTE_FN_EVAL(F,x)
+         (*((F)->function))(x,(F)->dim,(F)->params)
+
+
+File: gsl-ref.info,  Node: PLAIN Monte Carlo,  Next: MISER,  Prev: Monte Carlo Interface,  Up: Monte Carlo Integration
+
+PLAIN Monte Carlo
+=================
+
+   The plain Monte Carlo algorithm samples points randomly from the
+integration region to estimate the integral and its error.  Using this
+algorithm the estimate of the integral E(f; N) for N randomly
+distributed points x_i is given by,
+
+     E(f; N) = =  V <f> = (V / N) \sum_i^N f(x_i).
+
+where V is the volume of the integration region.  The error on this
+estimate \sigma(E;N) is calculated from the estimated variance of the
+mean,
+
+     \sigma^2 (E; N) = (V / N) \sum_i^N (f(x_i) -  <f>)^2
+
+For large N this variance decreases asymptotically as var(f)/N, where
+var(f) is the true variance of the function over the integration
+region.  The error estimate itself should decrease as
+\sigma(f)/\sqrt{N}.  The familiar law of errors decreasing as
+1/\sqrt{N} applies -- to reduce the error by a factor of 10 requires a
+100-fold increase in the number of sample points.
+
+   The functions described in this section are declared in the header
+file `gsl_monte_plain.h'.
+
+ - Function: gsl_monte_plain_state * gsl_monte_plain_alloc (size_t DIM)
+     This function allocates and initializes a workspace for Monte Carlo
+     integration in DIM dimensions.
+
+ - Function: int gsl_monte_plain_init (gsl_monte_plain_state* S)
+     This function initializes a previously allocated integration state.
+     This allows an existing workspace to be reused for different
+     integrations.
+
+ - Function: int gsl_monte_plain_integrate (gsl_monte_function * F,
+          double * XL, double * XU, size_t DIM, size_t CALLS, gsl_rng *
+          R, gsl_monte_plain_state * S, double * RESULT, double *
+          ABSERR)
+     This routines uses the plain Monte Carlo algorithm to integrate the
+     function F over the DIM-dimensional hypercubic region defined by
+     the lower and upper limits in the arrays XL and XU, each of size
+     DIM.  The integration uses a fixed number of function calls CALLS,
+     and obtains random sampling points using the random number
+     generator R. A previously allocated workspace S must be supplied.
+     The result of the integration is returned in RESULT, with an
+     estimated absolute error ABSERR.
+
+ - Function: void gsl_monte_plain_free (gsl_monte_plain_state* S),
+     This function frees the memory associated with the integrator state
+     S.
+
+
+File: gsl-ref.info,  Node: MISER,  Next: VEGAS,  Prev: PLAIN Monte Carlo,  Up: Monte Carlo Integration
+
+MISER
+=====
+
+   The MISER algorithm of Press and Farrar is based on recursive
+stratified sampling.  This technique aims to reduce the overall
+integration error by concentrating integration points in the regions of
+highest variance.
+
+   The idea of stratified sampling begins with the observation that for
+two disjoint regions a and b with Monte Carlo estimates of the integral
+E_a(f) and E_b(f) and variances \sigma_a^2(f) and \sigma_b^2(f), the
+variance Var(f) of the combined estimate E(f) = (1/2) (E_a(f) + E_b(f))
+is given by,
+
+     Var(f) = (\sigma_a^2(f) / 4 N_a) + (\sigma_b^2(f) / 4 N_b)
+
+It can be shown that this variance is minimized by distributing the
+points such that,
+
+     N_a / (N_a + N_b) = \sigma_a / (\sigma_a + \sigma_b)
+
+Hence the smallest error estimate is obtained by allocating sample
+points in proportion to the standard deviation of the function in each
+sub-region.
+
+   The MISER algorithm proceeds by bisecting the integration region
+along one coordinate axis to give two sub-regions at each step.  The
+direction is chosen by examining all d possible bisections and
+selecting the one which will minimize the combined variance of the two
+sub-regions.  The variance in the sub-regions is estimated by sampling
+with a fraction of the total number of points available to the current
+step.  The same procedure is then repeated recursively for each of the
+two half-spaces from the best bisection. The remaining sample points are
+allocated to the sub-regions using the formula for N_a and N_b.  This
+recursive allocation of integration points continues down to a
+user-specified depth where each sub-region is integrated using a plain
+Monte Carlo estimate.  These individual values and their error
+estimates are then combined upwards to give an overall result and an
+estimate of its error.
+
+   The functions described in this section are declared in the header
+file `gsl_monte_miser.h'.
+
+ - Function: gsl_monte_miser_state * gsl_monte_miser_alloc (size_t DIM)
+     This function allocates and initializes a workspace for Monte Carlo
+     integration in DIM dimensions.  The workspace is used to maintain
+     the state of the integration.
+
+ - Function: int gsl_monte_miser_init (gsl_monte_miser_state* S)
+     This function initializes a previously allocated integration state.
+     This allows an existing workspace to be reused for different
+     integrations.
+
+ - Function: int gsl_monte_miser_integrate (gsl_monte_function * F,
+          double * XL, double * XU, size_t DIM, size_t CALLS, gsl_rng *
+          R, gsl_monte_miser_state * S, double * RESULT, double *
+          ABSERR)
+     This routines uses the MISER Monte Carlo algorithm to integrate the
+     function F over the DIM-dimensional hypercubic region defined by
+     the lower and upper limits in the arrays XL and XU, each of size
+     DIM.  The integration uses a fixed number of function calls CALLS,
+     and obtains random sampling points using the random number
+     generator R. A previously allocated workspace S must be supplied.
+     The result of the integration is returned in RESULT, with an
+     estimated absolute error ABSERR.
+
+ - Function: void gsl_monte_miser_free (gsl_monte_miser_state* S),
+     This function frees the memory associated with the integrator state
+     S.
+
+   The MISER algorithm has several configurable parameters. The
+following variables can be accessed through the `gsl_monte_miser_state'
+struct,
+
+ - Variable: double estimate_frac
+     This parameter specifies the fraction of the currently available
+     number of function calls which are allocated to estimating the
+     variance at each recursive step. The default value is 0.1.
+
+ - Variable: size_t min_calls
+     This parameter specifies the minimum number of function calls
+     required for each estimate of the variance. If the number of
+     function calls allocated to the estimate using ESTIMATE_FRAC falls
+     below MIN_CALLS then MIN_CALLS are used instead.  This ensures
+     that each estimate maintains a reasonable level of accuracy.  The
+     default value of MIN_CALLS is `16 * dim'.
+
+ - Variable: size_t min_calls_per_bisection
+     This parameter specifies the minimum number of function calls
+     required to proceed with a bisection step.  When a recursive step
+     has fewer calls available than MIN_CALLS_PER_BISECTION it performs
+     a plain Monte Carlo estimate of the current sub-region and
+     terminates its branch of the recursion.  The default value of this
+     parameter is `32 * min_calls'.
+
+ - Variable: double alpha
+     This parameter controls how the estimated variances for the two
+     sub-regions of a bisection are combined when allocating points.
+     With recursive sampling the overall variance should scale better
+     than 1/N, since the values from the sub-regions will be obtained
+     using a procedure which explicitly minimizes their variance.  To
+     accommodate this behavior the MISER algorithm allows the total
+     variance to depend on a scaling parameter \alpha,
+
+          Var(f) = {\sigma_a \over N_a^\alpha} + {\sigma_b \over N_b^\alpha}
+
+     The authors of the original paper describing MISER recommend the
+     value \alpha = 2 as a good choice, obtained from numerical
+     experiments, and this is used as the default value in this
+     implementation.
+
+ - Variable: double dither
+     This parameter introduces a random fractional variation of size
+     DITHER into each bisection, which can be used to break the
+     symmetry of integrands which are concentrated near the exact
+     center of the hypercubic integration region.  The default value of
+     dither is zero, so no variation is introduced. If needed, a
+     typical value of DITHER is around 0.1.
+
+
+File: gsl-ref.info,  Node: VEGAS,  Next: Monte Carlo Examples,  Prev: MISER,  Up: Monte Carlo Integration
+
+VEGAS
+=====
+
+   The VEGAS algorithm of Lepage is based on importance sampling.  It
+samples points from the probability distribution described by the
+function |f|, so that the points are concentrated in the regions that
+make the largest contribution to the integral.
+
+   In general, if the Monte Carlo integral of f is sampled with points
+distributed according to a probability distribution described by the
+function g, we obtain an estimate E_g(f; N),
+
+     E_g(f; N) = E(f/g; N)
+
+with a corresponding variance,
+
+     Var_g(f; N) = Var(f/g; N)
+
+If the probability distribution is chosen as g = |f|/I(|f|) then it can
+be shown that the variance V_g(f; N) vanishes, and the error in the
+estimate will be zero.  In practice it is not possible to sample from
+the exact distribution g for an arbitrary function, so importance
+sampling algorithms aim to produce efficient approximations to the
+desired distribution.
+
+   The VEGAS algorithm approximates the exact distribution by making a
+number of passes over the integration region while histogramming the
+function f. Each histogram is used to define a sampling distribution
+for the next pass.  Asymptotically this procedure converges to the
+desired distribution. In order to avoid the number of histogram bins
+growing like K^d the probability distribution is approximated by a
+separable function: g(x_1, x_2, ...) = g_1(x_1) g_2(x_2) ...  so that
+the number of bins required is only Kd.  This is equivalent to locating
+the peaks of the function from the projections of the integrand onto
+the coordinate axes.  The efficiency of VEGAS depends on the validity
+of this assumption.  It is most efficient when the peaks of the
+integrand are well-localized.  If an integrand can be rewritten in a
+form which is approximately separable this will increase the efficiency
+of integration with VEGAS.
+
+   VEGAS incorporates a number of additional features, and combines both
+stratified sampling and importance sampling.  The integration region is
+divided into a number of "boxes", with each box getting in fixed number
+of points (the goal is 2).  Each box can then have a fractional number
+of bins, but if bins/box is less than two, Vegas switches to a kind
+variance reduction (rather than importance sampling).
+
+ - Function: gsl_monte_vegas_state * gsl_monte_vegas_alloc (size_t DIM)
+     This function allocates and initializes a workspace for Monte Carlo
+     integration in DIM dimensions.  The workspace is used to maintain
+     the state of the integration.
+
+ - Function: int gsl_monte_vegas_init (gsl_monte_vegas_state* S)
+     This function initializes a previously allocated integration state.
+     This allows an existing workspace to be reused for different
+     integrations.
+
+ - Function: int gsl_monte_vegas_integrate (gsl_monte_function * F,
+          double * XL, double * XU, size_t DIM, size_t CALLS, gsl_rng *
+          R, gsl_monte_vegas_state * S, double * RESULT, double *
+          ABSERR)
+     This routines uses the VEGAS Monte Carlo algorithm to integrate the
+     function F over the DIM-dimensional hypercubic region defined by
+     the lower and upper limits in the arrays XL and XU, each of size
+     DIM.  The integration uses a fixed number of function calls CALLS,
+     and obtains random sampling points using the random number
+     generator R. A previously allocated workspace S must be supplied.
+     The result of the integration is returned in RESULT, with an
+     estimated absolute error ABSERR.  The result and its error
+     estimate are based on a weighted average of independent samples.
+     The chi-squared per degree of freedom for the weighted average is
+     returned via the state struct component, S->CHISQ, and must be
+     consistent with 1 for the weighted average to be reliable.
+
+ - Function: void gsl_monte_vegas_free (gsl_monte_vegas_state* S),
+     This function frees the memory associated with the integrator state
+     S.
+
+   The VEGAS algorithm computes a number of independent estimates of the
+integral internally, according to the `iterations' parameter described
+below, and returns their weighted average.  Random sampling of the
+integrand can occasionally produce an estimate where the error is zero,
+particularly if the function is constant in some regions. An estimate
+with zero error causes the weighted average to break down and must be
+handled separately. In the original Fortran implementations of VEGAS
+the error estimate is made non-zero by substituting a small value
+(typically `1e-30').  The implementation in GSL differs from this and
+avoids the use of an arbitrary constant - it either assigns the value a
+weight which is the average weight of the preceding estimates or
+discards it according to the following procedure,
+
+current estimate has zero error, weighted average has finite error
+     The current estimate is assigned a weight which is the average
+     weight of the preceding estimates.
+
+current estimate has finite error, previous estimates had zero error
+     The previous estimates are discarded and the weighted averaging
+     procedure begins with the current estimate.
+
+current estimate has zero error, previous estimates had zero error
+     The estimates are averaged using the arithmetic mean, but no error
+     is computed.
+
+   The VEGAS algorithm is highly configurable. The following variables
+can be accessed through the `gsl_monte_vegas_state' struct,
+
+ - Variable: double result
+ - Variable: double sigma
+     These parameters contain the raw value of the integral RESULT and
+     its error SIGMA from the last iteration of the algorithm.
+
+ - Variable: double chisq
+     This parameter gives the chi-squared per degree of freedom for the
+     weighted estimate of the integral.  The value of CHISQ should be
+     close to 1.  A value of CHISQ which differs significantly from 1
+     indicates that the values from different iterations are
+     inconsistent.  In this case the weighted error will be
+     under-estimated, and further iterations of the algorithm are
+     needed to obtain reliable results.
+
+ - Variable: double alpha
+     The parameter `alpha' controls the stiffness of the rebinning
+     algorithm.  It is typically set between one and two. A value of
+     zero prevents rebinning of the grid.  The default value is 1.5.
+
+ - Variable: size_t iterations
+     The number of iterations to perform for each call to the routine.
+     The default value is 5 iterations.
+
+ - Variable: int stage
+     Setting this determines the "stage" of the calculation.  Normally,
+     `stage = 0' which begins with a new uniform grid and empty weighted
+     average.  Calling vegas with `stage = 1' retains the grid from the
+     previous run but discards the weighted average, so that one can
+     "tune" the grid using a relatively small number of points and then
+     do a large run with `stage = 1' on the optimized grid.  Setting
+     `stage = 2' keeps the grid and the weighted average from the
+     previous run, but may increase (or decrease) the number of
+     histogram bins in the grid depending on the number of calls
+     available.  Choosing `stage = 3' enters at the main loop, so that
+     nothing is changed, and is equivalent to performing additional
+     iterations in a previous call.
+
+ - Variable: int mode
+     The possible choices are `GSL_VEGAS_MODE_IMPORTANCE',
+     `GSL_VEGAS_MODE_STRATIFIED', `GSL_VEGAS_MODE_IMPORTANCE_ONLY'.
+     This determines whether VEGAS will use importance sampling or
+     stratified sampling, or whether it can pick on its own.  In low
+     dimensions VEGAS uses strict stratified sampling (more precisely,
+     stratified sampling is chosen if there are fewer than 2 bins per
+     box).
+
+ - Variable: int verbose
+ - Variable: FILE * ostream
+     These parameters set the level of information printed by VEGAS. All
+     information is written to the stream OSTREAM.  The default setting
+     of VERBOSE is `-1', which turns off all output.  A VERBOSE value
+     of `0' prints summary information about the weighted average and
+     final result, while a value of `1' also displays the grid
+     coordinates.  A value of `2' prints information from the rebinning
+     procedure for each iteration.
+
+
+File: gsl-ref.info,  Node: Monte Carlo Examples,  Next: Monte Carlo Integration References and Further Reading,  Prev: VEGAS,  Up: Monte Carlo Integration
+
+Examples
+========
+
+   The example program below uses the Monte Carlo routines to estimate
+the value of the following 3-dimensional integral from the theory of
+random walks,
+
+     I = \int_{-pi}^{+pi} {dk_x/(2 pi)}
+         \int_{-pi}^{+pi} {dk_y/(2 pi)}
+         \int_{-pi}^{+pi} {dk_z/(2 pi)}
+          1 / (1 - cos(k_x)cos(k_y)cos(k_z))
+
+The analytic value of this integral can be shown to be I =
+\Gamma(1/4)^4/(4 \pi^3) = 1.393203929685676859....  The integral gives
+the mean time spent at the origin by a random walk on a body-centered
+cubic lattice in three dimensions.
+
+   For simplicity we will compute the integral over the region (0,0,0)
+to (\pi,\pi,\pi) and multiply by 8 to obtain the full result.  The
+integral is slowly varying in the middle of the region but has
+integrable singularities at the corners (0,0,0), (0,\pi,\pi),
+(\pi,0,\pi) and (\pi,\pi,0).  The Monte Carlo routines only select
+points which are strictly within the integration region and so no
+special measures are needed to avoid these singularities.
+
+     #include <stdlib.h>
+     #include <gsl/gsl_math.h>
+     #include <gsl/gsl_monte.h>
+     #include <gsl/gsl_monte_plain.h>
+     #include <gsl/gsl_monte_miser.h>
+     #include <gsl/gsl_monte_vegas.h>
+     
+     /* Computation of the integral,
+     
+           I = int (dx dy dz)/(2pi)^3  1/(1-cos(x)cos(y)cos(z))
+     
+        over (-pi,-pi,-pi) to (+pi, +pi, +pi).  The exact answer
+        is Gamma(1/4)^4/(4 pi^3).  This example is taken from
+        C.Itzykson, J.M.Drouffe, "Statistical Field Theory -
+        Volume 1", Section 1.1, p21, which cites the original
+        paper M.L.Glasser, I.J.Zucker, Proc.Natl.Acad.Sci.USA 74
+        1800 (1977) */
+     
+     /* For simplicity we compute the integral over the region
+        (0,0,0) -> (pi,pi,pi) and multiply by 8 */
+     
+     double exact = 1.3932039296856768591842462603255;
+     
+     double
+     g (double *k, size_t dim, void *params)
+     {
+       double A = 1.0 / (M_PI * M_PI * M_PI);
+       return A / (1.0 - cos (k[0]) * cos (k[1]) * cos (k[2]));
+     }
+     
+     void
+     display_results (char *title, double result, double error)
+     {
+       printf ("%s ==================\n", title);
+       printf ("result = % .6f\n", result);
+       printf ("sigma  = % .6f\n", error);
+       printf ("exact  = % .6f\n", exact);
+       printf ("error  = % .6f = %.1g sigma\n", result - exact,
+               fabs (result - exact) / error);
+     }
+     
+     int
+     main (void)
+     {
+       double res, err;
+     
+       double xl[3] = { 0, 0, 0 };
+       double xu[3] = { M_PI, M_PI, M_PI };
+     
+       const gsl_rng_type *T;
+       gsl_rng *r;
+     
+       gsl_monte_function G = { &g, 3, 0 };
+     
+       size_t calls = 500000;
+     
+       gsl_rng_env_setup ();
+     
+       T = gsl_rng_default;
+       r = gsl_rng_alloc (T);
+     
+       {
+         gsl_monte_plain_state *s = gsl_monte_plain_alloc (3);
+         gsl_monte_plain_integrate (&G, xl, xu, 3, calls, r, s,
+                                    &res, &err);
+         gsl_monte_plain_free (s);
+     
+         display_results ("plain", res, err);
+       }
+     
+       {
+         gsl_monte_miser_state *s = gsl_monte_miser_alloc (3);
+         gsl_monte_miser_integrate (&G, xl, xu, 3, calls, r, s,
+                                    &res, &err);
+         gsl_monte_miser_free (s);
+     
+         display_results ("miser", res, err);
+       }
+     
+       {
+         gsl_monte_vegas_state *s = gsl_monte_vegas_alloc (3);
+     
+         gsl_monte_vegas_integrate (&G, xl, xu, 3, 10000, r, s,
+                                    &res, &err);
+         display_results ("vegas warm-up", res, err);
+     
+         printf ("converging...\n");
+     
+         do
+           {
+             gsl_monte_vegas_integrate (&G, xl, xu, 3, calls/5, r, s,
+                                        &res, &err);
+             printf ("result = % .6f sigma = % .6f "
+                     "chisq/dof = %.1f\n", res, err, s->chisq);
+           }
+         while (fabs (s->chisq - 1.0) > 0.5);
+     
+         display_results ("vegas final", res, err);
+     
+         gsl_monte_vegas_free (s);
+       }
+       return 0;
+     }
+
+With 500,000 function calls the plain Monte Carlo algorithm achieves a
+fractional error of 0.6%.  The estimated error `sigma' is consistent
+with the actual error, and the computed result differs from the true
+result by about one standard deviation,
+
+     plain ==================
+     result =  1.385867
+     sigma  =  0.007938
+     exact  =  1.393204
+     error  = -0.007337 = 0.9 sigma
+
+The MISER algorithm reduces the error by a factor of two, and also
+correctly estimates the error,
+
+     miser ==================
+     result =  1.390656
+     sigma  =  0.003743
+     exact  =  1.393204
+     error  = -0.002548 = 0.7 sigma
+
+In the case of the VEGAS algorithm the program uses an initial warm-up
+run of 10,000 function calls to prepare, or "warm up", the grid.  This
+is followed by a main run with five iterations of 100,000 function
+calls. The chi-squared per degree of freedom for the five iterations are
+checked for consistency with 1, and the run is repeated if the results
+have not converged. In this case the estimates are consistent on the
+first pass.
+
+     vegas warm-up ==================
+     result =  1.386925
+     sigma  =  0.002651
+     exact  =  1.393204
+     error  = -0.006278 = 2 sigma
+     converging...
+     result =  1.392957 sigma =  0.000452 chisq/dof = 1.1
+     vegas final ==================
+     result =  1.392957
+     sigma  =  0.000452
+     exact  =  1.393204
+     error  = -0.000247 = 0.5 sigma
+
+If the value of `chisq' had differed significantly from 1 it would
+indicate inconsistent results, with a correspondingly underestimated
+error.  The final estimate from VEGAS (using a similar number of
+function calls) is significantly more accurate than the other two
+algorithms.
+
+
+File: gsl-ref.info,  Node: Monte Carlo Integration References and Further Reading,  Prev: Monte Carlo Examples,  Up: Monte Carlo Integration
+
+References and Further Reading
+==============================
+
+The MISER algorithm is described in the following article,
+
+     W.H. Press, G.R. Farrar, `Recursive Stratified Sampling for
+     Multidimensional Monte Carlo Integration', Computers in Physics,
+     v4 (1990), pp190-195.
+
+The VEGAS algorithm is described in the following papers,
+
+     G.P. Lepage, `A New Algorithm for Adaptive Multidimensional
+     Integration', Journal of Computational Physics 27, 192-203, (1978)
+
+     G.P. Lepage, `VEGAS: An Adaptive Multi-dimensional Integration
+     Program', Cornell preprint CLNS 80-447, March 1980
+
+
+File: gsl-ref.info,  Node: Simulated Annealing,  Next: Ordinary Differential Equations,  Prev: Monte Carlo Integration,  Up: Top
+
+Simulated Annealing
+*******************
+
+   Stochastic search techniques are used when the structure of a space
+is not well understood or is not smooth, so that techniques like
+Newton's method (which requires calculating Jacobian derivative
+matrices) cannot be used.
+
+   In particular, these techniques are frequently used to solve
+_combinatorial optimization_ problems, such as the traveling salesman
+problem.
+
+   The basic problem layout is that we are looking for a point in the
+space at which a real valued _energy function_ (or _cost function_) is
+minimized.
+
+   Simulated annealing is a technique which has given good results in
+avoiding local minima; it is based on the idea of taking a random walk
+through the space at successively lower temperatures, where the
+probability of taking a step is given by a Boltzmann distribution.
+
+   The functions described in this chapter are declared in the header
+file `gsl_siman.h'.
+
+* Menu:
+
+* Simulated Annealing algorithm::
+* Simulated Annealing functions::
+* Examples with Simulated Annealing::
+
+
+File: gsl-ref.info,  Node: Simulated Annealing algorithm,  Next: Simulated Annealing functions,  Prev: Simulated Annealing,  Up: Simulated Annealing
+
+Simulated Annealing algorithm
+=============================
+
+   We take random walks through the problem space, looking for points
+with low energies; in these random walks, the probability of taking a
+step is determined by the Boltzmann distribution
+
+     p = e^{-(E_{i+1} - E_i)/(kT)}
+
+if E_{i+1} > E_i, and p = 1 when E_{i+1} <= E_i.
+
+   In other words, a step _will_ occur if the new energy is lower.  If
+the new energy is higher, the transition can still occur, and its
+likelihood is proportional to the temperature T and inversely
+proportional to the energy difference E_{i+1} - E_i.
+
+   The temperature T is initially set to a high value, and a random
+walk is carried out at that temperature.  Then the temperature is
+lowered very slightly (according to a _cooling schedule_) and another
+random walk is taken.
+
+   This slight probability of taking a step that gives _higher_ energy
+is what allows simulated annealing to frequently get out of local
+minima.
+
+   An initial guess is supplied.  At each step, a point is chosen at a
+random distance from the current one, where the random distance _r_ is
+distributed according to a Boltzmann distribution r = e^(-E/kT).  After
+a few search steps using this distribution, the temperature _T_ is
+lowered according to some scheme, for example T -> T/mu_T where \mu_T
+is slightly greater than 1.
+
+
+File: gsl-ref.info,  Node: Simulated Annealing functions,  Next: Examples with Simulated Annealing,  Prev: Simulated Annealing algorithm,  Up: Simulated Annealing
+
+Simulated Annealing functions
+=============================
+
+ - Simulated annealing: gsl_siman_Efunc_t
+          double (*gsl_siman_Efunc_t) (void *xp);
+
+ - Simulated annealing: gsl_siman_step_t
+          void (*gsl_siman_step_t) (void *xp, double step_size);
+
+ - Simulated annealing: gsl_siman_metric_t
+          double (*gsl_siman_metric_t) (void *xp, void *yp);
+
+ - Simulated annealing: gsl_siman_print_t
+          void (*gsl_siman_print_t) (void *xp);
+
+ - Simulated annealing: gsl_siman_params_t
+     These are the parameters that control a run of `gsl_siman_solve'.
+
+          /* this structure contains all the information
+             needed to structure the search, beyond the
+             energy function, the step function and the
+             initial guess. */
+          
+          struct s_siman_params {
+            /* how many points to try for each step */
+            int n_tries;
+          
+            /* how many iterations at each temperature? */
+            int iters_fixed_T;
+          
+            /* max step size in the random walk */
+            double step_size;
+          
+            /* the following parameters are for the
+               Boltzmann distribution */
+            double k, t_initial, mu_t, t_min;
+          };
+          
+          typedef struct s_siman_params gsl_siman_params_t;
+
+ - Simulated annealing: void gsl_siman_solve (void *X0_P,
+          gsl_siman_Efunc_t EF, gsl_siman_metric_t DISTANCE,
+          gsl_siman_print_t PRINT_POSITION, size_t ELEMENT_SIZE,
+          gsl_siman_params_t params)
+     Does a _simulated annealing_ search through a given space.  The
+     space is specified by providing the functions EF, DISTANCE,
+     PRINT_POSITION, ELEMENT_SIZE.
+
+     The PARAMS structure (described above) controls the run by
+     providing the temperature schedule and other tunable parameters to
+     the algorithm (*note Simulated Annealing algorithm::).  p The
+     result (optimal point in the space) is placed in `*X0_P'.
+
+     If PRINT_POSITION is not null, a log will be printed to the screen
+     with the following columns:
+
+          number_of_iterations temperature x x-(*x0_p) Ef(x)
+
+     If PRINT_POSITION is null, no information is printed to the screen.
+
+
+File: gsl-ref.info,  Node: Examples with Simulated Annealing,  Prev: Simulated Annealing functions,  Up: Simulated Annealing
+
+Examples with Simulated Annealing
+=================================
+
+   GSL's Simulated Annealing package is clumsy, and it has to be
+because it is written in C, for C callers, and tries to be polymorphic
+at the same time.  But here we provide some examples which can be
+pasted into your application with little change and should make things
+easier.
+
+* Menu:
+
+* Trivial example::
+* Traveling Salesman Problem::
+
+
+File: gsl-ref.info,  Node: Trivial example,  Next: Traveling Salesman Problem,  Prev: Examples with Simulated Annealing,  Up: Examples with Simulated Annealing
+
+Trivial example
+---------------
+
+   The first example, in one dimensional cartesian space, sets up an
+energy function which is a damped sine wave; this has many local
+minima, but only one global minimum, somewhere between 1.0 and 1.5.
+The initial guess given is 15.5, which is several local minima away
+from the global minimum.
+
+     /* set up parameters for this simulated annealing run */
+     
+     /* how many points do we try before stepping */
+     #define N_TRIES 200
+     
+     /* how many iterations for each T? */
+     #define ITERS_FIXED_T 10
+     
+     /* max step size in random walk */
+     #define STEP_SIZE 10
+     
+     /* Boltzmann constant */
+     #define K 1.0
+     
+     /* initial temperature */
+     #define T_INITIAL 0.002
+     
+     /* damping factor for temperature */
+     #define MU_T 1.005
+     #define T_MIN 2.0e-6
+     
+     gsl_siman_params_t params
+       = {N_TRIES, ITERS_FIXED_T, STEP_SIZE,
+          K, T_INITIAL, MU_T, T_MIN};
+     
+     /* now some functions to test in one dimension */
+     double E1(void *xp)
+     {
+       double x = * ((double *) xp);
+     
+       return exp(-square(x-1))*sin(8*x);
+     }
+     
+     double M1(void *xp, void *yp)
+     {
+       double x = *((double *) xp);
+       double y = *((double *) yp);
+     
+       return fabs(x - y);
+     }
+     
+     void S1(void *xp, double step_size)
+     {
+       double r;
+       double old_x = *((double *) xp);
+       double new_x;
+     
+       r = gsl_ran_uniform();
+       new_x = r*2*step_size - step_size + old_x;
+     
+       memcpy(xp, &new_x, sizeof(new_x));
+     }
+     
+     void P1(void *xp)
+     {
+       printf("%12g", *((double *) xp));
+     }
+     
+     int
+     main(int argc, char *argv[])
+     {
+       Element x0; /* initial guess for search */
+     
+       double x_initial = 15.5;
+     
+       gsl_siman_solve(&x_initial, E1, S1, M1, P1,
+                       sizeof(double), params);
+       return 0;
+     }
+
+   Here are a couple of plots that are generated by running
+`siman_test' in the following way:
+     ./siman_test | grep -v "^#"
+       | xyplot -xyil -y -0.88 -0.83 -d "x...y"
+       | xyps -d > siman-test.eps
+     ./siman_test | grep -v "^#"
+       | xyplot -xyil -xl "generation" -yl "energy" -d "x..y"
+       | xyps -d > siman-energy.eps
+
+
+File: gsl-ref.info,  Node: Traveling Salesman Problem,  Prev: Trivial example,  Up: Examples with Simulated Annealing
+
+Traveling Salesman Problem
+--------------------------
+
+   The TSP (_Traveling Salesman Problem_) is the classic combinatorial
+optimization problem.  I have provided a very simple version of it,
+based on the coordinates of twelve cities in the southwestern United
+States.  This should maybe be called the _Flying Salesman Problem_,
+since I am using the great-circle distance between cities, rather than
+the driving distance.  Also: I assume the earth is a sphere, so I don't
+use geoid distances.
+
+   The `gsl_siman_solve()' routine finds a route which is 3490.62
+Kilometers long; this is confirmed by an exhaustive search of all
+possible routes with the same initial city.
+
+   The full code can be found in `siman/siman_tsp.c', but I include
+here some plots generated with in the following way:
+     ./siman_tsp > tsp.output
+     grep -v "^#" tsp.output
+       | xyplot -xyil -d "x................y"
+                -lx "generation" -ly "distance"
+                -lt "TSP -- 12 southwest cities"
+       | xyps -d > 12-cities.eps
+     grep initial_city_coord tsp.output
+       | awk '{print $2, $3, $4, $5}'
+       | xyplot -xyil -lb0 -cs 0.8
+                -lx "longitude (- means west)"
+                -ly "latitude"
+                -lt "TSP -- initial-order"
+       | xyps -d > initial-route.eps
+     grep final_city_coord tsp.output
+       | awk '{print $2, $3, $4, $5}'
+       | xyplot -xyil -lb0 -cs 0.8
+                -lx "longitude (- means west)"
+                -ly "latitude"
+                -lt "TSP -- final-order"
+       | xyps -d > final-route.eps
+
+   This is the output showing the initial order of the cities;
+longitude is negative, since it is west and I want the plot to look
+like a map.
+     # initial coordinates of cities (longitude and latitude)
+     ###initial_city_coord: -105.95 35.68 Santa Fe
+     ###initial_city_coord: -112.07 33.54 Phoenix
+     ###initial_city_coord: -106.62 35.12 Albuquerque
+     ###initial_city_coord: -103.2 34.41 Clovis
+     ###initial_city_coord: -107.87 37.29 Durango
+     ###initial_city_coord: -96.77 32.79 Dallas
+     ###initial_city_coord: -105.92 35.77 Tesuque
+     ###initial_city_coord: -107.84 35.15 Grants
+     ###initial_city_coord: -106.28 35.89 Los Alamos
+     ###initial_city_coord: -106.76 32.34 Las Cruces
+     ###initial_city_coord: -108.58 37.35 Cortez
+     ###initial_city_coord: -108.74 35.52 Gallup
+     ###initial_city_coord: -105.95 35.68 Santa Fe
+
+   The optimal route turns out to be:
+     # final coordinates of cities (longitude and latitude)
+     ###final_city_coord: -105.95 35.68 Santa Fe
+     ###final_city_coord: -106.28 35.89 Los Alamos
+     ###final_city_coord: -106.62 35.12 Albuquerque
+     ###final_city_coord: -107.84 35.15 Grants
+     ###final_city_coord: -107.87 37.29 Durango
+     ###final_city_coord: -108.58 37.35 Cortez
+     ###final_city_coord: -108.74 35.52 Gallup
+     ###final_city_coord: -112.07 33.54 Phoenix
+     ###final_city_coord: -106.76 32.34 Las Cruces
+     ###final_city_coord: -96.77 32.79 Dallas
+     ###final_city_coord: -103.2 34.41 Clovis
+     ###final_city_coord: -105.92 35.77 Tesuque
+     ###final_city_coord: -105.95 35.68 Santa Fe
+
+Here's a plot of the cost function (energy) versus generation (point in
+the calculation at which a new temperature is set) for this problem:
+
+
+File: gsl-ref.info,  Node: Ordinary Differential Equations,  Next: Interpolation,  Prev: Simulated Annealing,  Up: Top
+
+Ordinary Differential Equations
+*******************************
+
+   This chapter describes functions for solving ordinary differential
+equation (ODE) initial value problems.  The library provides a variety
+of low-level methods, such as Runge-Kutta and Bulirsch-Stoer routines,
+and higher-level components for adaptive step-size control.  The
+components can be combined by the user to achieve the desired solution,
+with full access to any intermediate steps.
+
+   These functions are declared in the header file `gsl_odeiv.h'.
+
+* Menu:
+
+* Defining the ODE System::
+* Stepping Functions::
+* Adaptive Step-size Control::
+* Evolution::
+* ODE Example programs::
+* ODE References and Further Reading::
+
+
+File: gsl-ref.info,  Node: Defining the ODE System,  Next: Stepping Functions,  Up: Ordinary Differential Equations
+
+Defining the ODE System
+=======================
+
+   The routines solve the general n-dimensional first-order system,
+
+     dy_i(t)/dt = f_i(t, y_1(t), ..., y_n(t))
+
+for i = 1, \dots, n.  The stepping functions rely on the vector of
+derivatives f_i and the Jacobian matrix, J_{ij} = df_i(t,y(t)) / dy_j.
+A system of equations is defined using the `gsl_odeiv_system' datatype.
+
+ - Data Type: gsl_odeiv_system
+     This data type defines a general ODE system with arbitrary
+     parameters.
+
+    `int (* FUNCTION) (double t, const double y[], double dydt[], void * params)'
+          This function should store the elements of f(t,y,params) in
+          the array DYDT, for arguments (T,Y) and parameters PARAMS
+
+    `int (* JACOBIAN) (double t, const double y[], double * dfdy, double dfdt[], void * params);'
+          This function should store the elements of f(t,y,params) in
+          the array DFDT and the Jacobian matrix J_{ij} in the the array
+          DFDY regarded as a row-ordered matrix `J(i,j) = dfdy[i * dim
+          + j]' where `dim' is the dimension of the system.
+
+    `size_t DIMENSION;'
+          This is the dimension of the system of equations
+
+    `void * PARAMS'
+          This is a pointer to the arbitrary parameters of the system.
+

@@ -1,0 +1,407 @@
+@cindex simulated annealing
+@cindex combinatorial searches
+
+Stochastic search techniques are used when the structure of a space is
+not well understood or is not smooth, so that techniques like Newton's
+method (which requires calculating Jacobian derivative matrices) cannot
+be used.
+
+In particular, these techniques are frequently used to solve
+@emph{combinatorial optimization} problems, such as the traveling
+salesman problem.
+@cindex combinatorial optimization
+@cindex optimization -- combinatorial
+
+The basic problem layout is that we are looking for a point in the space
+at which a real valued @emph{energy function} (or @emph{cost function})
+is minimized.
+@cindex energy function
+@cindex cost function
+
+Simulated annealing is a technique which has given good results in
+avoiding local minima; it is based on the idea of taking a random walk
+through the space at successively lower temperatures, where the
+probability of taking a step is given by a Boltzmann distribution.
+
+The functions described in this chapter are declared in the header file
+@file{gsl_siman.h}.
+
+@menu
+* Simulated Annealing algorithm::  
+* Simulated Annealing functions::  
+* Examples with Simulated Annealing::  
+@end menu
+
+@node Simulated Annealing algorithm, Simulated Annealing functions, Simulated Annealing, Simulated Annealing
+@section Simulated Annealing algorithm
+
+
+We take random walks through the problem space, looking for points with
+low energies; in these random walks, the probability of taking a step is
+determined by the Boltzmann distribution
+
+@tex
+\beforedisplay
+$$
+p = e^{-(E_{i+1} - E_i)/(kT)}
+$$
+\afterdisplay
+@end tex
+@ifinfo
+@example
+p = e^@{-(E_@{i+1@} - E_i)/(kT)@}
+@end example
+@end ifinfo
+
+@noindent
+if 
+@c{$E_{i+1} > E_i$}
+@math{E_@{i+1@} > E_i}, and 
+@math{p = 1} when 
+@c{$E_{i+1} \le E_i$}
+@math{E_@{i+1@} <= E_i}.
+
+In other words, a step @emph{will} occur if the new energy is lower.  If
+the new energy is higher, the transition can still occur, and its
+likelihood is proportional to the temperature @math{T} and inversely
+proportional to the energy difference 
+@c{$E_{i+1} - E_i$}
+@math{E_@{i+1@} - E_i}.
+
+The temperature @math{T} is initially set to a high value, and a random
+walk is carried out at that temperature.  Then the temperature is
+lowered very slightly (according to a @emph{cooling schedule}) and
+another random walk is taken.
+@cindex cooling schedule
+@cindex schedule - cooling
+
+This slight probability of taking a step that gives @emph{higher} energy
+is what allows simulated annealing to frequently get out of local
+minima.
+
+An initial guess is supplied.  At each step, a point is chosen at a
+random distance from the current one, where the random distance @emph{r}
+is distributed according to a Boltzmann distribution
+@tex
+$r = \exp^{-E/kT}$.
+@end tex
+@ifinfo
+r = e^(-E/kT).
+@end ifinfo
+After a few search steps using this distribution, the temperature
+@emph{T} is lowered according to some scheme, for example
+@tex
+$T \rightarrow T/\mu_T$
+@end tex
+@ifinfo
+T -> T/mu_T
+@end ifinfo
+where @math{\mu_T} is slightly greater than 1.
+
+
+@node Simulated Annealing functions, Examples with Simulated Annealing, Simulated Annealing algorithm, Simulated Annealing
+@section Simulated Annealing functions
+
+@deftp {Simulated annealing} gsl_siman_Efunc_t
+@example
+double (*gsl_siman_Efunc_t) (void *xp);
+@end example
+@end deftp
+
+@deftp {Simulated annealing} gsl_siman_step_t
+@example
+void (*gsl_siman_step_t) (void *xp, double step_size);
+@end example
+@end deftp
+
+@deftp {Simulated annealing} gsl_siman_metric_t
+@example
+double (*gsl_siman_metric_t) (void *xp, void *yp);
+@end example
+@end deftp
+
+@deftp {Simulated annealing} gsl_siman_print_t
+@example
+void (*gsl_siman_print_t) (void *xp);
+@end example
+@end deftp
+
+@deftp {Simulated annealing} gsl_siman_params_t
+These are the parameters that control a run of @code{gsl_siman_solve}.
+
+@example
+/* this structure contains all the information 
+   needed to structure the search, beyond the 
+   energy function, the step function and the 
+   initial guess. */
+
+struct s_siman_params @{
+  /* how many points to try for each step */
+  int n_tries;          
+
+  /* how many iterations at each temperature? */
+  int iters_fixed_T;    
+
+  /* max step size in the random walk */
+  double step_size;     
+
+  /* the following parameters are for the 
+     Boltzmann distribution */
+  double k, t_initial, mu_t, t_min;
+@};
+
+typedef struct s_siman_params gsl_siman_params_t;
+@end example
+@end deftp
+
+
+@deftypefn {Simulated annealing} void gsl_siman_solve (void *@var{x0_p}, gsl_siman_Efunc_t @var{Ef}, gsl_siman_metric_t @var{distance}, gsl_siman_print_t @var{print_position}, size_t @var{element_size}, gsl_siman_params_t params)
+Does a @emph{simulated annealing} search through a given space.  The
+space is specified by providing the functions @var{Ef}, @var{distance},
+@var{print_position}, @var{element_size}.
+
+The @var{params} structure (described above) controls the run by
+providing the temperature schedule and other tunable parameters to the
+algorithm (@pxref{Simulated Annealing algorithm}).
+p
+The result (optimal point in the space) is placed in @code{*@var{x0_p}}.
+
+If @var{print_position} is not null, a log will be printed to the screen
+with the following columns:
+
+@example
+number_of_iterations temperature x x-(*x0_p) Ef(x)
+@end example
+
+If @var{print_position} is null, no information is printed to the
+screen.
+@end deftypefn
+
+@node Examples with Simulated Annealing,  , Simulated Annealing functions, Simulated Annealing
+@section Examples with Simulated Annealing
+
+GSL's Simulated Annealing package is clumsy, and it has to be because it
+is written in C, for C callers, and tries to be polymorphic at the same
+time.  But here we provide some examples which can be pasted into your
+application with little change and should make things easier.
+
+@menu
+* Trivial example::             
+* Traveling Salesman Problem::  
+@end menu
+
+@node Trivial example, Traveling Salesman Problem, Examples with Simulated Annealing, Examples with Simulated Annealing
+@subsection Trivial example
+
+The first example, in one dimensional cartesian space, sets up an energy
+function which is a damped sine wave; this has many local minima, but
+only one global minimum, somewhere between 1.0 and 1.5.  The initial
+guess given is 15.5, which is several local minima away from the global
+minimum.
+
+@smallexample
+/* set up parameters for this simulated annealing run */
+
+/* how many points do we try before stepping */
+#define N_TRIES 200             
+
+/* how many iterations for each T? */
+#define ITERS_FIXED_T 10        
+
+/* max step size in random walk */
+#define STEP_SIZE 10            
+
+/* Boltzmann constant */
+#define K 1.0                   
+
+/* initial temperature */
+#define T_INITIAL 0.002         
+
+/* damping factor for temperature */
+#define MU_T 1.005              
+#define T_MIN 2.0e-6
+
+gsl_siman_params_t params 
+  = @{N_TRIES, ITERS_FIXED_T, STEP_SIZE,
+     K, T_INITIAL, MU_T, T_MIN@};
+
+/* now some functions to test in one dimension */
+double E1(void *xp)
+@{
+  double x = * ((double *) xp);
+
+  return exp(-square(x-1))*sin(8*x);
+@}
+
+double M1(void *xp, void *yp)
+@{
+  double x = *((double *) xp);
+  double y = *((double *) yp);
+
+  return fabs(x - y);
+@}
+
+void S1(void *xp, double step_size)
+@{
+  double r;
+  double old_x = *((double *) xp);
+  double new_x;
+
+  r = gsl_ran_uniform();
+  new_x = r*2*step_size - step_size + old_x;
+
+  memcpy(xp, &new_x, sizeof(new_x));
+@}
+
+void P1(void *xp)
+@{
+  printf("%12g", *((double *) xp));
+@}
+
+int
+main(int argc, char *argv[])
+@{
+  Element x0; /* initial guess for search */
+
+  double x_initial = 15.5;
+
+  gsl_siman_solve(&x_initial, E1, S1, M1, P1,
+                  sizeof(double), params);
+  return 0;
+@}
+@end smallexample
+
+Here are a couple of plots that are generated by running
+@code{siman_test} in the following way:
+@example
+./siman_test | grep -v "^#" 
+  | xyplot -xyil -y -0.88 -0.83 -d "x...y" 
+  | xyps -d > siman-test.eps
+./siman_test | grep -v "^#" 
+  | xyplot -xyil -xl "generation" -yl "energy" -d "x..y"
+  | xyps -d > siman-energy.eps
+@end example
+
+@iftex
+@sp 1
+@center @image{siman-test,3.4in} 
+@center @image{siman-energy,3.4in}
+
+@quotation
+Example of a simulated annealing run: at higher temperatures (early in
+the plot) you see that the solution can fluctuate, but at lower
+temperatures it converges.
+@end quotation
+@end iftex
+
+@node Traveling Salesman Problem,  , Trivial example, Examples with Simulated Annealing
+@subsection Traveling Salesman Problem
+@cindex TSP
+@cindex Traveling Salesman Problem
+
+The TSP (@emph{Traveling Salesman Problem}) is the classic combinatorial
+optimization problem.  I have provided a very simple version of it,
+based on the coordinates of twelve cities in the southwestern United
+States.  This should maybe be called the @emph{Flying Salesman Problem},
+since I am using the great-circle distance between cities, rather than
+the driving distance.  Also: I assume the earth is a sphere, so I don't
+use geoid distances.
+
+The @code{gsl_siman_solve()} routine finds a route which is 3490.62
+Kilometers long; this is confirmed by an exhaustive search of all
+possible routes with the same initial city.
+
+The full code can be found in @file{siman/siman_tsp.c}, but I include
+here some plots generated with in the following way:
+@example
+./siman_tsp > tsp.output
+grep -v "^#" tsp.output  
+  | xyplot -xyil -d "x................y" 
+           -lx "generation" -ly "distance" 
+           -lt "TSP -- 12 southwest cities" 
+  | xyps -d > 12-cities.eps
+grep initial_city_coord tsp.output 
+  | awk '@{print $2, $3, $4, $5@}' 
+  | xyplot -xyil -lb0 -cs 0.8 
+           -lx "longitude (- means west)" 
+           -ly "latitude" 
+           -lt "TSP -- initial-order" 
+  | xyps -d > initial-route.eps
+grep final_city_coord tsp.output 
+  | awk '@{print $2, $3, $4, $5@}' 
+  | xyplot -xyil -lb0 -cs 0.8
+           -lx "longitude (- means west)" 
+           -ly "latitude" 
+           -lt "TSP -- final-order" 
+  | xyps -d > final-route.eps
+@end example
+
+
+This is the output showing the initial order of the cities; longitude is
+negative, since it is west and I want the plot to look like a map.
+@smallexample
+# initial coordinates of cities (longitude and latitude)
+###initial_city_coord: -105.95 35.68 Santa Fe
+###initial_city_coord: -112.07 33.54 Phoenix
+###initial_city_coord: -106.62 35.12 Albuquerque
+###initial_city_coord: -103.2 34.41 Clovis
+###initial_city_coord: -107.87 37.29 Durango
+###initial_city_coord: -96.77 32.79 Dallas
+###initial_city_coord: -105.92 35.77 Tesuque
+###initial_city_coord: -107.84 35.15 Grants
+###initial_city_coord: -106.28 35.89 Los Alamos
+###initial_city_coord: -106.76 32.34 Las Cruces
+###initial_city_coord: -108.58 37.35 Cortez
+###initial_city_coord: -108.74 35.52 Gallup
+###initial_city_coord: -105.95 35.68 Santa Fe
+@end smallexample
+
+The optimal route turns out to be:
+@smallexample
+# final coordinates of cities (longitude and latitude)
+###final_city_coord: -105.95 35.68 Santa Fe
+###final_city_coord: -106.28 35.89 Los Alamos
+###final_city_coord: -106.62 35.12 Albuquerque
+###final_city_coord: -107.84 35.15 Grants
+###final_city_coord: -107.87 37.29 Durango
+###final_city_coord: -108.58 37.35 Cortez
+###final_city_coord: -108.74 35.52 Gallup
+###final_city_coord: -112.07 33.54 Phoenix
+###final_city_coord: -106.76 32.34 Las Cruces
+###final_city_coord: -96.77 32.79 Dallas
+###final_city_coord: -103.2 34.41 Clovis
+###final_city_coord: -105.92 35.77 Tesuque
+###final_city_coord: -105.95 35.68 Santa Fe
+@end smallexample
+
+@iftex
+@sp 1
+@center @image{initial-route,3in} 
+@center @image{final-route,3in}
+
+@quotation
+Initial and final (optimal) route for the 12 southwestern cities Flying
+Salesman Problem.
+@end quotation
+@end iftex
+
+@noindent
+Here's a plot of the cost function (energy) versus generation (point in
+the calculation at which a new temperature is set) for this problem:
+
+@iftex
+@sp 1
+@center @image{12-cities,4.4in}
+
+@quotation
+Example of a simulated annealing run for the 12 southwestern cities
+Flying Salesman Problem.
+@end quotation
+@end iftex
+
+@comment @node Simulated Annealing References and Further Reading
+@comment @section References and Further Reading
+
+@comment Modern Heuristic Techniques for Combinatorial Problems, Colin R. Reeves
+@comment (ed.), McGraw-Hill, 1995
+@comment ISBN 0-07-709239-2

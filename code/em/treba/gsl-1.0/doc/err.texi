@@ -1,0 +1,439 @@
+@cindex error handling
+This chapter describes the way that GSL functions report and handle
+errors.  By examining the status information returned by every function
+you can determine whether it succeeded or failed, and if it failed you
+can find out what the precise cause of failure was.  You can also define
+your own error handling functions to modify the default behavior of the
+library.
+
+The functions described in this section are declared in the header file
+@file{gsl_errno.h}.
+
+@comment Note: In this context we use the word @dfn{error} to mean something
+@comment different from a bug.  An error report from the library just means that
+@comment the library was not able to compute what you asked.  For example, if a
+@comment root finding function cannot reach the level of precision you requested
+@comment the library would return an error.  In the case of problems caused
+@comment by real bugs, @pxref{Debugging Numerical Programs}.
+
+@menu
+* Error Reporting::             
+* Error Handlers::              
+* Using GSL error reporting in your own functions::  
+@end menu
+
+@node Error Reporting
+@section Error Reporting
+
+The library follows the thread-safe error reporting conventions of the
+@sc{posix} Threads library.  Functions return a non-zero error code to
+indicate an error and @code{0} to indicate success.
+
+@example
+int status = gsl_function(...)
+
+if (status) @{ /* an error occurred */
+  .....       
+  /* status value specifies the type of error */
+@}
+@end example
+
+The routines report an error whenever they cannot perform the task
+requested of them.  For example, a root-finding function would return a
+non-zero error code if could not converge to the requested accuracy, or
+exceeded a limit on the number of iterations.  Situations like this are
+a normal occurrence when using any mathematical library and you should
+check the return status of the functions that you call.
+
+Whenever a routine reports an error the return value specifies the
+type of error.  The return value is analogous to the value of the
+variable @code{errno} in the C library.  However, the C library's
+@code{errno} is a global variable, which is not thread-safe (There can
+be only one instance of a global variable per program.  Different
+threads of execution may overwrite @code{errno} simultaneously).
+Returning the error number directly avoids this problem.  The caller can
+examine the return code and decide what action to take, including
+ignoring the error if it is not considered serious.
+
+The error code numbers are defined in the file @file{gsl_errno.h}.  They
+all have the prefix @code{GSL_} and expand to non-zero constant integer
+values.  Many of the error codes use the same base name as a
+corresponding error code in C library.  Here are some of the most common
+error codes,
+
+@cindex error codes
+@deftypefn {Macro} int GSL_EDOM
+Domain error; used by mathematical functions when an argument value does
+not fall into the domain over which the function is defined (like
+EDOM in the C library)
+@end deftypefn
+
+@deftypefn {Macro} int GSL_ERANGE
+Range error; used by mathematical functions when the result value is not
+representable because of overflow or underflow (like ERANGE in the C
+library)
+@end deftypefn
+
+@deftypefn {Macro} int GSL_ENOMEM
+No memory available.  The system cannot allocate more virtual memory
+because its capacity is full (like ENOMEM in the C library).  This error
+is reported when a GSL routine encounters problems when trying to
+allocate memory with @code{malloc}.
+@end deftypefn
+
+@deftypefn {Macro} int GSL_EINVAL
+Invalid argument.  This is used to indicate various kinds of problems
+with passing the wrong argument to a library function (like EINVAL in the C
+library). 
+@end deftypefn
+@noindent
+Here is an example of some code which checks the return value of a
+function where an error might be reported,
+
+@example
+int status = gsl_fft_complex_radix2_forward (data, n);
+
+if (status) @{
+  if (status == GSL_EINVAL) @{
+     fprintf (stderr, "invalid argument, n=%d\n", n);
+  @} else @{
+     fprintf (stderr, "failed, gsl_errno=%d\n", 
+                      status);
+  @}
+  exit (-1);
+@}
+@end example
+@comment 
+@noindent
+The function @code{gsl_fft_complex_radix2} only accepts integer lengths
+which are a power of two.  If the variable @code{n} is not a power
+of two then the call to the library function will return
+@code{GSL_EINVAL}, indicating that the length argument is invalid.  The
+@code{else} clause catches any other possible errors.
+
+The error codes can be converted into an error message using the
+function @code{gsl_strerror}.
+
+@deftypefun {const char *} gsl_strerror (const int @var{gsl_errno})
+This function returns a pointer to a string describing the error code
+@var{gsl_errno}. For example,
+
+@example
+printf("error: %s\n", gsl_strerror (status));
+@end example
+@noindent
+would print an error message like @code{error: output range error} for a
+status value of @code{GSL_ERANGE}.
+@end deftypefun
+
+@node Error Handlers
+@section Error Handlers
+@cindex Error handlers
+
+In addition to reporting errors the library also provides an optional
+error handler.  The error handler is called by library functions when
+they report an error, just before they return to the caller.  The
+purpose of the handler is to provide a function where a breakpoint can
+be set that will catch library errors when running under the debugger.
+It is not intended for use in production programs, which should handle
+any errors using the error return codes described above.
+
+The default behavior of the error handler is to print a short message
+and call @code{abort()} whenever an error is reported by the library.
+If this default is not turned off then any program using the library
+will stop with a core-dump whenever a library routine reports an error.
+This is intended as a fail-safe default for programs which do not check
+the return status of library routines (we don't encourage you to write
+programs this way).  If you turn off the default error handler it is
+your responsibility to check the return values of the GSL routines.  You
+can customize the error behavior by providing a new error handler. For
+example, an alternative error handler could log all errors to a file,
+ignore certain error conditions (such as underflows), or start the
+debugger and attach it to the current process when an error occurs.
+
+All GSL error handlers have the type @code{gsl_error_handler_t}, which is
+defined in @file{gsl_errno.h},
+
+@deftp {Data Type} gsl_error_handler_t
+
+This is the type of GSL error handler functions.  An error handler will
+be passed four arguments which specify the reason for the error (a
+string), the name of the source file in which it occurred (also a
+string), the line number in that file (an integer) and the error number
+(an integer).  The source file and line number are set at compile time
+using the @code{__FILE__} and @code{__LINE__} directives in the
+preprocessor.  An error handler function returns type @code{void}.
+Error handler functions should be defined like this,
+
+@example
+void handler (const char * reason, 
+              const char * file, 
+              int line, 
+              int gsl_errno)
+@end example
+@end deftp
+@comment 
+@noindent
+To request the use of your own error handler you need to call the
+function @code{gsl_set_error_handler} which is also declared in
+@file{gsl_errno.h},
+
+@deftypefun gsl_error_handler_t gsl_set_error_handler (gsl_error_handler_t @var{new_handler})
+
+This functions sets a new error handler, @var{new_handler}, for the GSL
+library routines.  The previous handler is returned (so that you can
+restore it later).  Note that the pointer to a user defined error
+handler function is stored in a static variable, so there can only be
+one error handler per program.  This function should be not be used in
+multi-threaded programs except to set up a program-wide error handler
+from a master thread.  The following example shows how to set and
+restore a new error handler,
+
+@example
+/* save original handler, install new handler */
+old_handler = gsl_set_error_handler (&my_handler); 
+
+/* code uses new handler */
+.....     
+
+/* restore original handler */
+gsl_set_error_handler (old_handler); 
+@end example
+@noindent
+To use the default behavior (@code{abort} on error) set the error
+handler to @code{NULL},
+
+@example
+old_handler = gsl_set_error_handler (NULL); 
+@end example
+@end deftypefun
+
+@deftypefun gsl_error_handler_t gsl_set_error_handler_off ()
+This function turns off the error handler by defining an error handler
+which does nothing. This will cause the program to continue after any
+error, so the return values from any library routines must be checked.
+This is the recommended behavior for production programs.  The previous
+handler is returned (so that you can restore it later).
+@end deftypefun
+
+The error behavior can be changed for specific applications by
+recompiling the library with a customized definition of the
+@code{GSL_ERROR} macro in the file @file{gsl_errno.h}.
+
+@c @noindent
+@c Here is a skeleton outline of a program which defines its own error
+@c handler.  Imagine that the program does interactive data analysis --
+@c there is a main loop which reads commands from the user and calls
+@c library routines with user-supplied arguments,
+
+@c @example
+@c #include <setjmp.h>
+@c #include <gsl/gsl_errno.h>
+
+@c jmp_buf main_loop;
+@c void my_error_handler (const char *reason, const char *file, int line);
+
+@c main ()
+@c @{
+@c    gsl_set_error_handler (&my_error_handler);
+
+@c    while (1) 
+@c      @{
+@c        .... /* read command from user */
+
+@c        if (setjmp (main_loop) == 0)
+@c          @{
+@c             .... /* call GSL routines requested by user */
+@c          @}
+@c        else 
+@c          @{
+@c             .... /* my_error_handler bailed out, GSL gave an error */
+@c          @}
+@c      @}
+@c @}
+
+@c void
+@c my_error_handler (const char *reason, const char *file, int line)
+@c @{
+@c     fprintf (stderr, "GSL error: %s\n", reason);
+@c     longjmp (main_loop, 1);
+@c @}
+@c @end example
+
+@c @noindent
+@c Before entering the interactive loop the program uses
+@c @code{gsl_set_error_handler} to provide its own error handler
+@c @code{my_error_handler} for GSL error reports.  After this point the
+@c function @code{my_error_handler} will be invoked whenever an error is
+@c reported by GSL. The new error handler prints the cause of the error
+@c (the string @code{reason}) and then does a non-local jump back to the
+@c main loop.  This would allow the user to fix the command which
+@c caused the error and try again.
+
+@comment @node Error streams
+@comment @section Error streams
+@comment 
+@comment GSL supports the concert of an error stream, which is a place where
+@comment errors are logged as they occur.  An error stream allows the library to
+@comment report an error message directly to the user rather than to the calling
+@comment program.  This can sometimes be useful because it reduces the amount of
+@comment error checking that the program needs to do.
+@comment 
+@comment For example, many mathematical functions compute floating point numbers
+@comment or other numerical values.  The standard versions of these functions
+@comment accept a pointer for storing their numerical result, so that the status
+@comment can be returned separately.  For example, to compute the first-order
+@comment Bessel function @math{J_1(x)} for @math{x=1.23} and obtain the status we
+@comment write,
+@comment 
+@comment @example
+@comment double result;
+@comment int status = gsl_sf_bessel_J1_e (1.23, &result);
+@comment @end example
+@comment @comment 
+@comment @noindent
+@comment where @code{gsl_sf_bessel_J1_e} is the appropriate function from the
+@comment special functions (@code{sf}) module.  The suffix @code{_e} appended to
+@comment the function name indicates that the return value gives the error
+@comment status.  This style of function is safe and avoids any confusion about
+@comment what the return value means, but requires a lot of error checking. 
+@comment 
+@comment For many numerical functions it would be more intuitive to write
+@comment something like @math{y = f(x)}.  The library provides functions with
+@comment an alternative interface which allows this,
+@comment 
+@comment @example
+@comment double result = gsl_sf_bessel_J1 (1.23)
+@comment @end example
+@comment @comment 
+@comment @noindent
+@comment However, in this case there is no way for the calling program to test
+@comment for an error.  Instead if there are any errors (such as underflow) they
+@comment are logged to the error stream, and can be examined by the user at the
+@comment end of the run.  It is up to the programmer to decide which form is best
+@comment suited to a given application.  For a truly robust program the error
+@comment checking versions of the functions should be used, since they don't rely
+@comment on the user examining the error stream.
+@comment 
+@comment @node Manipulating the error stream
+@comment @section Manipulating the error stream
+@comment 
+@comment By default the error stream is sent to @code{stderr}, and you can
+@comment redirect it to a file on the command line.  There are also two ways to
+@comment change this within your program.  Firstly, the stream can be redirected
+@comment to another file by providing a suitable file pointer.  Alternatively you
+@comment can set up an error stream handler, which is a function that accepts
+@comment error message strings.  By using an error stream handler function you
+@comment have complete control over where the messages are stored.
+@comment 
+@comment @deftypefun {FILE *} gsl_set_stream (FILE * @var{new_stream})
+@comment This function selects the stream used for GSL error messages.  After
+@comment calling @code{gsl_set_stream} any further messages sent to the default
+@comment stream handler will be printed on @var{new_stream}.  The previous stream
+@comment is returned, so that you can close it or restore it later.  Note that the
+@comment stream is stored in a static variable, so there can only be one error
+@comment stream per program.
+@comment @end deftypefun
+@comment 
+@comment @deftp {Data Type} gsl_stream_handler_t
+@comment This is the type of GSL stream handler functions. A stream handler will
+@comment be passed four arguments, specifying a label (such as @sc{error} or
+@comment @sc{warning}), the source file in which the error occurred, the line
+@comment number in that file and a description of the error.  The source file and
+@comment line number are set at compile time using the @code{__FILE__} and
+@comment @code{__LINE__} directives in the preprocessor. A stream handler
+@comment function returns type @code{void}.  Stream handler functions should be
+@comment defined like this,
+@comment 
+@comment @example
+@comment void @var{handler} (const char * label, const char * file,
+@comment               int line, const char * reason)
+@comment @end example
+@comment @end deftp
+@comment 
+@comment To request the use of your own stream handler you need to call the
+@comment function @code{gsl_set_stream_handler} which is also declared in
+@comment @file{gsl_errno.h},
+@comment 
+@comment @deftypefun gsl_stream_handler_t gsl_set_stream_handler (gsl_stream_handler_t @var{new_handler})
+@comment 
+@comment This functions sets a new stream handler, @var{new_handler}, for the GSL
+@comment library routines.  The previous handler is returned (so that you can
+@comment restore it later).  Note that the pointer to a user defined stream
+@comment handler function is stored in a static variable, so there can only be
+@comment one error handler per program.
+@comment 
+@comment @example
+@comment old_handler = gsl_set_stream_handler (&my_error_stream); 
+@comment 
+@comment .....     /* code uses new handler */
+@comment 
+@comment gsl_set_stream_handler (old_handler); /* restore old handler */
+@comment @end example
+@comment 
+@comment @noindent
+@comment To use the default behavior (print the message to @code{stderr}) set the stream
+@comment handler to @code{NULL},
+@comment 
+@comment @example
+@comment old_handler = gsl_set_stream_handler (NULL); 
+@comment @end example
+@comment @end deftypefun
+
+@node Using GSL error reporting in your own functions
+@section Using GSL error reporting in your own functions
+@cindex error handling macros
+If you are writing numerical functions in a program which also uses GSL
+code you may find it convenient to adopt the same error reporting
+conventions as in the library.
+
+To report an error you need to call the function @code{gsl_error} with a
+string describing the error and then return an appropriate error code
+from @code{gsl_errno.h}, or a special value, such as @code{NaN}.  For
+convenience the file @file{gsl_errno.h} defines two macros which carry
+out these steps:
+
+@deffn {Macro} GSL_ERROR (@var{reason}, @var{gsl_errno})
+
+This macro reports an error using the GSL conventions and returns a
+status value of @code{gsl_errno}.  It expands to the following code fragment,
+
+@example
+gsl_error (reason, __FILE__, __LINE__, gsl_errno);
+return gsl_errno;
+@end example
+
+@noindent
+The macro definition in @file{gsl_errno.h} actually wraps the code
+in a @code{do @{ ... @} while (0)} block to prevent possible
+parsing problems.
+@end deffn
+
+Here is an example of how the macro could be used to report that a
+routine did not achieve a requested tolerance.  To report the error the
+routine needs to return the error code @code{GSL_ETOL}.
+
+@example
+if (residual > tolerance) 
+  @{
+    GSL_ERROR("residual exceeds tolerance", GSL_ETOL);
+  @}
+@end example
+
+@deffn {Macro} GSL_ERROR_VAL (@var{reason}, @var{gsl_errno}, @var{value})
+
+This macro is the same as @code{GSL_ERROR} but returns a user-defined
+status value of @var{value} instead of an error code.  It can be used for
+mathematical functions that return a floating point value.
+@end deffn
+
+Here is an example where a function needs to return a @code{NaN} because
+of a mathematical singularity,
+
+@example
+if (x == 0) 
+  @{
+    GSL_ERROR_VAL("argument lies on singularity", 
+                  GSL_ERANGE, GSL_NAN);
+  @}
+@end example

@@ -1,0 +1,4 @@
+Problem: 14
+Algorithm: WFA, tau= 0.001, basis size=51
+KL: 128.534109702
+Runtime: 0.518571428571

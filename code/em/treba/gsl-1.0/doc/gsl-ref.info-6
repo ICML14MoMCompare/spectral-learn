@@ -1,0 +1,1013 @@
+This is gsl-ref.info, produced by makeinfo version 4.0 from
+gsl-ref.texi.
+
+INFO-DIR-SECTION Scientific software
+START-INFO-DIR-ENTRY
+* gsl-ref: (gsl-ref).                   GNU Scientific Library - Reference
+END-INFO-DIR-ENTRY
+
+   This file documents the GNU Scientific Library.
+
+   Copyright (C) 1996, 1997, 1998, 1999, 2000, 2001 The GSL Team.
+
+   Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.1 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.  A
+copy of the license is included in the section entitled "GNU Free
+Documentation License".
+
+
+File: gsl-ref.info,  Node: Permutation functions,  Next: Applying Permutations,  Prev: Permutation properties,  Up: Permutations
+
+Permutation functions
+=====================
+
+ - Function: void gsl_permutation_reverse (gsl_permutation * P)
+     This function reverses the elements of the permutation P.
+
+ - Function: int gsl_permutation_inverse (gsl_permutation * INV, const
+          gsl_permutation * P)
+     This function computes the inverse of the permutation P, storing
+     the result in INV.
+
+ - Function: int gsl_permutation_next (gsl_permutation * P)
+     This function advances the permutation P to the next permutation
+     in lexicographic order and returns `GSL_SUCCESS'.  If no further
+     permutations are available it returns `GSL_FAILURE' and leaves P
+     unmodified.  Starting with the identity permutation and repeatedly
+     applying this function will iterate through all possible
+     permutations of a given order.
+
+ - Function: int gsl_permutation_prev (gsl_permutation * P)
+     This function steps backwards from the permutation P to the
+     previous permutation in lexicographic order, returning
+     `GSL_SUCCESS'.  If no previous permutation is available it returns
+     `GSL_FAILURE' and leaves P unmodified.
+
+
+File: gsl-ref.info,  Node: Applying Permutations,  Next: Reading and writing permutations,  Prev: Permutation functions,  Up: Permutations
+
+Applying Permutations
+=====================
+
+ - Function: int gsl_permute (const size_t * P, double * DATA, size_t
+          STRIDE, size_t N)
+     This function applies the permutation P to the array DATA of size
+     N with stride STRIDE.
+
+ - Function: int gsl_permute_inverse (const size_t * P, double * DATA,
+          size_t STRIDE, size_t N)
+     This function applies the inverse of the permutation P to the
+     array DATA of size N with stride STRIDE.
+
+ - Function: int gsl_permute_vector (const gsl_permutation * P,
+          gsl_vector * V)
+     This function applies the permutation P to the elements of the
+     vector V, considered as a row-vector acted on by a permutation
+     matrix from the right, v' = v P.  The j-th column of the
+     permutation matrix P is given by the p_j-th column of the identity
+     matrix. The permutation P and the vector V must have the same
+     length.
+
+ - Function: int gsl_permute_vector_inverse (const gsl_permutation * P,
+          gsl_vector * V)
+     This function applies the inverse of the permutation P to the
+     elements of the vector V, considered as a row-vector acted on by
+     an inverse permutation matrix from the right, v' = v P^T.  Note
+     that for permutation matrices the inverse is the same as the
+     transpose.  The j-th column of the permutation matrix P is given by
+     the p_j-th column of the identity matrix. The permutation P and
+     the vector V must have the same length.
+
+
+File: gsl-ref.info,  Node: Reading and writing permutations,  Next: Permutation Examples,  Prev: Applying Permutations,  Up: Permutations
+
+Reading and writing permutations
+================================
+
+   The library provides functions for reading and writing permutations
+to a file as binary data or formatted text.
+
+ - Function: int gsl_permutation_fwrite (FILE * STREAM, const
+          gsl_permutation * P)
+     This function writes the elements of the permutation P to the
+     stream STREAM in binary format.  The function returns
+     `GSL_EFAILED' if there was a problem writing to the file.  Since
+     the data is written in the native binary format it may not be
+     portable between different architectures.
+
+ - Function: int gsl_permutation_fread (FILE * STREAM, gsl_permutation
+          * P)
+     This function reads into the permutation P from the open stream
+     STREAM in binary format.  The permutation P must be preallocated
+     with the correct length since the function uses the size of P to
+     determine how many bytes to read.  The function returns
+     `GSL_EFAILED' if there was a problem reading from the file.  The
+     data is assumed to have been written in the native binary format
+     on the same architecture.
+
+ - Function: int gsl_permutation_fprintf (FILE * STREAM, const
+          gsl_permutation * P, const char *FORMAT)
+     This function writes the elements of the permutation P
+     line-by-line to the stream STREAM using the format specifier
+     FORMAT, which should be suitable for a type of SIZE_T.  On a GNU
+     system the type modifier `Z' represents `size_t', so `"%Zu\n"' is
+     a suitable format.  The function returns `GSL_EFAILED' if there
+     was a problem writing to the file.
+
+ - Function: int gsl_permutation_fscanf (FILE * STREAM, gsl_permutation
+          * P)
+     This function reads formatted data from the stream STREAM into the
+     permutation P.  The permutation P must be preallocated with the
+     correct length since the function uses the size of P to determine
+     how many numbers to read.  The function returns `GSL_EFAILED' if
+     there was a problem reading from the file.
+
+
+File: gsl-ref.info,  Node: Permutation Examples,  Next: Permutation References and Further Reading,  Prev: Reading and writing permutations,  Up: Permutations
+
+Examples
+========
+
+   The example program below creates a random permutation by shuffling
+and finds its inverse.
+
+     #include <stdio.h>
+     #include <gsl/gsl_rng.h>
+     #include <gsl/gsl_randist.h>
+     #include <gsl/gsl_permutation.h>
+     
+     int
+     main (void)
+     {
+       const size_t N = 10;
+       const gsl_rng_type * T;
+       gsl_rng * r;
+     
+       gsl_permutation * p = gsl_permutation_alloc (N);
+       gsl_permutation * q = gsl_permutation_alloc (N);
+     
+       gsl_rng_env_setup();
+       T = gsl_rng_default;
+       r = gsl_rng_alloc (T);
+     
+       printf("initial permutation:");
+       gsl_permutation_init (p);
+       gsl_permutation_fprintf (stdout, p, " %u");
+       printf("\n");
+     
+       printf(" random permutation:");
+       gsl_ran_shuffle (r, p->data, N, sizeof(size_t));
+       gsl_permutation_fprintf (stdout, p, " %u");
+       printf("\n");
+     
+       printf("inverse permutation:");
+       gsl_permutation_invert (q, p);
+       gsl_permutation_fprintf (stdout, q, " %u");
+       printf("\n");
+     
+       return 0;
+     }
+
+Here is the output from the program,
+
+     bash$ ./a.out
+     initial permutation: 0 1 2 3 4 5 6 7 8 9
+      random permutation: 1 3 5 2 7 6 0 4 9 8
+     inverse permutation: 6 0 3 1 7 2 5 4 9 8
+
+The random permutation `p[i]' and its inverse `q[i]' are related
+through the identity `p[q[i]] = i', which can be verified from the
+output.
+
+   The next example program steps forwards through all possible 3-rd
+order permutations, starting from the identity,
+
+     #include <stdio.h>
+     #include <gsl/gsl_permutation.h>
+     
+     int
+     main (void)
+     {
+       gsl_permutation * p = gsl_permutation_alloc (3);
+     
+       gsl_permutation_init (p);
+     
+       do
+        {
+           gsl_permutation_fprintf (stdout, p, " %u");
+           printf("\n");
+        }
+       while (gsl_permutation_next(p) == GSL_SUCCESS);
+     
+       return 0;
+     }
+
+Here is the output from the program,
+
+     bash$ ./a.out
+      0 1 2
+      0 2 1
+      1 0 2
+      1 2 0
+      2 0 1
+      2 1 0
+
+All 6 permutations are generated in lexicographic order.  To reverse the
+sequence, begin with the final permutation (which is the reverse of the
+identity) and replace `gsl_permutation_next' with
+`gsl_permutation_prev'.
+
+
+File: gsl-ref.info,  Node: Permutation References and Further Reading,  Prev: Permutation Examples,  Up: Permutations
+
+References and Further Reading
+==============================
+
+The subject of permutations is covered extensively in Knuth's `Sorting
+and Searching',
+
+     Donald E. Knuth, `The Art of Computer Programming: Sorting and
+     Searching' (Vol 3, 3rd Ed, 1997), Addison-Wesley, ISBN 0201896850.
+
+
+File: gsl-ref.info,  Node: Sorting,  Next: BLAS Support,  Prev: Permutations,  Up: Top
+
+Sorting
+*******
+
+   This chapter describes functions for sorting data, both directly and
+indirectly (using an index).  All the functions use the "heapsort"
+algorithm.  Heapsort is an O(N \log N) algorithm which operates
+in-place.  It does not require any additional storage and provides
+consistent performance.  The running time for its worst-case (ordered
+data)  is not significantly longer than the average and best cases.
+Note that the heapsort algorithm does not preserve the relative
+ordering of equal elements -- it is an "unstable" sort.  However the
+resulting order of equal elements will be consistent across different
+platforms when using these functions.
+
+* Menu:
+
+* Sorting objects::
+* Sorting vectors::
+* Selecting the k-th smallest or largest elements::
+* Computing the rank::
+* Sorting Examples::
+* Sorting References and Further Reading::
+
+
+File: gsl-ref.info,  Node: Sorting objects,  Next: Sorting vectors,  Up: Sorting
+
+Sorting objects
+===============
+
+   The following function provides a simple alternative to the standard
+library function `qsort'.  It is intended for systems lacking `qsort',
+not as a replacement for it.  The function `qsort' should be used
+whenever possible, as it will be faster and can provide stable ordering
+of equal elements.  Documentation for `qsort' is available in the `GNU
+C Library Reference Manual'.
+
+   The functions described in this section are defined in the header
+file `gsl_heapsort.h'.
+
+ - Function: void gsl_heapsort (void * ARRAY, size_t COUNT, size_t
+          SIZE, gsl_comparison_fn_t COMPARE)
+     This function sorts the COUNT elements of the array ARRAY, each of
+     size SIZE, into ascending order using the comparison function
+     COMPARE.  The type of the comparison function is defined by,
+
+          int (*gsl_comparison_fn_t) (const void * a,
+                                      const void * b)
+
+     A comparison function should return a negative integer if the first
+     argument is less than the second argument, `0' if the two arguments
+     are equal and a positive integer if the first argument is greater
+     than the second argument.
+
+     For example, the following function can be used to sort doubles
+     into ascending numerical order.
+
+          int
+          compare_doubles (const double * a,
+                           const double * b)
+          {
+              return (int) (*a - *b);
+          }
+
+     The appropriate function call to perform the sort is,
+
+          gsl_heapsort (array, count, sizeof(double),
+                        compare_doubles);
+
+     Note that unlike `qsort' the heapsort algorithm cannot be made into
+     a stable sort by pointer arithmetic.  The trick of comparing
+     pointers for equal elements in the comparison function does not
+     work for the heapsort algorithm.  The heapsort algorithm performs
+     an internal rearrangement of the data which destroys its initial
+     ordering.
+
+ - Function: int gsl_heapsort_index (size_t * p, const void * ARRAY,
+          size_t COUNT, size_t SIZE, gsl_comparison_fn_t COMPARE)
+     This function indirectly sorts the COUNT elements of the array
+     ARRAY, each of size SIZE, into ascending order using the
+     comparison function COMPARE.  The resulting permutation is stored
+     in P, an array of length N.  The elements of P give the index of
+     the array element which would have been stored in that position if
+     the array had been sorted in place.  The first element of P gives
+     the index of the least element in ARRAY, and the last element of P
+     gives the index of the greatest element in ARRAY.  The array
+     itself is not changed.
+
+
+File: gsl-ref.info,  Node: Sorting vectors,  Next: Selecting the k-th smallest or largest elements,  Prev: Sorting objects,  Up: Sorting
+
+Sorting vectors
+===============
+
+   The following functions will sort the elements of an array or vector,
+either directly or indirectly.  They are defined for all real and
+integer types using the normal suffix rules.  For example, the `float'
+versions of the array functions are `gsl_sort_float' and
+`gsl_sort_float_index'.  The corresponding vector functions are
+`gsl_sort_vector_float' and `gsl_sort_vector_float_index'.  The
+prototypes are available in the header files `gsl_sort_float.h'
+`gsl_sort_vector_float.h'.  The complete set of prototypes can be
+included using the header files `gsl_sort.h' and `gsl_sort_vector.h'.
+
+   There are no functions for sorting complex arrays or vectors, since
+the ordering of complex numbers is not uniquely defined.  To sort a
+complex vector by magnitude compute a real vector containing the the
+magnitudes of the complex elements, and sort this vector indirectly.
+The resulting index gives the appropriate ordering of the original
+complex vector.
+
+ - Function: void gsl_sort (double * DATA, size_t STRIDE, size_t N)
+     This function sorts the N elements of the array DATA with stride
+     STRIDE into ascending numerical order.
+
+ - Function: void gsl_sort_vector (gsl_vector * V)
+     This function sorts the elements of the vector V into ascending
+     numerical order.
+
+ - Function: int gsl_sort_index (size_t * P, const double * DATA,
+          size_t STRIDE, size_t N)
+     This function indirectly sorts the N elements of the array DATA
+     with stride STRIDE into ascending order, storing the resulting
+     permutation in P.  The array P must be allocated to a sufficient
+     length to store the N elements of the permutation.  The elements
+     of P give the index of the array element which would have been
+     stored in that position if the array had been sorted in place.
+     The array DATA is not changed.
+
+ - Function: int gsl_sort_vector_index (gsl_permutation * P, const
+          gsl_vector * V)
+     This function indirectly sorts the elements of the vector V into
+     ascending order, storing the resulting permutation in P.  The
+     elements of P give the index of the vector element which would
+     have been stored in that position if the vector had been sorted in
+     place.  The first element of P gives the index of the least element
+     in V, and the last element of P gives the index of the greatest
+     element in V.  The vector V is not changed.
+
+
+File: gsl-ref.info,  Node: Selecting the k-th smallest or largest elements,  Next: Computing the rank,  Prev: Sorting vectors,  Up: Sorting
+
+Selecting the k-th smallest or largest elements
+===============================================
+
+   The functions described in this section select the k-th smallest or
+largest elements of a data set of size N.  The routines use an O(kN)
+direct insertion algorithm which is suited to subsets that are small
+compared with the total size of the dataset. For example, the routines
+are useful for selecting the 10 largest values from one million data
+points, but not for selecting the largest 100,000 values.  If the
+subset is a significant part of the total dataset it may be faster to
+sort all the elements of the dataset directly with an O(N \log N)
+algorithm and obtain the smallest or largest values that way.
+
+ - Function: void gsl_sort_smallest (double * DEST, size_t K, const
+          double * SRC, size_t STRIDE, size_t N)
+     This function copies the K-th smallest elements of the array SRC,
+     of size N and stride STRIDE, in ascending numerical order in DEST.
+     The size of the subset K must be less than or equal to N.  The
+     data SRC is not modified by this operation.
+
+ - Function: void gsl_sort_largest (double * DEST, size_t K, const
+          double * SRC, size_t STRIDE, size_t N)
+     This function copies the K-th largest elements of the array SRC,
+     of size N and stride STRIDE, in descending numerical order in
+     DEST. The size of the subset K must be less than or equal to N.
+     The data SRC is not modified by this operation.
+
+ - Function: void gsl_sort_vector_smallest (double * DEST, size_t K,
+          const gsl_vector * V)
+ - Function: void gsl_sort_vector_largest (double * DEST, size_t K,
+          const gsl_vector * V)
+     These functions copy the K-th smallest or largest elements of the
+     vector V into the array DEST. The size of the subset K must be
+     less than or equal to the length of the vector V.
+
+   The following functions find the indices of the k-th smallest or
+largest elements of a dataset,
+
+ - Function: void gsl_sort_smallest_index (size_t * P, size_t K, const
+          double * SRC, size_t STRIDE, size_t N)
+     This function stores the indices of the K-th smallest elements of
+     the array SRC, of size N and stride STRIDE, in the array P.  The
+     indices are chosen so that the corresponding data is in ascending
+     numerical order.  The size of the subset K must be less than or
+     equal to N. The data SRC is not modified by this operation.
+
+ - Function: void gsl_sort_largest_index (size_t * P, size_t K, const
+          double * SRC, size_t STRIDE, size_t N)
+     This function stores the indices of the K-th largest elements of
+     the array SRC, of size N and stride STRIDE, in the array P.  The
+     indices are chosen so that the corresponding data is in descending
+     numerical order.  The size of the subset K must be less than or
+     equal to N. The data SRC is not modified by this operation.
+
+ - Function: void gsl_sort_vector_smallest_index (size_t * P, size_t K,
+          const gsl_vector * V)
+ - Function: void gsl_sort_vector_largest_index (size_t * P, size_t K,
+          const gsl_vector * V)
+     These functions store the indices of K-th smallest or largest
+     elements of the vector V in the array P. The size of the subset K
+     must be less than or equal to the length of the vector V.
+
+
+File: gsl-ref.info,  Node: Computing the rank,  Next: Sorting Examples,  Prev: Selecting the k-th smallest or largest elements,  Up: Sorting
+
+Computing the rank
+==================
+
+   The "rank" of an element is its order in the sorted data.  The rank
+is the inverse of the index permutation, P.  It can be computed using
+the following algorithm,
+
+     for (i = 0; i < p->size; i++)
+     {
+         size_t pi = p->data[i];
+         rank->data[pi] = i;
+     }
+
+This can be computed directly from the function
+`gsl_permutation_invert(rank,p)'.
+
+   The following function will print the rank of each element of the
+vector V,
+
+     void
+     print_rank (gsl_vector * v)
+     {
+       size_t i;
+       size_t n = v->size;
+       gsl_permutation * perm = gsl_permutation_alloc(n);
+       gsl_permutation * rank = gsl_permutation_alloc(n);
+     
+       gsl_sort_vector_index (perm, v);
+       gsl_permutation_invert (rank, perm);
+     
+       for (i = 0; i < n; i++)
+        {
+         double vi = gsl_vector_get(v, i);
+         printf("element = %d, value = %g, rank = %d\n",
+                 i, vi, rank->data[i]);
+        }
+     
+       gsl_permutation_free (perm);
+       gsl_permutation_free (rank);
+     }
+
+
+File: gsl-ref.info,  Node: Sorting Examples,  Next: Sorting References and Further Reading,  Prev: Computing the rank,  Up: Sorting
+
+Examples
+========
+
+   The following example shows how to use the permutation P to print
+the elements of the vector V in ascending order,
+
+     gsl_sort_vector_index (p, v);
+     
+     for (i = 0; i < v->size; i++)
+     {
+         double vpi = gsl_vector_get(v, p->data[i]);
+         printf("order = %d, value = %g\n", i, vpi);
+     }
+
+The next example uses the function `gsl_sort_smallest' to select the 5
+smallest numbers from 100000 uniform random variates stored in an array,
+
+     #include <gsl/gsl_rng.h>
+     #include <gsl/gsl_sort_double.h>
+     
+     int
+     main (void)
+     {
+       const gsl_rng_type * T;
+       gsl_rng * r;
+     
+       int i, k = 5, N = 100000;
+     
+       double * x = malloc (N * sizeof(double));
+       double * small = malloc (k * sizeof(double));
+     
+       gsl_rng_env_setup();
+     
+       T = gsl_rng_default;
+       r = gsl_rng_alloc (T);
+     
+       for (i = 0; i < N; i++)
+         {
+           x[i] = gsl_rng_uniform(r);
+         }
+     
+       gsl_sort_smallest (small, k, x, 1, N);
+     
+       printf("%d smallest values from %d\n", k, N);
+     
+       for (i = 0; i < k; i++)
+         {
+           printf ("%d: %.18f\n", i, small[i]);
+         }
+       return 0;
+     }
+   The output lists the 5 smallest values, in ascending order,
+
+     $ ./a.out
+     5 smallest values from 100000
+     0: 0.000005466630682349
+     1: 0.000012384494766593
+     2: 0.000017581274732947
+     3: 0.000025131041184068
+     4: 0.000031369971111417
+
+
+File: gsl-ref.info,  Node: Sorting References and Further Reading,  Prev: Sorting Examples,  Up: Sorting
+
+References and Further Reading
+==============================
+
+The subject of sorting is covered extensively in Knuth's `Sorting and
+Searching',
+
+     Donald E. Knuth, `The Art of Computer Programming: Sorting and
+     Searching' (Vol 3, 3rd Ed, 1997), Addison-Wesley, ISBN 0201896850.
+
+The Heapsort algorithm is described in the following book,
+
+     Robert Sedgewick, `Algorithms in C', Addison-Wesley, ISBN
+     0201514257.
+
+
+File: gsl-ref.info,  Node: BLAS Support,  Next: Linear Algebra,  Prev: Sorting,  Up: Top
+
+BLAS Support
+************
+
+   The Basic Linear Algebra Subprograms (BLAS) define a set of
+fundamental operations on vectors and matrices which can be used to
+create optimized higher-level linear algebra functionality.
+
+   The library provides a low-level layer which corresponds directly to
+the C-language BLAS standard, referred to here as "CBLAS", and a
+higher-level interface for operations on GSL vectors and matrices.
+Users who are interested in simple operations on GSL vector and matrix
+objects should use the high-level layer, which is declared in the file
+`gsl_blas.h'.  This should satisfy the needs of most users.  Note that
+GSL matrices are implemented using dense-storage so the interface only
+includes the corresponding dense-storage BLAS functions.  The full BLAS
+functionality for band-format and packed-format matrices is available
+through the low-level CBLAS interface.
+
+   The interface for the `gsl_cblas' layer is specified in the file
+`gsl_cblas.h'.  This interface corresponds the BLAS Technical Forum's
+draft standard for the C interface to legacy BLAS implementations.
+Users who have access to other conforming CBLAS implementations can use
+these in place of the version provided by the library.  Note that users
+who have only a Fortran BLAS library can use a CBLAS conformant wrapper
+to convert it into a CBLAS library.  A reference CBLAS wrapper for
+legacy Fortran implementations exists as part of the draft CBLAS
+standard and can be obtained from Netlib.  The complete set of CBLAS
+functions is listed in an appendix (*note GSL CBLAS Library::).
+
+   There are three levels of BLAS operations,
+
+Level 1
+     Vector operations, e.g. y = \alpha x + y
+
+Level 2
+     Matrix-vector operations, e.g. y = \alpha A x + \beta y
+
+Level 3
+     Matrix-matrix operations, e.g. C = \alpha A B + C
+
+Each routine has a name which specifies the operation, the type of
+matrices involved and their precisions.  Some of the most common
+operations and their names are given below,
+
+DOT
+     scalar product, x^T y
+
+AXPY
+     vector sum, \alpha x + y
+
+MV
+     matrix-vector product, A x
+
+SV
+     matrix-vector solve, inv(A) x
+
+MM
+     matrix-matrix product, A B
+
+SM
+     matrix-matrix solve, inv(A) B
+
+The type of matrices are,
+
+GE
+     general
+
+GB
+     general band
+
+SY
+     symmetric
+
+SB
+     symmetric band
+
+SP
+     symmetric packed
+
+HE
+     hermitian
+
+HB
+     hermitian band
+
+HP
+     hermitian packed
+
+TR
+     triangular
+
+TB
+     triangular band
+
+TP
+     triangular packed
+
+Each operation is defined for four precisions,
+
+S
+     single real
+
+D
+     double real
+
+C
+     single complex
+
+Z
+     double complex
+
+Thus, for example, the name SGEMM stands for "single-precision general
+matrix-matrix multiply" and ZGEMM stands for "double-precision complex
+matrix-matrix multiply".
+
+* Menu:
+
+* GSL BLAS Interface::
+* BLAS Examples::
+* BLAS References and Further Reading::
+
+
+File: gsl-ref.info,  Node: GSL BLAS Interface,  Next: BLAS Examples,  Up: BLAS Support
+
+GSL BLAS Interface
+==================
+
+   GSL provides dense vector and matrix objects, based on the relevant
+built-in types.  The library provides an interface to the BLAS
+operations which apply to these objects.  The interface to this
+functionality is given in the file `gsl_blas.h'.
+
+* Menu:
+
+* Level 1 GSL BLAS Interface::
+* Level 2 GSL BLAS Interface::
+* Level 3 GSL BLAS Interface::
+
+
+File: gsl-ref.info,  Node: Level 1 GSL BLAS Interface,  Next: Level 2 GSL BLAS Interface,  Up: GSL BLAS Interface
+
+Level 1
+-------
+
+ - Function: int gsl_blas_sdsdot (float ALPHA, const gsl_vector_float *
+          X, const gsl_vector_float * Y, float * RESULT)
+ - Function: int gsl_blas_dsdot (const gsl_vector_float * X, const
+          gsl_vector_float * Y, double * RESULT)
+     These functions compute the sum \alpha + x^T y for the vectors X
+     and Y, returning the result in RESULT.
+
+ - Function: int gsl_blas_sdot (const gsl_vector_float * X, const
+          gsl_vector_float * Y, float * RESULT)
+ - Function: int gsl_blas_ddot (const gsl_vector * X, const gsl_vector
+          * Y, double * RESULT)
+     These functions compute the scalar product x^T y for the vectors X
+     and Y, returning the result in RESULT.
+
+ - Function: int gsl_blas_cdotu (const gsl_vector_complex_float * X,
+          const gsl_vector_complex_float * Y, gsl_complex_float * DOTU)
+ - Function: int gsl_blas_zdotu (const gsl_vector_complex * X, const
+          gsl_vector_complex * Y, gsl_complex * DOTU)
+     These functions compute the complex scalar product x^T y for the
+     vectors X and Y, returning the result in RESULT
+
+ - Function: int gsl_blas_cdotc (const gsl_vector_complex_float * X,
+          const gsl_vector_complex_float * Y, gsl_complex_float * DOTC)
+ - Function: int gsl_blas_zdotc (const gsl_vector_complex * X, const
+          gsl_vector_complex * Y, gsl_complex * DOTC)
+     These functions compute the complex conjugate scalar product x^H y
+     for the vectors X and Y, returning the result in RESULT
+
+ - Function: float gsl_blas_snrm2 (const gsl_vector_float * X)
+ - Function: double gsl_blas_dnrm2 (const gsl_vector * X)
+     These functions compute the Euclidean norm ||x||_2 = \sqrt {\sum
+     x_i^2} of the vector X.
+
+ - Function: float gsl_blas_scnrm2 (const gsl_vector_complex_float * X)
+ - Function: double gsl_blas_dznrm2 (const gsl_vector_complex * X)
+     These functions compute the Euclidean norm of the complex vector X,
+          ||x||_2 = \sqrt {\sum (\Re(x_i)^2 + \Im(x_i)^2)}.
+
+
+ - Function: float gsl_blas_sasum (const gsl_vector_float * X)
+ - Function: double gsl_blas_dasum (const gsl_vector * X)
+     These functions compute the absolute sum \sum |x_i| of the
+     elements of the vector X.
+
+ - Function: float gsl_blas_scasum (const gsl_vector_complex_float * X)
+ - Function: double gsl_blas_dzasum (const gsl_vector_complex * X)
+     These functions compute the absolute sum \sum |\Re(x_i)| +
+     |\Im(x_i)| of the elements of the vector X.
+
+ - Function: CBLAS_INDEX_t gsl_blas_isamax (const gsl_vector_float * X)
+ - Function: CBLAS_INDEX_t gsl_blas_idamax (const gsl_vector * X)
+ - Function: CBLAS_INDEX_t gsl_blas_icamax (const
+          gsl_vector_complex_float * X)
+ - Function: CBLAS_INDEX_t gsl_blas_izamax (const gsl_vector_complex *
+          X)
+     These functions return the index of the largest element of the
+     vector X. The largest element is determined by its absolute
+     magnitude for real vector and by the sum of the magnitudes of the
+     real and imaginary parts |\Re(x_i)| + |\Im(x_i)| for complex
+     vectors.  If the largest value occurs several times then the index
+     of the first occurrence is returned.
+
+ - Function: int gsl_blas_sswap (gsl_vector_float * X, gsl_vector_float
+          * Y)
+ - Function: int gsl_blas_dswap (gsl_vector * X, gsl_vector * Y)
+ - Function: int gsl_blas_cswap (gsl_vector_complex_float * X,
+          gsl_vector_complex_float * Y)
+ - Function: int gsl_blas_zswap (gsl_vector_complex * X,
+          gsl_vector_complex * Y)
+     These functions exchange the elements of the vectors X and Y.
+
+ - Function: int gsl_blas_scopy (const gsl_vector_float * X,
+          gsl_vector_float * Y)
+ - Function: int gsl_blas_dcopy (const gsl_vector * X, gsl_vector * Y)
+ - Function: int gsl_blas_ccopy (const gsl_vector_complex_float * X,
+          gsl_vector_complex_float * Y)
+ - Function: int gsl_blas_zcopy (const gsl_vector_complex * X,
+          gsl_vector_complex * Y)
+     These functions copy the elements of the vector X into the vector
+     Y.
+
+ - Function: int gsl_blas_saxpy (float ALPHA, const gsl_vector_float *
+          X, gsl_vector_float * Y)
+ - Function: int gsl_blas_daxpy (double ALPHA, const gsl_vector * X,
+          gsl_vector * Y)
+ - Function: int gsl_blas_caxpy (const gsl_complex_float ALPHA, const
+          gsl_vector_complex_float * X, gsl_vector_complex_float * Y)
+ - Function: int gsl_blas_zaxpy (const gsl_complex ALPHA, const
+          gsl_vector_complex * X, gsl_vector_complex * Y)
+     These functions compute the sum y = \alpha x + y for the vectors X
+     and Y.
+
+ - Function: void gsl_blas_sscal (float ALPHA, gsl_vector_float * X)
+ - Function: void gsl_blas_dscal (double ALPHA, gsl_vector * X)
+ - Function: void gsl_blas_cscal (const gsl_complex_float ALPHA,
+          gsl_vector_complex_float * X)
+ - Function: void gsl_blas_zscal (const gsl_complex ALPHA,
+          gsl_vector_complex * X)
+ - Function: void gsl_blas_csscal (float ALPHA,
+          gsl_vector_complex_float * X)
+ - Function: void gsl_blas_zdscal (double ALPHA, gsl_vector_complex * X)
+     These functions rescale the vector X by the multiplicative factor
+     ALPHA.
+
+ - Function: int gsl_blas_srotg (float a[], float b[], float c[], float
+          s[])
+ - Function: int gsl_blas_drotg (double a[], double b[], double c[],
+          double s[])
+     These functions compute a Givens rotation (c,s) which zeroes the
+     vector (a,b),
+
+          [  c  s ] [ a ] = [ r ]
+          [ -s  c ] [ b ]   [ 0 ]
+
+     The variables A and B are overwritten by the routine.
+
+ - Function: int gsl_blas_srot (gsl_vector_float * X, gsl_vector_float
+          * Y, float C, float S)
+ - Function: int gsl_blas_drot (gsl_vector * X, gsl_vector * Y, const
+          double C, const double S)
+     These functions apply a Givens rotation (x', y') = (c x + s y, -s
+     x + c y) to the vectors X, Y.
+
+ - Function: int gsl_blas_srotmg (float d1[], float d2[], float b1[],
+          float B2, float P[])
+ - Function: int gsl_blas_drotmg (double d1[], double d2[], double
+          b1[], double B2, double P[])
+     These functions compute a modified Given's transformation.
+
+ - Function: int gsl_blas_srotm (gsl_vector_float * X, gsl_vector_float
+          * Y, const float P[])
+ - Function: int gsl_blas_drotm (gsl_vector * X, gsl_vector * Y, const
+          double P[])
+     These functions apply a modified Given's transformation.
+
+
+File: gsl-ref.info,  Node: Level 2 GSL BLAS Interface,  Next: Level 3 GSL BLAS Interface,  Prev: Level 1 GSL BLAS Interface,  Up: GSL BLAS Interface
+
+Level 2
+-------
+
+ - Function: int gsl_blas_sgemv (CBLAS_TRANSPOSE_t TRANSA, float ALPHA,
+          const gsl_matrix_float * A, const gsl_vector_float * X, float
+          BETA, gsl_vector_float * Y)
+ - Function: int gsl_blas_dgemv (CBLAS_TRANSPOSE_t TRANSA, double
+          ALPHA, const gsl_matrix * A, const gsl_vector * X, double
+          BETA, gsl_vector * Y)
+ - Function: int gsl_blas_cgemv (CBLAS_TRANSPOSE_t TRANSA, const
+          gsl_complex_float ALPHA, const gsl_matrix_complex_float * A,
+          const gsl_vector_complex_float * X, const gsl_complex_float
+          BETA, gsl_vector_complex_float * Y)
+ - Function: int gsl_blas_zgemv (CBLAS_TRANSPOSE_t TRANSA, const
+          gsl_complex ALPHA, const gsl_matrix_complex * A, const
+          gsl_vector_complex * X, const gsl_complex BETA,
+          gsl_vector_complex * Y)
+     These functions compute the matrix-vector product and sum y =
+     \alpha op(A) x + \beta y, where op(A) = A, A^T, A^H for TRANSA =
+     `CblasNoTrans', `CblasTrans', `CblasConjTrans'.
+
+ - Function: int gsl_blas_strmv (CBLAS_UPLO_t UPLO, CBLAS_TRANSPOSE_t
+          TRANSA, CBLAS_DIAG_t DIAG, const gsl_matrix_float * A,
+          gsl_vector_float * X)
+ - Function: int gsl_blas_dtrmv (CBLAS_UPLO_t UPLO, CBLAS_TRANSPOSE_t
+          TRANSA, CBLAS_DIAG_t DIAG, const gsl_matrix * A, gsl_vector *
+          X)
+ - Function: int gsl_blas_ctrmv (CBLAS_UPLO_t UPLO, CBLAS_TRANSPOSE_t
+          TRANSA, CBLAS_DIAG_t DIAG, const gsl_matrix_complex_float *
+          A, gsl_vector_complex_float * X)
+ - Function: int gsl_blas_ztrmv (CBLAS_UPLO_t UPLO, CBLAS_TRANSPOSE_t
+          TRANSA, CBLAS_DIAG_t DIAG, const gsl_matrix_complex * A,
+          gsl_vector_complex * X)
+     These functions compute the matrix-vector product and sum y
+     =\alpha op(A) x + \beta y for the triangular matrix A, where op(A)
+     = A, A^T, A^H for TRANSA = `CblasNoTrans', `CblasTrans',
+     `CblasConjTrans'.  When UPLO is `CblasUpper' then the upper
+     triangle of A is used, and when UPLO is `CblasLower' then the
+     lower triangle of A is used.  If DIAG is `CblasNonUnit' then the
+     diagonal of the matrix is used, but if DIAG is `CblasUnit' then
+     the diagonal elements of the matrix A are taken as unity and are
+     not referenced.
+
+ - Function: int gsl_blas_strsv (CBLAS_UPLO_t UPLO, CBLAS_TRANSPOSE_t
+          TRANSA, CBLAS_DIAG_t DIAG, const gsl_matrix_float * A,
+          gsl_vector_float * X)
+ - Function: int gsl_blas_dtrsv (CBLAS_UPLO_t UPLO, CBLAS_TRANSPOSE_t
+          TRANSA, CBLAS_DIAG_t DIAG, const gsl_matrix * A, gsl_vector *
+          X)
+ - Function: int gsl_blas_ctrsv (CBLAS_UPLO_t UPLO, CBLAS_TRANSPOSE_t
+          TRANSA, CBLAS_DIAG_t DIAG, const gsl_matrix_complex_float *
+          A, gsl_vector_complex_float * X)
+ - Function: int gsl_blas_ztrsv (CBLAS_UPLO_t UPLO, CBLAS_TRANSPOSE_t
+          TRANSA, CBLAS_DIAG_t DIAG, const gsl_matrix_complex * A,
+          gsl_vector_complex *X)
+     These functions compute inv(op(A)) x for X, where op(A) = A, A^T,
+     A^H for TRANSA = `CblasNoTrans', `CblasTrans', `CblasConjTrans'.
+     When UPLO is `CblasUpper' then the upper triangle of A is used,
+     and when UPLO is `CblasLower' then the lower triangle of A is
+     used.  If DIAG is `CblasNonUnit' then the diagonal of the matrix
+     is used, but if DIAG is `CblasUnit' then the diagonal elements of
+     the matrix A are taken as unity and are not referenced.
+
+ - Function: int gsl_blas_ssymv (CBLAS_UPLO_t UPLO, float ALPHA, const
+          gsl_matrix_float * A, const gsl_vector_float * X, float BETA,
+          gsl_vector_float * Y)
+ - Function: int gsl_blas_dsymv (CBLAS_UPLO_t UPLO, double ALPHA, const
+          gsl_matrix * A, const gsl_vector * X, double BETA, gsl_vector
+          * Y)
+     These functions compute the matrix-vector product and sum y =
+     \alpha A x + \beta y for the symmetric matrix A.  Since the matrix
+     A is symmetric only its upper half or lower half need to be
+     stored.  When UPLO is `CblasUpper' then the upper triangle and
+     diagonal of A are used, and when UPLO is `CblasLower' then the
+     lower triangle and diagonal of A are used.
+
+ - Function: int gsl_blas_chemv (CBLAS_UPLO_t UPLO, const
+          gsl_complex_float ALPHA, const gsl_matrix_complex_float * A,
+          const gsl_vector_complex_float * X, const gsl_complex_float
+          BETA, gsl_vector_complex_float * Y)
+ - Function: int gsl_blas_zhemv (CBLAS_UPLO_t UPLO, const gsl_complex
+          ALPHA, const gsl_matrix_complex * A, const gsl_vector_complex
+          * X, const gsl_complex BETA, gsl_vector_complex * Y)
+     These functions compute the matrix-vector product and sum y =
+     \alpha A x + \beta y for the hermitian matrix A.  Since the matrix
+     A is hermitian only its upper half or lower half need to be
+     stored.  When UPLO is `CblasUpper' then the upper triangle and
+     diagonal of A are used, and when UPLO is `CblasLower' then the
+     lower triangle and diagonal of A are used.  The imaginary elements
+     of the diagonal are automatically assumed to be zero and are not
+     referenced.
+
+ - Function: int gsl_blas_sger (float ALPHA, const gsl_vector_float *
+          X, const gsl_vector_float * Y, gsl_matrix_float * A)
+ - Function: int gsl_blas_dger (double ALPHA, const gsl_vector * X,
+          const gsl_vector * Y, gsl_matrix * A)
+ - Function: int gsl_blas_cgeru (const gsl_complex_float ALPHA, const
+          gsl_vector_complex_float * X, const gsl_vector_complex_float
+          * Y, gsl_matrix_complex_float * A)
+ - Function: int gsl_blas_zgeru (const gsl_complex ALPHA, const
+          gsl_vector_complex * X, const gsl_vector_complex * Y,
+          gsl_matrix_complex * A)
+     These functions compute the rank-1 update A = \alpha x y^T + A of
+     the matrix A.
+
+ - Function: int gsl_blas_cgerc (const gsl_complex_float ALPHA, const
+          gsl_vector_complex_float * X, const gsl_vector_complex_float
+          * Y, gsl_matrix_complex_float * A)
+ - Function: int gsl_blas_zgerc (const gsl_complex ALPHA, const
+          gsl_vector_complex * X, const gsl_vector_complex * Y,
+          gsl_matrix_complex * A)
+     These functions compute the conjugate rank-1 update A = \alpha x
+     y^H + A of the matrix A.
+
+ - Function: int gsl_blas_ssyr (CBLAS_UPLO_t UPLO, float ALPHA, const
+          gsl_vector_float * X, gsl_matrix_float * A)
+ - Function: int gsl_blas_dsyr (CBLAS_UPLO_t UPLO, double ALPHA, const
+          gsl_vector * X, gsl_matrix * A)
+     These functions compute the symmetric rank-1 update A = \alpha x
+     x^T + A of the symmetric matrix A.  Since the matrix A is
+     symmetric only its upper half or lower half need to be stored.
+     When UPLO is `CblasUpper' then the upper triangle and diagonal of
+     A are used, and when UPLO is `CblasLower' then the lower triangle
+     and diagonal of A are used.
+
+ - Function: int gsl_blas_cher (CBLAS_UPLO_t UPLO, float ALPHA, const
+          gsl_vector_complex_float * X, gsl_matrix_complex_float * A)
+ - Function: int gsl_blas_zher (CBLAS_UPLO_t UPLO, double ALPHA, const
+          gsl_vector_complex * X, gsl_matrix_complex * A)
+     These functions compute the hermitian rank-1 update A = \alpha x
+     x^H + A of the hermitian matrix A.  Since the matrix A is
+     hermitian only its upper half or lower half need to be stored.
+     When UPLO is `CblasUpper' then the upper triangle and diagonal of
+     A are used, and when UPLO is `CblasLower' then the lower triangle
+     and diagonal of A are used.  The imaginary elements of the
+     diagonal are automatically set to zero.
+
+ - Function: int gsl_blas_ssyr2 (CBLAS_UPLO_t UPLO, float ALPHA, const
+          gsl_vector_float * X, const gsl_vector_float * Y,
+          gsl_matrix_float * A)
+ - Function: int gsl_blas_dsyr2 (CBLAS_UPLO_t UPLO, double ALPHA, const
+          gsl_vector * X, const gsl_vector * Y, gsl_matrix * A)
+     These functions compute the symmetric rank-2 update A = \alpha x
+     y^T + \alpha y x^T + A of the symmetric matrix A.  Since the
+     matrix A is symmetric only its upper half or lower half need to be
+     stored.  When UPLO is `CblasUpper' then the upper triangle and
+     diagonal of A are used, and when UPLO is `CblasLower' then the
+     lower triangle and diagonal of A are used.
+
+ - Function: int gsl_blas_cher2 (CBLAS_UPLO_t UPLO, const
+          gsl_complex_float ALPHA, const gsl_vector_complex_float * X,
+          const gsl_vector_complex_float * Y, gsl_matrix_complex_float
+          * A)
+ - Function: int gsl_blas_zher2 (CBLAS_UPLO_t UPLO, const gsl_complex
+          ALPHA, const gsl_vector_complex * X, const gsl_vector_complex
+          * Y, gsl_matrix_complex * A)
+     These functions compute the hermitian rank-2 update A = \alpha x
+     y^H + \alpha^* y x^H A of the hermitian matrix A.  Since the
+     matrix A is hermitian only its upper half or lower half need to be
+     stored.  When UPLO is `CblasUpper' then the upper triangle and
+     diagonal of A are used, and when UPLO is `CblasLower' then the
+     lower triangle and diagonal of A are used.  The imaginary elements
+     of the diagonal are automatically set to zero.
+

@@ -1,0 +1,1097 @@
+This is gsl-ref.info, produced by makeinfo version 4.0 from
+gsl-ref.texi.
+
+INFO-DIR-SECTION Scientific software
+START-INFO-DIR-ENTRY
+* gsl-ref: (gsl-ref).                   GNU Scientific Library - Reference
+END-INFO-DIR-ENTRY
+
+   This file documents the GNU Scientific Library.
+
+   Copyright (C) 1996, 1997, 1998, 1999, 2000, 2001 The GSL Team.
+
+   Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.1 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.  A
+copy of the license is included in the section entitled "GNU Free
+Documentation License".
+
+
+File: gsl-ref.info,  Node: Laguerre Functions,  Next: Lambert W Functions,  Prev: Hypergeometric Functions,  Up: Special Functions
+
+Laguerre Functions
+==================
+
+   The Laguerre polynomials are defined in terms of confluent
+hypergeometric functions as L^a_n(x) = ((a+1)_n / n!) 1F1(-n,a+1,x).
+These functions are declared in the header file `gsl_sf_laguerre.h'.
+
+ - Function: double gsl_sf_laguerre_1 (double A, double X)
+ - Function: double gsl_sf_laguerre_2 (double A, double X)
+ - Function: double gsl_sf_laguerre_3 (double A, double X)
+ - Function: int gsl_sf_laguerre_1_e (double A, double X, gsl_sf_result
+          * RESULT)
+ - Function: int gsl_sf_laguerre_2_e (double A, double X, gsl_sf_result
+          * RESULT)
+ - Function: int gsl_sf_laguerre_3_e (double A, double X, gsl_sf_result
+          * RESULT)
+     These routines evaluate the generalized Laguerre polynomials
+     L^a_1(x), L^a_2(x), L^a_3(x) using explicit representations.
+
+ - Function: double gsl_sf_laguerre_n (const int N, const double A,
+          const double X)
+ - Function: int gsl_sf_laguerre_n_e (int N, double A, double X,
+          gsl_sf_result * RESULT)
+     Thse routines evaluate the generalized Laguerre polynomials
+     L^a_n(x) for a > -1, n >= 0.
+
+
+
+File: gsl-ref.info,  Node: Lambert W Functions,  Next: Legendre Functions and Spherical Harmonics,  Prev: Laguerre Functions,  Up: Special Functions
+
+Lambert W Functions
+===================
+
+   Lambert's W functions, W(x), are defined to be solutions of the
+equation W(x) \exp(W(x)) = x. This function has multiple branches for x
+< 0; however, it has only two real-valued branches. We define W_0(x) to
+be the principal branch, where W > -1 for x < 0, and W_{-1}(x) to be
+the other real branch, where W < -1 for x < 0.  The Lambert functions
+are declared in the header file `gsl_sf_lambert.h'.
+
+ - Function: double gsl_sf_lambert_W0 (double X)
+ - Function: int gsl_sf_lambert_W0_e (double X, gsl_sf_result * RESULT)
+     These compute the principal branch of the Lambert W function,
+     W_0(x).
+
+ - Function: double gsl_sf_lambert_Wm1 (double X)
+ - Function: int gsl_sf_lambert_Wm1_e (double X, gsl_sf_result * RESULT)
+     These compute the secondary real-valued branch of the Lambert W
+     function, W_{-1}(x).
+
+
+File: gsl-ref.info,  Node: Legendre Functions and Spherical Harmonics,  Next: Logarithm and Related Functions,  Prev: Lambert W Functions,  Up: Special Functions
+
+Legendre Functions and Spherical Harmonics
+==========================================
+
+   The Legendre Functions and Legendre Polynomials are described in
+Abramowitz & Stegun, Chapter 8.  These functions are declared in the
+header file `gsl_sf_legendre.h'.
+
+* Menu:
+
+* Legendre Polynomials::
+* Associated Legendre Polynomials and Spherical Harmonics::
+* Conical Functions::
+* Radial Functions for Hyperbolic Space::
+
+
+File: gsl-ref.info,  Node: Legendre Polynomials,  Next: Associated Legendre Polynomials and Spherical Harmonics,  Up: Legendre Functions and Spherical Harmonics
+
+Legendre Polynomials
+--------------------
+
+ - Function: double gsl_sf_legendre_P1 (double X)
+ - Function: double gsl_sf_legendre_P2 (double X)
+ - Function: double gsl_sf_legendre_P3 (double X)
+ - Function: int gsl_sf_legendre_P1_e (double X, gsl_sf_result * RESULT)
+ - Function: int gsl_sf_legendre_P2_e (double X, gsl_sf_result * RESULT)
+ - Function: int gsl_sf_legendre_P3_e (double X, gsl_sf_result * RESULT)
+     These functions evaluate the Legendre polynomials P_l(x) using
+     explicit representations for l=1, 2, 3.
+
+ - Function: double gsl_sf_legendre_Pl (int L, double X)
+ - Function: int gsl_sf_legendre_Pl_e (int L, double X, gsl_sf_result *
+          RESULT)
+     These functions evaluate the Legendre polynomial P_l(x) for a
+     specific value of L, X subject to l >= 0, |x| <= 1
+
+ - Function: int gsl_sf_legendre_Pl_array (int LMAX, double X, double
+          RESULT_ARRAY[])
+     This function computes an array of Legendre polynomials P_l(x) for
+     l = 0, \dots, lmax, |x| <= 1
+
+ - Function: double gsl_sf_legendre_Q0 (double X)
+ - Function: int gsl_sf_legendre_Q0_e (double X, gsl_sf_result * RESULT)
+     These routines compute the Legendre function Q_0(x) for x > -1, x
+     != 1.
+
+ - Function: double gsl_sf_legendre_Q1 (double X)
+ - Function: int gsl_sf_legendre_Q1_e (double X, gsl_sf_result * RESULT)
+     These routines compute the Legendre function Q_1(x) for x > -1, x
+     != 1.
+
+ - Function: double gsl_sf_legendre_Ql (int L, double X)
+ - Function: int gsl_sf_legendre_Ql_e (int L, double X, gsl_sf_result *
+          RESULT)
+     These routines compute the Legendre function Q_l(x) for x > -1, x
+     != 1 and l >= 0.
+
+
+File: gsl-ref.info,  Node: Associated Legendre Polynomials and Spherical Harmonics,  Next: Conical Functions,  Prev: Legendre Polynomials,  Up: Legendre Functions and Spherical Harmonics
+
+Associated Legendre Polynomials and Spherical Harmonics
+-------------------------------------------------------
+
+   The following functions compute the associated Legendre Polynomials
+P_l^m(x).  Note that this function grows combinatorially with l and can
+overflow for l larger than about 150.  There is no trouble for small m,
+but overflow occurs when m and l are both large.  Rather than allow
+overflows, these functions refuse to calculate P_l^m(x) and return
+`GSL_EOVRFLW' when they can sense that l and m are too big.
+
+   If you want to calculate a spherical harmonic, then _do not_ use
+these functions.  Instead use `gsl_sf_legendre_sphPlm()' below, which
+uses a similar recursion, but with the normalized functions.
+
+ - Function: double gsl_sf_legendre_Plm (int L, int M, double X)
+ - Function: int gsl_sf_legendre_Plm_e (int L, int M, double X,
+          gsl_sf_result * RESULT)
+     These routines compute the associated Legendre polynomial P_l^m(x)
+     for m >= 0, l >= m, |x| <= 1.
+
+ - Function: int gsl_sf_legendre_Plm_array (int LMAX, int M, double X,
+          double RESULT_ARRAY[])
+     This function computes an array of Legendre polynomials P_l^m(x)
+     for m >= 0, l = |m|, ..., lmax, |x| <= 1.
+
+ - Function: double gsl_sf_legendre_sphPlm (int L, int M, double X)
+ - Function: int gsl_sf_legendre_sphPlm_e (int L, int M, double X,
+          gsl_sf_result * RESULT)
+     These routines compute the normalized associated Legendre
+     polynomial $\sqrt{(2l+1)/(4\pi)} \sqrt{(l-m)!/(l+m)!} P_l^m(x)$
+     suitable for use in spherical harmonics.  The parameters must
+     satisfy m >= 0, l >= m, |x| <= 1. Theses routines avoid the
+     overflows that occur for the standard normalization of P_l^m(x).
+
+ - Function: int gsl_sf_legendre_sphPlm_array (int LMAX, int M, double
+          X, double RESULT_ARRAY[])
+     This function computes an array of normalized associated Legendre
+     functions $\sqrt{(2l+1)/(4\pi)} \sqrt{(l-m)!/(l+m)!} P_l^m(x)$ for
+     m >= 0, l = |m|, ..., lmax, |x| <= 1.0
+
+ - Function: int gsl_sf_legendre_array_size (const int LMAX, const int
+          M)
+     This functions returns the size of RESULT_ARRAY[] needed for the
+     array versions of P_l^m(x), LMAX - M + 1.
+
+
+File: gsl-ref.info,  Node: Conical Functions,  Next: Radial Functions for Hyperbolic Space,  Prev: Associated Legendre Polynomials and Spherical Harmonics,  Up: Legendre Functions and Spherical Harmonics
+
+Conical Functions
+-----------------
+
+   The Conical Functions P^\mu_{-(1/2)+i\lambda}(x),
+Q^\mu_{-(1/2)+i\lambda} are described in Abramowitz & Stegun, Section
+8.12.
+
+ - Function: double gsl_sf_conicalP_half (double LAMBDA, double X)
+ - Function: int gsl_sf_conicalP_half_e (double LAMBDA, double X,
+          gsl_sf_result * RESULT)
+     These routines compute the irregular Spherical Conical Function
+     P^{1/2}_{-1/2 + i \lambda}(x) for x > -1.
+
+ - Function: double gsl_sf_conicalP_mhalf (double LAMBDA, double X)
+ - Function: int gsl_sf_conicalP_mhalf_e (double LAMBDA, double X,
+          gsl_sf_result * RESULT)
+     These routines compute the regular Spherical Conical Function
+     P^{-1/2}_{-1/2 + i \lambda}(x) for x > -1.
+
+ - Function: double gsl_sf_conicalP_0 (double LAMBDA, double X)
+ - Function: int gsl_sf_conicalP_0_e (double LAMBDA, double X,
+          gsl_sf_result * RESULT)
+     These routines compute the conical function P^0_{-1/2 + i
+     \lambda}(x) for x > -1.
+
+ - Function: double gsl_sf_conicalP_1 (double LAMBDA, double X)
+ - Function: int gsl_sf_conicalP_1_e (double LAMBDA, double X,
+          gsl_sf_result * RESULT)
+     These routines compute the conical function P^1_{-1/2 + i
+     \lambda}(x) for x > -1.
+
+ - Function: double gsl_sf_conicalP_sph_reg (int L, double LAMBDA,
+          double X)
+ - Function: int gsl_sf_conicalP_sph_reg_e (int L, double LAMBDA,
+          double X, gsl_sf_result * RESULT)
+     These routines compute the Regular Spherical Conical Function
+     P^{-1/2-l}_{-1/2 + i \lambda}(x) for x > -1, l >= -1.
+
+ - Function: double gsl_sf_conicalP_cyl_reg (int M, double LAMBDA,
+          double X)
+ - Function: int gsl_sf_conicalP_cyl_reg_e (int M, double LAMBDA,
+          double X, gsl_sf_result * RESULT)
+     These routines compute the Regular Cylindrical Conical Function
+     P^{-m}_{-1/2 + i \lambda}(x) for x > -1, m >= -1.
+
+
+File: gsl-ref.info,  Node: Radial Functions for Hyperbolic Space,  Prev: Conical Functions,  Up: Legendre Functions and Spherical Harmonics
+
+Radial Functions for Hyperbolic Space
+-------------------------------------
+
+   The following spherical functions are specializations of Legendre
+functions which give the regular eigenfunctions of the Laplacian on a
+3-dimensional hyperbolic space H3d.  Of particular interest is the flat
+limit, \lambda \to \infty, \eta \to 0, \lambda\eta fixed.
+
+ - Function: double gsl_sf_legendre_H3d_0 (double LAMBDA, double ETA)
+ - Function: int gsl_sf_legendre_H3d_0_e (double LAMBDA, double ETA,
+          gsl_sf_result * RESULT)
+     These routines compute the zeroth radial eigenfunction of the
+     Laplacian on the 3-dimensional hyperbolic space,
+     L^{H3d}_0(\lambda,\eta) := \sin(\lambda\eta)/(\lambda\sinh(\eta))
+     for \eta >= 0.  In the flat limit this takes the form
+     L^{H3d}_0(\lambda,\eta) = j_0(\lambda\eta)
+
+ - Function: double gsl_sf_legendre_H3d_1 (double LAMBDA, double ETA)
+ - Function: int gsl_sf_legendre_H3d_1_e (double LAMBDA, double ETA,
+          gsl_sf_result * RESULT)
+     These routines compute the first radial eigenfunction of the
+     Laplacian on the 3-dimensional hyperbolic space,
+     L^{H3d}_1(\lambda,\eta) := 1/\sqrt{\lambda^2 + 1} \sin(\lambda
+     \eta)/(\lambda \sinh(\eta)) (\coth(\eta) - \lambda
+     \cot(\lambda\eta)) for \eta >= 0.  In the flat limit this takes
+     the form L^{H3d}_1(\lambda,\eta) = j_1(\lambda\eta).
+
+ - Function: double gsl_sf_legendre_H3d (int L, double LAMBDA, double
+          ETA)
+ - Function: int gsl_sf_legendre_H3d_e (int L, double LAMBDA, double
+          ETA, gsl_sf_result * RESULT)
+     These routines compute the L'th radial eigenfunction of the
+     Laplacian on the 3-dimensional hyperbolic space \eta >= 0, l >= 0.
+     In the flat limit this takes the form L^{H3d}_l(\lambda,\eta) =
+     j_l(\lambda\eta).
+
+ - Function: int gsl_sf_legendre_H3d_array (int LMAX, double LAMBDA,
+          double ETA, double RESULT_ARRAY[])
+     This function computes an array of radial eigenfunctions
+     L^{H3d}_l(\lambda, \eta) for 0 <= l <= lmax.
+
+
+File: gsl-ref.info,  Node: Logarithm and Related Functions,  Next: Power Function,  Prev: Legendre Functions and Spherical Harmonics,  Up: Special Functions
+
+Logarithm and Related Functions
+===============================
+
+   Information on the properties of the Logarithm function can be found
+in Abramowitz & Stegun, Chapter 4.  The functions described in this
+section are declared in the header file `gsl_sf_log.h'.
+
+ - Function: double gsl_sf_log (double X)
+ - Function: int gsl_sf_log_e (double X, gsl_sf_result * RESULT)
+     These routines compute the logarithm of X, \log(x), for x > 0.
+
+ - Function: double gsl_sf_log_abs (double X)
+ - Function: int gsl_sf_log_abs_e (double X, gsl_sf_result * RESULT)
+     These routines compute the logarithm of the magnitude of X,
+     \log(|x|), for x \ne 0.
+
+ - Function: int gsl_sf_complex_log_e (double ZR, double ZI,
+          gsl_sf_result * LNR, gsl_sf_result * THETA)
+     This routine computes the complex logarithm of z = z_r + i z_i.
+     The results are returned as LNR, THETA such that \exp(lnr + i
+     \theta) = z_r + i z_i, where \theta lies in the range [-\pi,\pi].
+
+ - Function: double gsl_sf_log_1plusx (double X)
+ - Function: int gsl_sf_log_1plusx_e (double X, gsl_sf_result * RESULT)
+     These routines compute \log(1 + x) for x > -1 using an algorithm
+     that is accurate for small x.
+
+ - Function: double gsl_sf_log_1plusx_mx (double X)
+ - Function: int gsl_sf_log_1plusx_mx_e (double X, gsl_sf_result *
+          RESULT)
+     These routines compute \log(1 + x) - x for x > -1 using an
+     algorithm that is accurate for small x.
+
+
+File: gsl-ref.info,  Node: Power Function,  Next: Psi (Digamma) Function,  Prev: Logarithm and Related Functions,  Up: Special Functions
+
+Power Function
+==============
+
+   The following functions are equivalent to the function `gsl_pow_int'
+(*note Small integer powers::) with an error estimate.  These functions
+are declared in the header file `gsl_sf_pow_int.h'.
+
+ - Function: double gsl_sf_pow_int (double X, int N)
+ - Function: int gsl_sf_pow_int_e (double X, int N, gsl_sf_result *
+          RESULT)
+     These routines compute the power x^n for integer N.  The power is
+     computed using the minimum number of multiplications. For example,
+     x^8 is computed as ((x^2)^2)^2, requiring only 3 multiplications.
+     For reasons of efficiency, these functions do not check for
+     overflow or underflow conditions.
+
+     #include <gsl/gsl_sf_pow_int.h>
+     /* compute 3.0**12 */
+     double y = gsl_sf_pow_int(3.0, 12);
+
+
+File: gsl-ref.info,  Node: Psi (Digamma) Function,  Next: Synchrotron Functions,  Prev: Power Function,  Up: Special Functions
+
+Psi (Digamma) Function
+======================
+
+   The polygamma functions of order m defined by \psi^{(m)}(x) =
+(d/dx)^m \psi(x) = (d/dx)^{m+1} \log(\Gamma(x)), where \psi(x) =
+\Gamma'(x)/\Gamma(x) is known as the digamma function.  These functions
+are declared in the header file `gsl_sf_psi.h'.
+
+* Menu:
+
+* Digamma Function::
+* Trigamma Function::
+* Polygamma Function::
+
+
+File: gsl-ref.info,  Node: Digamma Function,  Next: Trigamma Function,  Up: Psi (Digamma) Function
+
+Digamma Function
+----------------
+
+ - Function: double gsl_sf_psi_int (int N)
+ - Function: int gsl_sf_psi_int_e (int N, gsl_sf_result * RESULT)
+     These routines compute the digamma function \psi(n) for positive
+     integer N.  The digamma function is also called the Psi function.
+
+ - Function: double gsl_sf_psi (double X)
+ - Function: int gsl_sf_psi_e (double X, gsl_sf_result * RESULT)
+     These routines compute the digamma function \psi(x) for general x,
+     x \ne 0.
+
+ - Function: double gsl_sf_psi_1piy (double Y)
+ - Function: int gsl_sf_psi_1piy_e (double Y, gsl_sf_result * RESULT)
+     These routines compute the real part of the digamma function on
+     the line 1+i y, Re[\psi(1 + i y)].
+
+
+File: gsl-ref.info,  Node: Trigamma Function,  Next: Polygamma Function,  Prev: Digamma Function,  Up: Psi (Digamma) Function
+
+Trigamma Function
+-----------------
+
+ - Function: double gsl_sf_psi_1_int (int N)
+ - Function: int gsl_sf_psi_1_int_e (int N, gsl_sf_result * RESULT)
+     These routines compute the Trigamma function \psi'(n) for positive
+     integer n.
+
+
+File: gsl-ref.info,  Node: Polygamma Function,  Prev: Trigamma Function,  Up: Psi (Digamma) Function
+
+Polygamma Function
+------------------
+
+ - Function: double gsl_sf_psi_n (int M, double X)
+ - Function: int gsl_sf_psi_n_e (int M, double X, gsl_sf_result *
+          RESULT)
+     These routines compute the polygamma function \psi^{(m)}(x) for m
+     >= 0, x > 0.
+
+
+File: gsl-ref.info,  Node: Synchrotron Functions,  Next: Transport Functions,  Prev: Psi (Digamma) Function,  Up: Special Functions
+
+Synchrotron Functions
+=====================
+
+   The functions described in this section are declared in the header
+file `gsl_sf_synchroton.h'.
+
+ - Function: double gsl_sf_synchrotron_1 (double X)
+ - Function: int gsl_sf_synchrotron_1_e (double X, gsl_sf_result *
+          RESULT)
+     These routines compute the first synchrotron function x
+     \int_x^\infty dt K_{5/3}(t) for x >= 0.
+
+ - Function: double gsl_sf_synchrotron_2 (double X)
+ - Function: int gsl_sf_synchrotron_2_e (double X, gsl_sf_result *
+          RESULT)
+     These routines compute the second synchrotron function x
+     K_{2/3}(x) for x >= 0.
+
+
+File: gsl-ref.info,  Node: Transport Functions,  Next: Trigonometric Functions,  Prev: Synchrotron Functions,  Up: Special Functions
+
+Transport Functions
+===================
+
+   The transport functions J(n,x) are defined by the integral
+representations J(n,x) := \int_0^x dt t^n e^t /(e^t - 1)^2.  They are
+declared in the header file `gsl_sf_transport.h'.
+
+ - Function: double gsl_sf_transport_2 (double X)
+ - Function: int gsl_sf_transport_2_e (double X, gsl_sf_result * RESULT)
+     These routines compute the transport function J(2,x).
+
+ - Function: double gsl_sf_transport_3 (double X)
+ - Function: int gsl_sf_transport_3_e (double X, gsl_sf_result * RESULT)
+     These routines compute the transport function J(3,x).
+
+ - Function: double gsl_sf_transport_4 (double X)
+ - Function: int gsl_sf_transport_4_e (double X, gsl_sf_result * RESULT)
+     These routines compute the transport function J(4,x).
+
+ - Function: double gsl_sf_transport_5 (double X)
+ - Function: int gsl_sf_transport_5_e (double X, gsl_sf_result * RESULT)
+     These routines compute the transport function J(5,x).
+
+
+File: gsl-ref.info,  Node: Trigonometric Functions,  Next: Zeta Functions,  Prev: Transport Functions,  Up: Special Functions
+
+Trigonometric Functions
+=======================
+
+   The library includes its own trigonometric functions in order to
+provide consistency across platforms and reliable error estimates.
+These functions are declared in the header file `gsl_sf_trig.h'.
+
+* Menu:
+
+* Circular Trigonometric Functions::
+* Trigonometric Functions for Complex Arguments::
+* Hyperbolic Trigonometric Functions::
+* Conversion Functions::
+* Restriction Functions::
+* Trigonometric Functions With Error Estimates::
+
+
+File: gsl-ref.info,  Node: Circular Trigonometric Functions,  Next: Trigonometric Functions for Complex Arguments,  Up: Trigonometric Functions
+
+Circular Trigonometric Functions
+--------------------------------
+
+ - Function: double gsl_sf_sin (double X)
+ - Function: int gsl_sf_sin_e (double X, gsl_sf_result * RESULT)
+     These routines compute the sine function \sin(x).
+
+ - Function: double gsl_sf_cos (double X)
+ - Function: int gsl_sf_cos_e (double X, gsl_sf_result * RESULT)
+     These routines compute the cosine function \cos(x).
+
+ - Function: double gsl_sf_hypot (double X, double Y)
+ - Function: int gsl_sf_hypot_e (double X, double Y, gsl_sf_result *
+          RESULT)
+     These routines compute the hypotenuse function \sqrt{x^2 + y^2}
+     avoiding overflow and underflow.
+
+ - Function: double gsl_sf_sinc (double X)
+ - Function: int gsl_sf_sinc_e (double X, gsl_sf_result * RESULT)
+     These routines compute \sinc(x) = \sin(\pi x) / (\pi x) for any
+     value of X.
+
+
+File: gsl-ref.info,  Node: Trigonometric Functions for Complex Arguments,  Next: Hyperbolic Trigonometric Functions,  Prev: Circular Trigonometric Functions,  Up: Trigonometric Functions
+
+Trigonometric Functions for Complex Arguments
+---------------------------------------------
+
+ - Function: int gsl_sf_complex_sin_e (double ZR, double ZI,
+          gsl_sf_result * SZR, gsl_sf_result * SZI)
+     This function computes the complex sine, \sin(z_r + i z_i) storing
+     the real and imaginary parts in SZR, SZI.
+
+ - Function: int gsl_sf_complex_cos_e (double ZR, double ZI,
+          gsl_sf_result * CZR, gsl_sf_result * CZI)
+     This function computes the complex cosine, \cos(z_r + i z_i)
+     storing the real and imaginary parts in SZR, SZI.
+
+ - Function: int gsl_sf_complex_logsin_e (double ZR, double ZI,
+          gsl_sf_result * LSZR, gsl_sf_result * LSZI)
+     This function computes the logarithm of the complex sine,
+     \log(\sin(z_r + i z_i)) storing the real and imaginary parts in
+     SZR, SZI.
+
+
+File: gsl-ref.info,  Node: Hyperbolic Trigonometric Functions,  Next: Conversion Functions,  Prev: Trigonometric Functions for Complex Arguments,  Up: Trigonometric Functions
+
+Hyperbolic Trigonometric Functions
+----------------------------------
+
+ - Function: double gsl_sf_lnsinh (double X)
+ - Function: int gsl_sf_lnsinh_e (double X, gsl_sf_result * RESULT)
+     These routines compute \log(\sinh(x)) for x > 0.
+
+ - Function: double gsl_sf_lncosh (double X)
+ - Function: int gsl_sf_lncosh_e (double X, gsl_sf_result * RESULT)
+     These routines compute \log(\cosh(x)) for any X.
+
+
+File: gsl-ref.info,  Node: Conversion Functions,  Next: Restriction Functions,  Prev: Hyperbolic Trigonometric Functions,  Up: Trigonometric Functions
+
+Conversion Functions
+--------------------
+
+ - Function: int gsl_sf_polar_to_rect (double R, double THETA,
+          gsl_sf_result * X, gsl_sf_result * Y);
+     This function converts the polar coordinates (R,THETA) to
+     rectilinear coordinates (X,Y), x = r\cos(\theta), y =
+     r\sin(\theta).
+
+ - Function: int gsl_sf_rect_to_polar (double X, double Y,
+          gsl_sf_result * R, gsl_sf_result * THETA)
+     This function converts the rectilinear coordinates (X,Y) to polar
+     coordinates (R,THETA), such that x = r\cos(\theta), y =
+     r\sin(\theta).  The argument THETA lies in the range [-\pi, \pi].
+
+
+File: gsl-ref.info,  Node: Restriction Functions,  Next: Trigonometric Functions With Error Estimates,  Prev: Conversion Functions,  Up: Trigonometric Functions
+
+Restriction Functions
+---------------------
+
+ - Function: double gsl_sf_angle_restrict_symm (double THETA)
+ - Function: int gsl_sf_angle_restrict_symm_e (double * THETA)
+     These routines force the angle THETA to lie in the range
+     (-\pi,\pi].
+
+ - Function: double gsl_sf_angle_restrict_pos (double THETA)
+ - Function: int gsl_sf_angle_restrict_pos_e (double * THETA)
+     These routines force the angle THETA to lie in the range [0, 2\pi).
+
+
+File: gsl-ref.info,  Node: Trigonometric Functions With Error Estimates,  Prev: Restriction Functions,  Up: Trigonometric Functions
+
+Trigonometric Functions With Error Estimates
+--------------------------------------------
+
+ - Function: double gsl_sf_sin_err (double X, double DX)
+ - Function: int gsl_sf_sin_err_e (double X, double DX, gsl_sf_result *
+          RESULT)
+     These routines compute the sine of an angle X with an associated
+     absolute error DX, \sin(x \pm dx).
+
+ - Function: double gsl_sf_cos_err (double X, double DX)
+ - Function: int gsl_sf_cos_err_e (double X, double DX, gsl_sf_result *
+          RESULT)
+     These routines compute the cosine of an angle X with an associated
+     absolute error DX, \cos(x \pm dx).
+
+
+File: gsl-ref.info,  Node: Zeta Functions,  Next: Special Functions Examples,  Prev: Trigonometric Functions,  Up: Special Functions
+
+Zeta Functions
+==============
+
+   The Riemann zeta function is defined in Abramowitz & Stegun, Section
+23.2.  The functions described in this section are declared in the
+header file `gsl_sf_zeta.h'.
+
+* Menu:
+
+* Riemann Zeta Function::
+* Hurwitz Zeta Function::
+* Eta Function::
+
+
+File: gsl-ref.info,  Node: Riemann Zeta Function,  Next: Hurwitz Zeta Function,  Up: Zeta Functions
+
+Riemann Zeta Function
+---------------------
+
+   The Riemann zeta function is defined by the infinite sum \zeta(s) =
+\sum_{k=1}^\infty k^{-s}.
+
+ - Function: double gsl_sf_zeta_int (int N)
+ - Function: int gsl_sf_zeta_int_e (int N, gsl_sf_result * RESULT)
+     These routines compute the Riemann zeta function \zeta(n) for
+     integer N, n \ne 1.
+
+ - Function: double gsl_sf_zeta (double S)
+ - Function: int gsl_sf_zeta_e (double S, gsl_sf_result * RESULT)
+     These routines compute the Riemann zeta function \zeta(s) for
+     arbitrary S, s \ne 1.
+
+
+File: gsl-ref.info,  Node: Hurwitz Zeta Function,  Next: Eta Function,  Prev: Riemann Zeta Function,  Up: Zeta Functions
+
+Hurwitz Zeta Function
+---------------------
+
+   The Hurwitz zeta function is defined by \zeta(s,q) = \sum_0^\infty
+(k+q)^{-s}.
+
+ - Function: double gsl_sf_hzeta (double S, double Q)
+ - Function: int gsl_sf_hzeta_e (double S, double Q, gsl_sf_result *
+          RESULT)
+     These routines compute the Hurwitz zeta function \zeta(s,q) for s
+     > 1, q > 0.
+
+
+File: gsl-ref.info,  Node: Eta Function,  Prev: Hurwitz Zeta Function,  Up: Zeta Functions
+
+Eta Function
+------------
+
+   The eta function is defined by \eta(s) = (1-2^{1-s}) \zeta(s).
+
+ - Function: double gsl_sf_eta_int (int N)
+ - Function: int gsl_sf_eta_int_e (int N, gsl_sf_result * RESULT)
+     These routines compute the eta function \eta(n) for integer N.
+
+ - Function: double gsl_sf_eta (double S)
+ - Function: int gsl_sf_eta_e (double S, gsl_sf_result * RESULT)
+     These routines compute the eta function \eta(s) for arbitrary S.
+
+
+File: gsl-ref.info,  Node: Special Functions Examples,  Next: Special Functions References and Further Reading,  Prev: Zeta Functions,  Up: Special Functions
+
+Examples
+========
+
+   The following example demonstrates the use of the error handling
+form of the special functions, in this case to compute the Bessel
+function J_0(5.0),
+
+     #include <stdio.h>
+     #include <gsl/gsl_sf_bessel.h>
+     
+     int
+     main (void)
+     {
+       double x = 5.0;
+       gsl_sf_result result;
+     
+       double expected = -0.17759677131433830434739701;
+     
+       int status = gsl_sf_bessel_J0_e (x, &result);
+     
+       printf("status  = %s\n", gsl_strerror(status));
+       printf("J0(5.0) = %.18f\n"
+              "      +/- % .18f\n",
+              result.val, result.err);
+       printf("exact   = %.18f\n", expected);
+       return status;
+     }
+
+Here are the results of running the program,
+     $ ./a.out
+     status  = success
+     J0(5.0) = -0.177596771314338292
+           +/-  0.000000000000000193
+     exact   = -0.177596771314338292
+
+The next program computes the same quantity using the natural form of
+the function. In this case the error term RESULT.ERR and return status
+are not accessible.
+
+     #include <stdio.h>
+     #include <gsl/gsl_sf_bessel.h>
+     
+     int
+     main (void)
+     {
+       double x = 5.0;
+       double expected = -0.17759677131433830434739701;
+     
+       double y = gsl_sf_bessel_J0 (x);
+     
+       printf("J0(5.0) = %.18f\n", y);
+       printf("exact   = %.18f\n", expected);
+       return 0;
+     }
+
+The results of the function are the same,
+     $ ./a.out
+     J0(5.0) = -0.177596771314338292
+     exact   = -0.177596771314338292
+
+
+File: gsl-ref.info,  Node: Special Functions References and Further Reading,  Prev: Special Functions Examples,  Up: Special Functions
+
+References and Further Reading
+==============================
+
+The library follows the conventions of `Abramowitz & Stegun' where
+possible,
+     Abramowitz & Stegun (eds.), `Handbook of Mathematical Functions'
+
+The following papers contain information on the algorithms used to
+compute the special functions,
+     MISCFUN: A software package to compute uncommon special functions.
+     `ACM Trans. Math. Soft.', vol. 22, 1996, 288-301
+
+     G.N. Watson, A Treatise on the Theory of Bessel Functions, 2nd
+     Edition (Cambridge University Press, 1944).
+
+     G. Nemeth, Mathematical Approximations of Special Functions, Nova
+     Science Publishers, ISBN 1-56072-052-2
+
+     B.C. Carlson, Special Functions of Applied Mathematics (1977)
+
+     W.J. Thompson, Atlas for Computing Mathematical Functions, John
+     Wiley & Sons, New York (1997).
+
+     Y.Y. Luke, Algorithms for the Computation of Mathematical
+     Functions, Academic Press, New York (1977).
+
+
+
+File: gsl-ref.info,  Node: Vectors and Matrices,  Next: Permutations,  Prev: Special Functions,  Up: Top
+
+Vectors and Matrices
+********************
+
+   The functions described in this chapter provide a simple vector and
+matrix interface to ordinary C arrays. The memory management of these
+arrays is implemented using a single underlying type, known as a block.
+By writing your functions in terms of vectors and matrices you can pass
+a single structure containing both data and dimensions as an argument
+without needing additional function parameters.  The structures are
+compatible with the vector and matrix formats used by BLAS routines.
+
+* Menu:
+
+* Data types::
+* Blocks::
+* Vectors::
+* Matrices::
+* Vector and Matrix References and Further Reading::
+
+
+File: gsl-ref.info,  Node: Data types,  Next: Blocks,  Up: Vectors and Matrices
+
+Data types
+==========
+
+   All the functions are available for each of the standard data-types.
+The versions for `double' have the prefix `gsl_block', `gsl_vector' and
+`gsl_matrix'.  Similarly the versions for single-precision `float'
+arrays have the prefix `gsl_block_float', `gsl_vector_float' and
+`gsl_matrix_float'.  The full list of available types is given below,
+
+     gsl_block                       double
+     gsl_block_float                 float
+     gsl_block_long_double           long double
+     gsl_block_int                   int
+     gsl_block_uint                  unsigned int
+     gsl_block_long                  long
+     gsl_block_ulong                 unsigned long
+     gsl_block_short                 short
+     gsl_block_ushort                unsigned short
+     gsl_block_char                  char
+     gsl_block_uchar                 unsigned char
+     gsl_block_complex               complex double
+     gsl_block_complex_float         complex float
+     gsl_block_complex_long_double   complex long double
+
+Corresponding types exist for the `gsl_vector' and `gsl_matrix'
+functions.
+
+
+File: gsl-ref.info,  Node: Blocks,  Next: Vectors,  Prev: Data types,  Up: Vectors and Matrices
+
+Blocks
+======
+
+   For consistency all memory is allocated through a `gsl_block'
+structure.  The structure contains two components, the size of an area
+of memory and a pointer to the memory.  The `gsl_block' structure looks
+like this,
+
+     typedef struct
+     {
+       size_t size;
+       double * data;
+     } gsl_block;
+
+Vectors and matrices are made by "slicing" an underlying block. A slice
+is a set of elements formed from an initial offset and a combination of
+indices and step-sizes. In the case of a matrix the step-size for the
+column index represents the row-length.  The step-size for a vector is
+known as the "stride".
+
+   The functions for allocating and deallocating blocks are defined in
+`gsl_block.h'
+
+* Menu:
+
+* Block allocation::
+* Reading and writing blocks::
+* Example programs for blocks::
+
+
+File: gsl-ref.info,  Node: Block allocation,  Next: Reading and writing blocks,  Up: Blocks
+
+Block allocation
+----------------
+
+   The functions for allocating memory to a block follow the style of
+`malloc' and `free'.  In addition they also perform their own error
+checking.  If there is insufficient memory available to allocate a
+block then the functions call the GSL error handler (with an error
+number of `GSL_ENOMEM') in addition to returning a null pointer.  Thus
+if you use the library error handler to abort your program then it
+isn't necessary to check every `alloc'.
+
+ - Function: gsl_block * gsl_block_alloc (size_t N)
+     This function allocates memory for a block of N double-precision
+     elements, returning a pointer to the block struct.  The block is
+     not initialized and so the values of its elements are undefined.
+     Use the function `gsl_block_calloc' if you want to ensure that all
+     the elements are initialized to zero.
+
+     A null pointer is returned if insufficient memory is available to
+     create the block.
+
+ - Function: gsl_block * gsl_block_calloc (size_t N)
+     This function allocates memory for a block and initializes all the
+     elements of the block to zero.
+
+ - Function: void gsl_block_free (gsl_block * B)
+     This function frees the memory used by a block B previously
+     allocated with `gsl_block_alloc' or `gsl_block_calloc'.
+
+
+File: gsl-ref.info,  Node: Reading and writing blocks,  Next: Example programs for blocks,  Prev: Block allocation,  Up: Blocks
+
+Reading and writing blocks
+--------------------------
+
+   The library provides functions for reading and writing blocks to a
+file as binary data or formatted text.
+
+ - Function: int gsl_block_fwrite (FILE * STREAM, const gsl_block * B)
+     This function writes the elements of the block B to the stream
+     STREAM in binary format.  The return value is 0 for success and
+     `GSL_EFAILED' if there was a problem writing to the file.  Since
+     the data is written in the native binary format it may not be
+     portable between different architectures.
+
+ - Function: int gsl_block_fread (FILE * STREAM, gsl_block * B)
+     This function reads into the block B from the open stream STREAM
+     in binary format.  The block B must be preallocated with the
+     correct length since the function uses the size of B to determine
+     how many bytes to read.  The return value is 0 for success and
+     `GSL_EFAILED' if there was a problem reading from the file.  The
+     data is assumed to have been written in the native binary format
+     on the same architecture.
+
+ - Function: int gsl_block_fprintf (FILE * STREAM, const gsl_block * B,
+          const char * FORMAT)
+     This function writes the elements of the block B line-by-line to
+     the stream STREAM using the format specifier FORMAT, which should
+     be one of the `%g', `%e' or `%f' formats for floating point
+     numbers and `%d' for integers.  The function returns 0 for success
+     and `GSL_EFAILED' if there was a problem writing to the file.
+
+ - Function: int gsl_block_fscanf (FILE * STREAM, gsl_block * B)
+     This function reads formatted data from the stream STREAM into the
+     block B.  The block B must be preallocated with the correct length
+     since the function uses the size of B to determine how many
+     numbers to read.  The function returns 0 for success and
+     `GSL_EFAILED' if there was a problem reading from the file.
+
+
+File: gsl-ref.info,  Node: Example programs for blocks,  Prev: Reading and writing blocks,  Up: Blocks
+
+Example programs for blocks
+---------------------------
+
+   The following program shows how to allocate a block,
+
+     #include <stdio.h>
+     #include <gsl/gsl_block.h>
+     
+     int
+     main (void)
+     {
+       gsl_block * b = gsl_block_alloc (100);
+     
+       printf("length of block = %u\n", b->size);
+       printf("block data address = %#x\n", b->data);
+     
+       gsl_block_free (b);
+       return 0;
+     }
+
+Here is the output from the program,
+
+     length of block = 100
+     block data address = 0x804b0d8
+
+
+File: gsl-ref.info,  Node: Vectors,  Next: Matrices,  Prev: Blocks,  Up: Vectors and Matrices
+
+Vectors
+=======
+
+   Vectors are defined by a `gsl_vector' structure which describes a
+slice of a block.  Different vectors can be created which point to the
+same block.  A vector slice is a set of equally-spaced elements of an
+area of memory.
+
+   The `gsl_vector' structure contains five components, the "size", the
+"stride", a pointer to the memory where the elements are stored, DATA,
+a pointer to the block owned by the vector, BLOCK, if any, and an
+ownership flag, OWNER.  The structure is very simple and looks like
+this,
+
+     typedef struct
+     {
+       size_t size;
+       size_t stride;
+       double * data;
+       gsl_block * block;
+       int owner;
+     } gsl_vector;
+
+The SIZE is simply the number of vector elements.  The range of valid
+indices runs from 0 to `size-1'.  The STRIDE is the step-size from one
+element to the next in physical memory, measured in units of the
+appropriate datatype.  The pointer DATA gives the location of the first
+element of the vector in memory.  The pointer BLOCK stores the location
+of the memory block in which the vector elements are located (if any).
+If the vector owns this block then the OWNER field is set to one and
+the block will be deallocated when the vector is freed.  If the vector
+points to a block owned by another object then the OWNER field is zero
+and any underlying block will not be deallocated.
+
+   The functions for allocating and accessing vectors are defined in
+`gsl_vector.h'
+
+* Menu:
+
+* Vector allocation::
+* Accessing vector elements::
+* Initializing vector elements::
+* Reading and writing vectors::
+* Vector views::
+* Copying vectors::
+* Exchanging elements::
+* Vector operations::
+* Finding maximum and minimum elements of vectors::
+* Vector properties::
+* Example programs for vectors::
+
+
+File: gsl-ref.info,  Node: Vector allocation,  Next: Accessing vector elements,  Up: Vectors
+
+Vector allocation
+-----------------
+
+   The functions for allocating memory to a vector follow the style of
+`malloc' and `free'.  In addition they also perform their own error
+checking.  If there is insufficient memory available to allocate a
+vector then the functions call the GSL error handler (with an error
+number of `GSL_ENOMEM') in addition to returning a null pointer.  Thus
+if you use the library error handler to abort your program then it
+isn't necessary to check every `alloc'.
+
+ - Function: gsl_vector * gsl_vector_alloc (size_t N)
+     This function creates a vector of length N, returning a pointer to
+     a newly initialized vector struct. A new block is allocated for the
+     elements of the vector, and stored in the BLOCK component of the
+     vector struct.  The block is "owned" by the vector, and will be
+     deallocated when the vector is deallocated.
+
+ - Function: gsl_vector * gsl_vector_calloc (size_t N)
+     This function allocates memory for a vector of length N and
+     initializes all the elements of the vector to zero.
+
+ - Function: void gsl_vector_free (gsl_vector * V)
+     This function frees a previously allocated vector V.  If the
+     vector was created using `gsl_vector_alloc' then the block
+     underlying the vector will also be deallocated.  If the vector has
+     been created from another object then the memory is still owned by
+     that object and will not be deallocated.
+
+
+File: gsl-ref.info,  Node: Accessing vector elements,  Next: Initializing vector elements,  Prev: Vector allocation,  Up: Vectors
+
+Accessing vector elements
+-------------------------
+
+   Unlike FORTRAN compilers, C compilers do not usually provide support
+for range checking of vectors and matrices.  Range checking is
+available in the GNU C Compiler extension `checkergcc' but it is not
+available on every platform.  The functions `gsl_vector_get' and
+`gsl_vector_set' can perform portable range checking for you and report
+an error if you attempt to access elements outside the allowed range.
+
+   The functions for accessing the elements of a vector or matrix are
+defined in `gsl_vector.h' and declared `extern inline' to eliminate
+function-call overhead.  If necessary you can turn off range checking
+completely without modifying any source files by recompiling your
+program with the preprocessor definition `GSL_RANGE_CHECK_OFF'.
+Provided your compiler supports inline functions the effect of turning
+off range checking is to replace calls to `gsl_vector_get(v,i)' by
+`v->data[i*v->stride]' and and calls to `gsl_vector_set(v,i,x)' by
+`v->data[i*v->stride]=x'.  Thus there should be no performance penalty
+for using the range checking functions when range checking is turned
+off.
+
+ - Function: double gsl_vector_get (const gsl_vector * V, size_t I)
+     This function returns the I-th element of a vector V.  If I lies
+     outside the allowed range of 0 to N-1 then the error handler is
+     invoked and 0 is returned.
+
+ - Function: void gsl_vector_set (gsl_vector * V, size_t I, double X)
+     This function sets the value of the I-th element of a vector V to
+     X.  If I lies outside the allowed range of 0 to N-1 then the error
+     handler is invoked.
+
+ - Function: double * gsl_vector_ptr (gsl_vector * V, size_t I)
+ - Function: const double * gsl_vector_ptr (const gsl_vector * V,
+          size_t I)
+     These functions return a pointer to the I-th element of a vector
+     V.  If I lies outside the allowed range of 0 to N-1 then the error
+     handler is invoked and a null pointer is returned.
+
+
+File: gsl-ref.info,  Node: Initializing vector elements,  Next: Reading and writing vectors,  Prev: Accessing vector elements,  Up: Vectors
+
+Initializing vector elements
+----------------------------
+
+ - Function: void gsl_vector_set_all (gsl_vector * V, double X)
+     This function sets all the elements of the vector V to the value X.
+
+ - Function: void gsl_vector_set_zero (gsl_vector * V)
+     This function sets all the elements of the vector V to zero.
+
+ - Function: int gsl_vector_set_basis (gsl_vector * V, size_t I)
+     This function makes a basis vector by setting all the elements of
+     the vector V to zero except for the I-th element which is set to
+     one.
+
+
+File: gsl-ref.info,  Node: Reading and writing vectors,  Next: Vector views,  Prev: Initializing vector elements,  Up: Vectors
+
+Reading and writing vectors
+---------------------------
+
+   The library provides functions for reading and writing vectors to a
+file as binary data or formatted text.
+
+ - Function: int gsl_vector_fwrite (FILE * STREAM, const gsl_vector * V)
+     This function writes the elements of the vector V to the stream
+     STREAM in binary format.  The return value is 0 for success and
+     `GSL_EFAILED' if there was a problem writing to the file.  Since
+     the data is written in the native binary format it may not be
+     portable between different architectures.
+
+ - Function: int gsl_vector_fread (FILE * STREAM, gsl_vector * V)
+     This function reads into the vector V from the open stream STREAM
+     in binary format.  The vector V must be preallocated with the
+     correct length since the function uses the size of V to determine
+     how many bytes to read.  The return value is 0 for success and
+     `GSL_EFAILED' if there was a problem reading from the file.  The
+     data is assumed to have been written in the native binary format
+     on the same architecture.
+
+ - Function: int gsl_vector_fprintf (FILE * STREAM, const gsl_vector *
+          V, const char * FORMAT)
+     This function writes the elements of the vector V line-by-line to
+     the stream STREAM using the format specifier FORMAT, which should
+     be one of the `%g', `%e' or `%f' formats for floating point
+     numbers and `%d' for integers.  The function returns 0 for success
+     and `GSL_EFAILED' if there was a problem writing to the file.
+
+ - Function: int gsl_vector_fscanf (FILE * STREAM, gsl_vector * V)
+     This function reads formatted data from the stream STREAM into the
+     vector V.  The vector V must be preallocated with the correct
+     length since the function uses the size of V to determine how many
+     numbers to read.  The function returns 0 for success and
+     `GSL_EFAILED' if there was a problem reading from the file.
+

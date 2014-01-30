@@ -1,0 +1,4 @@
+Problem: 33
+Algorithm: substring, size= 3, basis size=501
+WER: 0.767174854131
+Runtime: 0.0755555555556

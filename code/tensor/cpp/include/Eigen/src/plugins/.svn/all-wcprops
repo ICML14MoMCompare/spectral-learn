@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/plugins
+END
+ArrayCwiseUnaryOps.h
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/plugins/ArrayCwiseUnaryOps.h
+END
+CommonCwiseBinaryOps.h
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/plugins/CommonCwiseBinaryOps.h
+END
+BlockMethods.h
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/plugins/BlockMethods.h
+END
+ArrayCwiseBinaryOps.h
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/plugins/ArrayCwiseBinaryOps.h
+END
+MatrixCwiseUnaryOps.h
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/plugins/MatrixCwiseUnaryOps.h
+END
+CommonCwiseUnaryOps.h
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/plugins/CommonCwiseUnaryOps.h
+END
+MatrixCwiseBinaryOps.h
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/plugins/MatrixCwiseBinaryOps.h
+END
+CMakeLists.txt
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/plugins/CMakeLists.txt
+END

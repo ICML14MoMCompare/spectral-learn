@@ -1,0 +1,4 @@
+Problem: 1
+Algorithm: PNFA, tau= 0.001, basis size=201
+WER: 0.999911457411
+Runtime: 27.3353333333

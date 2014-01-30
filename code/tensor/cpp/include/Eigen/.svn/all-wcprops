@@ -1,0 +1,203 @@
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen
+END
+Cholesky
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/Cholesky
+END
+QR
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/QR
+END
+CholmodSupport
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/CholmodSupport
+END
+SuperLUSupport
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/SuperLUSupport
+END
+Sparse
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/Sparse
+END
+OrderingMethods
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/OrderingMethods
+END
+SparseCholesky
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/SparseCholesky
+END
+SparseQR
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/SparseQR
+END
+QtAlignedMalloc
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/QtAlignedMalloc
+END
+Eigenvalues
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/Eigenvalues
+END
+LeastSquares
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/LeastSquares
+END
+StdVector
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/StdVector
+END
+CMakeLists.txt
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/CMakeLists.txt
+END
+MetisSupport
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/MetisSupport
+END
+Array
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/Array
+END
+LU
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/LU
+END
+Householder
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/Householder
+END
+SPQRSupport
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/SPQRSupport
+END
+UmfPackSupport
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/UmfPackSupport
+END
+StdList
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/StdList
+END
+Eigen
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/Eigen
+END
+Jacobi
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/Jacobi
+END
+Core
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/Core
+END
+Geometry
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/Geometry
+END
+SVD
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/SVD
+END
+SparseLU
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/SparseLU
+END
+PardisoSupport
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/PardisoSupport
+END
+Dense
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/Dense
+END
+PaStiXSupport
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/PaStiXSupport
+END
+IterativeLinearSolvers
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/IterativeLinearSolvers
+END
+SparseCore
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/SparseCore
+END
+Eigen2Support
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/Eigen2Support
+END
+StdDeque
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/StdDeque
+END

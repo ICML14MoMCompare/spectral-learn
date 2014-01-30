@@ -1,0 +1,4 @@
+Problem: tree
+Algorithm: substring, size= 9, basis size=501
+KL: 1.00082767526e+14
+Runtime: 0

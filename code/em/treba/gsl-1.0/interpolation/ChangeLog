@@ -1,0 +1,61 @@
+Tue Jul  3 12:10:53 2001  Brian Gough  <bjg@network-theory.co.uk>
+
+	* interp.c (DISCARD_STATUS): discard error status values using a
+ 	macro for configurability
+
+Sun Jul  1 21:41:27 2001  Brian Gough  <bjg@network-theory.co.uk>
+
+	* cspline.c: added const to state in appropriate places
+
+Tue Jun 26 11:57:55 2001  Brian Gough  <bjg@network-theory.co.uk>
+
+	* spline.c: added missing #include <string.h> for memcpy
+
+Mon Jun 25 19:58:45 2001  Brian Gough  <bjg@network-theory.co.uk>
+
+	* standardized to gsl conventions, added high-level 'spline'
+ 	interface
+
+Mon Apr 30 13:29:34 2001  Brian Gough  <bjg@network-theory.co.uk>
+
+	* renamed gsl_interp_obj to gsl_interp
+
+Mon Apr 23 10:29:51 2001  Brian Gough  <bjg@network-theory.co.uk>
+
+	* unified error handling conventions to _e for error handling
+ 	functions and no suffix for plain functions, so _impl functions
+ 	are no longer needed.
+
+	* removed tests for EFAULT, since EFAULT should only apply to
+ 	invalid non-null pointers.
+
+
+Tue Apr 11 19:56:25 2000  Brian Gough  <bjg@network-theory.co.uk>
+
+	* cspline.c (cspline_calc_periodic): changed occurrence of gsl_la
+ 	name to new gsl_linalg prefix, gsl_linalg_solve_symm_cyc_tridiag
+	(cspline_calc_natural): ditto
+
+Mon Aug 30 11:31:00 1999  Brian Gough  <bjg@network-theory.co.uk>
+
+	* bsearch.c: made gsl_interp_bsearch (formerly interp_bsearch) an
+ 	exported function, since it is needed by the inline version of
+ 	gsl_interp_accel_find in gsl_interp.h
+ 
+Tue Nov 17 16:52:00 1998  Brian Gough  <bjg@vvv.lanl.gov>
+
+	* added #include <config.h> to all top-level source files
+
+	* renamed test_interp.c to test.c
+
+	* test_interp.c: got rid of unused function alloc_xy_table
+
+Fri Nov 13 16:50:05 1998  Brian Gough  <bjg@vvv.lanl.gov>
+
+	* clean up for make strict, use size_t instead of unsigned int
+
+1998-11-06    <bjg@ancho.lanl.gov>
+
+	* added const to several declarations where needed.
+	
+

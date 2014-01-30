@@ -1,0 +1,31 @@
+* Look at STARPAC ftp://ftp.ucar.edu/starpac/ and Statlib
+http://lib.stat.cmu.edu/ for more ideas
+
+* Try using the Kahan summation formula to improve accuracy for the
+NIST tests (see Brian for details, below is a sketch of the algorithm).
+
+      sum = x(1)
+      c = 0
+      
+      DO i = 2, 1000000, 1
+         y = x(i) - c
+         t = sum + y
+         c = (t - sum) - y
+         sum = t
+      ENDDO
+
+* Prevent incorrect use of unsorted data for quartile calculations
+using a typedef for sorted data (?)
+
+* Rejection of outliers
+
+* Time series. Auto correlation, cross-correlation, smoothing (moving
+average), detrending, various econometric things. Integrated
+quantities (area under the curve). Interpolation of noisy data/fitting
+-- maybe add that to the existing interpolation stuff.What about
+missing data and gaps?
+
+   There is a new GNU package called gretl which does econometrics
+
+* Statistical tests (equal means, equal variance, etc).
+

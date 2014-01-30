@@ -1,0 +1,702 @@
+This is gsl-ref.info, produced by makeinfo version 4.0 from
+gsl-ref.texi.
+
+INFO-DIR-SECTION Scientific software
+START-INFO-DIR-ENTRY
+* gsl-ref: (gsl-ref).                   GNU Scientific Library - Reference
+END-INFO-DIR-ENTRY
+
+   This file documents the GNU Scientific Library.
+
+   Copyright (C) 1996, 1997, 1998, 1999, 2000, 2001 The GSL Team.
+
+   Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.1 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.  A
+copy of the license is included in the section entitled "GNU Free
+Documentation License".
+
+
+File: gsl-ref.info,  Node: Variable Index,  Next: Type Index,  Prev: Function Index,  Up: Top
+
+Variable Index
+**************
+
+* Menu:
+
+* alpha <1>:                             VEGAS.
+* alpha:                                 MISER.
+* chisq:                                 VEGAS.
+* dither:                                MISER.
+* estimate_frac:                         MISER.
+* iterations:                            VEGAS.
+* min_calls:                             MISER.
+* min_calls_per_bisection:               MISER.
+* mode:                                  VEGAS.
+* ostream:                               VEGAS.
+* result:                                VEGAS.
+* sigma:                                 VEGAS.
+* stage:                                 VEGAS.
+* verbose:                               VEGAS.
+
+
+File: gsl-ref.info,  Node: Type Index,  Next: Concept Index,  Prev: Variable Index,  Up: Top
+
+Type Index
+**********
+
+* Menu:
+
+* gsl_error_handler_t:                   Error Handlers.
+* gsl_fft_complex_wavetable:             Mixed-radix FFT routines for complex data.
+* gsl_function:                          Providing the function to solve.
+* gsl_function_fdf:                      Providing the function to solve.
+* gsl_histogram:                         The histogram struct.
+* gsl_histogram2d:                       The 2D histogram struct.
+* gsl_histogram2d_pdf:                   Resampling from 2D histograms.
+* gsl_histogram_pdf:                     The histogram probability distribution struct.
+* gsl_monte_function:                    Monte Carlo Interface.
+* gsl_multifit_function:                 Providing the Function to be Minimized.
+* gsl_multifit_function_fdf:             Providing the Function to be Minimized.
+* gsl_multimin_function_fdf:             Providing a function to minimize.
+* gsl_multiroot_function:                Providing the multidimensional system of equations to solve.
+* gsl_multiroot_function_fdf:            Providing the multidimensional system of equations to solve.
+* gsl_odeiv_system:                      Defining the ODE System.
+* gsl_siman_Efunc_t:                     Simulated Annealing functions.
+* gsl_siman_metric_t:                    Simulated Annealing functions.
+* gsl_siman_params_t:                    Simulated Annealing functions.
+* gsl_siman_print_t:                     Simulated Annealing functions.
+* gsl_siman_step_t:                      Simulated Annealing functions.
+
+
+File: gsl-ref.info,  Node: Concept Index,  Prev: Type Index,  Up: Top
+
+Concept Index
+*************
+
+* Menu:
+
+* 2D histograms:                         Two dimensional histograms.
+* 2D random direction vector:            The Spherical Distribution (2D & 3D).
+* 3-j symbols:                           Coupling Coefficients.
+* 3D random direction vector:            The Spherical Distribution (2D & 3D).
+* 6-j symbols:                           Coupling Coefficients.
+* 9-j symbols:                           Coupling Coefficients.
+* acceleration of series:                Series Acceleration.
+* acosh:                                 Elementary Functions.
+* Adaptive step-size control, differential equations: Adaptive Step-size Control.
+* Ai(x):                                 Airy Functions and Derivatives.
+* Airy functions:                        Airy Functions and Derivatives.
+* Akima splines:                         Interpolation Types.
+* aliasing of arrays:                    Aliasing of arrays.
+* alternative optimized functions:       Alternative optimized functions.
+* AMAX, Level-1 BLAS:                    Level 1 GSL BLAS Interface.
+* angular reduction:                     Restriction Functions.
+* ANSI C, use of:                        Using the library.
+* Apell symbol, see Pochammer symbol:    Gamma Function.
+* argument of complex number:            Properties of complex numbers.
+* arithmetic exceptions:                 Setting up your IEEE environment.
+* asinh:                                 Elementary Functions.
+* astronomical constants:                Astronomy and Astrophysics.
+* ASUM, Level-1 BLAS:                    Level 1 GSL BLAS Interface.
+* atanh:                                 Elementary Functions.
+* atomic physics, constants:             Atomic and Nuclear Physics.
+* autoconf, using with GSL:              Inline functions.
+* AXPY, Level-1 BLAS:                    Level 1 GSL BLAS Interface.
+* Bader and Deuflhard, Bulirsch-Stoer method.: Stepping Functions.
+* Bernoulli trial, random variates:      The Bernoulli Distribution.
+* Bessel functions:                      Bessel Functions.
+* Bessel Functions, Fractional Order:    Regular Bessel Function - Fractional Order.
+* best-fit parameters, covariance:       Computing the covariance matrix of best fit parameters.
+* Beta distribution random variates:     The Beta Distribution.
+* Beta function:                         Gamma Function.
+* Beta function, incomplete normalized:  Gamma Function.
+* Bi(x):                                 Airy Functions and Derivatives.
+* bias, IEEE format:                     Representation of floating point numbers.
+* bidiagonalization of real matrices:    Bidiagonalization.
+* binning data:                          Histograms.
+* Binomial random variates:              The Binomial Distribution.
+* bisection algorithm for finding roots: Root Bracketing Algorithms.
+* BLAS:                                  BLAS Support.
+* blocks:                                Vectors and Matrices.
+* breakpoints:                           Using gdb.
+* brent's method for finding minima:     Minimization Algorithms.
+* brent's method for finding roots:      Root Bracketing Algorithms.
+* Broyden algorithm for multidimensional roots: Algorithms without Derivatives.
+* BSD random number generator:           Unix random number generators.
+* BSD random number generator, rand:     Unix random number generators.
+* Bulirsch-Stoer method:                 Stepping Functions.
+* C extensions, compatible use of:       Using the library.
+* C++, compatibility:                    Compatibility with C++.
+* Carlson forms of Elliptic integrals:   Definition of Carlson Forms.
+* Cash-Karp, Runge-Kutta method:         Stepping Functions.
+* Cauchy random variates:                The Cauchy Distribution.
+* CBLAS:                                 BLAS Support.
+* CBLAS, Low-level interface:            GSL CBLAS Library.
+* Chebyshev series:                      Chebyshev Approximations.
+* Checkergcc:                            Accessing vector elements.
+* checking permutation for validity:     Permutation properties.
+* Chi-squared random variates:           The Chi-squared Distribution.
+* Cholesky decomposition:                Cholesky Decomposition.
+* Clausen functions:                     Clausen Functions.
+* Clenshaw-Curtis quadrature:            Numerical Integration Introduction.
+* CMRG, combined multiple recursive random number generator: Random number generator algorithms.
+* code reuse in applications:            Code Reuse.
+* combinatorial factor C(m,n):           Gamma Function.
+* combinatorial optimization:            Simulated Annealing.
+* combinatorial searches:                Simulated Annealing.
+* comparison functions, definition:      Sorting objects.
+* compatibility:                         Using the library.
+* compiling programs, include paths:     Compiling and Linking.
+* compiling programs, library paths:     Compiling and Linking.
+* complementary incomplete Gamma function: Gamma Function.
+* complex arithmetic:                    Complex arithmetic operators.
+* complex cosine function, special functions: Trigonometric Functions for Complex Arguments.
+* Complex Gamma function:                Gamma Function.
+* complex hermitian matrix, eigensystem: Complex Hermitian Matrices.
+* complex log sine function, special functions: Trigonometric Functions for Complex Arguments.
+* complex numbers:                       Complex Numbers.
+* complex sinc function, special functions: Circular Trigonometric Functions.
+* complex sine function, special functions: Trigonometric Functions for Complex Arguments.
+* confluent hypergeometric function:     Laguerre Functions.
+* confluent hypergeometric functions:    Hypergeometric Functions.
+* conical functions:                     Legendre Functions and Spherical Harmonics.
+* conjugate of complex number:           Complex arithmetic operators.
+* constants, fundamental:                Fundamental Constants.
+* constants, mathematical -- defined as macros: Mathematical Constants.
+* constants, physical:                   Physical Constants.
+* contacting the GSL developers:         Further Information.
+* convergence, accelerating a series:    Series Acceleration.
+* conversion of units:                   Physical Constants.
+* cooling schedule:                      Simulated Annealing algorithm.
+* COPY, Level-1 BLAS:                    Level 1 GSL BLAS Interface.
+* cosine function, special functions:    Circular Trigonometric Functions.
+* cosine of complex number:              Complex Trigonometric Functions.
+* cost function:                         Simulated Annealing.
+* Coulomb wave functions:                Coulomb Functions.
+* coupling coefficients:                 Coupling Coefficients.
+* covariance of best-fit parameters:     Computing the covariance matrix of best fit parameters.
+* covariance, of two datasets:           Covariance.
+* CRAY random number generator, RANF:    Other random number generators.
+* cubic equation, solving:               Cubic equations.
+* cubic splines:                         Interpolation Types.
+* Cylindrical Bessel Functions:          Regular Cylindrical Bessel Functions.
+* Dawson function:                       Dawson Function.
+* debugging numerical programs:          Using gdb.
+* Debye functions:                       Debye Functions.
+* denormalized form, IEEE format:        Representation of floating point numbers.
+* derivatives, calculating numerically:  Numerical Differentiation.
+* determinant of a matrix, by LU decomposition: LU Decomposition.
+* Deuflhard and Bader, Bulirsch-Stoer method.: Stepping Functions.
+* DFTs, see FFT:                         Fast Fourier Transforms.
+* differential equations, initial value problems: Ordinary Differential Equations.
+* differentiation of functions, numeric: Numerical Differentiation.
+* digamma function:                      Psi (Digamma) Function.
+* dilogarithm:                           Dilogarithm.
+* direction vector, random 2D:           The Spherical Distribution (2D & 3D).
+* direction vector, random 3D:           The Spherical Distribution (2D & 3D).
+* direction vector, random N-dimensional: The Spherical Distribution (2D & 3D).
+* Discrete Fourier Transforms, see FFT:  Fast Fourier Transforms.
+* discrete Hankel transforms:            Discrete Hankel Transforms.
+* Discrete newton algorithm for multidimensional roots: Algorithms without Derivatives.
+* Discrete Newton algorithm for nonlinear systems: Algorithms without Derivatives.
+* Discrete random numbers:               General Discrete Distributions.
+* Discrete random numbers, preprocessing: General Discrete Distributions.
+* division by zero, IEEE exceptions:     Setting up your IEEE environment.
+* DOT, Level-1 BLAS:                     Level 1 GSL BLAS Interface.
+* double factorial:                      Gamma Function.
+* double precision, IEEE format:         Representation of floating point numbers.
+* downloading GSL:                       Obtaining GSL.
+* e, defined as a macro:                 Mathematical Constants.
+* eigenvalues and eigenvectors:          Eigensystems.
+* elementary functions:                  Mathematical Functions.
+* elementary operations:                 Elementary Operations.
+* elliptic functions (Jacobi):           Elliptic Functions (Jacobi).
+* elliptic integrals:                    Elliptic Integrals.
+* energy function:                       Simulated Annealing.
+* energy, units of:                      Thermal Energy and Power.
+* erf(x):                                Error Functions.
+* erfc(x):                               Error Functions.
+* error codes:                           Error Reporting.
+* error function:                        Error Functions.
+* Error handlers:                        Error Handlers.
+* error handling:                        Error Handling.
+* error handling macros:                 Using GSL error reporting in your own functions.
+* Errors:                                Error Handling.
+* estimated standard deviation:          Statistics.
+* estimated variance:                    Statistics.
+* euclidean distance function, hypot:    Elementary Functions.
+* Euler's constant, defined as a macro:  Mathematical Constants.
+* evaluation of polynomials:             Polynomial evaluation.
+* exceptions, IEEE arithmetic:           Setting up your IEEE environment.
+* exchanging permutation elements:       Accessing permutation elements.
+* exp:                                   Exponential Functions.
+* expm1:                                 Elementary Functions.
+* exponent, IEEE format:                 Representation of floating point numbers.
+* exponential function:                  Exponential Functions.
+* exponential integrals:                 Exponential Integrals.
+* Exponential power distribution, random variates: The Exponential Power Distribution.
+* Exponential random variates:           The Exponential Distribution.
+* exponential, difference from 1 computed accurately: Elementary Functions.
+* exponentiation of complex number:      Elementary Complex Functions.
+* F-distribution random variates:        The F-distribution.
+* factorial:                             Gamma Function.
+* factorization of matrices:             Linear Algebra.
+* false position algorithm for finding roots: Root Bracketing Algorithms.
+* Fast Fourier Transforms, see FFT:      Fast Fourier Transforms.
+* FDL, GNU Free Documentation License:   GNU Free Documentation License.
+* Fehlberg method, differential equations: Stepping Functions.
+* Fermi-Dirac function:                  Fermi-Dirac Function.
+* FFT:                                   Fast Fourier Transforms.
+* FFT mathematical definition:           Mathematical Definitions.
+* FFT of complex data, mixed-radix algorithm: Mixed-radix FFT routines for complex data.
+* FFT of complex data, radix-2 algorithm: Radix-2 FFT routines for complex data.
+* FFT of real data:                      Overview of real data FFTs.
+* FFT of real data, mixed-radix algorithm: Mixed-radix FFT routines for real data.
+* FFT of real data, radix-2 algorithm:   Radix-2 FFT routines for real data.
+* FFT, complex data:                     Overview of complex data FFTs.
+* finding minima:                        One dimensional Minimization.
+* finding roots:                         One dimensional Root-Finding.
+* finding zeros:                         One dimensional Root-Finding.
+* fitting:                               Least-Squares Fitting.
+* fitting, using Chebyshev polynomials:  Chebyshev Approximations.
+* flat distribution random variates:     The Flat (Uniform) Distribution.
+* Fortran range checking, equivalent in gcc: Accessing vector elements.
+* Four-tap Generalized Feedback Shift Register: Random number generator algorithms.
+* Fourier integrals, numerical:          QAWF adaptive integration for Fourier integrals.
+* Fourier Transforms, see FFT:           Fast Fourier Transforms.
+* Fractional Order Bessel Functions:     Regular Bessel Function - Fractional Order.
+* free software, explanation of:         GSL is Free Software.
+* functions, numerical differentiation:  Numerical Differentiation.
+* fundamental constants:                 Fundamental Constants.
+* Gamma distribution random variates:    The Gamma Distribution.
+* gamma function:                        Gamma Function.
+* Gauss-Kronrod quadrature:              Numerical Integration Introduction.
+* Gaussian random variates <1>:          The Bivariate Gaussian Distribution.
+* Gaussian random variates:              The Gaussian Distribution.
+* Gaussian Tail random variates:         The Gaussian Tail Distribution.
+* gcc extensions, range-checking:        Accessing vector elements.
+* gcc warning options:                   GCC warning options for numerical programs.
+* gdb:                                   Using gdb.
+* Gear method, differential equations:   Stepping Functions.
+* Gegenbauer functions:                  Gegenbauer Functions.
+* GEMM, Level-3 BLAS:                    Level 3 GSL BLAS Interface.
+* GEMV, Level-2 BLAS:                    Level 2 GSL BLAS Interface.
+* general polynomial equations, solving: General polynomial equations.
+* Geometric random variates <1>:         The Hypergeometric Distribution.
+* Geometric random variates:             The Geometric Distribution.
+* GER, Level-2 BLAS:                     Level 2 GSL BLAS Interface.
+* GERC, Level-2 BLAS:                    Level 2 GSL BLAS Interface.
+* GERU, Level-2 BLAS:                    Level 2 GSL BLAS Interface.
+* Givens Rotation, BLAS:                 Level 1 GSL BLAS Interface.
+* Givens Rotation, Modified, BLAS:       Level 1 GSL BLAS Interface.
+* GNEWTON algorithm:                     Algorithms using Derivatives.
+* GNU General Public License:            Introduction.
+* golden section algorithm for finding minima: Minimization Algorithms.
+* gsl-announce mailing list:             Obtaining GSL.
+* gsl_sf_result:                         The gsl_sf_result struct.
+* gsl_sf_result_e10:                     The gsl_sf_result struct.
+* Gumbel distribution (Type 1), random variates: The Type-1 Gumbel Distribution.
+* Gumbel distribution (Type 2), random variates: The Type-2 Gumbel Distribution.
+* Hankel transforms, discrete:           Discrete Hankel Transforms.
+* HAVE_INLINE:                           Inline functions.
+* HBOOK:                                 Ntuple References and Further Reading.
+* header files, including:               Compiling and Linking.
+* heapsort:                              Sorting.
+* HEMM, Level-3 BLAS:                    Level 3 GSL BLAS Interface.
+* HEMV, Level-2 BLAS:                    Level 2 GSL BLAS Interface.
+* HER, Level-2 BLAS:                     Level 2 GSL BLAS Interface.
+* HER2, Level-2 BLAS:                    Level 2 GSL BLAS Interface.
+* HER2K, Level-3 BLAS:                   Level 3 GSL BLAS Interface.
+* HERK, Level-3 BLAS:                    Level 3 GSL BLAS Interface.
+* hermitian matrix, complex, eigensystem: Complex Hermitian Matrices.
+* histogram, from ntuple:                Histogramming ntuple values.
+* histograms:                            Histograms.
+* householder linear solver:             Householder solver for linear systems.
+* HYBRID algorithm, unscaled without derivatives: Algorithms without Derivatives.
+* HYBRID algorithms for nonlinear systems: Algorithms using Derivatives.
+* HYBRIDJ algorithm:                     Algorithms using Derivatives.
+* HYBRIDS algorithm, scaled without derivatives: Algorithms without Derivatives.
+* HYBRIDSJ algorithm:                    Algorithms using Derivatives.
+* hydrogen atom:                         Coulomb Functions.
+* hyperbolic cosine, inverse:            Elementary Functions.
+* hyperbolic functions, complex numbers: Complex Hyperbolic Functions.
+* hyperbolic sine, inverse:              Elementary Functions.
+* hyperbolic space:                      Legendre Functions and Spherical Harmonics.
+* hyperbolic tangent, inverse:           Elementary Functions.
+* hypergeometric functions:              Hypergeometric Functions.
+* hypot:                                 Elementary Functions.
+* hypot function, special functions:     Circular Trigonometric Functions.
+* identity permutation:                  Permutation allocation.
+* IEEE exceptions:                       Setting up your IEEE environment.
+* IEEE floating point:                   IEEE floating-point arithmetic.
+* IEEE format for floating point numbers: Representation of floating point numbers.
+* IEEE infinity, defined as a macro:     Infinities and Not-a-number.
+* IEEE NaN, defined as a macro:          Infinities and Not-a-number.
+* illumination, units of:                Light and Illumination.
+* imperial units:                        Imperial Units.
+* importance sampling, VEGAS:            VEGAS.
+* including GSL header files:            Compiling and Linking.
+* incomplete Beta function, normalized:  Gamma Function.
+* incomplete Gamma function:             Gamma Function.
+* indirect sorting:                      Sorting objects.
+* indirect sorting, of vector elements:  Sorting vectors.
+* infinity, defined as a macro:          Infinities and Not-a-number.
+* infinity, IEEE format:                 Representation of floating point numbers.
+* initial value problems, differential equations: Ordinary Differential Equations.
+* initializing matrices:                 Initializing matrix elements.
+* initializing vectors:                  Initializing vector elements.
+* inline functions:                      Inline functions.
+* integer powers:                        Power Function.
+* integration, numerical (quadrature):   Numerical Integration.
+* interpolation:                         Interpolation.
+* interpolation, using Chebyshev polynomials: Chebyshev Approximations.
+* inverse complex trigonometric functions: Inverse Complex Trigonometric Functions.
+* inverse hyperbolic cosine:             Elementary Functions.
+* inverse hyperbolic functions, complex numbers: Inverse Complex Hyperbolic Functions.
+* inverse hyperbolic sine:               Elementary Functions.
+* inverse hyperbolic tangent:            Elementary Functions.
+* inverse of a matrix, by LU decomposition: LU Decomposition.
+* inverting a permutation:               Permutation functions.
+* Irregular Cylindrical Bessel Functions: Irregular Cylindrical Bessel Functions.
+* Irregular Modified Bessel Functions, Fractional Order: Irregular Modified Bessel Functions - Fractional Order.
+* Irregular Modified Cylindrical Bessel Functions: Irregular Modified Cylindrical Bessel Functions.
+* Irregular Modified Spherical Bessel Functions: Irregular Modified Spherical Bessel Functions.
+* Irregular Spherical Bessel Functions:  Irregular Spherical Bessel Functions.
+* iterating through permutations:        Permutation functions.
+* iterative refinement of solutions in linear systems: LU Decomposition.
+* Jacobi elliptic functions:             Elliptic Functions (Jacobi).
+* Laguerre functions:                    Laguerre Functions.
+* Lambert function:                      Lambert W Functions.
+* Landau random variates:                The Landau Distribution.
+* LAPACK, recommended for linear algebra <1>: Eigensystems.
+* LAPACK, recommended for linear algebra: Linear Algebra.
+* Laplace distribution random variates:  The Laplace Distribution.
+* leading dimension, matrices:           Matrices.
+* least squares fit:                     Least-Squares Fitting.
+* least squares fitting, nonlinear:      Nonlinear Least-Squares Fitting.
+* least-squares, covariance of best-fit parameters: Computing the covariance matrix of best fit parameters.
+* Legendre forms of elliptic integrals:  Definition of Legendre Forms.
+* Legendre functions:                    Legendre Functions and Spherical Harmonics.
+* length, computed accurately using hypot: Elementary Functions.
+* Levenberg-Marquardt algorithms:        Minimization Algorithms using Derivatives.
+* Levin u-transform:                     Series Acceleration.
+* Levy distribution, random variates <1>: The Levy skew alpha-Stable Distribution.
+* Levy distribution, random variates:    The Levy alpha-Stable Distributions.
+* libraries, linking with:               Compiling and Linking.
+* license of GSL:                        Introduction.
+* light, units of:                       Light and Illumination.
+* linear algebra:                        Linear Algebra.
+* linear algebra, BLAS:                  BLAS Support.
+* linear interpolation:                  Interpolation Types.
+* linear systems, refinement of solutions: LU Decomposition.
+* linear systems, solution of:           LU Decomposition.
+* linking with GSL libraries:            Compiling and Linking.
+* LMDER algorithm:                       Minimization Algorithms using Derivatives.
+* log1p:                                 Elementary Functions.
+* logarithm and related functions:       Logarithm and Related Functions.
+* logarithm of Beta function:            Gamma Function.
+* logarithm of combinatorial factor C(m,n): Gamma Function.
+* logarithm of complex number:           Elementary Complex Functions.
+* logarithm of cosh function, special functions: Hyperbolic Trigonometric Functions.
+* logarithm of double factorial:         Gamma Function.
+* logarithm of factorial:                Gamma Function.
+* logarithm of Gamma function:           Gamma Function.
+* logarithm of Pochhammer symbol:        Gamma Function.
+* logarithm of sinh function, special functions: Hyperbolic Trigonometric Functions.
+* logarithm of the determinant of a matrix: LU Decomposition.
+* logarithm, computed accurately near 1: Elementary Functions.
+* Logarithmic random variates:           The Logarithmic Distribution.
+* Logistic random variates:              The Logistic Distribution.
+* Lognormal random variates:             The Lognormal Distribution.
+* long double:                           Long double.
+* low discrepancy sequences:             Quasi-Random Sequences.
+* Low-level CBLAS:                       GSL CBLAS Library.
+* LU decomposition:                      LU Decomposition.
+* macros for mathematical constants:     Mathematical Constants.
+* magnitude of complex number:           Properties of complex numbers.
+* mailing list archives:                 Further Information.
+* mailing list for GSL announcements:    Obtaining GSL.
+* mantissa, IEEE format:                 Representation of floating point numbers.
+* mass, units of:                        Mass and Weight.
+* mathematical constants, defined as macros: Mathematical Constants.
+* mathematical functions, elementary:    Mathematical Functions.
+* matrices <1>:                          Matrices.
+* matrices:                              Vectors and Matrices.
+* matrices, initializing:                Initializing matrix elements.
+* matrices, range-checking:              Accessing matrix elements.
+* matrix determinant:                    LU Decomposition.
+* matrix factorization:                  Linear Algebra.
+* matrix inverse:                        LU Decomposition.
+* matrix square root, Cholesky decomposition: Cholesky Decomposition.
+* matrix, operations:                    BLAS Support.
+* max:                                   Statistics.
+* maximization, see minimization:        One dimensional Minimization.
+* maximum of two numbers:                Maximum and Minimum functions.
+* mean:                                  Statistics.
+* min:                                   Statistics.
+* Minimization, caveats:                 Minimization Caveats.
+* minimization, multidimensional:        Multidimensional Minimization.
+* minimization, one-dimensional:         One dimensional Minimization.
+* minimization, overview:                Minimization Overview.
+* minimization, providing a function to minimize: Providing the function to minimize.
+* minimization, stopping parameters:     Minimization Stopping Parameters.
+* minimum finding, brent's method:       Minimization Algorithms.
+* minimum finding, golden section algorithm: Minimization Algorithms.
+* minimum of two numbers:                Maximum and Minimum functions.
+* MINPACK, minimization algorithms <1>:  Minimization Algorithms using Derivatives.
+* MINPACK, minimization algorithms:      Algorithms using Derivatives.
+* MISCFUN:                               Special Functions References and Further Reading.
+* MISER monte carlo integration:         MISER.
+* Mixed-radix FFT, complex data:         Mixed-radix FFT routines for complex data.
+* Mixed-radix FFT, real data:            Mixed-radix FFT routines for real data.
+* Modified Bessel Functions, Fractional Order: Regular Modified Bessel Functions - Fractional Order.
+* Modified Clenshaw-Curtis quadrature:   Numerical Integration Introduction.
+* Modified Cylindrical Bessel Functions: Regular Modified Cylindrical Bessel Functions.
+* Modified Givens Rotation, BLAS:        Level 1 GSL BLAS Interface.
+* Modified Newton's Method for nonlinear systems: Algorithms using Derivatives.
+* Modified Spherical Bessel Functions:   Regular Modified Spherical Bessel Functions.
+* Monte Carlo integration:               Monte Carlo Integration.
+* MRG, multiple recursive random number generator: Random number generator algorithms.
+* MT19937 random number generator:       Random number generator algorithms.
+* multidimensional root finding, Broyden algorithm: Algorithms without Derivatives.
+* multidimensional root finding, overview: Overview of Multidimensional Root Finding.
+* multidimensional root finding, providing a function to solve: Providing the multidimensional system of equations to solve.
+* Multimin, caveats:                     Multimin Caveats.
+* multiplication:                        Elementary Operations.
+* N-dimensional random direction vector: The Spherical Distribution (2D & 3D).
+* NaN, defined as a macro:               Infinities and Not-a-number.
+* nautical units:                        Nautical Units.
+* Negative Binomial distribution, random variates: The Negative Binomial Distribution.
+* Newton algorithm, discrete:            Algorithms without Derivatives.
+* Newton's Method algorithm for finding roots: Root Finding Algorithms using Derivatives.
+* Newton's Method for systems of nonlinear equations: Algorithms using Derivatives.
+* Niederreiter sequence:                 Quasi-Random Sequences.
+* non-linear equation, solutions of:     One dimensional Root-Finding.
+* non-linear functions, minimization:    One dimensional Minimization.
+* nonlinear fitting, stopping parameters: Search Stopping Parameters for Minimization Algorithms.
+* nonlinear least squares fitting:       Nonlinear Least-Squares Fitting.
+* nonlinear least-squares fitting, overview: Overview of Nonlinear Least-Squares Fitting.
+* nonlinear systems of equations, solution of: Multidimensional Root-Finding.
+* normalized form, IEEE format:          Representation of floating point numbers.
+* normalized incomplete Beta function:   Gamma Function.
+* Not-a-number, defined as a macro:      Infinities and Not-a-number.
+* NRM2, Level-1 BLAS:                    Level 1 GSL BLAS Interface.
+* ntuples:                               N-tuples.
+* nuclear physics, constants:            Atomic and Nuclear Physics.
+* numerical constants, defined as macros: Mathematical Constants.
+* numerical derivatives:                 Numerical Differentiation.
+* numerical integration (quadrature):    Numerical Integration.
+* Numerical recipes, random number generators: Numerical Recipes generators.
+* obtaining GSL:                         Obtaining GSL.
+* ODEs, initial value problems:          Ordinary Differential Equations.
+* optimization - combinatorial:          Simulated Annealing.
+* optimization, see minimization:        One dimensional Minimization.
+* optimized functions, alternatives:     Alternative optimized functions.
+* ordinary differential equations, initial value problem: Ordinary Differential Equations.
+* overflow, IEEE exceptions:             Setting up your IEEE environment.
+* Pareto random variates:                The Pareto Distribution.
+* PAW:                                   Ntuple References and Further Reading.
+* permutations:                          Permutations.
+* physical constants:                    Physical Constants.
+* physical dimension, matrices:          Matrices.
+* pi, defined as a macro:                Mathematical Constants.
+* plain monte carlo:                     PLAIN Monte Carlo.
+* Pochhammer symbol:                     Gamma Function.
+* Poisson random numbers:                The Poisson Distribution.
+* polar form of complex numbers:         Complex numbers.
+* polar to rectangular conversion:       Conversion Functions.
+* polygamma functions:                   Psi (Digamma) Function.
+* polynomial evaluation:                 Polynomial evaluation.
+* polynomials, roots of:                 Roots of Polynomials.
+* power function:                        Power Function.
+* power of complex number:               Elementary Complex Functions.
+* power, units of:                       Thermal Energy and Power.
+* precision, IEEE arithmetic:            Setting up your IEEE environment.
+* pressure, units of:                    Pressure.
+* Prince-Dormand, Runge-Kutta method:    Stepping Functions.
+* printers units:                        Printers Units.
+* probability distributions, from histograms: Resampling from histograms.
+* projection of ntuples:                 Histogramming ntuple values.
+* psi function:                          Psi (Digamma) Function.
+* QR decomposition:                      QR Decomposition.
+* QR decomposition with column pivoting: QR Decomposition with Column Pivoting.
+* QUADPACK:                              Numerical Integration.
+* quadratic equation, solving:           Quadratic equations.
+* quadrature:                            Numerical Integration.
+* quasi-random sequences:                Quasi-Random Sequences.
+* R250 shift-register random number generator: Other random number generators.
+* Racah coefficients:                    Coupling Coefficients.
+* radioactivity, units of:               Radioactivity.
+* Radix-2 FFT for real data:             Radix-2 FFT routines for real data.
+* Radix-2 FFT, complex data:             Radix-2 FFT routines for complex data.
+* rand48 random number generator:        Unix random number generators.
+* random number distributions:           Random Number Distributions.
+* random number generators:              Random Number Generation.
+* Random number generators, Numerical recipes: Numerical Recipes generators.
+* RANDU random number generator:         Other random number generators.
+* RANF random number generator:          Other random number generators.
+* range:                                 Statistics.
+* range-checking for matrices:           Accessing matrix elements.
+* range-checking for vectors:            Accessing vector elements.
+* RANLUX random number generator:        Random number generator algorithms.
+* RANLXD random number generator:        Random number generator algorithms.
+* RANLXS random number generator:        Random number generator algorithms.
+* RANMAR random number generator:        Other random number generators.
+* Rayleigh random variates:              The Rayleigh Distribution.
+* Rayleigh Tail random variates:         The Rayleigh Tail Distribution.
+* real symmetric matrix, eigensystem:    Real Symmetric Matrices.
+* Reciprocal Gamma function:             Gamma Function.
+* rectangular to polar conversion:       Conversion Functions.
+* recursive stratified sampling, MISER:  MISER.
+* reduction of angular variables:        Restriction Functions.
+* refinement of solutions in linear systems: LU Decomposition.
+* regression, least squares:             Least-Squares Fitting.
+* Regular Bessel Functions, Fractional Order: Regular Bessel Function - Fractional Order.
+* Regular Bessel Functions, Zeros of:    Zeros of Regular Bessel Functions.
+* Regular Cylindrical Bessel Functions:  Regular Cylindrical Bessel Functions.
+* Regular Modified Bessel Functions - Fractional Order: Regular Modified Bessel Functions - Fractional Order.
+* Regular Modified Cylindrical Bessel Functions: Regular Modified Cylindrical Bessel Functions.
+* Regular Modified Spherical Bessel Functions: Regular Modified Spherical Bessel Functions.
+* Regular Spherical Bessel Functions:    Regular Spherical Bessel Functions.
+* Regulated Gamma function:              Gamma Function.
+* relative Pochhammer symbol:            Gamma Function.
+* representations of complex numbers:    Complex numbers.
+* resampling from histograms:            Resampling from histograms.
+* residual, in nonlinear systems of equations <1>: Search Stopping Parameters for Minimization Algorithms.
+* residual, in nonlinear systems of equations: Search Stopping Parameters for the multidimensional solver.
+* reversing a permutation:               Permutation functions.
+* RK2, Runge-Kutta Method:               Stepping Functions.
+* RK4, Runge-Kutta Method:               Stepping Functions.
+* RKF45, Runge-Kutta-Fehlberg method:    Stepping Functions.
+* root finding:                          One dimensional Root-Finding.
+* root finding, bisection algorithm:     Root Bracketing Algorithms.
+* root finding, brent's method:          Root Bracketing Algorithms.
+* root finding, caveats:                 Root Finding Caveats.
+* root finding, false position algorithm: Root Bracketing Algorithms.
+* root finding, initial guess:           Search Bounds and Guesses.
+* root finding, Newton's Method algorithm: Root Finding Algorithms using Derivatives.
+* root finding, overview:                Root Finding Overview.
+* root finding, providing a function to solve: Providing the function to solve.
+* root finding, search bounds:           Search Bounds and Guesses.
+* root finding, Secant Method algorithm: Root Finding Algorithms using Derivatives.
+* root finding, Steffenson's Method:     Root Finding Algorithms using Derivatives.
+* root finding, stopping parameters <1>: Search Stopping Parameters for the multidimensional solver.
+* root finding, stopping parameters:     Search Stopping Parameters.
+* roots:                                 One dimensional Root-Finding.
+* ROTG, Level-1 BLAS:                    Level 1 GSL BLAS Interface.
+* rounding mode:                         Setting up your IEEE environment.
+* Runge-Kutta Cash-Karp method:          Stepping Functions.
+* Runge-Kutta methods, ordinary differential equations: Stepping Functions.
+* Runge-Kutta Prince-Dormand method:     Stepping Functions.
+* sampling from histograms:              Resampling from histograms.
+* SCAL, Level-1 BLAS:                    Level 1 GSL BLAS Interface.
+* schedule - cooling:                    Simulated Annealing algorithm.
+* Secant Method algorithm for finding roots: Root Finding Algorithms using Derivatives.
+* selection function, ntuples:           Histogramming ntuple values.
+* series, acceleration:                  Series Acceleration.
+* shift-register random number generator: Other random number generators.
+* sign bit, IEEE format:                 Representation of floating point numbers.
+* sign of the determinant of a matrix:   LU Decomposition.
+* simulated annealing:                   Simulated Annealing.
+* sin of complex number:                 Complex Trigonometric Functions.
+* sine function, special functions:      Circular Trigonometric Functions.
+* single precision, IEEE format:         Representation of floating point numbers.
+* singular value decomposition:          Singular Value Decomposition.
+* Sobol sequence:                        Quasi-Random Sequences.
+* solution of linear system by householder transformations: Householder solver for linear systems.
+* solution of linear systems, Ax=b:      Linear Algebra.
+* solving a non-linear equation:         One dimensional Root-Finding.
+* solving nonlinear systems of equations: Multidimensional Root-Finding.
+* sorting:                               Sorting.
+* sorting eigenvalues and eigenvectors:  Sorting Eigenvalues and Eigenvectors.
+* sorting vector elements:               Sorting vectors.
+* source code, reuse in applications:    Code Reuse.
+* Special Functions:                     Special Functions.
+* Spherical Bessel Functions:            Regular Spherical Bessel Functions.
+* spherical harmonics:                   Legendre Functions and Spherical Harmonics.
+* spherical random variates, 2D:         The Spherical Distribution (2D & 3D).
+* spherical random variates, 3D:         The Spherical Distribution (2D & 3D).
+* spherical random variates, N-dimensional: The Spherical Distribution (2D & 3D).
+* spline:                                Interpolation.
+* square root of a matrix, Cholesky decomposition: Cholesky Decomposition.
+* square root of complex number:         Elementary Complex Functions.
+* standard deviation:                    Statistics.
+* standards conformance, ANSI C:         Using the library.
+* statistics:                            Statistics.
+* Steffenson's Method for finding roots: Root Finding Algorithms using Derivatives.
+* stride, of vector index:               Vectors.
+* summation, acceleration:               Series Acceleration.
+* SVD:                                   Singular Value Decomposition.
+* SWAP, Level-1 BLAS:                    Level 1 GSL BLAS Interface.
+* swapping permutation elements:         Accessing permutation elements.
+* SYMM, Level-3 BLAS:                    Level 3 GSL BLAS Interface.
+* symmetric matrix, real, eigensystem:   Real Symmetric Matrices.
+* SYMV, Level-2 BLAS:                    Level 2 GSL BLAS Interface.
+* Synchrotron functions:                 Synchrotron Functions.
+* SYR, Level-2 BLAS:                     Level 2 GSL BLAS Interface.
+* SYR2, Level-2 BLAS:                    Level 2 GSL BLAS Interface.
+* SYR2K, Level-3 BLAS:                   Level 3 GSL BLAS Interface.
+* SYRK, Level-3 BLAS:                    Level 3 GSL BLAS Interface.
+* systems of equations, nonlinear:       Multidimensional Root-Finding.
+* t-distribution random variates:        The t-distribution.
+* t-test:                                Statistics.
+* tangent of complex number:             Complex Trigonometric Functions.
+* Tausworthe random number generator:    Random number generator algorithms.
+* Taylor coefficients, computation of:   Gamma Function.
+* testing permutation for validity:      Permutation properties.
+* thermal energy, units of:              Thermal Energy and Power.
+* time units:                            Measurement of Time.
+* trailing dimension, matrices:          Matrices.
+* transforms, Hankel:                    Discrete Hankel Transforms.
+* Transport functions:                   Transport Functions.
+* Traveling Salesman Problem:            Traveling Salesman Problem.
+* tridiagonal decomposition <1>:         Tridiagonal Decomposition of Hermitian Matrices.
+* tridiagonal decomposition:             Tridiagonal Decomposition of Real Symmetric Matrices.
+* tridiagonal systems:                   Tridiagonal Systems.
+* Trigonometric functions:               Trigonometric Functions.
+* trigonometric functions of complex numbers: Complex Trigonometric Functions.
+* TRMM, Level-3 BLAS:                    Level 3 GSL BLAS Interface.
+* TRMV, Level-2 BLAS:                    Level 2 GSL BLAS Interface.
+* TRSM, Level-3 BLAS:                    Level 3 GSL BLAS Interface.
+* TRSV, Level-2 BLAS:                    Level 2 GSL BLAS Interface.
+* TSP:                                   Traveling Salesman Problem.
+* TT800 random number generator:         Other random number generators.
+* two dimensional histograms:            Two dimensional histograms.
+* two-sided exponential random variates: The Laplace Distribution.
+* Type 1 Gumbel distribution, random variates: The Type-1 Gumbel Distribution.
+* Type 2 Gumbel distribution, random variate: The Type-2 Gumbel Distribution.
+* u-transform for series:                Series Acceleration.
+* underflow, IEEE exceptions:            Setting up your IEEE environment.
+* units, conversion of:                  Physical Constants.
+* units, imperial:                       Imperial Units.
+* Unix random number generators, rand:   Unix random number generators.
+* Unix random number generators, rand48: Unix random number generators.
+* usage, compiling application programs: Using the library.
+* value function, ntuples:               Histogramming ntuple values.
+* Van der Pol oscillator, example:       ODE Example programs.
+* variance:                              Statistics.
+* VAX random number generator:           Other random number generators.
+* vector, operations:                    BLAS Support.
+* vector, sorting elements of:           Sorting vectors.
+* vectors <1>:                           Vectors.
+* vectors:                               Vectors and Matrices.
+* vectors, initializing:                 Initializing vector elements.
+* vectors, range-checking:               Accessing vector elements.
+* VEGAS monte carlo integration:         VEGAS.
+* viscosity, units of:                   Viscosity.
+* volume units:                          Volume.
+* W function:                            Lambert W Functions.
+* warning options:                       GCC warning options for numerical programs.
+* warranty (none):                       No Warranty.
+* website, developer information:        Further Information.
+* Weibull distribution random variates:  The Weibull Distribution.
+* weight, units of:                      Mass and Weight.
+* Wigner coefficients:                   Coupling Coefficients.
+* zero finding:                          One dimensional Root-Finding.
+* zero, IEEE format:                     Representation of floating point numbers.
+* Zeros of Regular Bessel Functions:     Zeros of Regular Bessel Functions.
+* Zeta functions:                        Zeta Functions.
+
+

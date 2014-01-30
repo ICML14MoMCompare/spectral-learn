@@ -1,0 +1,176 @@
+Main Todo Items
+===============
+
+We are looking for volunteers to do the following tasks,
+
+* [Consult the TODO files in each directory first for specific
+requirements.]
+
+* Make a web page at www.gnu.org
+
+* Arrange for RPMs to be uploaded to Redhat's contrib area
+
+* Document dht
+
+* Switch to library interface versioning for libtool (eventually),
+provide better GSL_VERSION_MAJOR, GSL_VERSION_MINOR macros.
+
+* add Fresnel Integrals to specfunc.  See TOMS 723 + 2 subsequent
+errata.
+
+* make mode variables consistent in specfunc -- some seem to be
+unnecessary from performance point of view since the speed difference
+is negligible.
+
+* Complex polynomial solvers (Got Newton-Mueller from
+jotahtin@cc.hut.fi, still to add (BJG)).
+
+* Reorganize siman interfaces to allow iterative use.
+
+* Add a GSL_ERROR_MODE environment variable for choosing error
+behavior at runtime.
+
+* Implement N-d histograms (Simone Piccardi <piccardi@fi.infn.it> is
+working on something here).
+
+* More tests. We should (at least) have a test for every error
+condition.  Use GCOV to improve coverage.
+
+* Annotate the header files with GAMS classifications
+
+* Use pkg-config from GNOME, preferably the C version when that is
+working.
+
+* Provide g-wrap wrappers for guile
+
+* Provide a run-time expression evaluator for interactive programs
+where the user can provide formulas as strings.  Keith Briggs
+recommended formulc2.22 which he had found useful in several projects.
+http://www.cs.brandeis.edu/~hhelf/formu/formulc.html. It is LGPL.
+Alternatively, the source code for GDB contains yacc grammars and
+evaluators for expressions in various languages, so that would be
+another way to go.  It would have the advantage of following the
+language standards.  If I was going to write something from scratch I
+would think about using that as a base, as the full set of operators
+are already included with the correct precedence rules. Being able to
+evaluate C and Fortran expressions could be useful.
+
+Before Each Release
+===================
+
+* Make sure that all #defines are fully wrapped in ()'s, especially
+the outermost layer which may have been missed. Everything should be
+of the form #define foo(x) (....) so there is no possibility of bad
+parsing.
+
+* Clean up the ordering of lines in the Makefile.am's so that they are
+all consistent. At the moment the lines are in any order. Also get rid
+of make strict targets, since it's better to define a shell alias to
+do that.  Files with strict target are 
+
+    specfunc/Makefile.am
+
+* Make all internal functions static, and have all exported functions
+& variables prefixed with gsl_ or GSL_. Useful command for checking this: nm -A -g -P */*.a  | perl -a -n -e 'print if $F[1] !~ /gsl_/ && $F[2] ne "U"'
+
+* Make sure config.h is used consistently. This is especially relevant
+for HAVE_INLINE use in installed headers.  
+
+ grep config.h gsl/*.h    --- shouldn't match anything
+ grep -L config.h */*.c m| grep -v _source  --- gives files not using config.h
+
+* Make the return value EINVAL vs EDOM consistent for invalid
+parameters. EDOM means a domain error (i.e. float or mathematically
+undefined), EINVAL means invalid (i.e. zero length)
+
+* Change return 0 to return GSL_SUCCESS, and return -1 to GSL_FAILURE
+throughout, where appropriate. Similarly change any if(...) checks of
+return values to use == GSL_SUCCESS, if they are checking for zero.
+N.B. want to be careful about accidentally omitting error conditions
+if using something like == GSL_FAILURE when function returns a
+different error code.
+
+Wishlist or vague ideas
+=======================
+
+* An example chapter on how to link GSL code with Python
+
+* Provide an interface to LAPACK, as for BLAS?  Clarify the license
+for LAPACK first, their web page is vague on what the license terms
+are.  Some parts of LAPACK are included in octave so maybe the Octave
+maintainers will know more.
+
+* Public domain or free texts which could be distributed with GSL:
+     
+Abramowitz and Stegun, "Handbook of Mathematical Functions" appears to
+be public domain.
+
+Devroye's book on Random Variates (1st ed) is/was in the public
+domain.  The troff source has been lost, unfortunately, but he says we
+could scan it in if anyone would like to do that. It is 800 pages so a
+spare copy of the book that could have the binding removed would be
+needed, plus a scanner with an Automatic Document Feeder.
+
+ACM TOMS articles in the printed journal have the following copyright notice,
+
+    "Permission to copy without fee all or part fo this material is
+    granted provided that the copies are made not made or distributed for
+    direct commercial advantage, the ACM copyright notice and the title of
+    the publication and its date appear, and notice is given by
+    permisision of the association for Computing Machinery. To copy
+    otherwise, or to republish, requires a fee and/or specific
+    permission."
+
+Wonder what this might mean with regard to being scanned and
+distributed (??), presumably it is considered "republication" and so
+requires permission.  The versions downloaded from their server
+explicitly forbid redistribution (natch).
+
+* Investigate complex support in GCC: Operations like sin(z) silently
+convert argument to double, losing the imaginary part. This is
+mentioned in CEPHES documentation in 1998 with a patch to generate a
+warning.  What happened? (Does it now work with gcc-3.0?)
+
+* Go through the matrix and vector functions systematically and decide
+what should be provided outside of BLAS.
+
+* Standardize function names, in particular VERB vs NOUN (e.g. _invert
+vs _inverse). Also adopt a convection for functions which can operate
+in place vs use of workspace (e.g linalg_solve functions).
+
+* Change from gsl-ref.texi to gsl.texi since it is the main file?
+Also, put under dir section "Math" (which seems to be the appropriate
+one for Debian, as Octave, Gnuplot etc are in that)
+
+* Use GNU Free Documentation License for reference manual?
+
+* Remove error stream stuff?? It is hardly used.
+
+* Extend histogram routines as described in recent discussion
+
+* Check that there are no conflicts when linking with Lapack. CBLAS, ATLAS
+
+* Make a sorted datatype for the median and quantile functions so that
+the user can be prevented from passing unsorted data, which is not
+checked for.
+
+* Eliminate use of volatile where it has been used to force rounding
+(integration/). It is better to write the code to avoid dependence on
+rounding.
+
+* Optimization/error for dest == src as appropriate
+
+* Constant objects (like gsl_roots_fsolver_brent) ought to have
+constant pointers (const gsl_roots_fsolver_type * const
+gsl_roots_fsolver_brent)??
+
+* Add swig.i files and swig demos so that swig can be run more easily
+
+* Redesign the interface to iterative functions to use an init/do-while
+construct (Mostly done).
+
+* Add a vector layer to statistics and ffts, sometime in the future.
+
+* Look at www.vsipl.org
+
+

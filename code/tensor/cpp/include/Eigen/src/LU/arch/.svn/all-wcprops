@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/LU/arch
+END
+Inverse_SSE.h
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/LU/arch/Inverse_SSE.h
+END
+CMakeLists.txt
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/LU/arch/CMakeLists.txt
+END

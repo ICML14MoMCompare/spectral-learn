@@ -1,0 +1,3 @@
+* Change qawf workspace so that it does not dynamically extend itself
+since this prevents it being used multithreaded.  Try to use static
+tables of precomputed constants and separate workspaces.

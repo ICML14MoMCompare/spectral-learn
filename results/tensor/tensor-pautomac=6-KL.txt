@@ -1,0 +1,4 @@
+Problem: 6
+Algorithm: size= 3, basis size=10001
+KL: 691.280582094
+Runtime: 107.39

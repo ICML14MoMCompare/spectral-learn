@@ -1,0 +1,475 @@
+* What is new is gsl-1.0:
+
+** First general release.
+
+** Increased the maximum number of iterations in gsl_poly_complex_solve()
+from 30 to 60.
+
+* What was new in gsl-0.9.4:
+
+** Reorganized the multmin functions to use the same interface as the
+other iterative solvers.
+
+** Added histogram _alloc functions for consistency, in addition to the
+existing _calloc functions.
+
+** Renamed all the gsl_multimin functions to be consistent with the
+rest of the library.  An underscore has been removed from _minimizer
+in all the function names.
+
+** Renamed the function gsl_sf_coulomb_CL_list to gsl_sf_coulomb_CL_array
+
+** A bug in the multimin functions where the function parameters
+(params) were omitted has been fixed.
+
+** A bug in the nonlinear minimization routines has been fixed, which
+could prevent the algorithms from converging.  Additional tests from
+the NIST reference datasets have been added and these now agree with
+MINPACK.
+
+** All the physical constants and conversion factors are now defined as
+real numbers to avoid potential problems with integer arithmetic.
+
+** The ODE evolution routines now allow for negative step sizes, and
+integrating backwards as well as forwards.
+
+** The implicit Burlisch-Stoer ODE algorithm 'bsimp' now detects
+singularities and forces a reduction in step size, preventing runaway
+instabilities.
+
+** Fixed a bug in the ODE evolution function gsl_odeiv_evolve_apply
+which could cause an erroneous value to be returned if the step size
+is reduced on the last step.
+
+* What was new in gsl-0.9.3:
+
+** Routines for complex LU decomposition are now available, allowing
+the solution of systems of equations with complex coefficients.
+
+** Matrix views of vectors now correctly require a unit stride for the
+original vector.
+
+** Permutations can now be applied to complex arrays and vectors.
+
+** gsl_sf_pow_int now handles the case x = 0, n < 0
+
+** The static versions of inline functions can now be hidden by
+defining the preprocessor macro HIDE_INLINE_STATIC.  This is needed
+for some compilers.
+
+** The original seeding procedure of mt19937 is available through the
+generator gsl_rng_mt19937_1998.  The seeding procedure was flawed, but
+is available for compatibility.
+
+** Added missing functions gsl_complex_div_real and
+gsl_complex_div_imag.
+
+** Missing functions for constant vector and matrix views have now been
+added.
+
+** Statistical calculations for histograms are now available, and the
+gsl-histogram command also displays the histogram mean and standard
+deviation.
+
+** The behavior of GSL_IEEE_MODE for denormalized exceptions has been
+fixed on Openbsd and Netbsd.
+
+** A pkg-config file gsl.pc is included in the distribution
+
+** The reference manual can now be printed in @smallbook format without
+overflow.
+
+* What was new in gsl-0.9.2:
+
+** Vector and matrix views are now compliant with the ANSI standard.
+
+** Added Lambert functions gsl_sf_lambert_W0, gsl_sf_lambert_Wm1.
+
+** The reference manual now uses the GNU Free Documentation License.
+
+** Fixed a couple of bugs in the SVD routines.
+
+** Macros for Infinity and Nan now work correctly with Microsoft Visual
+C++, and a bug in the config.h file for the finite() function has been
+fixed.
+
+** Redundant entries in the test suite for the complex math functions
+have been removed, making the distribution size smaller.
+
+** Installed programs gsl-randist and gsl-histogram now use shared
+libraries.
+
+* What was new in gsl-0.9.1:
+
+** The single precision ffts now uses float throughout, rather than
+mixing float and double.
+
+** The random number distributions now include the Landau distribution.
+
+** The fft function interface has been reorganized, with workspaces
+separate from wavetables to eliminate unnecessary recomputation of
+trigonometric factors.
+
+** The gsl_interval type has been eliminated and replaced by two double
+arguments for simplicity.
+
+** The order of the arguments to the minimization routines is no more
+logical, with function values assocatied with x-values.
+
+** Modified initialization of vector and matrix views to work with the
+SunPro compiler.
+
+** Renamed gsl_Efunc_t to gsl_siman_Efunc_t, in accordance with
+namespace conventions.
+
+** Improved accuracy and fixed bugs in gsl_sf_hyperg_1F1,
+gsl_sf_bessel_I0_scaled, gsl_sf_erfc, gsl_sf_log_erfc,
+gsl_sf_legendre_Q0 and gsl_sf_legendre_Q1, and gsl_sf_zeta.
+
+** Improved IEEE compliance of special functions, overflows now return
+Inf and domain errors return NaN.
+
+** Improved checking for underflows in special functions when using
+extended precision registers
+
+* What was new in gsl-0.9:
+
+** There is a new system of vector and matrix views.  Any code using
+vector and matrix views will need to be updated.  
+
+** The order of arguments of the view functions involving strides have
+been changed to be consistent with the rest of the library.
+
+** The ode solvers have been reorganized.
+
+** There are new eigensystem routines for real symmetric and complex
+hermitian matrices.
+
+** The linear algebra directory now includes functions for computing
+symmetric tridiagonal decompositions and bidiagonal decompositions.
+
+** The svd routines now include the Golub-Reinsch and Modified
+Golub-Reinsch algorithms in addition to the Jacobi algorithm.
+
+** The interpolation directory has been reorganized and a higher-level
+"spline" interface has been added which simplifies the handling of
+interpolation arguments.
+
+** IEEE support is now available on OpenBSD.
+
+* What was new in gsl-0.8:
+
+** The build process now uses the latest libtool and automake.
+
+** The library should now compile with Microsoft Visual C++.
+
+** Portable versions of the isinf, isnan and finite functions are
+available as gsl_isinf(x), gsl_isnan(x) and gsl_finite(x).
+
+** The definitions of GSL_POSINF, GSL_NEGINF and GSL_NAN no longer
+cause divisions by zero during compilation.
+
+** The gsl_interp_obj has been renamed to gsl_interp.
+
+** The poly_eval and pow_int functions have been moved from the
+specfunc directory to the poly and sys directories.
+
+** The Chebyshev functions are now available as an independent module
+in their own directory.
+
+** The error handling conventions have been unified across the
+library.  This simplifies the use of the special functions.
+
+** A full CBLAS implementation is now included for systems where ATLAS
+has not been installed. The CBLAS library can also be used
+independently of GSL.  The organisation of the BLAS directories has been
+simplified.
+
+** IEEE support for HPUX-11, NetBSD, Apple Darwin and OS/2 are now
+included.
+
+** The library now includes implementations of log1p, expm1, hypot,
+acosh, asinh, atanh for platforms which do not provide them.
+
+** The convention for alloc and set functions has changed so that they
+are orthogonal. After allocating an object it is now necessary to
+initialize it.
+
+** There is a new module for estimating numerical derivatives of functions
+
+** There is a new module for handling data with ntuples
+
+** The histogram lookup functions are now optimized for the case of
+uniform bins, and include an inline binary search for speed.
+
+** The Chebyschev coefficients for the QAWO algorithm are now
+precomputed in a table for efficiency, rather than being computed on
+the fly.
+
+** There are several new sorting functions for selecting the k-th
+smallest or largest elements of a dataset.
+
+** Iterator functions are now available for permutations,
+gsl_permutation_next and gsl_permutation_prev.
+
+** The function gsl_complex_xy has been renamed gsl_complex_rect
+
+** The API for simulated annealing has been changed to support search
+spaces in which the points cannot be represented as contiguous-memory
+data structures.  gsl_siman_solve() now takes three extra arguments: a
+copy constructor, a copy function and a destructor, allowing
+gsl_siman_solve() to do its work with linked data structures.  If all
+three of these function pointers are NULL, then the traditioanl
+approach of using malloc(), memcpy(), and free() with the element size
+is used.
+
+* What was new in gsl-0.7:
+
+** Linux/PowerPC should now be well supported.
+
+** Header files for common physical constants have been added.
+
+** Functions linear and nonlinear regression in one or more dimensions
+are now available.
+
+** Vector and matrix views now have access to the address of the
+underlying block for compatibility with VSIPL (www.vsipl.org).
+
+** There is a new library for generating low-discrepancy quasi-random
+sequences.
+
+** The seeding procedure of the default random number generator
+MT19937 has been updated to match the 10/99 release of the original
+code.  This fixes a weakness which occurred for seeds which were
+powers of 2.
+
+** The blas library libgslblasnative has been renamed libgslblas to avoid
+confusion with system blas library
+
+* What was new in gsl-0.6:
+
+** The library is now installed as a single shared or static libgsl
+file using libtool.
+
+** The gsl-config script now works.  There is also a gsl.m4 file which
+people can use in their configure scripts.
+
+** All header files are now in installed as pkginclude headers in a
+gsl/ subdirectory.
+
+** The header files now use extern "C" to allow them to be included in
+C++ programs
+
+** For consistency the following functions have been renamed,
+
+    gsl_vector_copy (dest, src) is now  gsl_vector_memcpy (dest, src)
+    gsl_rng_cpy (dest, src)     is now  gsl_rng_memcpy (dest, src)
+    gsl_matrix_copy_row (v,m,i) is now  gsl_matrix_get_row (v,m,i)
+    gsl_matrix_copy_col (v,m,j) is now  gsl_matrix_get_col (v,m,j)
+    gsl_vector_swap             is now  gsl_vector_swap_elements
+    gsl_vector_swap_cols        is now  gsl_vector_swap_columns
+    gsl_vector_swap_row_col     is now  gsl_vector_swap_row_column
+
+and the vector/matrix view allocation functions have been simplified.
+
+** A new sort directory has been added for sorting objects and vectors.
+
+** A permutation directory has been added for manipulating permutations
+
+** Statistics functions now support a stride argument for generality, and
+also support weighted samples and a covariance function.
+
+** The names of the statistics functions have been reorganized for
+improved clarity. Consult manual for details.
+
+** The environment variable GSL_IEEE_MODE now uses "," as a separator
+instead of ";"
+
+** The autogen.sh script, mostly for use by developers who use the CVS
+repository, now does not run configure.
+
+** The histogram directory now has additional functions for copying
+and comparing histograms, performing arithmetic on histograms and
+finding maximum and minimum values. Corresponding functions have been
+added for vectors and matrices.
+
+** The linear algebra directory supports additional methods, including
+rectangular QR, rectangular QRPT and Cholesky decomposition.
+
+** Complex arithmetic (+,-,*,/) and complex elementary functions
+(sqrt, log, exp, sin, cos, tan, arcsin, arccos, arctan, sinh, cosh,
+tanh, arcsinh, arccosh, arctanh) are now supported.
+
+** Multidimensional minimization methods are now available.
+
+** The special functions directory now includes a routine for
+computing the value of the incomplete beta function.
+
+* Was new in gsl-0.5:
+
+** There is now a KNOWN-PROBLEMS file which lists compilation problems
+and test failures which are known to the developers.
+
+** Many improvements have been made to the special functions directory.
+
+** The extrapolations from the Levin u-transform are now more reliable.
+
+** Linear algebra and Eigensystem routines are now available.
+
+** ODE solvers are now available.
+
+** Multidimensional root finding algorithms are available.
+
+** Minimization now keeps track of function values.
+
+** Matrices and vectors now use a BLAS compatible format, and have a
+separate memory handling layer (gsl_block).
+
+** Roots of general polynomials can now be found using gsl_poly_complex_solve
+
+** IEEE modes support on Sparclinux, Tru64, AIX and IRIX
+
+** We have added the second generation RANLUX generators RANLXS and RANLXD
+
+** Minimization algorithms are available (one-dimensional)
+
+** Documentation now works out of the box with the standard Texinfo.
+
+** Full reimplementation of the QUADPACK integration library
+
+** Introduced THANKS file.
+We appreciate all patches from people on the net, even those which are
+too small to warrant adding the author to the AUTHORS file.  The
+THANKS file should include everyone who sent in patches.  They should
+also be mentioned in the ChangeLog entry.
+
+* What was new in gsl-0.4.1:
+
+** Two changes not making their way into the documentation
+A couple of things are not getting into the docs, so here are the
+errata:
+*** The FFT routines now take a stride parameter.  Passing 1 for the
+stride will make them behave as documented.
+*** The complex numbers are now an opaque type, and no assumptions can
+be made about the format in which they are stored (they are not stored
+as a simple structure anymore, since that is not portable).  The type
+is now gsl_complex (or gsl_complex_long_double or gsl_complex_float),
+and the macros to access them are
+    GSL_REAL(z)
+    GSL_IMAG(z)
+    GSL_COMPLEX_P_REAL(zp)
+    GSL_COMPLEX_P_IMAG(zp)
+    GSL_COMPLEX_EQ(z1,z2)
+    GSL_SET_COMPLEX(zp,x,y)
+    GSL_SET_REAL(zp,x)
+    GSL_SET_IMAG(zp,y)
+
+This change in the complex number API makes it important that you
+start working with 0.4.1 or later.
+
+** 0.4.1 is being released in occasion of the Red Hat 6.0 release.
+The specfunc module is still in an alpha state; if you run "make
+check" in the specfunc directory you will see that some tests still
+fail.
+
+** Most Alpha specific problems have been fixed. In particular the
+random number generators rand48 and ranf now work on the Alpha
+
+** Additional random number distributions: 
+   Rayleigh distribution
+   n-dimensional spherical distribution 
+     (ie, points at random on an n-dimensional sphere)
+   Gaussian tail distribution 
+     (ie, choosing values from a gaussian distribution subject to a 
+      constraint that they be larger than some fixed value, eg 5 sigmas)
+   Walker's algorithm for arbitrary discrete distributions
+
+* What was new in gsl-0.4:
+
+** A single libgsl.a file is built in the top level directory and
+installed, instead of separate .a files for each subdirectory.
+
+** The parts of the complex struct gsl_complex, .real and .imag, are
+not supported anymore. The macros GSL_REAL(z) and GSL_IMAG(z) do the
+same job. All complex numbers are considered as packed arrays of
+floating point numbers, for portability since the layout of structs or
+arrays of structs is not guaranteed.
+
+** The interface for matrices and vectors has changed. Vectors now
+support strides, and can be used to access rows and columns of a
+matrix. Many more types are available (float, double, long double,
+int, long, short, char, signed and unsigned, plus complex floats,
+doubles and long doubles) due to improvements in our preprocessor
+template system.
+
+** The random number generators have a completely new thread-safe
+interface and have moved from the random directory to the rng
+directory. Any program using random numbers will have to be
+updated. You can also choose generators and seeds using the
+environment variables GSL_RNG_TYPE and GSL_RNG_SEED.
+
+** Some additional random number distributions have been added in the
+randist directory. The available distributiosn are: bernoulli, beta,
+binomial, cauchy, chisq, erlang, exponential, fdist, flat, gamma,
+gauss, geometric, levy, logistic, lognormal, nbinomial, pareto,
+poisson, sphere, tdist, twosidedexp, weibull.
+
+** The FFT interface has be extended to support strides, but the
+implementation hasn't been finished for all the cases yet, The FFT
+allocation functions now return a pointer to a newly allocated
+wavetable struct, instead of taking the pointer to an existing struct
+as an argument.
+
+   e.g. status = gsl_fft_wavetable_alloc(n, w)
+   is now    w = gsl_fft_wavetable_alloc(n) in accordance with usual practice
+
+** The statistics directory now works with all the builtin
+types. It has a new function for computing the lag1-autocorrelation and
+an extra set of numerical accuracy tests from NIST as part of 'make
+check'.
+
+** The simulated annealing routines no longer set the random number
+seed with the time of day.  You'll need to reseed the generator
+yourself if you want subsequent runs to use different random numbers.
+
+** Work is in progress on a reimplementation of QUADPACK in the
+`integration' subdirectory, but it is not finished yet.
+
+** Work is in progress on reimplementations of the VEGAS and
+MISER Monte Carlo algorithms in the monte' subdirectory.  They work
+just fine, but the code is still evolving.
+
+** Work has started on a portable blas system in the `blas'
+subdirectory.
+
+** You can now set the IEEE arithmetic mode for your programs from the
+environment variable GSL_IEEE_MODE by calling the function
+gsl_ieee_env_setup(). Currently this only works with the Linux kernel,
+HP-UX, SunOS4 and Solaris.
+
+** There are some simple spline interpolation functions in the `interp'
+subdir.
+
+** The NEWS file now uses outline mode, like the Emacs NEWS file
+
+
+* This covers changes made *after* the gsl-0.2 snapshot
+
+** Added several new modules: histogram, integration, matrix, specfunc
+and vectors.
+
+** Changed libgsl_statisctics.a to libgslstatistics.a and
+libgsl_siman.a to libgslsiman.a, since most of the packages don't have
+the underscore.  Users will have to remove the old files, unless they
+do a "make uninstall" on the previous release before they install this
+new one.
+
+** Changes to the random number suite
+Incorporated the gauss, poisson and exponential distributions in
+the standard libgslrandom.a
+
+
+Local variables:
+mode: outline
+paragraph-separate: "[ 	]*$"
+end:

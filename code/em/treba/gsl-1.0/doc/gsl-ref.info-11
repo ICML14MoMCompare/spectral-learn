@@ -1,0 +1,1233 @@
+This is gsl-ref.info, produced by makeinfo version 4.0 from
+gsl-ref.texi.
+
+INFO-DIR-SECTION Scientific software
+START-INFO-DIR-ENTRY
+* gsl-ref: (gsl-ref).                   GNU Scientific Library - Reference
+END-INFO-DIR-ENTRY
+
+   This file documents the GNU Scientific Library.
+
+   Copyright (C) 1996, 1997, 1998, 1999, 2000, 2001 The GSL Team.
+
+   Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.1 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.  A
+copy of the license is included in the section entitled "GNU Free
+Documentation License".
+
+
+
+File: gsl-ref.info,  Node: The t-distribution,  Next: The Beta Distribution,  Prev: The F-distribution,  Up: Random Number Distributions
+
+The t-distribution
+==================
+
+   The t-distribution arises in statistics.  If Y_1 has a normal
+distribution and Y_2 has a chi-squared distribution with \nu degrees of
+freedom then the ratio,
+
+     X = { Y_1 \over \sqrt{Y_2 / \nu} }
+
+has a t-distribution t(x;\nu) with \nu degrees of freedom.
+
+ - Random: double gsl_ran_tdist (const gsl_rng * R, double NU)
+     This function returns a random variate from the t-distribution.
+     The distribution function is,
+
+          p(x) dx = {\Gamma((\nu + 1)/2) \over \sqrt{\pi \nu} \Gamma(\nu/2)}
+             (1 + x^2/\nu)^{-(\nu + 1)/2} dx
+
+     for -\infty < x < +\infty.
+
+ - Function: double gsl_ran_tdist_pdf (double X, double NU)
+     This function computes the probability density p(x) at X for a
+     t-distribution with NU degrees of freedom, using the formula given
+     above.
+
+
+
+File: gsl-ref.info,  Node: The Beta Distribution,  Next: The Logistic Distribution,  Prev: The t-distribution,  Up: Random Number Distributions
+
+The Beta Distribution
+=====================
+
+ - Random: double gsl_ran_beta (const gsl_rng * R, double A, double B)
+     This function returns a random variate from the beta distribution.
+     The distribution function is,
+
+          p(x) dx = {\Gamma(a+b) \over \Gamma(a) \Gamma(b)} x^{a-1} (1-x)^{b-1} dx
+
+     for 0 <= x <= 1.
+
+ - Function: double gsl_ran_beta_pdf (double X, double A, double B)
+     This function computes the probability density p(x) at X for a
+     beta distribution with parameters A and B, using the formula given
+     above.
+
+
+
+File: gsl-ref.info,  Node: The Logistic Distribution,  Next: The Pareto Distribution,  Prev: The Beta Distribution,  Up: Random Number Distributions
+
+The Logistic Distribution
+=========================
+
+ - Random: double gsl_ran_logistic (const gsl_rng * R, double A)
+     This function returns a random variate from the logistic
+     distribution.  The distribution function is,
+
+          p(x) dx = { \exp(-x/a) \over a (1 + \exp(-x/a))^2 } dx
+
+     for -\infty < x < +\infty.
+
+ - Function: double gsl_ran_logistic_pdf (double X, double A)
+     This function computes the probability density p(x) at X for a
+     logistic distribution with scale parameter A, using the formula
+     given above.
+
+
+
+File: gsl-ref.info,  Node: The Pareto Distribution,  Next: The Spherical Distribution (2D & 3D),  Prev: The Logistic Distribution,  Up: Random Number Distributions
+
+The Pareto Distribution
+=======================
+
+ - Random: double gsl_ran_pareto (const gsl_rng * R, double A, double B)
+     This function returns a random variate from the Pareto
+     distribution of order A.  The distribution function is,
+
+          p(x) dx = (a/b) / (x/b)^{a+1} dx
+
+     for x >= b.
+
+ - Function: double gsl_ran_pareto_pdf (double X, double A, double B)
+     This function computes the probability density p(x) at X for a
+     Pareto distribution with exponent A and scale B, using the formula
+     given above.
+
+
+
+File: gsl-ref.info,  Node: The Spherical Distribution (2D & 3D),  Next: The Weibull Distribution,  Prev: The Pareto Distribution,  Up: Random Number Distributions
+
+The Spherical Distribution (2D & 3D)
+====================================
+
+   The spherical distributions generate random vectors, located on a
+spherical surface.  They can be used as random directions, for example
+in the steps of a random walk.
+
+ - Random: void gsl_ran_dir_2d (const gsl_rng * R, double *X, double *Y)
+ - Random: void gsl_ran_dir_2d_trig_method (const gsl_rng * R, double
+          *X, double *Y)
+     This function returns a random direction vector v = (X,Y) in two
+     dimensions.  The vector is normalized such that |v|^2 = x^2 + y^2
+     = 1.  The obvious way to do this is to take a uniform random
+     number between 0 and 2\pi and let X and Y be the sine and cosine
+     respectively.  Two trig functions would have been expensive in the
+     old days, but with modern hardware implementations, this is
+     sometimes the fastest way to go.  This is the case for my home
+     Pentium (but not the case for my Sun Sparcstation 20 at work).
+     Once can avoid the trig evaluations by choosing X and Y in the
+     interior of a unit circle (choose them at random from the interior
+     of the enclosing square, and then reject those that are outside
+     the unit circle), and then dividing by \sqrt{x^2 + y^2}.  A much
+     cleverer approach, attributed to von Neumann (See Knuth, v2, 3rd
+     ed, p140, exercise 23), requires neither trig nor a square root.
+     In this approach, U and V are chosen at random from the interior
+     of a unit circle, and then x=(u^2-v^2)/(u^2+v^2) and
+     y=uv/(u^2+v^2).
+
+ - Random: void gsl_ran_dir_3d (const gsl_rng * R, double *X, double
+          *Y, double * Z)
+     This function returns a random direction vector v = (X,Y,Z) in
+     three dimensions.  The vector is normalized such that |v|^2 = x^2
+     + y^2 + z^2 = 1.  The method employed is due to Robert E. Knop
+     (CACM 13, 326 (1970)), and explained in Knuth, v2, 3rd ed, p136.
+     It uses the surprising fact that the distribution projected along
+     any axis is actually uniform (this is only true for 3d).
+
+ - Random: void gsl_ran_dir_nd (const gsl_rng * R, int N, double *X)
+     This function returns a random direction vector v =
+     (x_1,x_2,...,x_n) in N dimensions.  The vector is normalized such
+     that |v|^2 = x_1^2 + x_2^2 + ... + x_n^2 = 1.  The method uses the
+     fact that a multivariate gaussian distribution is spherically
+     symmetric.  Each component is generated to have a gaussian
+     distribution, and then the components are normalized.  The method
+     is described by Knuth, v2, 3rd ed, p135-136, and attributed to G.
+     W. Brown, Modern Mathematics for the Engineer (1956).
+
+
+File: gsl-ref.info,  Node: The Weibull Distribution,  Next: The Type-1 Gumbel Distribution,  Prev: The Spherical Distribution (2D & 3D),  Up: Random Number Distributions
+
+The Weibull Distribution
+========================
+
+ - Random: double gsl_ran_weibull (const gsl_rng * R, double A, double
+          B)
+     This function returns a random variate from the Weibull
+     distribution.  The distribution function is,
+
+          p(x) dx = {b \over a^b} x^{b-1}  \exp(-(x/a)^b) dx
+
+     for x >= 0.
+
+ - Function: double gsl_ran_weibull_pdf (double X, double A, double B)
+     This function computes the probability density p(x) at X for a
+     Weibull distribution with scale A and exponent B, using the
+     formula given above.
+
+
+
+File: gsl-ref.info,  Node: The Type-1 Gumbel Distribution,  Next: The Type-2 Gumbel Distribution,  Prev: The Weibull Distribution,  Up: Random Number Distributions
+
+The Type-1 Gumbel Distribution
+==============================
+
+ - Random: double gsl_ran_gumbel1 (const gsl_rng * R, double A, double
+          B)
+     This function returns  a random variate from the Type-1 Gumbel
+     distribution.  The Type-1 Gumbel distribution function is,
+
+          p(x) dx = a b \exp(-(b \exp(-ax) + ax)) dx
+
+     for -\infty < x < \infty.
+
+ - Function: double gsl_ran_gumbel1_pdf (double X, double A, double B)
+     This function computes the probability density p(x) at X for a
+     Type-1 Gumbel distribution with parameters A and B, using the
+     formula given above.
+
+
+
+File: gsl-ref.info,  Node: The Type-2 Gumbel Distribution,  Next: General Discrete Distributions,  Prev: The Type-1 Gumbel Distribution,  Up: Random Number Distributions
+
+The Type-2 Gumbel Distribution
+==============================
+
+ - Random: double gsl_ran_gumbel2 (const gsl_rng * R, double A, double
+          B)
+     This function returns a random variate from the Type-2 Gumbel
+     distribution.  The Type-2 Gumbel distribution function is,
+
+          p(x) dx = a b x^{-a-1} \exp(-b x^{-a}) dx
+
+     for 0 < x < \infty.
+
+ - Function: double gsl_ran_gumbel2_pdf (double X, double A, double B)
+     This function computes the probability density p(x) at X for a
+     Type-2 Gumbel distribution with parameters A and B, using the
+     formula given above.
+
+
+
+File: gsl-ref.info,  Node: General Discrete Distributions,  Next: The Poisson Distribution,  Prev: The Type-2 Gumbel Distribution,  Up: Random Number Distributions
+
+General Discrete Distributions
+==============================
+
+   Given K discrete events with different probabilities P[k], produce a
+random value k consistent with its probability.
+
+   The obvious way to do this is to preprocess the probability list by
+generating a cumulative probability array with K+1 elements:
+
+       C[0] = 0
+     C[k+1] = C[k]+P[k].
+
+Note that this construction produces C[K]=1.  Now choose a uniform
+deviate u between 0 and 1, and find the value of k such that C[k] <= u
+< C[k+1].  Although this in principle requires of order \log K steps per
+random number generation, they are fast steps, and if you use something
+like \lfloor uK \rfloor as a starting point, you can often do pretty
+well.
+
+   But faster methods have been devised.  Again, the idea is to
+preprocess the probability list, and save the result in some form of
+lookup table; then the individual calls for a random discrete event can
+go rapidly.  An approach invented by G. Marsaglia (Generating discrete
+random numbers in a computer, Comm ACM 6, 37-38 (1963)) is very clever,
+and readers interested in examples of good algorithm design are
+directed to this short and well-written paper.  Unfortunately, for
+large K, Marsaglia's lookup table can be quite large.
+
+   A much better approach is due to Alastair J. Walker (An efficient
+method for generating discrete random variables with general
+distributions, ACM Trans on Mathematical Software 3, 253-256 (1977);
+see also Knuth, v2, 3rd ed, p120-121,139).  This requires two lookup
+tables, one floating point and one integer, but both only of size K.
+After preprocessing, the random numbers are generated in O(1) time,
+even for large K.  The preprocessing suggested by Walker requires
+O(K^2) effort, but that is not actually necessary, and the
+implementation provided here only takes O(K) effort.  In general, more
+preprocessing leads to faster generation of the individual random
+numbers, but a diminishing return is reached pretty early.  Knuth points
+out that the optimal preprocessing is combinatorially difficult for
+large K.
+
+   This method can be used to speed up some of the discrete random
+number generators below, such as the binomial distribution.  To use if
+for something like the Poisson Distribution, a modification would have
+to be made, since it only takes a finite set of K outcomes.
+
+ - Random: gsl_ran_discrete_t * gsl_ran_discrete_preproc (size_t K,
+          const double * P)
+     This function returns a pointer to a structure that contains the
+     lookup table for the discrete random number generator.  The array
+     P[] contains the probabilities of the discrete events; these array
+     elements must all be positive, but they needn't add up to one (so
+     you can think of them more generally as "weights") - the
+     preprocessor will normalize appropriately.  This return value is
+     used as an argument for the `gsl_ran_discrete' function below.
+
+ - Random: size_t gsl_ran_discrete (const gsl_rng * R, const
+          gsl_ran_discrete_t * G)
+     After the preprocessor, above, has been called, you use this
+     function to get the discrete random numbers.
+
+ - Random: double gsl_ran_discrete_pdf (size_t K, const
+          gsl_ran_discrete_t * G)
+     Returns the probability P[k] of observing the variable K.  Since
+     P[k] is not stored as part of the lookup table, it must be
+     recomputed; this computation takes O(K), so if K is large and you
+     care about the original array P[k] used to create the lookup
+     table, then you should just keep this original array P[k] around.
+
+ - Random: void gsl_ran_discrete_free (gsl_ran_discrete_t * G)
+     De-allocates the lookup table pointed to by G.
+
+
+File: gsl-ref.info,  Node: The Poisson Distribution,  Next: The Bernoulli Distribution,  Prev: General Discrete Distributions,  Up: Random Number Distributions
+
+The Poisson Distribution
+========================
+
+ - Random: unsigned int gsl_ran_poisson (const gsl_rng * R, double MU)
+     This function returns a random integer from the Poisson
+     distribution with mean MU.  The probability distribution for
+     Poisson variates is,
+
+          p(k) = {\mu^k \over k!} \exp(-\mu)
+
+     for k >= 0.
+
+ - Function: double gsl_ran_poisson_pdf (unsigned int K, double MU)
+     This function computes the probability p(k) of obtaining  K from a
+     Poisson distribution with mean MU, using the formula given above.
+
+
+
+File: gsl-ref.info,  Node: The Bernoulli Distribution,  Next: The Binomial Distribution,  Prev: The Poisson Distribution,  Up: Random Number Distributions
+
+The Bernoulli Distribution
+==========================
+
+ - Random: unsigned int gsl_ran_bernoulli (const gsl_rng * R, double P)
+     This function returns either 0 or 1, the result of a Bernoulli
+     trial with probability P.  The probability distribution for a
+     Bernoulli trial is,
+
+          p(0) = 1 - p
+          p(1) = p
+
+
+ - Function: double gsl_ran_bernoulli_pdf (unsigned int K, double P)
+     This function computes the probability p(k) of obtaining K from a
+     Bernoulli distribution with probability parameter P, using the
+     formula given above.
+
+
+
+File: gsl-ref.info,  Node: The Binomial Distribution,  Next: The Negative Binomial Distribution,  Prev: The Bernoulli Distribution,  Up: Random Number Distributions
+
+The Binomial Distribution
+=========================
+
+ - Random: unsigned int gsl_ran_binomial (const gsl_rng * R, double P,
+          unsigned int N)
+     This function returns a random integer from the binomial
+     distribution, the number of successes in N independent trials with
+     probability P.  The probability distribution for binomial variates
+     is,
+
+          p(k) = {n! \over k! (n-k)! } p^k (1-p)^{n-k}
+
+     for 0 <= k <= n.
+
+ - Function: double gsl_ran_binomial_pdf (unsigned int K, double P,
+          unsigned int N)
+     This function computes the probability p(k) of obtaining K from a
+     binomial distribution with parameters P and N, using the formula
+     given above.
+
+
+
+File: gsl-ref.info,  Node: The Negative Binomial Distribution,  Next: The Pascal Distribution,  Prev: The Binomial Distribution,  Up: Random Number Distributions
+
+The Negative Binomial Distribution
+==================================
+
+ - Random: unsigned int gsl_ran_negative_binomial (const gsl_rng * R,
+          double P, double N)
+     This function returns a random integer from the negative binomial
+     distribution, the number of failures occurring before N successes
+     in independent trials with probability P of success.  The
+     probability distribution for negative binomial variates is,
+
+          p(k) = {\Gamma(n + k) \over \Gamma(k+1) \Gamma(n) } p^n (1-p)^k
+
+     Note that n is not required to be an integer.
+
+ - Function: double gsl_ran_negative_binomial_pdf (unsigned int K,
+          double P, double N)
+     This function computes the probability p(k) of obtaining K from a
+     negative binomial distribution with parameters P and N, using the
+     formula given above.
+
+
+
+File: gsl-ref.info,  Node: The Pascal Distribution,  Next: The Geometric Distribution,  Prev: The Negative Binomial Distribution,  Up: Random Number Distributions
+
+The Pascal Distribution
+=======================
+
+ - Random: unsigned int gsl_ran_pascal (const gsl_rng * R, double P,
+          unsigned int K)
+     This function returns a random integer from the Pascal
+     distribution.  The Pascal distribution is simply a negative
+     binomial distribution with an integer value of n.
+
+          p(k) = {(n + k - 1)! \over k! (n - 1)! } p^n (1-p)^k
+
+     for k >= 0
+
+ - Function: double gsl_ran_pascal_pdf (unsigned int K, double P,
+          unsigned int N)
+     This function computes the probability p(k) of obtaining K from a
+     Pascal distribution with parameters P and N, using the formula
+     given above.
+
+
+
+File: gsl-ref.info,  Node: The Geometric Distribution,  Next: The Hypergeometric Distribution,  Prev: The Pascal Distribution,  Up: Random Number Distributions
+
+The Geometric Distribution
+==========================
+
+ - Random: unsigned int gsl_ran_geometric (const gsl_rng * R, double P)
+     This function returns a random integer from the geometric
+     distribution, the number of independent trials with probability P
+     until the first success.  The probability distribution for
+     geometric variates is,
+
+          p(k) =  p (1-p)^(k-1)
+
+     for k >= 1.
+
+ - Function: double gsl_ran_geometric_pdf (unsigned int K, double P)
+     This function computes the probability p(k) of obtaining K from a
+     geometric distribution with probability parameter P, using the
+     formula given above.
+
+
+
+File: gsl-ref.info,  Node: The Hypergeometric Distribution,  Next: The Logarithmic Distribution,  Prev: The Geometric Distribution,  Up: Random Number Distributions
+
+The Hypergeometric Distribution
+===============================
+
+ - Random: unsigned int gsl_ran_hypergeometric (const gsl_rng * R,
+          unsigned int N1, unsigned int N2, unsigned int T)
+     This function returns a random integer from the hypergeometric
+     distribution.  The probability distribution for hypergeometric
+     random variates is,
+
+          p(k) =  C(n_1,k) C(n_2, t-k) / C(n_1 + n_2,k)
+
+     where C(a,b) = a!/(b!(a-b)!).  The domain of k is max(0,t-n_2),
+     ..., max(t,n_1).
+
+ - Function: double gsl_ran_hypergeometric_pdf (unsigned int K,
+          unsigned int N1, unsigned int N2, unsigned int T)
+     This function computes the probability p(k) of obtaining K from a
+     hypergeometric distribution with parameters N1, N2, N3, using the
+     formula given above.
+
+
+
+File: gsl-ref.info,  Node: The Logarithmic Distribution,  Next: Shuffling and Sampling,  Prev: The Hypergeometric Distribution,  Up: Random Number Distributions
+
+The Logarithmic Distribution
+============================
+
+ - Random: unsigned int gsl_ran_logarithmic (const gsl_rng * R, double
+          P)
+     This function returns a random integer from the logarithmic
+     distribution.  The probability distribution for logarithmic random
+     variates is,
+
+          p(k) = {-1 \over \log(1-p)} {(p^k \over k)}
+
+     for k >= 1.
+
+ - Function: double gsl_ran_logarithmic_pdf (unsigned int K, double P)
+     This function computes the probability p(k) of obtaining K from a
+     logarithmic distribution with probability parameter P, using the
+     formula given above.
+
+
+
+File: gsl-ref.info,  Node: Shuffling and Sampling,  Next: Random Number Distribution Examples,  Prev: The Logarithmic Distribution,  Up: Random Number Distributions
+
+Shuffling and Sampling
+======================
+
+   The following functions allow the shuffling and sampling of a set of
+objects.  The algorithms rely on a random number generator as source of
+randomness and a poor quality generator can lead to correlations in the
+output.  In particular it is important to avoid generators with a short
+period.  For more information see Knuth, v2, 3rd ed, Section 3.4.2,
+"Random Sampling and Shuffling".
+
+ - Random: void gsl_ran_shuffle (const gsl_rng * R, void * BASE, size_t
+          N, size_t SIZE)
+     This function randomly shuffles the order of N objects, each of
+     size SIZE, stored in the array BASE[0..N-1].  The output of the
+     random number generator R is used to produce the permutation.  The
+     algorithm generates all possible n!  permutations with equal
+     probability, assuming a perfect source of random numbers.
+
+     The following code shows how to shuffle the numbers from 0 to 51,
+
+          int a[52];
+          
+          for (i = 0; i < 52; i++)
+            {
+              a[i] = i;
+            }
+          
+          gsl_ran_shuffle (r, a, 52, sizeof (int));
+
+
+ - Random: int gsl_ran_choose (const gsl_rng * R, void * DEST, size_t
+          K, void * SRC, size_t N, size_t SIZE)
+     This function fills the array DEST[k] with K objects taken
+     randomly from the N elements of the array SRC[0..N-1].  The
+     objects are each of size SIZE.  The output of the random number
+     generator R is used to make the selection.  The algorithm ensures
+     all possible samples are equally likely, assuming a perfect source
+     of randomness.
+
+     The objects are sampled _without_ replacement, thus each object can
+     only appear once in DEST[k].  It is required that K be less than
+     or equal to `n'.  The objects in DEST will be in the same relative
+     order as those in SRC.  You will need to call `gsl_ran_shuffle(r,
+     dest, n, size)' if you want to randomize the order.
+
+     The following code shows how to select a random sample of three
+     unique numbers from the set 0 to 99,
+
+          double a[3], b[100];
+          
+          for (i = 0; i < 100; i++)
+            {
+              b[i] = (double) i;
+            }
+          
+          gsl_ran_choose (r, a, 3, b, 100, sizeof (double));
+
+
+ - Random: void gsl_ran_sample (const gsl_rng * R, void * DEST, size_t
+          K, void * SRC, size_t N, size_t SIZE)
+     This function is like `gsl_ran_choose' but samples K items from
+     the original array of N items SRC with replacement, so the same
+     object can appear more than once in the output sequence DEST.
+     There is no requirement that K be less than N in this case.
+
+
+File: gsl-ref.info,  Node: Random Number Distribution Examples,  Next: Random Number Distribution References and Further Reading,  Prev: Shuffling and Sampling,  Up: Random Number Distributions
+
+Examples
+========
+
+   The following program demonstrates the use of a random number
+generator to produce variates from a distribution.  It prints 10
+samples from the Poisson distribution with a mean of 3.
+
+     #include <stdio.h>
+     #include <gsl/gsl_rng.h>
+     #include <gsl/gsl_randist.h>
+     
+     int
+     main (void)
+     {
+       const gsl_rng_type * T;
+       gsl_rng * r;
+     
+       int i, n = 10;
+       double mu = 3.0;
+     
+       /* create a generator chosen by the
+          environment variable GSL_RNG_TYPE */
+     
+       gsl_rng_env_setup();
+     
+       T = gsl_rng_default;
+       r = gsl_rng_alloc (T);
+     
+       /* print n random variates chosen from
+          the poisson distribution with mean
+          parameter mu */
+     
+       for (i = 0; i < n; i++)
+         {
+           unsigned int k = gsl_ran_poisson (r, mu);
+           printf(" %u", k);
+         }
+     
+       printf("\n");
+       return 0;
+     }
+
+If the library and header files are installed under `/usr/local' (the
+default location) then the program can be compiled with these options,
+
+     gcc demo.c -lgsl -lgslcblas -lm
+
+Here is the output of the program,
+
+     $ ./a.out
+      4 2 3 3 1 3 4 1 3 5
+
+The variates depend on the seed used by the generator.  The seed for the
+default generator type `gsl_rng_default' can be changed with the
+`GSL_RNG_SEED' environment variable to produce a different stream of
+variates,
+
+     $ GSL_RNG_SEED=123 ./a.out
+     GSL_RNG_SEED=123
+      1 1 2 1 2 6 2 1 8 7
+
+The following program generates a random walk in two dimensions.
+
+     #include <stdio.h>
+     #include <gsl/gsl_rng.h>
+     #include <gsl/gsl_randist.h>
+     
+     int
+     main (void)
+     {
+       const gsl_rng_type * T;
+       gsl_rng * r;
+     
+       gsl_rng_env_setup();
+       T = gsl_rng_default;
+       r = gsl_rng_alloc (T);
+     
+       int i;
+       double x = 0, y = 0, dx, dy;
+     
+       printf("%g %g\n", x, y);
+     
+       for (i = 0; i < 10; i++)
+         {
+           gsl_ran_dir_2d (r, &dx, &dy);
+           x += dx; y += dy;
+           printf("%g %g\n", x, y);
+         }
+       return 0;
+     }
+
+Example output from the program, three 10-step random walks from the
+origin.
+
+
+
+File: gsl-ref.info,  Node: Random Number Distribution References and Further Reading,  Prev: Random Number Distribution Examples,  Up: Random Number Distributions
+
+References and Further Reading
+==============================
+
+For an encyclopaedic coverage of the subject readers are advised to
+consult the book `Non-Uniform Random Variate Generation' by Luc
+Devroye.  It covers every imaginable distribution and provides hundreds
+of algorithms.
+
+     Luc Devroye, `Non-Uniform Random Variate Generation',
+     Springer-Verlag, ISBN 0-387-96305-7.
+
+The subject of random variate generation is also reviewed by Knuth, who
+describes algorithms for all the major distributions.
+
+     Donald E. Knuth, `The Art of Computer Programming: Seminumerical
+     Algorithms' (Vol 2, 3rd Ed, 1997), Addison-Wesley, ISBN 0201896842.
+
+The Particle Data Group provides a short review of techniques for
+generating distributions of random numbers in the "Monte Carlo" section
+of its Annual Review of Particle Physics.
+
+     `Review of Particle Properties' R.M. Barnett et al., Physical
+     Review D54, 1 (1996) <http://pdg.lbl.gov/>.
+
+The Review of Particle Physics is available online in postscript and pdf
+format.
+
+
+File: gsl-ref.info,  Node: Statistics,  Next: Histograms,  Prev: Random Number Distributions,  Up: Top
+
+Statistics
+**********
+
+   This chapter describes the statistical functions in the library.  The
+basic statistical functions include routines to compute the mean,
+variance and standard deviation.  More advanced functions allow you to
+calculate absolute deviations, skewness, and kurtosis as well as the
+median and arbitrary percentiles.  The algorithms use recurrence
+relations to compute average quantities in a stable way, without large
+intermediate values that might overflow.
+
+   The functions are available in versions for datasets in the standard
+floating-point and integer types.  The versions for double precision
+floating-point data have the prefix `gsl_stats' and are declared in the
+header file `gsl_stats_double.h'.  The versions for integer data have
+the prefix `gsl_stats_int' and are declared in the header files
+`gsl_stats_int.h'.
+
+* Menu:
+
+* Mean and standard deviation and variance::
+* Absolute deviation::
+* Higher moments (skewness and kurtosis)::
+* Autocorrelation::
+* Covariance::
+* Weighted Samples::
+* Maximum and Minimum values::
+* Median and Percentiles::
+* Example statistical programs::
+* Statistics References and Further Reading::
+
+
+File: gsl-ref.info,  Node: Mean and standard deviation and variance,  Next: Absolute deviation,  Up: Statistics
+
+Mean, Standard Deviation and Variance
+=====================================
+
+ - Statistics: double gsl_stats_mean (const double DATA[], size_t
+          STRIDE, size_t N)
+     This function returns the arithmetic mean of DATA, a dataset of
+     length N with stride STRIDE.  The arithmetic mean, or "sample
+     mean", is denoted by \Hat\mu and defined as,
+
+          \Hat\mu = (1/N) \sum x_i
+
+     where x_i are the elements of the dataset DATA.  For samples drawn
+     from a gaussian distribution the variance of \Hat\mu is \sigma^2 /
+     N.
+
+ - Statistics: double gsl_stats_variance (const double DATA[], size_t
+          STRIDE, size_t N)
+     This function returns the estimated, or "sample", variance of
+     DATA, a dataset of length N with stride STRIDE.  The estimated
+     variance is denoted by \Hat\sigma^2 and is defined by,
+
+          \Hat\sigma^2 = (1/(N-1)) \sum (x_i - \Hat\mu)^2
+
+     where x_i are the elements of the dataset DATA.  Note that the
+     normalization factor of 1/(N-1) results from the derivation of
+     \Hat\sigma^2 as an unbiased estimator of the population variance
+     \sigma^2.  For samples drawn from a gaussian distribution the
+     variance of \Hat\sigma^2 itself is 2 \sigma^4 / N.
+
+     This function computes the mean via a call to `gsl_stats_mean'.  If
+     you have already computed the mean then you can pass it directly to
+     `gsl_stats_variance_m'.
+
+ - Statistics: double gsl_stats_variance_m (const double DATA[], size_t
+          STRIDE, size_t N, double MEAN)
+     This function returns the sample variance of DATA relative to the
+     given value of MEAN.  The function is computed with \Hat\mu
+     replaced by the value of MEAN that you supply,
+
+          \Hat\sigma^2 = (1/(N-1)) \sum (x_i - mean)^2
+
+ - Statistics: double gsl_stats_sd (const double DATA[], size_t STRIDE,
+          size_t N)
+ - Statistics: double gsl_stats_sd_m (const double DATA[], size_t
+          STRIDE, size_t N, double MEAN)
+     The standard deviation is defined as the square root of the
+     variance.  These functions return the square root of the
+     corresponding variance functions above.
+
+ - Statistics: double gsl_stats_variance_with_fixed_mean (const double
+          DATA[], size_t STRIDE, size_t N, double MEAN)
+     This function computes an unbiased estimate of the variance of
+     DATA when the population mean MEAN of the underlying distribution
+     is known _a priori_.  In this case the estimator for the variance
+     uses the factor 1/N and the sample mean \Hat\mu is replaced by the
+     known population mean \mu,
+
+          \Hat\sigma^2 = (1/N) \sum (x_i - \mu)^2
+
+
+ - Statistics: double gsl_stats_sd_with_fixed_mean (const double
+          DATA[], size_t STRIDE, size_t N, double MEAN)
+     This function calculates the standard deviation of DATA for a a
+     fixed population mean MEAN.  The result is the square root of the
+     corresponding variance function.
+
+
+File: gsl-ref.info,  Node: Absolute deviation,  Next: Higher moments (skewness and kurtosis),  Prev: Mean and standard deviation and variance,  Up: Statistics
+
+Absolute deviation
+==================
+
+ - Statistics: double gsl_stats_absdev (const double DATA[], size_t
+          STRIDE, size_t N)
+     This function computes the absolute deviation from the mean of
+     DATA, a dataset of length N with stride STRIDE.  The absolute
+     deviation from the mean is defined as,
+
+          absdev  = (1/N) \sum |x_i - \Hat\mu|
+
+     where x_i are the elements of the dataset DATA.  The absolute
+     deviation from the mean provides a more robust measure of the
+     width of a distribution than the variance.  This function computes
+     the mean of DATA via a call to `gsl_stats_mean'.
+
+ - Statistics: double gsl_stats_absdev_m (const double DATA[], size_t
+          STRIDE, size_t N, double MEAN)
+     This function computes the absolute deviation of the dataset DATA
+     relative to the given value of MEAN,
+
+          absdev  = (1/N) \sum |x_i - mean|
+
+     This function is useful if you have already computed the mean of
+     DATA (and want to avoid recomputing it), or wish to calculate the
+     absolute deviation relative to another value (such as zero, or the
+     median).
+
+
+File: gsl-ref.info,  Node: Higher moments (skewness and kurtosis),  Next: Autocorrelation,  Prev: Absolute deviation,  Up: Statistics
+
+Higher moments (skewness and kurtosis)
+======================================
+
+ - Statistics: double gsl_stats_skew (const double DATA[], size_t
+          STRIDE, size_t N)
+     This function computes the skewness of DATA, a dataset of length N
+     with stride STRIDE.  The skewness is defined as,
+
+          skew = (1/N) \sum ((x_i - \Hat\mu)/\Hat\sigma)^3
+
+     where x_i are the elements of the dataset DATA.  The skewness
+     measures the asymmetry of the tails of a distribution.
+
+     The function computes the mean and estimated standard deviation of
+     DATA via calls to `gsl_stats_mean' and `gsl_stats_sd'.
+
+ - Statistics: double gsl_stats_skew_m_sd (const double DATA[], size_t
+          STRIDE, size_t N, double MEAN, double SD)
+     This function computes the skewness of the dataset DATA using the
+     given values of the mean MEAN and standard deviation SD,
+
+          skew = (1/N) \sum ((x_i - mean)/sd)^3
+
+     These functions are useful if you have already computed the mean
+     and standard deviation of DATA and want to avoid recomputing them.
+
+ - Statistics: double gsl_stats_kurtosis (const double DATA[], size_t
+          STRIDE, size_t N)
+     This function computes the kurtosis of DATA, a dataset of length N
+     with stride STRIDE.  The kurtosis is defined as,
+
+          kurtosis = ((1/N) \sum ((x_i - \Hat\mu)/\Hat\sigma)^4)  - 3
+
+     The kurtosis measures how sharply peaked a distribution is,
+     relative to its width.  The kurtosis is normalized to zero for a
+     gaussian distribution.
+
+ - Statistics: double gsl_stats_kurtosis_m_sd (const double DATA[],
+          size_t STRIDE, size_t N, double MEAN, double SD)
+     This function computes the kurtosis of the dataset DATA using the
+     given values of the mean MEAN and standard deviation SD,
+
+          kurtosis = ((1/N) \sum ((x_i - mean)/sd)^4) - 3
+
+     This function is useful if you have already computed the mean and
+     standard deviation of DATA and want to avoid recomputing them.
+
+
+File: gsl-ref.info,  Node: Autocorrelation,  Next: Covariance,  Prev: Higher moments (skewness and kurtosis),  Up: Statistics
+
+Autocorrelation
+===============
+
+ - Function: double gsl_stats_lag1_autocorrelation (const double
+          data[], const size_t STRIDE, const size_t N)
+     This function computes the lag-1 autocorrelation of the dataset
+     DATA.
+
+          a_1 = {\sum_{i = 1}^{n} (x_{i} - \Hat\mu) (x_{i-1} - \Hat\mu)
+                 \over
+                 \sum_{i = 1}^{n} (x_{i} - \Hat\mu) (x_{i} - \Hat\mu)}
+
+
+ - Function: double gsl_stats_lag1_autocorrelation_m (const double
+          data[], const size_t STRIDE, const size_t N, const double
+          MEAN)
+     This function computes the lag-1 autocorrelation of the dataset
+     DATA using the given value of the mean MEAN.
+
+
+
+File: gsl-ref.info,  Node: Covariance,  Next: Weighted Samples,  Prev: Autocorrelation,  Up: Statistics
+
+Covariance
+==========
+
+ - Function: double gsl_stats_covariance (const double DATA1[], const
+          size_t STRIDE1, const double data2[], const size_t STRIDE2,
+          const size_t N)
+     This function computes the covariance of the datasets DATA1 and
+     DATA2 which must both be of the same length N.
+
+          covar = (1/(n - 1)) \sum_{i = 1}^{n} (x_i - \Hat x) (y_i - \Hat y)
+
+
+ - Function: double gsl_stats_covariance_m (const double DATA1[], const
+          size_t STRIDE1, const double DATA2[], const size_t N, const
+          double MEAN1, const double MEAN2)
+     This function computes the covariance of the datasets DATA1 and
+     DATA2 using the given values of the means, MEAN1 and MEAN2.
+
+
+
+File: gsl-ref.info,  Node: Weighted Samples,  Next: Maximum and Minimum values,  Prev: Covariance,  Up: Statistics
+
+Weighted Samples
+================
+
+   The functions described in this section allow the computation of
+statistics for weighted samples.  The functions accept an array of
+samples, x_i, with associated weights, w_i.  Each sample x_i is
+considered as having been drawn from a Gaussian distribution with
+variance \sigma_i^2.  The sample weight w_i is defined as the
+reciprocal of this variance, w_i = 1/\sigma_i^2.  Setting a weight to
+zero corresponds to removing a sample from a dataset.
+
+ - Statistics: double gsl_stats_wmean (const double W[], size_t
+          WSTRIDE, const double DATA[], size_t STRIDE, size_t N)
+     This function returns the weighted mean of the dataset DATA with
+     stride STRIDE and length N, using the set of weights W with stride
+     WSTRIDE and length N.  The weighted mean is defined as,
+
+          \Hat\mu = (\sum w_i x_i) / (\sum w_i)
+
+ - Statistics: double gsl_stats_wvariance (const double W[], size_t
+          WSTRIDE, const double DATA[], size_t STRIDE, size_t N)
+     This function returns the estimated variance of the dataset DATA
+     with stride STRIDE and length N, using the set of weights W with
+     stride WSTRIDE and length N.  The estimated variance of a weighted
+     dataset is defined as,
+
+          \Hat\sigma^2 = ((\sum w_i)/((\sum w_i)^2 - \sum (w_i^2)))
+                          \sum w_i (x_i - \Hat\mu)^2
+
+     Note that this expression reduces to an unweighted variance with
+     the familiar 1/(N-1) factor when there are N equal non-zero
+     weights.
+
+ - Statistics: double gsl_stats_wvariance_m (const double W[], size_t
+          WSTRIDE, const double DATA[], size_t STRIDE, size_t N, double
+          WMEAN)
+     This function returns the estimated variance of the weighted
+     dataset DATA using the given weighted mean WMEAN.
+
+ - Statistics: double gsl_stats_wsd (const double W[], size_t WSTRIDE,
+          const double DATA[], size_t STRIDE, size_t N)
+     The standard deviation is defined as the square root of the
+     variance.  This function returns the square root of the
+     corresponding variance function `gsl_stats_wvariance' above.
+
+ - Statistics: double gsl_stats_wsd_m (const double W[], size_t
+          WSTRIDE, const double DATA[], size_t STRIDE, size_t N, double
+          WMEAN)
+     This function returns the square root of the corresponding variance
+     function `gsl_stats_wvariance_m' above.
+
+ - Statistics: double gsl_stats_wvariance_with_fixed_mean (const double
+          W[], size_t WSTRIDE, const double DATA[], size_t STRIDE,
+          size_t N)
+     This function computes an unbiased estimate of the variance of
+     weighted dataset DATA when the population mean MEAN of the
+     underlying distribution is known _a priori_.  In this case the
+     estimator for the variance replaces the sample mean \Hat\mu by the
+     known population mean \mu,
+
+          \Hat\sigma^2 = (\sum w_i (x_i - \mu)^2) / (\sum w_i)
+
+ - Statistics: double gsl_stats_wsd_with_fixed_mean (const double W[],
+          size_t WSTRIDE, const double DATA[], size_t STRIDE, size_t N)
+     The standard deviation is defined as the square root of the
+     variance.  This function returns the square root of the
+     corresponding variance function above.
+
+ - Statistics: double gsl_stats_wabsdev (const double W[], size_t
+          WSTRIDE, const double DATA[], size_t STRIDE, size_t N)
+     This function computes the weighted absolute deviation from the
+     weighted mean of DATA.  The absolute deviation from the mean is
+     defined as,
+
+          absdev = (\sum w_i |x_i - \Hat\mu|) / (\sum w_i)
+
+ - Statistics: double gsl_stats_wabsdev_m (const double W[], size_t
+          WSTRIDE, const double DATA[], size_t STRIDE, size_t N, double
+          WMEAN)
+     This function computes the absolute deviation of the weighted
+     dataset DATA about the given weighted mean WMEAN.
+
+ - Statistics: double gsl_stats_wskew (const double W[], size_t
+          WSTRIDE, const double DATA[], size_t STRIDE, size_t N)
+     This function computes the weighted skewness of the dataset DATA.
+
+          skew = (\sum w_i ((x_i - xbar)/\sigma)^3) / (\sum w_i)
+
+ - Statistics: double gsl_stats_wskew_m_sd (const double W[], size_t
+          WSTRIDE, const double DATA[], size_t STRIDE, size_t N, double
+          WMEAN, double WSD)
+     This function computes the weighted skewness of the dataset DATA
+     using the given values of the weighted mean and weighted standard
+     deviation, WMEAN and WSD.
+
+ - Statistics: double gsl_stats_wkurtosis (const double W[], size_t
+          WSTRIDE, const double DATA[], size_t STRIDE, size_t N)
+     This function computes the weighted kurtosis of the dataset DATA.
+          kurtosis = ((\sum w_i ((x_i - xbar)/sigma)^4) / (\sum w_i)) - 3
+
+ - Statistics: double gsl_stats_wkurtosis_m_sd (const double W[],
+          size_t WSTRIDE, const double DATA[], size_t STRIDE, size_t N,
+          double WMEAN, double WSD)
+     This function computes the weighted kurtosis of the dataset DATA
+     using the given values of the weighted mean and weighted standard
+     deviation, WMEAN and WSD.
+
+
+File: gsl-ref.info,  Node: Maximum and Minimum values,  Next: Median and Percentiles,  Prev: Weighted Samples,  Up: Statistics
+
+Maximum and Minimum values
+==========================
+
+ - Statistics: double gsl_stats_max (const double DATA[], size_t
+          STRIDE, size_t N)
+     This function returns the maximum value in DATA, a dataset of
+     length N with stride STRIDE.  The maximum value is defined as the
+     value of the element x_i which satisfies x_i >= x_j for all j.
+
+     If you want instead to find the element with the largest absolute
+     magnitude you will need to apply `fabs' or `abs' to your data
+     before calling this function.
+
+ - Statistics: double gsl_stats_min (const double DATA[], size_t
+          STRIDE, size_t N)
+     This function returns the minimum value in DATA, a dataset of
+     length N with stride STRIDE.  The minimum value is defined as the
+     value of the element x_i which satisfies x_i <= x_j for all j.
+
+     If you want instead to find the element with the smallest absolute
+     magnitude you will need to apply `fabs' or `abs' to your data
+     before calling this function.
+
+ - Statistics: void gsl_stats_minmax (double * MIN, double * MAX, const
+          double DATA[], size_t STRIDE, size_t N)
+     This function finds both the minimum and maximum values MIN, MAX
+     in DATA in a single pass.
+
+ - Statistics: size_t gsl_stats_max_index (const double DATA[], size_t
+          STRIDE, size_t N)
+     This function returns the index of the maximum value in DATA, a
+     dataset of length N with stride STRIDE.  The maximum value is
+     defined as the value of the element x_i which satisfies x_i >= x_j
+     for all j.  When there are several equal maximum elements then the
+     first one is chosen.
+
+ - Statistics: size_t gsl_stats_min_index (const double DATA[], size_t
+          STRIDE, size_t N)
+     This function returns the index of the minimum value in DATA, a
+     dataset of length N with stride STRIDE.  The minimum value is
+     defined as the value of the element x_i which satisfies x_i >= x_j
+     for all j.  When there are several equal minimum elements then the
+     first one is chosen.
+
+ - Statistics: void gsl_stats_minmax_index (size_t * MIN_INDEX, size_t
+          * MAX_INDEX, const double DATA[], size_t STRIDE, size_t N)
+     This function returns the indexes MIN_INDEX, MAX_INDEX of the
+     minimum and maximum values in DATA in a single pass.
+
+
+File: gsl-ref.info,  Node: Median and Percentiles,  Next: Example statistical programs,  Prev: Maximum and Minimum values,  Up: Statistics
+
+Median and Percentiles
+======================
+
+   The median and percentile functions described in this section
+operate on sorted data.  For convenience we use "quantiles", measured
+on a scale of 0 to 1, instead of percentiles (which use a scale of 0 to
+100).
+
+ - Statistics: double gsl_stats_median_from_sorted_data (const double
+          SORTED_DATA[], size_t STRIDE, size_t N)
+     This function returns the median value of SORTED_DATA, a dataset
+     of length N with stride STRIDE.  The elements of the array must be
+     in ascending numerical order.  There are no checks to see whether
+     the data are sorted, so the function `gsl_sort' should always be
+     used first.
+
+     When the dataset has an odd number of elements the median is the
+     value of element (n-1)/2.  When the dataset has an even number of
+     elements the median is the mean of the two nearest middle values,
+     elements (n-1)/2 and n/2.  Since the algorithm for computing the
+     median involves interpolation this function always returns a
+     floating-point number, even for integer data types.
+
+ - Statistics: double gsl_stats_quantile_from_sorted_data (const double
+          SORTED_DATA[], size_t STRIDE, size_t N, double F)
+     This function returns a quantile value of SORTED_DATA, a
+     double-precision array of length N with stride STRIDE.  The
+     elements of the array must be in ascending numerical order.  The
+     quantile is determined by the F, a fraction between 0 and 1.  For
+     example, to compute the value of the 75th percentile F should have
+     the value 0.75.
+
+     There are no checks to see whether the data are sorted, so the
+     function `gsl_sort' should always be used first.
+
+     The quantile is found by interpolation, using the formula
+
+          quantile = (1 - \delta) x_i + \delta x_{i+1}
+
+     where i is `floor'((n - 1)f) and \delta is (n-1)f - i.
+
+     Thus the minimum value of the array (`data[0*stride]') is given by
+     F equal to zero, the maximum value (`data[(n-1)*stride]') is given
+     by F equal to one and the median value is given by F equal to 0.5.
+     Since the algorithm for computing quantiles involves
+     interpolation this function always returns a floating-point
+     number, even for integer data types.
+
+
+File: gsl-ref.info,  Node: Example statistical programs,  Next: Statistics References and Further Reading,  Prev: Median and Percentiles,  Up: Statistics
+
+Example statistical programs
+============================
+
+   Here is a basic example of how to use the statistical functions:
+
+     #include <stdio.h>
+     #include <gsl/gsl_statistics.h>
+     
+     int
+     main(void)
+     {
+       double data[5] = {17.2, 18.1, 16.5, 18.3, 12.6};
+       double mean, variance, largest, smallest;
+     
+       mean     = gsl_stats_mean(data, 1, 5);
+       variance = gsl_stats_variance(data, 1, 5);
+       largest  = gsl_stats_max(data, 1, 5);
+       smallest = gsl_stats_min(data, 1, 5);
+     
+       printf("The dataset is %g, %g, %g, %g, %g\n",
+             data[0], data[1], data[2], data[3], data[4]);
+     
+       printf("The sample mean is %g\n", mean);
+       printf("The estimated variance is %g\n", variance);
+       printf("The largest value is %g\n", largest);
+       printf("The smallest value is %g\n", smallest);
+       return 0;
+     }
+
+   The program should produce the following output,
+
+     The dataset is 17.2, 18.1, 16.5, 18.3, 12.6
+     The sample mean is 16.54
+     The estimated variance is 4.2984
+     The largest value is 18.3
+     The smallest value is 12.6
+
+   Here is an example using sorted data,
+
+     #include <stdio.h>
+     #include <gsl/gsl_sort.h>
+     #include <gsl/gsl_statistics.h>
+     
+     int
+     main(void)
+     {
+       double data[5] = {17.2, 18.1, 16.5, 18.3, 12.6};
+       double median, upperq, lowerq;
+     
+       printf("Original dataset:  %g, %g, %g, %g, %g\n",
+             data[0], data[1], data[2], data[3], data[4]);
+     
+       gsl_sort (data, 1, 5);
+     
+       printf("Sorted dataset: %g, %g, %g, %g, %g\n",
+             data[0], data[1], data[2], data[3], data[4]);
+     
+       median
+         = gsl_stats_median_from_sorted_data (data,
+                                              1, 5);
+     
+       upperq
+         = gsl_stats_quantile_from_sorted_data (data,
+                                                1, 5,
+                                                0.75);
+       lowerq
+         = gsl_stats_quantile_from_sorted_data (data,
+                                                1, 5,
+                                                0.25);
+     
+       printf("The median is %g\n", median);
+       printf("The upper quartile is %g\n", upperq);
+       printf("The lower quartile is %g\n", lowerq);
+       return 0;
+     }
+
+   This program should produce the following output,
+
+     Original dataset: 17.2, 18.1, 16.5, 18.3, 12.6
+     Sorted dataset: 12.6, 16.5, 17.2, 18.1, 18.3
+     The median is 17.2
+     The upper quartile is 18.1
+     The lower quartile is 16.5
+
+
+File: gsl-ref.info,  Node: Statistics References and Further Reading,  Prev: Example statistical programs,  Up: Statistics
+
+References and Further Reading
+==============================
+
+The standard reference for almost any topic in statistics is the
+multi-volume `Advanced Theory of Statistics' by Kendall and Stuart.
+
+     Maurice Kendall, Alan Stuart, and J. Keith Ord.  `The Advanced
+     Theory of Statistics' (multiple volumes) reprinted as `Kendall's
+     Advanced Theory of Statistics'.  Wiley, ISBN 047023380X.
+
+Many statistical concepts can be more easily understood by a Bayesian
+approach.  The following book by Gelman, Carlin, Stern and Rubin gives a
+comprehensive coverage of the subject.
+
+     Andrew Gelman, John B. Carlin, Hal S. Stern, Donald B. Rubin.
+     `Bayesian Data Analysis'.  Chapman & Hall, ISBN 0412039915.
+
+For physicists the Particle Data Group provides useful reviews of
+Probability and Statistics in the "Mathematical Tools" section of its
+Annual Review of Particle Physics.
+
+     `Review of Particle Properties' R.M. Barnett et al., Physical
+     Review D54, 1 (1996)
+
+The Review of Particle Physics is available online at
+<http://pdg.lbl.gov/>.
+

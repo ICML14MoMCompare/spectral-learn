@@ -1,0 +1,4 @@
+Problem: tree
+Algorithm: KL size:20 WER size: 20 30 KL: 1.70567647655e+13
+KL, WER: 1.32537480832e+13,0.597606674299
+Runtime: 917.509982395

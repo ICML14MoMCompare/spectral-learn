@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/StlSupport
+END
+StdVector.h
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/StlSupport/StdVector.h
+END
+StdDeque.h
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/StlSupport/StdDeque.h
+END
+details.h
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/StlSupport/details.h
+END
+StdList.h
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/StlSupport/StdList.h
+END
+CMakeLists.txt
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/StlSupport/CMakeLists.txt
+END

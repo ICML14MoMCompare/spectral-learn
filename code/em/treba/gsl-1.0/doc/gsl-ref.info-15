@@ -1,0 +1,1285 @@
+This is gsl-ref.info, produced by makeinfo version 4.0 from
+gsl-ref.texi.
+
+INFO-DIR-SECTION Scientific software
+START-INFO-DIR-ENTRY
+* gsl-ref: (gsl-ref).                   GNU Scientific Library - Reference
+END-INFO-DIR-ENTRY
+
+   This file documents the GNU Scientific Library.
+
+   Copyright (C) 1996, 1997, 1998, 1999, 2000, 2001 The GSL Team.
+
+   Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.1 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.  A
+copy of the license is included in the section entitled "GNU Free
+Documentation License".
+
+
+File: gsl-ref.info,  Node: Discrete Hankel Transform Functions,  Next: Discrete Hankel Transform References,  Prev: Discrete Hankel Transform Definition,  Up: Discrete Hankel Transforms
+
+Functions
+=========
+
+ - Function: gsl_dht * gsl_dht_alloc (size_t SIZE)
+     This function allocates a Discrete Hankel transform object of size
+     SIZE.
+
+ - Function: int gsl_dht_init (gsl_dht * T, double NU, double XMAX)
+     This function initializes the transform T for the given values of
+     NU and X.
+
+ - Function: gsl_dht * gsl_dht_new (size_t SIZE, double NU, double XMAX)
+     This function allocates a Discrete Hankel transform object of size
+     SIZE and initializes it for the given values of NU and X.
+
+ - Function: void gsl_dht_free (gsl_dht * T)
+     This function frees the transform T.
+
+ - Function: int gsl_dht_apply (const gsl_dht * T, double * F_IN,
+          double * F_OUT)
+     This function applies the transform T to the array F_IN whose size
+     is equal to the size of the transform.  The result is stored in
+     the array F_OUT which must be of the same length.
+
+ - Function: double gsl_dht_x_sample (const gsl_dht * T, int N)
+     This function returns the value of the n'th sample point in the
+     unit interval, (j_{\nu,n+1}/j_{\nu,M}) X. These are the points
+     where the function f(t) is assumed to be sampled.
+
+ - Function: double gsl_dht_k_sample (const gsl_dht * T, int N)
+     This function returns the value of the n'th sample point in
+     "k-space", j_{\nu,n+1}/X.
+
+
+File: gsl-ref.info,  Node: Discrete Hankel Transform References,  Prev: Discrete Hankel Transform Functions,  Up: Discrete Hankel Transforms
+
+References and Further Reading
+==============================
+
+The algorithms used by these functions are described in the following
+papers,
+
+     H. Fisk Johnson, Comp. Phys. Comm. 43, 181 (1987).
+
+     D. Lemoine, J. Chem. Phys. 101, 3936 (1994).
+
+
+File: gsl-ref.info,  Node: One dimensional Root-Finding,  Next: One dimensional Minimization,  Prev: Discrete Hankel Transforms,  Up: Top
+
+One dimensional Root-Finding
+****************************
+
+   This chapter describes routines for finding roots of arbitrary
+one-dimensional functions.  The library provides low level components
+for a variety of iterative solvers and convergence tests.  These can be
+combined by the user to achieve the desired solution, with full access
+to the intermediate steps of the iteration.  Each class of methods uses
+the same framework, so that you can switch between solvers at runtime
+without needing to recompile your program.  Each instance of a solver
+keeps track of its own state, allowing the solvers to be used in
+multi-threaded programs.
+
+   The header file `gsl_roots.h' contains prototypes for the root
+finding functions and related declarations.
+
+* Menu:
+
+* Root Finding Overview::
+* Root Finding Caveats::
+* Initializing the Solver::
+* Providing the function to solve::
+* Search Bounds and Guesses::
+* Root Finding Iteration::
+* Search Stopping Parameters::
+* Root Bracketing Algorithms::
+* Root Finding Algorithms using Derivatives::
+* Root Finding Examples::
+* Root Finding References and Further Reading::
+
+
+File: gsl-ref.info,  Node: Root Finding Overview,  Next: Root Finding Caveats,  Up: One dimensional Root-Finding
+
+Overview
+========
+
+   One-dimensional root finding algorithms can be divided into two
+classes, "root bracketing" and "root polishing".  Algorithms which
+proceed by bracketing a root are guaranteed to converge.  Bracketing
+algorithms begin with a bounded region known to contain a root.  The
+size of this bounded region is reduced, iteratively, until it encloses
+the root to a desired tolerance.  This provides a rigorous error
+estimate for the location of the root.
+
+   The technique of "root polishing" attempts to improve an initial
+guess to the root.  These algorithms converge only if started "close
+enough" to a root, and sacrifice a rigorous error bound for speed.  By
+approximating the behavior of a function in the vicinity of a root they
+attempt to find a higher order improvement of an initial guess.  When
+the behavior of the function is compatible with the algorithm and a good
+initial guess is available a polishing algorithm can provide rapid
+convergence.
+
+   In GSL both types of algorithm are available in similar frameworks.
+The user provides a high-level driver for the algorithms, and the
+library provides the individual functions necessary for each of the
+steps.  There are three main phases of the iteration.  The steps are,
+
+   * initialize solver state, S, for algorithm T
+
+   * update S using the iteration T
+
+   * test S for convergence, and repeat iteration if necessary
+
+The state for bracketing solvers is held in a `gsl_root_fsolver'
+struct.  The updating procedure uses only function evaluations (not
+derivatives).  The state for root polishing solvers is held in a
+`gsl_root_fdfsolver' struct.  The updates require both the function and
+its derivative (hence the name `fdf') to be supplied by the user.
+
+
+File: gsl-ref.info,  Node: Root Finding Caveats,  Next: Initializing the Solver,  Prev: Root Finding Overview,  Up: One dimensional Root-Finding
+
+Caveats
+=======
+
+   Note that root finding functions can only search for one root at a
+time.  When there are several roots in the search area, the first root
+to be found will be returned; however it is difficult to predict which
+of the roots this will be. _In most cases, no error will be reported if
+you try to find a root in an area where there is more than one._
+
+   Care must be taken when a function may have a multiple root (such as
+f(x) = (x-x_0)^2 or f(x) = (x-x_0)^3).  It is not possible to use
+root-bracketing algorithms on even-multiplicity roots.  For these
+algorithms the initial interval must contain a zero-crossing, where the
+function is negative at one end of the interval and positive at the
+other end.  Roots with even-multiplicity do not cross zero, but only
+touch it instantaneously.  Algorithms based on root bracketing will
+still work for odd-multiplicity roots (e.g. cubic, quintic, ...).  Root
+polishing algorithms generally work with higher multiplicity roots, but
+at reduced rate of convergence.  In these cases the "Steffenson
+algorithm" can be used to accelerate the convergence of multiple roots.
+
+   While it is not absolutely required that f have a root within the
+search region, numerical root finding functions should not be used
+haphazardly to check for the _existence_ of roots.  There are better
+ways to do this.  Because it is easy to create situations where
+numerical root finders go awry, it is a bad idea to throw a root finder
+at a function you do not know much about.  In general it is best to
+examine the function visually by plotting before searching for a root.
+
+
+File: gsl-ref.info,  Node: Initializing the Solver,  Next: Providing the function to solve,  Prev: Root Finding Caveats,  Up: One dimensional Root-Finding
+
+Initializing the Solver
+=======================
+
+ - Function: gsl_root_fsolver * gsl_root_fsolver_alloc (const
+          gsl_root_fsolver_type * T)
+     This function returns a pointer to a a newly allocated instance of
+     a solver of type T.  For example, the following code creates an
+     instance of a bisection solver,
+
+          const gsl_root_fsolver_type * T
+            = gsl_root_fsolver_bisection;
+          gsl_root_fsolver * s
+            = gsl_root_fsolver_alloc (T);
+
+     If there is insufficient memory to create the solver then the
+     function returns a null pointer and the error handler is invoked
+     with an error code of `GSL_ENOMEM'.
+
+ - Function: gsl_root_fdfsolver * gsl_root_fdfsolver_alloc (const
+          gsl_root_fdfsolver_type * T)
+     This function returns a pointer to a a newly allocated instance of
+     a derivative-based solver of type T.  For example, the following
+     code creates an instance of a Newton-Raphson solver,
+
+          const gsl_root_fdfsolver_type * T
+            = gsl_root_fdfsolver_newton;
+          gsl_root_fdfsolver * s
+            = gsl_root_fdfsolver_alloc (T);
+
+     If there is insufficient memory to create the solver then the
+     function returns a null pointer and the error handler is invoked
+     with an error code of `GSL_ENOMEM'.
+
+ - Function: int gsl_root_fsolver_set (gsl_root_fsolver * S,
+          gsl_function * F, double X_LOWER, double X_UPPER)
+     This function initializes, or reinitializes, an existing solver S
+     to use the function F and the initial search interval [X_LOWER,
+     X_UPPER].
+
+ - Function: int gsl_root_fdfsolver_set (gsl_root_fdfsolver * S,
+          gsl_function_fdf * FDF, double ROOT)
+     This function initializes, or reinitializes, an existing solver S
+     to use the function and derivative FDF and the initial guess ROOT.
+
+ - Function: void gsl_root_fsolver_free (gsl_root_fsolver * S)
+ - Function: void gsl_root_fdfsolver_free (gsl_root_fdfsolver * S)
+     These functions free all the memory associated with the solver S.
+
+ - Function: const char * gsl_root_fsolver_name (const gsl_root_fsolver
+          * S)
+ - Function: const char * gsl_root_fdfsolver_name (const
+          gsl_root_fdfsolver * S)
+     These functions return a pointer to the name of the solver.  For
+     example,
+
+          printf("s is a '%s' solver\n",
+                 gsl_root_fsolver_name (s));
+
+     would print something like `s is a 'bisection' solver'.
+
+
+File: gsl-ref.info,  Node: Providing the function to solve,  Next: Search Bounds and Guesses,  Prev: Initializing the Solver,  Up: One dimensional Root-Finding
+
+Providing the function to solve
+===============================
+
+   You must provide a continuous function of one variable for the root
+finders to operate on, and, sometimes, its first derivative.  In order
+to allow for general parameters the functions are defined by the
+following data types:
+
+ - Data Type: gsl_function
+     This data type defines a general function with parameters.
+
+    `double (* FUNCTION) (double X, void * PARAMS)'
+          this function should return the value f(x,params) for
+          argument X and parameters PARAMS
+
+    `void * PARAMS'
+          a pointer to the parameters of the function
+
+   Here is an example for the general quadratic function,
+
+     f(x) = a x^2 + b x + c
+
+with a = 3, b = 2, c = 1.  The following code defines a `gsl_function'
+`F' which you could pass to a root finder:
+
+     struct my_f_params { double a; double b; double c; };
+     
+     double
+     my_f (double x, void * p) {
+        struct my_f_params * params
+          = (struct my_f_params *)p;
+        double a = (params->a);
+        double b = (params->b);
+        double c = (params->c);
+     
+        return  (a * x + b) * x + c;
+     }
+     
+     gsl_function F;
+     struct my_f_params params = { 3.0, 2.0, 1.0 };
+     
+     F.function = &my_f;
+     F.params = &params;
+
+The function f(x) can be evaluated using the following macro,
+
+     #define GSL_FN_EVAL(F,x)
+         (*((F)->function))(x,(F)->params)
+
+ - Data Type: gsl_function_fdf
+     This data type defines a general function with parameters and its
+     first derivative.
+
+    `double (* F) (double X, void * PARAMS)'
+          this function should return the value of f(x,params) for
+          argument X and parameters PARAMS
+
+    `double (* DF) (double X, void * PARAMS)'
+          this function should return the value of the derivative of F
+          with respect to X, f'(x,params), for argument X and
+          parameters PARAMS
+
+    `void (* FDF) (double X, void * PARAMS, double * F, double * Df)'
+          this function should set the values of the function F to
+          f(x,params) and its derivative DF to f'(x,params) for
+          argument X and parameters PARAMS.  This function provides an
+          optimization of the separate functions for f(x) and f'(x) -
+          it is always faster to compute the function and its
+          derivative at the same time.
+
+    `void * PARAMS'
+          a pointer to the parameters of the function
+
+   Here is an example where f(x) = 2\exp(2x):
+
+     double
+     my_f (double x, void * params)
+     {
+        return exp (2 * x);
+     }
+     
+     double
+     my_df (double x, void * params)
+     {
+        return 2 * exp (2 * x);
+     }
+     
+     void
+     my_fdf (double x, void * params,
+             double * f, double * df)
+     {
+        double t = exp (2 * x);
+     
+        *f = t;
+        *df = 2 * t;   /* uses existing value */
+     }
+     
+     gsl_function_fdf FDF;
+     
+     FDF.f = &my_f;
+     FDF.df = &my_df;
+     FDF.fdf = &my_fdf;
+     FDF.params = 0;
+
+The function f(x) can be evaluated using the following macro,
+
+     #define GSL_FN_FDF_EVAL_F(FDF,x)
+          (*((FDF)->f))(x,(FDF)->params)
+
+The derivative f'(x) can be evaluated using the following macro,
+
+     #define GSL_FN_FDF_EVAL_DF(FDF,x)
+          (*((FDF)->df))(x,(FDF)->params)
+
+and both the function y = f(x) and its derivative dy = f'(x) can be
+evaluated at the same time using the following macro,
+
+     #define GSL_FN_FDF_EVAL_F_DF(FDF,x,y,dy)
+          (*((FDF)->fdf))(x,(FDF)->params,(y),(dy))
+
+The macro stores f(x) in its Y argument and f'(x) in its DY argument -
+both of these should be pointers to `double'.
+
+
+File: gsl-ref.info,  Node: Search Bounds and Guesses,  Next: Root Finding Iteration,  Prev: Providing the function to solve,  Up: One dimensional Root-Finding
+
+Search Bounds and Guesses
+=========================
+
+   You provide either search bounds or an initial guess; this section
+explains how search bounds and guesses work and how function arguments
+control them.
+
+   A guess is simply an x value which is iterated until it is within
+the desired precision of a root.  It takes the form of a `double'.
+
+   Search bounds are the endpoints of a interval which is iterated until
+the length of the interval is smaller than the requested precision.  The
+interval is defined by two values, the lower limit and the upper limit.
+Whether the endpoints are intended to be included in the interval or not
+depends on the context in which the interval is used.
+
+
+File: gsl-ref.info,  Node: Root Finding Iteration,  Next: Search Stopping Parameters,  Prev: Search Bounds and Guesses,  Up: One dimensional Root-Finding
+
+Iteration
+=========
+
+   The following functions drive the iteration of each algorithm.  Each
+function performs one iteration to update the state of any solver of the
+corresponding type.  The same functions work for all solvers so that
+different methods can be substituted at runtime without modifications to
+the code.
+
+ - Function: int gsl_root_fsolver_iterate (gsl_root_fsolver * S)
+ - Function: int gsl_root_fdfsolver_iterate (gsl_root_fdfsolver * S)
+     These functions perform a single iteration of the solver S.  If the
+     iteration encounters an unexpected problem then an error code will
+     be returned,
+
+    `GSL_EBADFUNC'
+          the iteration encountered a singular point where the function
+          or its derivative evaluated to `Inf' or `NaN'.
+
+    `GSL_EZERODIV'
+          the derivative of the function vanished at the iteration
+          point, preventing the algorithm from continuing without a
+          division by zero.
+
+   The solver maintains a current best estimate of the root at all
+times.  The bracketing solvers also keep track of the current best
+interval bounding the root.  This information can be accessed with the
+following auxiliary functions,
+
+ - Function: double gsl_root_fsolver_root (const gsl_root_fsolver * S)
+ - Function: double gsl_root_fdfsolver_root (const gsl_root_fdfsolver *
+          S)
+     These functions return the current estimate of the root for the
+     solver S.
+
+ - Function: double gsl_root_fsolver_x_lower (const gsl_root_fsolver *
+          S)
+ - Function: double gsl_root_fsolver_x_upper (const gsl_root_fsolver *
+          S)
+     These functions return the current bracketing interval for the
+     solver S.
+
+
+File: gsl-ref.info,  Node: Search Stopping Parameters,  Next: Root Bracketing Algorithms,  Prev: Root Finding Iteration,  Up: One dimensional Root-Finding
+
+Search Stopping Parameters
+==========================
+
+   A root finding procedure should stop when one of the following
+conditions is true:
+
+   * A root has been found to within the user-specified precision.
+
+   * A user-specified maximum number of iterations has been reached.
+
+   * An error has occurred.
+
+The handling of these conditions is under user control.  The functions
+below allow the user to test the precision of the current result in
+several standard ways.
+
+ - Function: int gsl_root_test_interval (double X_LOWER, double
+          X_UPPER, double EPSREL, double EPSABS)
+     This function tests for the convergence of the interval [X_LOWER,
+     X_UPPER] with absolute error EPSABS and relative error EPSREL.
+     The test returns `GSL_SUCCESS' if the following condition is
+     achieved,
+
+          |a - b| < epsabs + epsrel min(|a|,|b|)
+
+     when the interval x = [a,b] does not include the origin.  If the
+     interval includes the origin then \min(|a|,|b|) is replaced by
+     zero (which is the minimum value of |x| over the interval).  This
+     ensures that the relative error is accurately estimated for roots
+     close to the origin.
+
+     This condition on the interval also implies that any estimate of
+     the root r in the interval satisfies the same condition with
+     respect to the true root r^*,
+
+          |r - r^*| < epsabs + epsrel r^*
+
+     assuming that the true root r^* is contained within the interval.
+
+ - Function: int gsl_root_test_delta (double X1, double X0, double
+          EPSREL, double EPSABS)
+     This function tests for the convergence of the sequence ..., X0,
+     X1 with absolute error EPSABS and relative error EPSREL.  The test
+     returns `GSL_SUCCESS' if the following condition is achieved,
+
+          |x_1 - x_0| < epsabs + epsrel |x_1|
+
+     and returns `GSL_CONTINUE' otherwise.
+
+ - Function: int gsl_root_test_residual (double F, double EPSABS)
+     This function tests the residual value F against the absolute
+     error bound EPSABS.  The test returns `GSL_SUCCESS' if the
+     following condition is achieved,
+
+          |f| < epsabs
+
+     and returns `GSL_CONTINUE' otherwise.  This criterion is suitable
+     for situations where the the precise location of the root, x, is
+     unimportant provided a value can be found where the residual,
+     |f(x)|, is small enough.
+
+
+File: gsl-ref.info,  Node: Root Bracketing Algorithms,  Next: Root Finding Algorithms using Derivatives,  Prev: Search Stopping Parameters,  Up: One dimensional Root-Finding
+
+Root Bracketing Algorithms
+==========================
+
+   The root bracketing algorithms described in this section require an
+initial interval which is guaranteed to contain a root - if a and b are
+the endpoints of the interval then f(a) must differ in sign from f(b).
+This ensures that the function crosses zero at least once in the
+interval.  If a valid initial interval is used then these algorithm
+cannot fail, provided the function is well-behaved.
+
+   Note that a bracketing algorithm cannot find roots of even degree,
+since these do not cross the x-axis.
+
+ - Solver: gsl_root_fsolver_bisection
+     The "bisection algorithm" is the simplest method of bracketing the
+     roots of a function.   It is the slowest algorithm provided by the
+     library, with linear convergence.
+
+     On each iteration, the interval is bisected and the value of the
+     function at the midpoint is calculated.  The sign of this value is
+     used to determine which half of the interval does not contain a
+     root.  That half is discarded to give a new, smaller interval
+     containing the root.  This procedure can be continued indefinitely
+     until the interval is sufficiently small.
+
+     At any time the current estimate of the root is taken as the
+     midpoint of the interval.
+
+
+ - Solver: gsl_root_fsolver_falsepos
+     The "false position algorithm" is a method of finding roots based
+     on linear interpolation.  Its convergence is linear, but it is
+     usually faster than bisection.
+
+     On each iteration a line is drawn between the endpoints (a,f(a))
+     and (b,f(b)) and the point where this line crosses the x-axis
+     taken as a "midpoint".  The value of the function at this point is
+     calculated and its sign is used to determine which side of the
+     interval does not contain a root.  That side is discarded to give a
+     new, smaller interval containing the root.  This procedure can be
+     continued indefinitely until the interval is sufficiently small.
+
+     The best estimate of the root is taken from the linear
+     interpolation of the interval on the current iteration.
+
+
+ - Solver: gsl_root_fsolver_brent
+     The "Brent-Dekker method" (referred to here as "Brent's method")
+     combines an interpolation strategy with the bisection algorithm.
+     This produces a fast algorithm which is still robust.
+
+     On each iteration Brent's method approximates the function using an
+     interpolating curve.  On the first iteration this is a linear
+     interpolation of the two endpoints.  For subsequent iterations the
+     algorithm uses an inverse quadratic fit to the last three points,
+     for higher accuracy.  The intercept of the interpolating curve
+     with the x-axis is taken as a guess for the root.  If it lies
+     within the bounds of the current interval then the interpolating
+     point is accepted, and used to generate a smaller interval.  If
+     the interpolating point is not accepted then the algorithm falls
+     back to an ordinary bisection step.
+
+     The best estimate of the root is taken from the most recent
+     interpolation or bisection.
+
+
+File: gsl-ref.info,  Node: Root Finding Algorithms using Derivatives,  Next: Root Finding Examples,  Prev: Root Bracketing Algorithms,  Up: One dimensional Root-Finding
+
+Root Finding Algorithms using Derivatives
+=========================================
+
+   The root polishing algorithms described in this section require an
+initial guess for the location of the root.  There is no absolute
+guarantee of convergence - the function must be suitable for this
+technique and the initial guess must be sufficiently close to the root
+for it to work.  When these conditions are satisfied then convergence is
+quadratic.
+
+   These algorithms make use of both the function and its derivative.
+
+ - Derivative Solver: gsl_root_fdfsolver_newton
+     Newton's Method is the standard root-polishing algorithm.  The
+     algorithm begins with an initial guess for the location of the
+     root.  On each iteration, a line tangent to the function f is
+     drawn at that position.  The point where this line crosses the
+     x-axis becomes the new guess.  The iteration is defined by the
+     following sequence,
+
+          x_{i+1} = x_i - f(x_i)/f'(x_i)
+
+     Newton's method converges quadratically for single roots, and
+     linearly for multiple roots.
+
+
+ - Derivative Solver: gsl_root_fdfsolver_secant
+     The "secant method" is a simplified version of Newton's method does
+     not require the computation of the derivative on every step.
+
+     On its first iteration the algorithm begins with Newton's method,
+     using the derivative to compute a first step,
+
+          x_1 = x_0 - f(x_0)/f'(x_0)
+
+     Subsequent iterations avoid the evaluation of the derivative by
+     replacing it with a numerical estimate, the slope through the
+     previous two points,
+
+          x_{i+1} = x_i f(x_i) / f'_{est} where
+           f'_{est} = (f(x_i) - f(x_{i-1})/(x_i - x_{i-1})
+
+     When the derivative does not change significantly in the vicinity
+     of the root the secant method gives a useful saving.
+     Asymptotically the secant method is faster than Newton's method
+     whenever the cost of evaluating the derivative is more than 0.44
+     times the cost of evaluating the function itself.  As with all
+     methods of computing a numerical derivative the estimate can
+     suffer from cancellation errors if the separation of the points
+     becomes too small.
+
+     On single roots, the method has a convergence of order (1 + \sqrt
+     5)/2 (approximately 1.62).  It converges linearly for multiple
+     roots.
+
+
+ - Derivative Solver: gsl_root_fdfsolver_steffenson
+     The "Steffenson Method" provides the fastest convergence of all the
+     routines.  It combines the basic Newton algorithm with an Aitken
+     "delta-squared" acceleration.  If the Newton iterates are x_i then
+     the acceleration procedure generates a new sequence R_i,
+
+          R_i = x_i - (x_{i+1} - x_i)^2 / (x_{i+2} - 2 x_{i+1} + x_{i})
+
+     which converges faster than the original sequence under reasonable
+     conditions.  The new sequence requires three terms before it can
+     produce its first value so the method returns accelerated values
+     on the second and subsequent iterations.  On the first iteration
+     it returns the ordinary Newton estimate.  The Newton iterate is
+     also returned if the denominator of the acceleration term ever
+     becomes zero.
+
+     As with all acceleration procedures this method can become
+     unstable if the function is not well-behaved.
+
+
+File: gsl-ref.info,  Node: Root Finding Examples,  Next: Root Finding References and Further Reading,  Prev: Root Finding Algorithms using Derivatives,  Up: One dimensional Root-Finding
+
+Examples
+========
+
+   For any root finding algorithm we need to prepare the function to be
+solved.  For this example we will use the general quadratic equation
+described earlier.  We first need a header file (`demo_fn.h') to define
+the function parameters,
+
+     struct quadratic_params
+       {
+         double a, b, c;
+       };
+     
+     double quadratic (double x, void *params);
+     double quadratic_deriv (double x, void *params);
+     void quadratic_fdf (double x, void *params,
+                         double *y, double *dy);
+
+We place the function definitions in a separate file (`demo_fn.c'),
+
+     double
+     quadratic (double x, void *params)
+     {
+       struct quadratic_params *p
+         = (struct quadratic_params *) params;
+     
+       double a = p->a;
+       double b = p->b;
+       double c = p->c;
+     
+       return (a * x + b) * x + c;
+     }
+     
+     double
+     quadratic_deriv (double x, void *params)
+     {
+       struct quadratic_params *p
+         = (struct quadratic_params *) params;
+     
+       double a = p->a;
+       double b = p->b;
+       double c = p->c;
+     
+       return 2.0 * a * x + b;
+     }
+     
+     void
+     quadratic_fdf (double x, void *params,
+                    double *y, double *dy)
+     {
+       struct quadratic_params *p
+         = (struct quadratic_params *) params;
+     
+       double a = p->a;
+       double b = p->b;
+       double c = p->c;
+     
+       *y = (a * x + b) * x + c;
+       *dy = 2.0 * a * x + b;
+     }
+
+The first program uses the function solver `gsl_root_fsolver_brent' for
+Brent's method and the general quadratic defined above to solve the
+following equation,
+
+     x^2 - 5 = 0
+
+with solution x = \sqrt 5 = 2.236068...
+
+     #include <stdio.h>
+     #include <gsl/gsl_errno.h>
+     #include <gsl/gsl_math.h>
+     #include <gsl/gsl_roots.h>
+     
+     #include "demo_fn.h"
+     #include "demo_fn.c"
+     
+     int
+     main (void)
+     {
+       int status;
+       int iter = 0, max_iter = 100;
+       const gsl_root_fsolver_type *T;
+       gsl_root_fsolver *s;
+       double r = 0, r_expected = sqrt (5.0);
+       double x_lo = 0.0, x_hi = 5.0;
+       gsl_function F;
+       struct quadratic_params params = {1.0, 0.0, -5.0};
+     
+       F.function = &quadratic;
+       F.params = &params;
+     
+       T = gsl_root_fsolver_brent;
+       s = gsl_root_fsolver_alloc (T);
+       gsl_root_fsolver_set (s, &F, x_lo, x_hi);
+     
+       printf ("using %s method\n",
+               gsl_root_fsolver_name (s));
+     
+       printf ("%5s [%9s, %9s] %9s %10s %9s\n",
+               "iter", "lower", "upper", "root",
+               "err", "err(est)");
+     
+       do
+         {
+           iter++;
+           status = gsl_root_fsolver_iterate (s);
+           r = gsl_root_fsolver_root (s);
+           x_lo = gsl_root_fsolver_x_lower (s);
+           x_hi = gsl_root_fsolver_x_upper (s);
+           status = gsl_root_test_interval (x_lo, x_hi,
+                                            0, 0.001);
+     
+           if (status == GSL_SUCCESS)
+             printf ("Converged:\n");
+     
+           printf ("%5d [%.7f, %.7f] %.7f %+.7f %.7f\n",
+                   iter, x_lo, x_hi,
+                   r, r - r_expected,
+                   x_hi - x_lo);
+         }
+       while (status == GSL_CONTINUE && iter < max_iter);
+       return status;
+     }
+
+Here are the results of the iterations,
+
+     bash$ ./a.out
+     using brent method
+      iter [    lower,     upper]      root        err  err(est)
+         1 [1.0000000, 5.0000000] 1.0000000 -1.2360680 4.0000000
+         2 [1.0000000, 3.0000000] 3.0000000 +0.7639320 2.0000000
+         3 [2.0000000, 3.0000000] 2.0000000 -0.2360680 1.0000000
+         4 [2.2000000, 3.0000000] 2.2000000 -0.0360680 0.8000000
+         5 [2.2000000, 2.2366300] 2.2366300 +0.0005621 0.0366300
+     Converged:
+         6 [2.2360634, 2.2366300] 2.2360634 -0.0000046 0.0005666
+
+If the program is modified to use the bisection solver instead of
+Brent's method, by changing `gsl_root_fsolver_brent' to
+`gsl_root_fsolver_bisection' the slower convergence of the Bisection
+method can be observed,
+
+     bash$ ./a.out
+     using bisection method
+      iter [    lower,     upper]      root        err  err(est)
+         1 [0.0000000, 2.5000000] 1.2500000 -0.9860680 2.5000000
+         2 [1.2500000, 2.5000000] 1.8750000 -0.3610680 1.2500000
+         3 [1.8750000, 2.5000000] 2.1875000 -0.0485680 0.6250000
+         4 [2.1875000, 2.5000000] 2.3437500 +0.1076820 0.3125000
+         5 [2.1875000, 2.3437500] 2.2656250 +0.0295570 0.1562500
+         6 [2.1875000, 2.2656250] 2.2265625 -0.0095055 0.0781250
+         7 [2.2265625, 2.2656250] 2.2460938 +0.0100258 0.0390625
+         8 [2.2265625, 2.2460938] 2.2363281 +0.0002601 0.0195312
+         9 [2.2265625, 2.2363281] 2.2314453 -0.0046227 0.0097656
+        10 [2.2314453, 2.2363281] 2.2338867 -0.0021813 0.0048828
+        11 [2.2338867, 2.2363281] 2.2351074 -0.0009606 0.0024414
+     Converged:
+        12 [2.2351074, 2.2363281] 2.2357178 -0.0003502 0.0012207
+
+   The next program solves the same function using a derivative solver
+instead.
+
+     #include <stdio.h>
+     #include <gsl/gsl_errno.h>
+     #include <gsl/gsl_math.h>
+     #include <gsl/gsl_roots.h>
+     
+     #include "demo_fn.h"
+     #include "demo_fn.c"
+     
+     int
+     main (void)
+     {
+       int status;
+       int iter = 0, max_iter = 100;
+       const gsl_root_fdfsolver_type *T;
+       gsl_root_fdfsolver *s;
+       double x0, x = 5.0, r_expected = sqrt (5.0);
+       gsl_function_fdf FDF;
+       struct quadratic_params params = {1.0, 0.0, -5.0};
+     
+       FDF.f = &quadratic;
+       FDF.df = &quadratic_deriv;
+       FDF.fdf = &quadratic_fdf;
+       FDF.params = &params;
+     
+       T = gsl_root_fdfsolver_newton;
+       s = gsl_root_fdfsolver_alloc (T);
+       gsl_root_fdfsolver_set (s, &FDF, x);
+     
+       printf ("using %s method\n",
+               gsl_root_fdfsolver_name (s));
+     
+       printf ("%-5s %10s %10s %10s\n",
+               "iter", "root", "err", "err(est)");
+       do
+         {
+           iter++;
+           status = gsl_root_fdfsolver_iterate (s);
+           x0 = x;
+           x = gsl_root_fdfsolver_root (s);
+           status = gsl_root_test_delta (x, x0, 0, 1e-3);
+     
+           if (status == GSL_SUCCESS)
+             printf ("Converged:\n");
+     
+           printf ("%5d %10.7f %+10.7f %10.7f\n",
+                   iter, x, x - r_expected, x - x0);
+         }
+       while (status == GSL_CONTINUE && iter < max_iter);
+       return status;
+     }
+
+Here are the results for Newton's method,
+
+     bash$ ./a.out
+     using newton method
+     iter        root        err   err(est)
+         1  3.0000000 +0.7639320 -2.0000000
+         2  2.3333333 +0.0972654 -0.6666667
+         3  2.2380952 +0.0020273 -0.0952381
+     Converged:
+         4  2.2360689 +0.0000009 -0.0020263
+
+Note that the error can be estimated more accurately by taking the
+difference between the current iterate and next iterate rather than the
+previous iterate.  The other derivative solvers can be investigated by
+changing `gsl_root_fdfsolver_newton' to `gsl_root_fdfsolver_secant' or
+`gsl_root_fdfsolver_steffenson'.
+
+
+File: gsl-ref.info,  Node: Root Finding References and Further Reading,  Prev: Root Finding Examples,  Up: One dimensional Root-Finding
+
+References and Further Reading
+==============================
+
+For information on the Brent-Dekker algorithm see the following two
+papers,
+
+     R. P. Brent, "An algorithm with guaranteed convergence for finding
+     a zero of a function", `Computer Journal', 14 (1971) 422-425
+
+     J. C. P. Bus and T. J. Dekker, "Two Efficient Algorithms with
+     Guaranteed Convergence for Finding a Zero of a Function", `ACM
+     Transactions of Mathematical Software', Vol. 1 No. 4 (1975) 330-345
+
+
+File: gsl-ref.info,  Node: One dimensional Minimization,  Next: Multidimensional Root-Finding,  Prev: One dimensional Root-Finding,  Up: Top
+
+One dimensional Minimization
+****************************
+
+   This chapter describes routines for finding minima of arbitrary
+one-dimensional functions.  The library provides low level components
+for a variety of iterative minimizers and convergence tests.  These can
+be combined by the user to achieve the desired solution, with full
+access to the intermediate steps of the algorithms.  Each class of
+methods uses the same framework, so that you can switch between
+minimizers at runtime without needing to recompile your program.  Each
+instance of a minimizer keeps track of its own state, allowing the
+minimizers to be used in multi-threaded programs.
+
+   The header file `gsl_min.h' contains prototypes for the minimization
+functions and related declarations.  To use the minimization algorithms
+to find the maximum of a function simply invert its sign.
+
+* Menu:
+
+* Minimization Overview::
+* Minimization Caveats::
+* Initializing the Minimizer::
+* Providing the function to minimize::
+* Minimization Iteration::
+* Minimization Stopping Parameters::
+* Minimization Algorithms::
+* Minimization Examples::
+* Minimization References and Further Reading::
+
+
+File: gsl-ref.info,  Node: Minimization Overview,  Next: Minimization Caveats,  Up: One dimensional Minimization
+
+Overview
+========
+
+   The minimization algorithms begin with a bounded region known to
+contain a minimum.  The region is described by an lower bound a and an
+upper bound b, with an estimate of the minimum x.
+
+The value of the function at x must be less than the value of the
+function at the ends of the interval,
+
+     f(a) > f(x) < f(b)
+
+This condition guarantees that a minimum is contained somewhere within
+the interval.  On each iteration a new point x' is selected using one
+of the available algorithms.  If the new point is a better estimate of
+the minimum, f(x') < f(x), then the current estimate of the minimum x
+is updated.  The new point also allows the size of the bounded interval
+to be reduced, by choosing the most compact set of points which
+satisfies the constraint f(a) > f(x) < f(b).  The interval is reduced
+until it encloses the true minimum to a desired tolerance.  This
+provides a best estimate of the location of the minimum and a rigorous
+error estimate.
+
+   Several bracketing algorithms are available within a single
+framework.  The user provides a high-level driver for the algorithm,
+and the library provides the individual functions necessary for each of
+the steps.  There are three main phases of the iteration.  The steps
+are,
+
+   * initialize minimizer state, S, for algorithm T
+
+   * update S using the iteration T
+
+   * test S for convergence, and repeat iteration if necessary
+
+The state for the minimizers is held in a `gsl_min_fminimizer' struct.
+The updating procedure uses only function evaluations (not derivatives).
+
+
+File: gsl-ref.info,  Node: Minimization Caveats,  Next: Initializing the Minimizer,  Prev: Minimization Overview,  Up: One dimensional Minimization
+
+Caveats
+=======
+
+   Note that minimization functions can only search for one minimum at a
+time.  When there are several minima in the search area, the first
+minimum to be found will be returned; however it is difficult to predict
+which of the minima this will be. _In most cases, no error will be
+reported if you try to find a minimum in an area where there is more
+than one._
+
+   With all minimization algorithms it can be difficult to determine the
+location of the minimum to full numerical precision.  The behavior of
+the function in the region of the minimum x^* can be approximated by a
+Taylor expansion,
+
+     y = f(x^*) + (1/2) f''(x^*) (x - x^*)^2
+
+and the second term of this expansion can be lost when added to the
+first term at finite precision.  This magnifies the error in locating
+x^*, making it proportional to \sqrt \epsilon (where \epsilon is the
+relative accuracy of the floating point numbers).  For functions with
+higher order minima, such as x^4, the magnification of the error is
+correspondingly worse.  The best that can be achieved is to converge to
+the limit of numerical accuracy in the function values, rather than the
+location of the minimum itself.
+
+
+File: gsl-ref.info,  Node: Initializing the Minimizer,  Next: Providing the function to minimize,  Prev: Minimization Caveats,  Up: One dimensional Minimization
+
+Initializing the Minimizer
+==========================
+
+ - Function: gsl_min_fminimizer * gsl_min_fminimizer_alloc (const
+          gsl_min_fminimizer_type * T)
+     This function returns a pointer to a a newly allocated instance of
+     a minimizer of type T.  For example, the following code creates an
+     instance of a golden section minimizer,
+
+          const gsl_min_fminimizer_type * T
+            = gsl_min_fminimizer_goldensection;
+          gsl_min_fminimizer * s
+            = gsl_min_fminimizer_alloc (T);
+
+     If there is insufficient memory to create the minimizer then the
+     function returns a null pointer and the error handler is invoked
+     with an error code of `GSL_ENOMEM'.
+
+ - Function: int gsl_min_fminimizer_set (gsl_min_fminimizer * S,
+          gsl_function * F, double MINIMUM, double X_LOWER, double
+          X_UPPER)
+     This function sets, or resets, an existing minimizer S to use the
+     function F and the initial search interval [X_LOWER, X_UPPER],
+     with a guess for the location of the minimum MINIMUM.
+
+     If the interval given does not contain a minimum, then the function
+     returns an error code of `GSL_FAILURE'.
+
+ - Function: int gsl_min_fminimizer_set_with_values (gsl_min_fminimizer
+          * S, gsl_function * F, double MINIMUM, double F_MINIMUM,
+          double X_LOWER, double F_LOWER, double X_UPPER, double
+          F_UPPER)
+     This function is equivalent to `gsl_min_fminimizer_set' but uses
+     the values F_MINIMUM, F_LOWER and F_UPPER instead of computing
+     `f(minimum)', `f(x_lower)' and `f(x_upper)'.
+
+ - Function: void gsl_min_fminimizer_free (gsl_min_fminimizer * S)
+     This function frees all the memory associated with the minimizer S.
+
+ - Function: const char * gsl_min_fminimizer_name (const
+          gsl_min_fminimizer * S)
+     This function returns a pointer to the name of the minimizer.  For
+     example,
+
+          printf("s is a '%s' minimizer\n",
+                 gsl_min_fminimizer_name (s));
+
+     would print something like `s is a 'brent' minimizer'.
+
+
+File: gsl-ref.info,  Node: Providing the function to minimize,  Next: Minimization Iteration,  Prev: Initializing the Minimizer,  Up: One dimensional Minimization
+
+Providing the function to minimize
+==================================
+
+   You must provide a continuous function of one variable for the
+minimizers to operate on.  In order to allow for general parameters the
+functions are defined by a `gsl_function' data type (*note Providing
+the function to solve::).
+
+
+File: gsl-ref.info,  Node: Minimization Iteration,  Next: Minimization Stopping Parameters,  Prev: Providing the function to minimize,  Up: One dimensional Minimization
+
+Iteration
+=========
+
+   The following functions drive the iteration of each algorithm.  Each
+function performs one iteration to update the state of any minimizer of
+the corresponding type.  The same functions work for all minimizers so
+that different methods can be substituted at runtime without
+modifications to the code.
+
+ - Function: int gsl_min_fminimizer_iterate (gsl_min_fminimizer * S)
+     This function performs a single iteration of the minimizer S.  If
+     the iteration encounters an unexpected problem then an error code
+     will be returned,
+
+    `GSL_EBADFUNC'
+          the iteration encountered a singular point where the function
+          evaluated to `Inf' or `NaN'.
+
+    `GSL_FAILURE'
+          the algorithm could not improve the current best
+          approximation or bounding interval.
+
+   The minimizer maintains a current best estimate of the minimum at all
+times, and the current interval bounding the minimum.  This information
+can be accessed with the following auxiliary functions,
+
+ - Function: double gsl_min_fminimizer_minimum (const
+          gsl_min_fminimizer * S)
+     This function returns the current estimate of the minimum for the
+     minimizer S.
+
+ - Function: double gsl_interval gsl_min_fminimizer_x_upper (const
+          gsl_min_fminimizer * S)
+ - Function: double gsl_interval gsl_min_fminimizer_x_lower (const
+          gsl_min_fminimizer * S)
+     These functions return the current upper and lower bound of the
+     interval for the minimizer S.
+
+
+File: gsl-ref.info,  Node: Minimization Stopping Parameters,  Next: Minimization Algorithms,  Prev: Minimization Iteration,  Up: One dimensional Minimization
+
+Stopping Parameters
+===================
+
+   A minimization procedure should stop when one of the following
+conditions is true:
+
+   * A minimum has been found to within the user-specified precision.
+
+   * A user-specified maximum number of iterations has been reached.
+
+   * An error has occurred.
+
+The handling of these conditions is under user control.  The function
+below allows the user to test the precision of the current result.
+
+ - Function: int gsl_min_test_interval (double X_LOWER, double X_UPPER,
+          double EPSREL, double EPSABS)
+     This function tests for the convergence of the interval [X_LOWER,
+     X_UPPER] with absolute error EPSABS and relative error EPSREL.
+     The test returns `GSL_SUCCESS' if the following condition is
+     achieved,
+
+          |a - b| < epsabs + epsrel min(|a|,|b|)
+
+     when the interval x = [a,b] does not include the origin.  If the
+     interval includes the origin then \min(|a|,|b|) is replaced by
+     zero (which is the minimum value of |x| over the interval).  This
+     ensures that the relative error is accurately estimated for minima
+     close to the origin.
+
+     This condition on the interval also implies that any estimate of
+     the minimum x_m in the interval satisfies the same condition with
+     respect to the true minimum x_m^*,
+
+          |x_m - x_m^*| < epsabs + epsrel x_m^*
+
+     assuming that the true minimum x_m^* is contained within the
+     interval.
+
+
+File: gsl-ref.info,  Node: Minimization Algorithms,  Next: Minimization Examples,  Prev: Minimization Stopping Parameters,  Up: One dimensional Minimization
+
+Minimization Algorithms
+=======================
+
+   The minimization algorithms described in this section require an
+initial interval which is guaranteed to contain a minimum -- if a and b
+are the endpoints of the interval and x is an estimate of the minimum
+then f(a) > f(x) < f(b).  This ensures that the function has at least
+one minimum somewhere in the interval.  If a valid initial interval is
+used then these algorithm cannot fail, provided the function is
+well-behaved.
+
+ - Minimizer: gsl_min_fminimizer_goldensection
+     The "golden section algorithm" is the simplest method of bracketing
+     the minimum of a function.  It is the slowest algorithm provided
+     by the library, with linear convergence.
+
+     On each iteration, the algorithm first compares the subintervals
+     from the endpoints to the current minimum.  The larger subinterval
+     is divided in a golden section (using the famous ratio (3-\sqrt
+     5)/2 = 0.3189660...) and the value of the function at this new
+     point is calculated.  The new value is used with the constraint
+     f(a') > f(x') < f(b') to a select new interval containing the
+     minimum, by discarding the least useful point.  This procedure can
+     be continued indefinitely until the interval is sufficiently
+     small.  Choosing the golden section as the bisection ratio can be
+     shown to provide the fastest convergence for this type of
+     algorithm.
+
+
+ - Minimizer: gsl_min_fminimizer_brent
+     The "Brent minimization algorithm" combines a parabolic
+     interpolation with the golden section algorithm.  This produces a
+     fast algorithm which is still robust.
+
+     The outline of the algorithm can be summarized as follows: on each
+     iteration Brent's method approximates the function using an
+     interpolating parabola through three existing points.  The minimum
+     of the parabola is taken as a guess for the minimum.  If it lies
+     within the bounds of the current interval then the interpolating
+     point is accepted, and used to generate a smaller interval.  If
+     the interpolating point is not accepted then the algorithm falls
+     back to an ordinary golden section step.  The full details of
+     Brent's method include some additional checks to improve
+     convergence.
+
+
+File: gsl-ref.info,  Node: Minimization Examples,  Next: Minimization References and Further Reading,  Prev: Minimization Algorithms,  Up: One dimensional Minimization
+
+Examples
+========
+
+   The following program uses the Brent algorithm to find the minimum of
+the function f(x) = \cos(x) + 1, which occurs at x = \pi.  The starting
+interval is (0,6), with an initial guess for the minimum of 2.
+
+     #include <stdio.h>
+     #include <gsl/gsl_errno.h>
+     #include <gsl/gsl_math.h>
+     #include <gsl/gsl_min.h>
+     
+     double fn1 (double x, void * params)
+     {
+       return cos(x) + 1.0;
+     }
+     
+     int
+     main (void)
+     {
+       int status;
+       int iter = 0, max_iter = 100;
+       const gsl_min_fminimizer_type *T;
+       gsl_min_fminimizer *s;
+       double m = 2.0, m_expected = M_PI;
+       double a = 0.0, b = 6.0;
+       gsl_function F;
+     
+       F.function = &fn1;
+       F.params = 0;
+     
+       T = gsl_min_fminimizer_brent;
+       s = gsl_min_fminimizer_alloc (T);
+       gsl_min_fminimizer_set (s, &F, m, a, b);
+     
+       printf ("using %s method\n",
+               gsl_min_fminimizer_name (s));
+     
+       printf ("%5s [%9s, %9s] %9s %10s %9s\n",
+               "iter", "lower", "upper", "min",
+               "err", "err(est)");
+     
+       printf ("%5d [%.7f, %.7f] %.7f %+.7f %.7f\n",
+               iter, a, b,
+               m, m - m_expected, b - a);
+     
+       do
+         {
+           iter++;
+           status = gsl_min_fminimizer_iterate (s);
+     
+           m = gsl_min_fminimizer_minimum (s);
+           a = gsl_min_fminimizer_x_lower (s);
+           b = gsl_min_fminimizer_x_upper (s);
+     
+           status
+             = gsl_min_test_interval (a, b, 0.001, 0.0);
+     
+           if (status == GSL_SUCCESS)
+             printf ("Converged:\n");
+     
+           printf ("%5d [%.7f, %.7f] "
+                   "%.7f %.7f %+.7f %.7f\n",
+                   iter, a, b,
+                   m, m_expected, m - m_expected, b - a);
+         }
+       while (status == GSL_CONTINUE && iter < max_iter);
+     
+       return status;
+     }
+
+Here are the results of the minimization procedure.
+
+     bash$ ./a.out
+         0 [0.0000000, 6.0000000] 2.0000000 -1.1415927 6.0000000
+         1 [2.0000000, 6.0000000] 3.2758640 +0.1342713 4.0000000
+         2 [2.0000000, 3.2831929] 3.2758640 +0.1342713 1.2831929
+         3 [2.8689068, 3.2831929] 3.2758640 +0.1342713 0.4142862
+         4 [2.8689068, 3.2831929] 3.2758640 +0.1342713 0.4142862
+         5 [2.8689068, 3.2758640] 3.1460585 +0.0044658 0.4069572
+         6 [3.1346075, 3.2758640] 3.1460585 +0.0044658 0.1412565
+         7 [3.1346075, 3.1874620] 3.1460585 +0.0044658 0.0528545
+         8 [3.1346075, 3.1460585] 3.1460585 +0.0044658 0.0114510
+         9 [3.1346075, 3.1460585] 3.1424060 +0.0008133 0.0114510
+        10 [3.1346075, 3.1424060] 3.1415885 -0.0000041 0.0077985
+     Converged:
+        11 [3.1415885, 3.1424060] 3.1415927 -0.0000000 0.0008175
+
+
+File: gsl-ref.info,  Node: Minimization References and Further Reading,  Prev: Minimization Examples,  Up: One dimensional Minimization
+
+References and Further Reading
+==============================
+
+Further information on Brent's algorithm is available in the following
+book,
+
+     Richard Brent, `Algorithms for minimization without derivatives',
+     Prentice-Hall (1973)
+

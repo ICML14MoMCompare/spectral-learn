@@ -1,0 +1,1202 @@
+This is gsl-ref.info, produced by makeinfo version 4.0 from
+gsl-ref.texi.
+
+INFO-DIR-SECTION Scientific software
+START-INFO-DIR-ENTRY
+* gsl-ref: (gsl-ref).                   GNU Scientific Library - Reference
+END-INFO-DIR-ENTRY
+
+   This file documents the GNU Scientific Library.
+
+   Copyright (C) 1996, 1997, 1998, 1999, 2000, 2001 The GSL Team.
+
+   Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.1 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.  A
+copy of the license is included in the section entitled "GNU Free
+Documentation License".
+
+
+File: gsl-ref.info,  Node: Complex arithmetic operators,  Next: Elementary Complex Functions,  Prev: Properties of complex numbers,  Up: Complex Numbers
+
+Complex arithmetic operators
+============================
+
+ - Function: gsl_complex gsl_complex_add (gsl_complex A, gsl_complex B)
+     This function returns the sum of the complex numbers A and B,
+     z=a+b.
+
+ - Function: gsl_complex gsl_complex_sub (gsl_complex A, gsl_complex B)
+     This function returns the difference of the complex numbers A and
+     B, z=a-b.
+
+ - Function: gsl_complex gsl_complex_mul (gsl_complex A, gsl_complex B)
+     This function returns the product of the complex numbers A and B,
+     z=ab.
+
+ - Function: gsl_complex gsl_complex_div (gsl_complex A, gsl_complex B)
+     This function returns the quotient of the complex numbers A and B,
+     z=a/b.
+
+ - Function: gsl_complex gsl_complex_add_real (gsl_complex A, double X)
+     This function returns the sum of the complex number A and the real
+     number X, z=a+x.
+
+ - Function: gsl_complex gsl_complex_sub_real (gsl_complex A, double X)
+     This function returns the difference of the complex number A and
+     the real number X, z=a-x.
+
+ - Function: gsl_complex gsl_complex_mul_real (gsl_complex A, double X)
+     This function returns the product of the complex number A and the
+     real number X, z=ax.
+
+ - Function: gsl_complex gsl_complex_div_real (gsl_complex A, double X)
+     This function returns the quotient of the complex number A and the
+     real number X, z=a/x.
+
+ - Function: gsl_complex gsl_complex_add_imag (gsl_complex A, double Y)
+     This function returns the sum of the complex number A and the
+     imaginary number iY, z=a+iy.
+
+ - Function: gsl_complex gsl_complex_sub_imag (gsl_complex A, double Y)
+     This function returns the difference of the complex number A and
+     the imaginary number iY, z=a-iy.
+
+ - Function: gsl_complex gsl_complex_mul_imag (gsl_complex A, double Y)
+     This function returns the product of the complex number A and the
+     imaginary number iY, z=a*(iy).
+
+ - Function: gsl_complex gsl_complex_div_imag (gsl_complex A, double Y)
+     This function returns the quotient of the complex number A and the
+     imaginary number iY, z=a/(iy).
+
+ - Function: gsl_complex gsl_complex_conjugate (gsl_complex Z)
+     This function returns the complex conjugate of the complex number
+     Z, z^* = x - i y.
+
+ - Function: gsl_complex gsl_complex_inverse (gsl_complex Z)
+     This function returns the inverse, or reciprocal, of the complex
+     number Z, 1/z = (x - i y)/(x^2 + y^2).
+
+ - Function: gsl_complex gsl_complex_negative (gsl_complex Z)
+     This function returns the negative of the complex number Z, -z =
+     (-x) + i(-y).
+
+
+File: gsl-ref.info,  Node: Elementary Complex Functions,  Next: Complex Trigonometric Functions,  Prev: Complex arithmetic operators,  Up: Complex Numbers
+
+Elementary Complex Functions
+============================
+
+ - Function: gsl_complex gsl_complex_sqrt (gsl_complex Z)
+     This function returns the square root of the complex number Z,
+     \sqrt z. The branch cut is the negative real axis. The result
+     always lies in the right half of the complex plane.
+
+ - Function: gsl_complex gsl_complex_sqrt_real (double x)
+     This function returns the complex square root of the real number
+     X, where X may be negative.
+
+ - Function: gsl_complex gsl_complex_pow (gsl_complex Z, gsl_complex A)
+     The function returns the complex number Z raised to the complex
+     power A, z^a. This is computed as \exp(\log(z)*a) using complex
+     logarithms and complex exponentials.
+
+ - Function: gsl_complex gsl_complex_pow_real (gsl_complex Z, double X)
+     This function returns the complex number Z raised to the real
+     power X, z^x.
+
+ - Function: gsl_complex gsl_complex_exp (gsl_complex Z)
+     This function returns the complex exponential of the complex number
+     Z, \exp(z).
+
+ - Function: gsl_complex gsl_complex_log (gsl_complex Z)
+     This function returns the complex natural logarithm (base e) of
+     the complex number Z, \log(z).  The branch cut is the negative
+     real axis.
+
+ - Function: gsl_complex gsl_complex_log10 (gsl_complex Z)
+     This function returns the complex base-10 logarithm of the complex
+     number Z, \log_10 (z).
+
+ - Function: gsl_complex gsl_complex_log_b (gsl_complex Z, gsl_complex
+          B)
+     This function returns the complex base-B logarithm of the complex
+     number Z, \log_b(z). This quantity is computed as the ratio
+     \log(z)/\log(b).
+
+
+File: gsl-ref.info,  Node: Complex Trigonometric Functions,  Next: Inverse Complex Trigonometric Functions,  Prev: Elementary Complex Functions,  Up: Complex Numbers
+
+Complex Trigonometric Functions
+===============================
+
+ - Function: gsl_complex gsl_complex_sin (gsl_complex Z)
+     This function returns the complex sine of the complex number Z,
+     \sin(z) = (\exp(iz) - \exp(-iz))/(2i).
+
+ - Function: gsl_complex gsl_complex_cos (gsl_complex Z)
+     This function returns the complex cosine of the complex number Z,
+     \cos(z) = (\exp(iz) + \exp(-iz))/2.
+
+ - Function: gsl_complex gsl_complex_tan (gsl_complex Z)
+     This function returns the complex tangent of the complex number Z,
+     \tan(z) = \sin(z)/\cos(z).
+
+ - Function: gsl_complex gsl_complex_sec (gsl_complex Z)
+     This function returns the complex secant of the complex number Z,
+     \sec(z) = 1/\cos(z).
+
+ - Function: gsl_complex gsl_complex_csc (gsl_complex Z)
+     This function returns the complex cosecant of the complex number Z,
+     \csc(z) = 1/\sin(z).
+
+ - Function: gsl_complex gsl_complex_cot (gsl_complex Z)
+     This function returns the complex cotangent of the complex number
+     Z, \cot(z) = 1/\tan(z).
+
+
+File: gsl-ref.info,  Node: Inverse Complex Trigonometric Functions,  Next: Complex Hyperbolic Functions,  Prev: Complex Trigonometric Functions,  Up: Complex Numbers
+
+Inverse Complex Trigonometric Functions
+=======================================
+
+ - Function: gsl_complex gsl_complex_arcsin (gsl_complex Z)
+     This function returns the complex arcsine of the complex number Z,
+     \arcsin(z). The branch cuts are on the real axis, less than -1 and
+     greater than 1.
+
+ - Function: gsl_complex gsl_complex_arcsin_real (double Z)
+     This function returns the complex arcsine of the real number Z,
+     \arcsin(z). For z between -1 and 1, the function returns a real
+     value in the range (-\pi,\pi]. For z less than -1 the result has a
+     real part of -\pi/2 and a positive imaginary part.  For z greater
+     than 1 the result has a real part of \pi/2 and a negative
+     imaginary part.
+
+ - Function: gsl_complex gsl_complex_arccos (gsl_complex Z)
+     This function returns the complex arccosine of the complex number
+     Z, \arccos(z). The branch cuts are on the real axis, less than -1
+     and greater than 1.
+
+ - Function: gsl_complex gsl_complex_arccos_real (double Z)
+     This function returns the complex arccosine of the real number Z,
+     \arccos(z). For z between -1 and 1, the function returns a real
+     value in the range [0,\pi]. For z less than -1 the result has a
+     real part of \pi/2 and a negative imaginary part.  For z greater
+     than 1 the result is purely imaginary and positive.
+
+ - Function: gsl_complex gsl_complex_arctan (gsl_complex Z)
+     This function returns the complex arctangent of the complex number
+     Z, \arctan(z). The branch cuts are on the imaginary axis, below -i
+     and above i.
+
+ - Function: gsl_complex gsl_complex_arcsec (gsl_complex Z)
+     This function returns the complex arcsecant of the complex number
+     Z, \arcsec(z) = \arccos(1/z).
+
+ - Function: gsl_complex gsl_complex_arcsec_real (double Z)
+     This function returns the complex arcsecant of the real number Z,
+     \arcsec(z) = \arccos(1/z).
+
+ - Function: gsl_complex gsl_complex_arccsc (gsl_complex Z)
+     This function returns the complex arccosecant of the complex
+     number Z, \arccsc(z) = \arcsin(1/z).
+
+ - Function: gsl_complex gsl_complex_arccsc_real (double Z)
+     This function returns the complex arccosecant of the real number Z,
+     \arccsc(z) = \arcsin(1/z).
+
+ - Function: gsl_complex gsl_complex_arccot (gsl_complex Z)
+     This function returns the complex arccotangent of the complex
+     number Z, \arccot(z) = \arctan(1/z).
+
+
+File: gsl-ref.info,  Node: Complex Hyperbolic Functions,  Next: Inverse Complex Hyperbolic Functions,  Prev: Inverse Complex Trigonometric Functions,  Up: Complex Numbers
+
+Complex Hyperbolic Functions
+============================
+
+ - Function: gsl_complex gsl_complex_sinh (gsl_complex Z)
+     This function returns the complex hyperbolic sine of the complex
+     number Z, \sinh(z) = (\exp(z) - \exp(-z))/2.
+
+ - Function: gsl_complex gsl_complex_cosh (gsl_complex Z)
+     This function returns the complex hyperbolic cosine of the complex
+     number Z, \cosh(z) = (\exp(z) + \exp(-z))/2.
+
+ - Function: gsl_complex gsl_complex_tanh (gsl_complex Z)
+     This function returns the complex hyperbolic tangent of the
+     complex number Z, \tanh(z) = \sinh(z)/\cosh(z).
+
+ - Function: gsl_complex gsl_complex_sech (gsl_complex Z)
+     This function returns the complex hyperbolic secant of the complex
+     number Z, \sech(z) = 1/\cosh(z).
+
+ - Function: gsl_complex gsl_complex_csch (gsl_complex Z)
+     This function returns the complex hyperbolic cosecant of the
+     complex number Z, \csch(z) = 1/\sinh(z).
+
+ - Function: gsl_complex gsl_complex_coth (gsl_complex Z)
+     This function returns the complex hyperbolic cotangent of the
+     complex number Z, \coth(z) = 1/\tanh(z).
+
+
+File: gsl-ref.info,  Node: Inverse Complex Hyperbolic Functions,  Next: Complex Number References and Further Reading,  Prev: Complex Hyperbolic Functions,  Up: Complex Numbers
+
+Inverse Complex Hyperbolic Functions
+====================================
+
+ - Function: gsl_complex gsl_complex_arcsinh (gsl_complex Z)
+     This function returns the complex hyperbolic arcsine of the
+     complex number Z, \arcsinh(z).  The branch cuts are on the
+     imaginary axis, below -i and above i.
+
+ - Function: gsl_complex gsl_complex_arccosh (gsl_complex Z)
+     This function returns the complex hyperbolic arccosine of the
+     complex number Z, \arccosh(z).  The branch cut is on the real axis,
+     less than 1.
+
+ - Function: gsl_complex gsl_complex_arccosh_real (double Z)
+     This function returns the complex hyperbolic arccosine of the real
+     number Z, \arccosh(z).
+
+ - Function: gsl_complex gsl_complex_arctanh (gsl_complex Z)
+     This function returns the complex hyperbolic arctangent of the
+     complex number Z, \arctanh(z).  The branch cuts are on the real
+     axis, less than -1 and greater than 1.
+
+ - Function: gsl_complex gsl_complex_arctanh_real (double Z)
+     This function returns the complex hyperbolic arctangent of the real
+     number Z, \arctanh(z).
+
+ - Function: gsl_complex gsl_complex_arcsech (gsl_complex Z)
+     This function returns the complex hyperbolic arcsecant of the
+     complex number Z, \arcsech(z) = \arccosh(1/z).
+
+ - Function: gsl_complex gsl_complex_arccsch (gsl_complex Z)
+     This function returns the complex hyperbolic arccosecant of the
+     complex number Z, \arccsch(z) = \arcsin(1/z).
+
+ - Function: gsl_complex gsl_complex_arccoth (gsl_complex Z)
+     This function returns the complex hyperbolic arccotangent of the
+     complex number Z, \arccoth(z) = \arctanh(1/z).
+
+
+File: gsl-ref.info,  Node: Complex Number References and Further Reading,  Prev: Inverse Complex Hyperbolic Functions,  Up: Complex Numbers
+
+References and Further Reading
+==============================
+
+The implementations of the elementary and trigonometric functions are
+based on the following papers,
+
+     T. E. Hull, Thomas F. Fairgrieve, Ping Tak Peter Tang,
+     "Implementing Complex Elementary Functions Using Exception
+     Handling", `ACM Transactions on Mathematical Software', Volume 20
+     (1994), pp 215-244, Corrigenda, p553
+
+     T. E. Hull, Thomas F. Fairgrieve, Ping Tak Peter Tang,
+     "Implementing the complex arcsin and arccosine functions using
+     exception handling", `ACM Transactions on Mathematical Software',
+     Volume 23 (1997) pp 299-335
+
+The general formulas and details of branch cuts can be found in the
+following books,
+
+     Abramowitz and Stegun, `Handbook of Mathematical Functions',
+     "Circular Functions in Terms of Real and Imaginary Parts", Formulas
+     4.3.55-58, "Inverse Circular Functions in Terms of Real and
+     Imaginary Parts", Formulas 4.4.37-39, "Hyperbolic Functions in
+     Terms of Real and Imaginary Parts", Formulas 4.5.49-52, "Inverse
+     Hyperbolic Functions - relation to Inverse Circular Functions",
+     Formulas 4.6.14-19.
+
+     Dave Gillespie, `Calc Manual', Free Software Foundation, ISBN
+     1-882114-18-3
+
+
+File: gsl-ref.info,  Node: Roots of Polynomials,  Next: Special Functions,  Prev: Complex Numbers,  Up: Top
+
+Roots of Polynomials
+********************
+
+   This chapter describes functions for evaluating and solving
+polynomials.  There are routines for finding real and complex roots of
+quadratic and cubic equations using analytic methods.  An iterative
+polynomial solver is also available for finding the roots of general
+polynomials with real coefficients (of any order).  The functions are
+declared in the header file `gsl_poly.h'.
+
+* Menu:
+
+* Polynomial evaluation::
+* Quadratic equations::
+* Cubic equations::
+* General polynomial equations::
+* Roots of Polynomials Examples::
+* Roots of Polynomials References and Further Reading::
+
+
+File: gsl-ref.info,  Node: Polynomial evaluation,  Next: Quadratic equations,  Up: Roots of Polynomials
+
+Polynomial evaluation
+=====================
+
+ - Function: double gsl_poly_eval (const double c[], const int LEN,
+          const double X)
+     This function evaluates the polynomial c[0] + c[1] x + c[2] x^2 +
+     \dots + c[len-1] x^{len-1} using Horner's method for stability.
+     The function is inlined when possible.
+
+
+File: gsl-ref.info,  Node: Quadratic equations,  Next: Cubic equations,  Prev: Polynomial evaluation,  Up: Roots of Polynomials
+
+Quadratic equations
+===================
+
+ - Function: int gsl_poly_solve_quadratic (double A, double B, double
+          C, double *X0, double *X1)
+     This function finds the real roots of the quadratic equation,
+
+          a x^2 + b x + c = 0
+
+     The number of real roots (either zero or two) is returned, and
+     their locations are stored in X0 and X1.  If no real roots are
+     found then X0 and X1 are not modified.  When two real roots are
+     found they are stored in X0 and X1 in ascending order.  The case
+     of coincident roots is not considered special.  For example
+     (x-1)^2=0 will have two roots, which happen to have exactly equal
+     values.
+
+     The number of roots found depends on the sign of the discriminant
+     b^2 - 4 a c.  This will be subject to rounding and cancellation
+     errors when computed in double precision, and will also be subject
+     to errors if the coefficients of the polynomial are inexact.
+     These errors may cause a discrete change in the number of roots.
+     However, for polynomials with small integer coefficients the
+     discriminant can always be computed exactly.
+
+
+ - Function: int gsl_poly_complex_solve_quadratic (double A, double B,
+          double C, gsl_complex *Z0, gsl_complex *Z1)
+     This function finds the complex roots of the quadratic equation,
+
+          a z^2 + b z + c = 0
+
+     The number of complex roots is returned (always two) and the
+     locations of the roots are stored in Z0 and Z1.  The roots are
+     returned in ascending order, sorted first by their real components
+     and then by their imaginary components.
+
+
+
+File: gsl-ref.info,  Node: Cubic equations,  Next: General polynomial equations,  Prev: Quadratic equations,  Up: Roots of Polynomials
+
+Cubic equations
+===============
+
+ - Function: int gsl_poly_solve_cubic (double A, double B, double C,
+          double *X0, double *X1, double *X2)
+     This function finds the real roots of the cubic equation,
+
+          x^3 + a x^2 + b x + c = 0
+
+     with a leading coefficient of unity.  The number of real roots
+     (either one or three) is returned, and their locations are stored
+     in X0, X1 and X2.  If one real root is found then only X0 is
+     modified.  When three real roots are found they are stored in X0,
+     X1 and X2 in ascending order.  The case of coincident roots is not
+     considered special.  For example, the equation (x-1)^3=0 will have
+     three roots with exactly equal values.
+
+
+ - Function: int gsl_poly_complex_solve_cubic (double A, double B,
+          double C, gsl_complex *Z0, gsl_complex *Z1, gsl_complex *Z2)
+     This function finds the complex roots of the cubic equation,
+
+          z^3 + a z^2 + b z + c = 0
+
+     The number of complex roots is returned (always three) and the
+     locations of the roots are stored in Z0, Z1 and Z2.  The roots are
+     returned in ascending order, sorted first by their real components
+     and then by their imaginary components.
+
+
+
+File: gsl-ref.info,  Node: General polynomial equations,  Next: Roots of Polynomials Examples,  Prev: Cubic equations,  Up: Roots of Polynomials
+
+General polynomial equations
+============================
+
+   The roots of polynomial equations cannot be found analytically beyond
+the special cases of the quadratic, cubic and quartic equation.  The
+algorithm described in this section uses an iterative method to find the
+approximate locations of roots of higher order polynomials.
+
+ - Function: gsl_poly_complex_workspace *
+gsl_poly_complex_workspace_alloc (size_t N)
+     This function allocates space for a `gsl_poly_complex_workspace'
+     struct and a workspace suitable for solving a polynomial with N
+     coefficients using the routine `gsl_poly_complex_solve'.
+
+     The function returns a pointer to the newly allocated
+     `gsl_poly_complex_workspace' if no errors were detected, and a null
+     pointer in the case of error.
+
+ - Function: void gsl_poly_complex_workspace_free
+          (gsl_poly_complex_workspace * W)
+     This function frees all the memory associated with the workspace W.
+
+ - Function: int gsl_poly_complex_solve (const double * A, size_t N,
+          gsl_poly_complex_workspace * W, gsl_complex_packed_ptr Z)
+     This function computes the roots of the general polynomial P(x) =
+     a_0 + a_1 x + a_2 x^2 + ... + a_{n-1} x^{n-1} using balanced-QR
+     reduction of the companion matrix.  The parameter N specifies the
+     length of the coefficient array.  The coefficient of the highest
+     order term must be non-zero.  The function requires a workspace W
+     of the appropriate size.  The n-1 roots are returned in the packed
+     complex array Z of length 2(n-1), alternating real and imaginary
+     parts.
+
+     The function returns `GSL_SUCCESS' if all the roots are found and
+     `GSL_EFAILED' if the QR reduction does not converge.
+
+
+File: gsl-ref.info,  Node: Roots of Polynomials Examples,  Next: Roots of Polynomials References and Further Reading,  Prev: General polynomial equations,  Up: Roots of Polynomials
+
+Examples
+========
+
+   To demonstrate the use of the general polynomial solver we will take
+the polynomial P(x) = x^5 - 1 which has the following roots,
+
+     1, e^{2\pi i /5}, e^{4\pi i /5}, e^{6\pi i /5}, e^{8\pi i /5}
+
+The following program will find these roots.
+
+     #include <stdio.h>
+     #include <gsl/gsl_poly.h>
+     
+     int
+     main (void)
+     {
+       int i;
+       /* coefficient of P(x) =  -1 + x^5  */
+       double a[6] = { -1, 0, 0, 0, 0, 1 };
+       double z[10];
+     
+       gsl_poly_complex_workspace * w
+           = gsl_poly_complex_workspace_alloc (6);
+     
+       gsl_poly_complex_solve (a, 6, w, z);
+     
+       gsl_poly_complex_workspace_free (w);
+     
+       for (i = 0; i < 5; i++)
+         {
+           printf("z%d = %+.18f %+.18f\n",
+                  i, z[2*i], z[2*i+1]);
+         }
+     
+       return 0;
+     }
+
+The output of the program is,
+
+     bash$ ./a.out
+     z0 = -0.809016994374947451 +0.587785252292473137
+     z1 = -0.809016994374947451 -0.587785252292473137
+     z2 = +0.309016994374947451 +0.951056516295153642
+     z3 = +0.309016994374947451 -0.951056516295153642
+     z4 = +1.000000000000000000 +0.000000000000000000
+
+which agrees with the analytic result, z_n = \exp(2 \pi n i/5).
+
+
+File: gsl-ref.info,  Node: Roots of Polynomials References and Further Reading,  Prev: Roots of Polynomials Examples,  Up: Roots of Polynomials
+
+References and Further Reading
+==============================
+
+The balanced-QR method and its error analysis is described in the
+following papers.
+
+     R.S. Martin, G. Peters and J.H. Wilkinson, "The QR Algorithm for
+     Real Hessenberg Matrices", `Numerische Mathematik', 14 (1970),
+     219-231.
+
+     B.N. Parlett and C. Reinsch, "Balancing a Matrix for Calculation of
+     Eigenvalues and Eigenvectors", `Numerische Mathematik', 13 (1969),
+     293-304.
+
+     A. Edelman and H. Murakami, "Polynomial roots from companion matrix
+     eigenvalues", `Mathematics of Computation', Vol. 64 No. 210
+     (1995), 763-776.
+
+
+File: gsl-ref.info,  Node: Special Functions,  Next: Vectors and Matrices,  Prev: Roots of Polynomials,  Up: Top
+
+Special Functions
+*****************
+
+   This chapter describes the GSL special function library.  The library
+includes routines for calculating the values of Airy functions, Bessel
+functions, Clausen functions, Coulomb wave functions, Coupling
+coefficients, the Dawson function, Debye functions, Dilogarithms,
+Elliptic integrals, Jacobi elliptic functions, Error functions,
+Exponential integrals, Fermi-Dirac functions, Gamma functions,
+Gegenbauer functions, Hypergeometric functions, Laguerre functions,
+Legendre functions and Spherical Harmonics, the Psi (Digamma) Function,
+Synchrotron functions, Transport functions, Trigonometric functions and
+Zeta functions.  Each routine also computes an estimate of the numerical
+error in the calculated value of the function.
+
+   The functions are declared in individual header files, such as
+`gsl_sf_airy.h', `gsl_sf_bessel.h', etc.  The complete set of header
+files can be included using the file `gsl_sf.h'.
+
+* Menu:
+
+* Special Function Usage::
+* The gsl_sf_result struct::
+* Special Function Modes::
+* Airy Functions and Derivatives::
+* Bessel Functions::
+* Clausen Functions::
+* Coulomb Functions::
+* Coupling Coefficients::
+* Dawson Function::
+* Debye Functions::
+* Dilogarithm::
+* Elementary Operations::
+* Elliptic Integrals::
+* Elliptic Functions (Jacobi)::
+* Error Functions::
+* Exponential Functions::
+* Exponential Integrals::
+* Fermi-Dirac Function::
+* Gamma Function::
+* Gegenbauer Functions::
+* Hypergeometric Functions::
+* Laguerre Functions::
+* Lambert W Functions::
+* Legendre Functions and Spherical Harmonics::
+* Logarithm and Related Functions::
+* Power Function::
+* Psi (Digamma) Function::
+* Synchrotron Functions::
+* Transport Functions::
+* Trigonometric Functions::
+* Zeta Functions::
+* Special Functions Examples::
+* Special Functions References and Further Reading::
+
+
+File: gsl-ref.info,  Node: Special Function Usage,  Next: The gsl_sf_result struct,  Up: Special Functions
+
+Usage
+=====
+
+   The special functions are available in two calling conventions, a
+"natural form" which returns the numerical value of the function and an
+"error-handling form" which returns an error code.  The two types of
+function provide alternative ways of accessing the same underlying code.
+
+   The "natural form" returns only the value of the function and can be
+used directly in mathematical expressions..  For example, the following
+function call will compute the value of the Bessel function J_0(x),
+
+     double y = gsl_sf_bessel_J0 (x);
+
+There is no way to access an error code or to estimate the error using
+this method.  To allow access to this information the alternative
+error-handling form stores the value and error in a modifiable argument,
+
+     gsl_sf_result result;
+     int status = gsl_sf_bessel_J0_e (x, &result);
+
+The error-handling functions have the suffix `_e'. The returned status
+value indicates error conditions such as overflow, underflow or loss of
+precision.  If there are no errors the error-handling functions return
+`GSL_SUCCESS'.
+
+
+File: gsl-ref.info,  Node: The gsl_sf_result struct,  Next: Special Function Modes,  Prev: Special Function Usage,  Up: Special Functions
+
+The gsl_sf_result struct
+========================
+
+   The error handling form of the special functions always calculate an
+error estimate along with the value of the result.  Therefore,
+structures are provided for amalgamating a value and error estimate.
+These structures are declared in the header file `gsl_sf_result.h'.
+
+   The `gsl_sf_result' struct contains value and error fields.
+
+     typedef struct
+     {
+       double val;
+       double err;
+     } gsl_sf_result;
+
+The field VAL contains the value and the field ERR contains an estimate
+of the absolute error in the value.
+
+   In some cases, an overflow or underflow can be detected and handled
+by a function.  In this case, it may be possible to return a scaling
+exponent as well as an error/value pair in order to save the result from
+exceeding the dynamic range of the built-in types.  The
+`gsl_sf_result_e10' struct contains value and error fields as well as
+an exponent field such that the actual result is obtained as `result *
+10^(e10)'.
+
+     typedef struct
+     {
+       double val;
+       double err;
+       int    e10;
+     } gsl_sf_result_e10;
+
+
+File: gsl-ref.info,  Node: Special Function Modes,  Next: Airy Functions and Derivatives,  Prev: The gsl_sf_result struct,  Up: Special Functions
+
+Modes
+=====
+
+   The goal of the library is to achieve double precision accuracy
+wherever possible.  However the cost of evaluating some special
+functions to double precision can be significant, particularly where
+very high order terms are required.  In these cases a `mode' argument
+allows the accuracy of the function to be reduced in order to improve
+performance.  The following precision levels are available for the mode
+argument,
+
+`GSL_PREC_DOUBLE'
+     Double-precision, a relative accuracy of approximately 2 * 10^-16.
+
+`GSL_PREC_SINGLE'
+     Single-precision, a relative accuracy of approximately 10^-7.
+
+`GSL_PREC_APPROX'
+     Approximate values, a relative accuracy of approximately 5 * 10^-4.
+
+The approximate mode provides the fastest evaluation at the lowest
+accuracy.
+
+
+File: gsl-ref.info,  Node: Airy Functions and Derivatives,  Next: Bessel Functions,  Prev: Special Function Modes,  Up: Special Functions
+
+Airy Functions and Derivatives
+==============================
+
+   The Airy functions Ai(x) and Bi(x) are defined by the integral
+representations,
+
+     Ai(x) = (1/\pi) \int_0^\infty \cos((1/3) t^3 + xt) dt
+     Bi(x) = (1/\pi) \int_0^\infty (e^(-(1/3) t^3) + \sin((1/3) t^3 + xt)) dt
+
+For further information see Abramowitz & Stegun, Section 10.4. The Airy
+functions are defined in the header file `gsl_sf_airy.h'.
+
+* Menu:
+
+* Airy Functions::
+* Derivatives of Airy Functions::
+* Zeros of Airy Functions::
+* Zeros of Derivatives of Airy Functions::
+
+
+File: gsl-ref.info,  Node: Airy Functions,  Next: Derivatives of Airy Functions,  Up: Airy Functions and Derivatives
+
+Airy Functions
+--------------
+
+ - Function: double gsl_sf_airy_Ai (double X, gsl_mode_t MODE)
+ - Function: int gsl_sf_airy_Ai_e (double X, gsl_mode_t MODE,
+          gsl_sf_result * RESULT)
+     These routines compute the Airy function Ai(x) with an accuracy
+     specified by MODE.
+
+ - Function: double gsl_sf_airy_Bi (double X, gsl_mode_t MODE)
+ - Function: int gsl_sf_airy_Bi_e (double X, gsl_mode_t MODE,
+          gsl_sf_result * RESULT)
+     These routines compute the Airy function Bi(x) with an accuracy
+     specified by MODE.
+
+ - Function: double gsl_sf_airy_Ai_scaled (double X, gsl_mode_t MODE)
+ - Function: int gsl_sf_airy_Ai_scaled_e (double X, gsl_mode_t MODE,
+          gsl_sf_result * RESULT)
+     These routines compute a scaled version of the Airy function
+     S_A(x) Ai(x).  For x>0 the scaling factor S_A(x) is \exp(+(2/3)
+     x^(3/2)), and is 1 for x<0.
+
+ - Function: double gsl_sf_airy_Bi_scaled (double X, gsl_mode_t MODE)
+ - Function: int gsl_sf_airy_Bi_scaled_e (double X, gsl_mode_t MODE,
+          gsl_sf_result * RESULT)
+     These routines compute a scaled version of the Airy function
+     S_B(x) Bi(x).  For x>0 the scaling factor S_B(x) is exp(-(2/3)
+     x^(3/2)), and is 1 for x<0.
+
+
+File: gsl-ref.info,  Node: Derivatives of Airy Functions,  Next: Zeros of Airy Functions,  Prev: Airy Functions,  Up: Airy Functions and Derivatives
+
+Derivatives of Airy Functions
+-----------------------------
+
+ - Function: double gsl_sf_airy_Ai_deriv (double X, gsl_mode_t MODE)
+ - Function: int gsl_sf_airy_Ai_deriv_e (double X, gsl_mode_t MODE,
+          gsl_sf_result * RESULT)
+     These routines compute the Airy function derivative Ai'(x) with an
+     accuracy specified by MODE.
+
+ - Function: double gsl_sf_airy_Bi_deriv (double X, gsl_mode_t MODE)
+ - Function: int gsl_sf_airy_Bi_deriv_e (double X, gsl_mode_t MODE,
+          gsl_sf_result * RESULT)
+     These routines compute the Airy function derivative Bi'(x) with an
+     accuracy specified by MODE.
+
+ - Function: double gsl_sf_airy_Ai_deriv_scaled (double X, gsl_mode_t
+          MODE)
+ - Function: int gsl_sf_airy_Ai_deriv_scaled_e (double X, gsl_mode_t
+          MODE, gsl_sf_result * RESULT)
+     These routines compute the derivative of the scaled Airy function
+     S_A(x) Ai(x).
+
+ - Function: double gsl_sf_airy_Bi_deriv_scaled (double X, gsl_mode_t
+          MODE)
+ - Function: int gsl_sf_airy_Bi_deriv_scaled_e (double X, gsl_mode_t
+          MODE, gsl_sf_result * RESULT)
+     These routines compute the derivative of the scaled Airy function
+     S_B(x) Bi(x).
+
+
+File: gsl-ref.info,  Node: Zeros of Airy Functions,  Next: Zeros of Derivatives of Airy Functions,  Prev: Derivatives of Airy Functions,  Up: Airy Functions and Derivatives
+
+Zeros of Airy Functions
+-----------------------
+
+ - Function: double gsl_sf_airy_zero_Ai (unsigned int S)
+ - Function: int gsl_sf_airy_zero_Ai_e (unsigned int S, gsl_sf_result *
+          RESULT)
+     These routines compute the location of the S-th zero of the Airy
+     function Ai(x).
+
+ - Function: double gsl_sf_airy_zero_Bi (unsigned int S)
+ - Function: int gsl_sf_airy_zero_Bi_e (unsigned int S, gsl_sf_result *
+          RESULT)
+     These routines compute the location of the S-th zero of the Airy
+     function Bi(x).
+
+
+File: gsl-ref.info,  Node: Zeros of Derivatives of Airy Functions,  Prev: Zeros of Airy Functions,  Up: Airy Functions and Derivatives
+
+Zeros of Derivatives of Airy Functions
+--------------------------------------
+
+ - Function: double gsl_sf_airy_zero_Ai_deriv (unsigned int S)
+ - Function: int gsl_sf_airy_zero_Ai_deriv_e (unsigned int S,
+          gsl_sf_result * RESULT)
+     These routines compute the location of the S-th zero of the Airy
+     function derivative Ai'(x).
+
+ - Function: double gsl_sf_airy_zero_Bi_deriv (unsigned int S)
+ - Function: int gsl_sf_airy_zero_Bi_deriv_e (unsigned int S,
+          gsl_sf_result * RESULT)
+     These routines compute the location of the S-th zero of the Airy
+     function derivative Bi'(x).
+
+
+File: gsl-ref.info,  Node: Bessel Functions,  Next: Clausen Functions,  Prev: Airy Functions and Derivatives,  Up: Special Functions
+
+Bessel Functions
+================
+
+   The routines described in this section compute the Cylindrical Bessel
+functions J_n(x), Y_n(x), Modified cylindrical Bessel functions I_n(x),
+K_n(x), Spherical Bessel functions j_l(x), y_l(x), and Modified
+Spherical Bessel functions i_l(x), k_l(x).  For more information see
+Abramowitz & Stegun, Chapters 9 and 10.  The Bessel functions are
+defined in the header file `gsl_sf_bessel.h'.
+
+* Menu:
+
+* Regular Cylindrical Bessel Functions::
+* Irregular Cylindrical Bessel Functions::
+* Regular Modified Cylindrical Bessel Functions::
+* Irregular Modified Cylindrical Bessel Functions::
+* Regular Spherical Bessel Functions::
+* Irregular Spherical Bessel Functions::
+* Regular Modified Spherical Bessel Functions::
+* Irregular Modified Spherical Bessel Functions::
+* Regular Bessel Function - Fractional Order::
+* Irregular Bessel Functions - Fractional Order::
+* Regular Modified Bessel Functions - Fractional Order::
+* Irregular Modified Bessel Functions - Fractional Order::
+* Zeros of Regular Bessel Functions::
+
+
+File: gsl-ref.info,  Node: Regular Cylindrical Bessel Functions,  Next: Irregular Cylindrical Bessel Functions,  Up: Bessel Functions
+
+Regular Cylindrical Bessel Functions
+------------------------------------
+
+ - Function: double gsl_sf_bessel_J0 (double X)
+ - Function: int gsl_sf_bessel_J0_e (double X, gsl_sf_result * RESULT)
+     These routines compute the regular cylindrical Bessel function of
+     zeroth order, J_0(x).
+
+ - Function: double gsl_sf_bessel_J1 (double X)
+ - Function: int gsl_sf_bessel_J1_e (double X, gsl_sf_result * RESULT)
+     These routines compute the regular cylindrical Bessel function of
+     first order, J_1(x).
+
+ - Function: double gsl_sf_bessel_Jn (int N, double X)
+ - Function: int gsl_sf_bessel_Jn_e (int N, double X, gsl_sf_result *
+          RESULT)
+     These routines compute the regular cylindrical Bessel function of
+     order N, J_n(x).
+
+ - Function: int gsl_sf_bessel_Jn_array (int NMIN, int NMAX, double X,
+          double RESULT_ARRAY[])
+     This routine computes the values of the regular cylindrical Bessel
+     functions J_n(x) for n from NMIN to NMAX inclusive, storing the
+     results in the array RESULT_ARRAY.  The values are computed using
+     recurrence relations, for efficiency, and therefore may differ
+     slightly from the exact values.
+
+
+File: gsl-ref.info,  Node: Irregular Cylindrical Bessel Functions,  Next: Regular Modified Cylindrical Bessel Functions,  Prev: Regular Cylindrical Bessel Functions,  Up: Bessel Functions
+
+Irregular Cylindrical Bessel Functions
+--------------------------------------
+
+ - Function: double gsl_sf_bessel_Y0 (double X)
+ - Function: int gsl_sf_bessel_Y0_e (double X, gsl_sf_result * RESULT)
+     These routines compute the irregular cylindrical Bessel function
+     of zeroth order, Y_0(x), for x>0.
+
+ - Function: double gsl_sf_bessel_Y1 (double X)
+ - Function: int gsl_sf_bessel_Y1_e (double X, gsl_sf_result * RESULT)
+     These routines compute the irregular cylindrical Bessel function
+     of first order, Y_1(x), for x>0.
+
+ - Function: double gsl_sf_bessel_Yn (int N,double X)
+ - Function: int gsl_sf_bessel_Yn_e (int N,double X, gsl_sf_result *
+          RESULT)
+     These routines compute the irregular cylindrical Bessel function of
+     order N, Y_n(x), for x>0.
+
+ - Function: int gsl_sf_bessel_Yn_array (int NMIN, int NMAX, double X,
+          double RESULT_ARRAY[])
+     This routine computes the values of the irregular cylindrical
+     Bessel functions Y_n(x) for n from NMIN to NMAX inclusive, storing
+     the results in the array RESULT_ARRAY.  The domain of the function
+     is x>0.  The values are computed using recurrence relations, for
+     efficiency, and therefore may differ slightly from the exact
+     values.
+
+
+File: gsl-ref.info,  Node: Regular Modified Cylindrical Bessel Functions,  Next: Irregular Modified Cylindrical Bessel Functions,  Prev: Irregular Cylindrical Bessel Functions,  Up: Bessel Functions
+
+Regular Modified Cylindrical Bessel Functions
+---------------------------------------------
+
+ - Function: double gsl_sf_bessel_I0 (double X)
+ - Function: int gsl_sf_bessel_I0_e (double X, gsl_sf_result * RESULT)
+     These routines compute the regular modified cylindrical Bessel
+     function of zeroth order, I_0(x).
+
+ - Function: double gsl_sf_bessel_I1 (double X)
+ - Function: int gsl_sf_bessel_I1_e (double X, gsl_sf_result * RESULT)
+     These routines compute the regular modified cylindrical Bessel
+     function of first order, I_1(x).
+
+ - Function: double gsl_sf_bessel_In (int N, double X)
+ - Function: int gsl_sf_bessel_In_e (int N, double X, gsl_sf_result *
+          RESULT)
+     These routines compute the regular modified cylindrical Bessel
+     function of order N, I_n(x).
+
+ - Function: int gsl_sf_bessel_In_array (int NMIN, int NMAX, double X,
+          double RESULT_ARRAY[])
+     This routine computes the values of the regular modified
+     cylindrical Bessel functions I_n(x) for n from NMIN to NMAX
+     inclusive, storing the results in the array RESULT_ARRAY.  The
+     start of the range NMIN must be positive or zero.  The values are
+     computed using recurrence relations, for efficiency, and therefore
+     may differ slightly from the exact values.
+
+ - Function: double gsl_sf_bessel_I0_scaled (double X)
+ - Function: int gsl_sf_bessel_I0_scaled_e (double X, gsl_sf_result *
+          RESULT)
+     These routines compute the scaled regular modified cylindrical
+     Bessel function of zeroth order \exp(-|x|) I_0(x).
+
+ - Function: double gsl_sf_bessel_I1_scaled (double X)
+ - Function: int gsl_sf_bessel_I1_scaled_e (double X, gsl_sf_result *
+          RESULT)
+     These routines compute the scaled regular modified cylindrical
+     Bessel function of first order \exp(-|x|) I_1(x).
+
+ - Function: double gsl_sf_bessel_In_scaled (int N, double X)
+ - Function: int gsl_sf_bessel_In_scaled_e (int N, double X,
+          gsl_sf_result * RESULT)
+     These routines compute the scaled regular modified cylindrical
+     Bessel function of order N, \exp(-|x|) I_n(x)
+
+ - Function: int gsl_sf_bessel_In_scaled_array (int NMIN, int NMAX,
+          double X, double RESULT_ARRAY[])
+     This routine computes the values of the scaled regular cylindrical
+     Bessel functions \exp(-|x|) I_n(x) for n from NMIN to NMAX
+     inclusive, storing the results in the array RESULT_ARRAY. The
+     start of the range NMIN must be positive or zero.  The values are
+     computed using recurrence relations, for efficiency, and therefore
+     may differ slightly from the exact values.
+
+
+File: gsl-ref.info,  Node: Irregular Modified Cylindrical Bessel Functions,  Next: Regular Spherical Bessel Functions,  Prev: Regular Modified Cylindrical Bessel Functions,  Up: Bessel Functions
+
+Irregular Modified Cylindrical Bessel Functions
+-----------------------------------------------
+
+ - Function: double gsl_sf_bessel_K0 (double X)
+ - Function: int gsl_sf_bessel_K0_e (double X, gsl_sf_result * RESULT)
+     These routines compute the irregular modified cylindrical Bessel
+     function of zeroth order, K_0(x), for x > 0.
+
+ - Function: double gsl_sf_bessel_K1 (double X)
+ - Function: int gsl_sf_bessel_K1_e (double X, gsl_sf_result * RESULT)
+     These routines compute the irregular modified cylindrical Bessel
+     function of first order, K_1(x), for x > 0.
+
+ - Function: double gsl_sf_bessel_Kn (int N, double X)
+ - Function: int gsl_sf_bessel_Kn_e (int N, double X, gsl_sf_result *
+          RESULT)
+     These routines compute the irregular modified cylindrical Bessel
+     function of order N, K_n(x), for x > 0.
+
+ - Function: int gsl_sf_bessel_Kn_array (int NMIN, int NMAX, double X,
+          double RESULT_ARRAY[])
+     This routine computes the values of the irregular modified
+     cylindrical Bessel functions K_n(x) for n from NMIN to NMAX
+     inclusive, storing the results in the array RESULT_ARRAY. The
+     start of the range NMIN must be positive or zero. The domain of
+     the function is x>0. The values are computed using recurrence
+     relations, for efficiency, and therefore may differ slightly from
+     the exact values.
+
+ - Function: double gsl_sf_bessel_K0_scaled (double X)
+ - Function: int gsl_sf_bessel_K0_scaled_e (double X, gsl_sf_result *
+          RESULT)
+     These routines compute the scaled irregular modified cylindrical
+     Bessel function of zeroth order \exp(x) K_0(x) for x>0.
+
+ - Function: double gsl_sf_bessel_K1_scaled (double X)
+ - Function: int gsl_sf_bessel_K1_scaled_e (double X, gsl_sf_result *
+          RESULT)
+     These routines compute the scaled irregular modified cylindrical
+     Bessel function of first order \exp(x) K_1(x) for x>0.
+
+ - Function: double gsl_sf_bessel_Kn_scaled (int N, double X)
+ - Function: int gsl_sf_bessel_Kn_scaled_e (int N, double X,
+          gsl_sf_result * RESULT)
+     These routines compute the scaled irregular modified cylindrical
+     Bessel function of order N, \exp(x) K_n(x), for x>0.
+
+ - Function: int gsl_sf_bessel_Kn_scaled_array (int NMIN, int NMAX,
+          double X, double RESULT_ARRAY[])
+     This routine computes the values of the scaled irregular
+     cylindrical Bessel functions \exp(x) K_n(x) for n from NMIN to
+     NMAX inclusive, storing the results in the array RESULT_ARRAY. The
+     start of the range NMIN must be positive or zero.  The domain of
+     the function is x>0. The values are computed using recurrence
+     relations, for efficiency, and therefore may differ slightly from
+     the exact values.
+
+
+File: gsl-ref.info,  Node: Regular Spherical Bessel Functions,  Next: Irregular Spherical Bessel Functions,  Prev: Irregular Modified Cylindrical Bessel Functions,  Up: Bessel Functions
+
+Regular Spherical Bessel Functions
+----------------------------------
+
+ - Function: double gsl_sf_bessel_j0 (double X)
+ - Function: int gsl_sf_bessel_j0_e (double X, gsl_sf_result * RESULT)
+     These routines compute the regular spherical Bessel function of
+     zeroth order, j_0(x) = \sin(x)/x.
+
+ - Function: double gsl_sf_bessel_j1 (double X)
+ - Function: int gsl_sf_bessel_j1_e (double X, gsl_sf_result * RESULT)
+     These routines compute the regular spherical Bessel function of
+     first order, j_1(x) = (\sin(x)/x - \cos(x))/x.
+
+ - Function: double gsl_sf_bessel_j2 (double X)
+ - Function: int gsl_sf_bessel_j2_e (double X, gsl_sf_result * RESULT)
+     These routines compute the regular spherical Bessel function of
+     second order, j_2(x) = ((3/x^2 - 1)\sin(x) - 3\cos(x)/x)/x.
+
+ - Function: double gsl_sf_bessel_jl (int L, double X)
+ - Function: int gsl_sf_bessel_jl_e (int L, double X, gsl_sf_result *
+          RESULT)
+     These routines compute the regular spherical Bessel function of
+     order L, j_l(x), for l >= 0 and x >= 0.
+
+ - Function: int gsl_sf_bessel_jl_array (int LMAX, double X, double
+          RESULT_ARRAY[])
+     This routine computes the values of the regular spherical Bessel
+     functions j_l(x) for l from 0 to LMAX inclusive  for lmax >= 0 and
+     x >= 0, storing the results in the array RESULT_ARRAY.  The values
+     are computed using recurrence relations, for efficiency, and
+     therefore may differ slightly from the exact values.
+
+ - Function: int gsl_sf_bessel_jl_steed_array (int LMAX, double X,
+          double * JL_X_ARRAY)
+     This routine uses Steed's method to compute the values of the
+     regular spherical Bessel functions j_l(x) for l from 0 to LMAX
+     inclusive for lmax >= 0 and x >= 0, storing the results in the
+     array RESULT_ARRAY.  The Steed/Barnett algorithm is described in
+     `Comp. Phys. Comm.' 21, 297 (1981).  Steed's method is more stable
+     than the recurrence used in the other functions but is also slower.
+
+
+File: gsl-ref.info,  Node: Irregular Spherical Bessel Functions,  Next: Regular Modified Spherical Bessel Functions,  Prev: Regular Spherical Bessel Functions,  Up: Bessel Functions
+
+Irregular Spherical Bessel Functions
+------------------------------------
+
+ - Function: double gsl_sf_bessel_y0 (double X)
+ - Function: int gsl_sf_bessel_y0_e (double X, gsl_sf_result * RESULT)
+     These routines compute the irregular spherical Bessel function of
+     zeroth order, y_0(x) = -\cos(x)/x.
+
+ - Function: double gsl_sf_bessel_y1 (double X)
+ - Function: int gsl_sf_bessel_y1_e (double X, gsl_sf_result * RESULT)
+     These routines compute the irregular spherical Bessel function of
+     first order, y_1(x) = -(\cos(x)/x + \sin(x))/x.
+
+ - Function: double gsl_sf_bessel_y2 (double X)
+ - Function: int gsl_sf_bessel_y2_e (double X, gsl_sf_result * RESULT)
+     These routines compute the irregular spherical Bessel function of
+     second order, y_2(x) = (-3/x^2 + 1/x)\cos(x) - (3/x^2)\sin(x).
+
+ - Function: double gsl_sf_bessel_yl (int L, double X)
+ - Function: int gsl_sf_bessel_yl_e (int L, double X, gsl_sf_result *
+          RESULT)
+     These routines compute the irregular spherical Bessel function of
+     order L, y_l(x), for l >= 0.
+
+ - Function: int gsl_sf_bessel_yl_array (int LMAX, double X, double
+          RESULT_ARRAY[])
+     This routine computes the values of the irregular spherical Bessel
+     functions y_l(x) for l from 0 to LMAX inclusive  for lmax >= 0,
+     storing the results in the array RESULT_ARRAY.  The values are
+     computed using recurrence relations, for efficiency, and therefore
+     may differ slightly from the exact values.
+
+
+File: gsl-ref.info,  Node: Regular Modified Spherical Bessel Functions,  Next: Irregular Modified Spherical Bessel Functions,  Prev: Irregular Spherical Bessel Functions,  Up: Bessel Functions
+
+Regular Modified Spherical Bessel Functions
+-------------------------------------------
+
+   The regular modified spherical Bessel functions i_l(x) are related
+to the modified Bessel functions of fractional order, i_l(x) =
+\sqrt{\pi/(2x)} I_{l+1/2}(x)
+
+ - Function: double gsl_sf_bessel_i0_scaled (double X)
+ - Function: int gsl_sf_bessel_i0_scaled_e (double X, gsl_sf_result *
+          RESULT)
+     These routines compute the scaled regular modified spherical Bessel
+     function of zeroth order, \exp(-|x|) i_0(x).
+
+ - Function: double gsl_sf_bessel_i1_scaled (double X)
+ - Function: int gsl_sf_bessel_i1_scaled_e (double X, gsl_sf_result *
+          RESULT)
+     These routines compute the scaled regular modified spherical Bessel
+     function of first order, \exp(-|x|) i_1(x).
+
+ - Function: double gsl_sf_bessel_i2_scaled (double X)
+ - Function: int gsl_sf_bessel_i2_scaled_e (double X, gsl_sf_result *
+          RESULT)
+     These routines compute the scaled regular modified spherical Bessel
+     function of second order,  \exp(-|x|) i_2(x)
+
+ - Function: double gsl_sf_bessel_il_scaled (int L, double X)
+ - Function: int gsl_sf_bessel_il_scaled_e (int L, double X,
+          gsl_sf_result * RESULT)
+     These routines compute the scaled regular modified spherical Bessel
+     function of order L,  \exp(-|x|) i_l(x)
+
+ - Function: int gsl_sf_bessel_il_scaled_array (int LMAX, double X,
+          double RESULT_ARRAY[])
+     This routine computes the values of the scaled regular modified
+     cylindrical Bessel functions \exp(-|x|) i_l(x) for l from 0 to
+     LMAX inclusive for lmax >= 0, storing the results in the array
+     RESULT_ARRAY.  The values are computed using recurrence relations,
+     for efficiency, and therefore may differ slightly from the exact
+     values.
+
+
+File: gsl-ref.info,  Node: Irregular Modified Spherical Bessel Functions,  Next: Regular Bessel Function - Fractional Order,  Prev: Regular Modified Spherical Bessel Functions,  Up: Bessel Functions
+
+Irregular Modified Spherical Bessel Functions
+---------------------------------------------
+
+   The irregular modified spherical Bessel functions k_l(x) are related
+to the irregular modified Bessel functions of fractional order, k_l(x)
+= \sqrt{\pi/(2x)} K_{l+1/2}(x).
+
+ - Function: double gsl_sf_bessel_k0_scaled (double X)
+ - Function: int gsl_sf_bessel_k0_scaled_e (double X, gsl_sf_result *
+          RESULT)
+     These routines compute the scaled irregular modified spherical
+     Bessel function of zeroth order, \exp(x) k_0(x), for x>0.
+
+ - Function: double gsl_sf_bessel_k1_scaled (double X)
+ - Function: int gsl_sf_bessel_k1_scaled_e (double X, gsl_sf_result *
+          RESULT)
+     These routines compute the scaled irregular modified spherical
+     Bessel function of first order, \exp(x) k_1(x), for x>0.
+
+ - Function: double gsl_sf_bessel_k2_scaled (double X)
+ - Function: int gsl_sf_bessel_k2_scaled_e (double X, gsl_sf_result *
+          RESULT)
+     These routines compute the scaled irregular modified spherical
+     Bessel function of second order, \exp(x) k_2(x), for x>0.
+
+ - Function: double gsl_sf_bessel_kl_scaled (int L, double X)
+ - Function: int gsl_sf_bessel_kl_scaled_e (int L, double X,
+          gsl_sf_result * RESULT)
+     These routines compute the scaled irregular modified spherical
+     Bessel function of order L, \exp(x) k_l(x), for x>0.
+
+ - Function: int gsl_sf_bessel_kl_scaled_array (int LMAX, double X,
+          double RESULT_ARRAY[])
+     This routine computes the values of the scaled irregular modified
+     spherical Bessel functions \exp(x) k_l(x) for l from 0 to LMAX
+     inclusive for lmax >= 0 and x>0, storing the results in the array
+     RESULT_ARRAY.  The values are computed using recurrence relations,
+     for efficiency, and therefore may differ slightly from the exact
+     values.
+
+
+File: gsl-ref.info,  Node: Regular Bessel Function - Fractional Order,  Next: Irregular Bessel Functions - Fractional Order,  Prev: Irregular Modified Spherical Bessel Functions,  Up: Bessel Functions
+
+Regular Bessel Function - Fractional Order
+------------------------------------------
+
+ - Function: double gsl_sf_bessel_Jnu (double NU, double X)
+ - Function: int gsl_sf_bessel_Jnu_e (double NU, double X,
+          gsl_sf_result * RESULT)
+     These routines compute the regular cylindrical Bessel function of
+     fractional order nu, J_\nu(x).
+
+ - Function: int gsl_sf_bessel_sequence_Jnu_e (double NU, gsl_mode_t
+          MODE, size_t SIZE, double V[])
+     This function computes the regular cylindrical Bessel function of
+     fractional order \nu, J_\nu(x), evaluated at a series of x values.
+     The array V of length SIZE contains the x values.  They are
+     assumed to be strictly ordered and positive.  The array is
+     over-written with the values of J_\nu(x_i).
+

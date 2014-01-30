@@ -1,0 +1,49 @@
+Summary: GNU Scientific Library (GSL)
+name: gsl
+Packager: rosalia@lanl.gov
+%define version @VERSION@
+%define release 0
+version: %{version}
+release: %{release}
+#Prereq: 
+#requires: 
+vendor: the GSL team
+Distribution: research software
+copyright: Copyright (C) 1997, 1998, 1999, 2000, 2001 the GSL team
+source: gsl-%{version}.tar.gz
+group: Libraries/Research
+%define mybuildroot /var/tmp/%{name}-build
+%define installroot /install-tmp
+BuildRoot: %{mybuildroot}
+
+%description
+  GSL is a library for numerical analysis that aims to be complete and
+to follow modern coding conventions, as well as lending itself to being
+used in very high level languages (VHLLs).
+
+%prep
+%setup -c
+echo "dude, mybuildroot is " %{mybuildroot}
+echo "dude, installroot is " %{installroot}
+echo "dude, RPM_BUILD_ROOT is " $RPM_BUILD_ROOT
+
+%build
+cd %{name}-%{version}; ./configure --prefix=/usr; make
+
+%install
+cd %{name}-%{version}; make install prefix=%{mybuildroot}/usr
+#cd %{name}-%{version}; make install prefix=%{mybuildroot}/%{installroot}
+
+%post
+
+%postun
+
+%files
+%doc %{name}-%{version}/{NEWS,ChangeLog,KNOWN-PROBLEMS,MACHINES,README,AUTHORS,THANKS}
+%doc /usr/info/gsl-ref*
+/usr/bin/gsl-config
+/usr/bin/gsl-histogram
+/usr/bin/gsl-randist
+/usr/lib
+/usr/include/gsl
+/usr/share/aclocal/gsl.m4

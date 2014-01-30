@@ -1,0 +1,4 @@
+Problem: tree
+Algorithm: size= 3, basis size=10001
+WER: 0.853336737467
+Runtime: 0

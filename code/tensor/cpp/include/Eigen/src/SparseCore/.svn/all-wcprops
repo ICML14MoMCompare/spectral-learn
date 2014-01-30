@@ -1,0 +1,161 @@
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/SparseCore
+END
+CompressedStorage.h
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/SparseCore/CompressedStorage.h
+END
+AmbiVector.h
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/SparseCore/AmbiVector.h
+END
+SparseUtil.h
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/SparseCore/SparseUtil.h
+END
+SparseCwiseBinaryOp.h
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/SparseCore/SparseCwiseBinaryOp.h
+END
+SparseTranspose.h
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/SparseCore/SparseTranspose.h
+END
+SparseDiagonalProduct.h
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/SparseCore/SparseDiagonalProduct.h
+END
+SparseProduct.h
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/SparseCore/SparseProduct.h
+END
+TriangularSolver.h
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/SparseCore/TriangularSolver.h
+END
+SparseDot.h
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/SparseCore/SparseDot.h
+END
+SparseFuzzy.h
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/SparseCore/SparseFuzzy.h
+END
+ConservativeSparseSparseProduct.h
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/SparseCore/ConservativeSparseSparseProduct.h
+END
+SparseRedux.h
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/SparseCore/SparseRedux.h
+END
+SparseCwiseUnaryOp.h
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/SparseCore/SparseCwiseUnaryOp.h
+END
+SparseBlock.h
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/SparseCore/SparseBlock.h
+END
+MappedSparseMatrix.h
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/SparseCore/MappedSparseMatrix.h
+END
+SparseSelfAdjointView.h
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/SparseCore/SparseSelfAdjointView.h
+END
+SparseSparseProductWithPruning.h
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/SparseCore/SparseSparseProductWithPruning.h
+END
+SparseMatrixBase.h
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/SparseCore/SparseMatrixBase.h
+END
+SparseDenseProduct.h
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/SparseCore/SparseDenseProduct.h
+END
+SparseColEtree.h
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/SparseCore/SparseColEtree.h
+END
+SparseVector.h
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/SparseCore/SparseVector.h
+END
+SparseTriangularView.h
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/SparseCore/SparseTriangularView.h
+END
+SparseMatrix.h
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/SparseCore/SparseMatrix.h
+END
+SparsePermutation.h
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/SparseCore/SparsePermutation.h
+END
+CMakeLists.txt
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/SparseCore/CMakeLists.txt
+END
+SparseView.h
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/SparseCore/SparseView.h
+END

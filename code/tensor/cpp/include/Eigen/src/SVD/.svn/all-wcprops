@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/SVD
+END
+UpperBidiagonalization.h
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/SVD/UpperBidiagonalization.h
+END
+JacobiSVD.h
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/SVD/JacobiSVD.h
+END
+CMakeLists.txt
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/SVD/CMakeLists.txt
+END
+JacobiSVD_MKL.h
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/SVD/JacobiSVD_MKL.h
+END

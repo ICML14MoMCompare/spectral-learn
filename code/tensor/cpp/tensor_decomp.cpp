@@ -1,0 +1,81 @@
+#include "include/tensor_decomp.h"
+
+#define DEBUG_RESIDUAL
+#define DEBUG_INPUT
+
+// Returns the first K eigenvectors and values of T
+// Deflated tensor is returned in R
+// Norm of R is the return value
+#define FNAME "(tensor_decomp)"
+//double tensor_decomp(const Ltensor & T, MatrixXd & evecs, VectorXd & evals, int K, Ltensor & R) {
+double tensor_decomp(Ltensor & T, Lmatrix & evecs, Lvector & evals, int K, Ltensor & R, int POWER_IT) {
+
+	// Get dimensions
+	int d1 = T.get_dim1();
+	int d2 = T.get_dim2();
+	int d3 = T.get_dim3();
+	// Check dimensions (tensor must be "square")
+	// and number of eigencomponents at most the dimension
+	if (d1 != d2 or d2 != d3 or d3 != d1 or K > d1) {
+		cerr << FNAME << " Dimensions mismatch!" << endl;
+		throw;
+	}
+
+#ifdef DEBUG_INPUT
+	cerr << FNAME << " called with inputs: ";
+	cerr << "T (" << d1 << "^3) K= " << K << " IT= " << POWER_IT << endl;
+#endif
+	
+	// Initialize evecs and evals
+	Index<'i'> i;
+	Index<'j'> j;
+	Index<'k'> k;
+	//evals = VectorXd::Zero(K);
+	//evecs = MatrixXd::Zero(d1,K);
+	evals = Lvector(K);
+	evecs = Lmatrix(d1,K);
+	Lvector v(d1);
+	Ltensor D(d1,d2,d3);
+	R = T;
+
+	// Main loop
+	for (int it = 0; it < K; it++) {
+		// Call power_method
+		evals(it) = power_method(R,v,POWER_IT);
+		// Save eigenvector
+		//lvector2eigen(v,evecs.col(i));
+		evecs(i,it) = v(i);
+		// Deflate tensor
+		D(i,j,k) = v(i)*v(j)*v(k);
+		D *= evals(it);
+		R -= D;
+#ifdef DEBUG_RESIDUAL
+		cerr << FNAME << " (Iteration " << it << ")\tResidual: " << frob_norm_ltensor(R) << endl;
+#endif
+	}
+	// Return norm of R
+	return frob_norm_ltensor(R);
+}
+
+double power_method(Ltensor & T, Lvector & evec, int M) {
+	// Not using them for now
+	// Initialize a random Lvector of norm 1
+	int d = evec.get_dim1();
+	Lvector v(d);
+	random_spherical_vector(v,d);
+	// Main loop
+	Index<'i'> i;
+	Index<'j'> j;
+	Index<'k'> k;
+	for (int it = 0; it < M; it++) {
+		// Contract and normalize
+		evec(i) = T(i,j,k)*v(j)*v(k);
+		evec *= 1.0 / evec.getNormN(2);
+		// TODO Check for earlier convergence
+		// Save to v
+		v = evec;
+	}
+	// Compute eigenvalue
+	return T(i,j,k)*v(i)*v(j)*v(k);
+}
+

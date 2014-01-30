@@ -1,0 +1,82 @@
+GSL - GNU Scientific Library
+============================
+
+This is GSL, the GNU Scientific Library, a collection of numerical
+routines for scientific computing.
+
+GSL is free software, you can redistribute it and/or modify it under
+the terms of the GNU General Public License.
+
+The GNU General Public License does not permit this software to be
+redistributed in proprietary programs.
+
+This library is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+Availability
+============
+
+The latest released version of GSL is always available from the
+website http://sources.redhat.com/gsl/.  Complete source and binaries
+for several popular systems are available.  Source distributions of
+GSL are also available from ftp.gnu.org in the directory /pub/gnu,
+as well as many mirror sites around the world.
+
+Installation
+============
+
+To compile GSL you will need an ANSI C-compiler.  After unpacking the
+distribution the Makefiles can be prepared using the configure
+command,
+
+  ./configure
+
+You can then build the library by typing,
+
+  make
+
+By default both static and shared versions of the libraries are
+compiled.  Compilation of shared libraries can be turned off by
+specifying the `--disable-shared' option to `configure', e.g.
+  
+  ./configure --disable-shared
+
+This is recommended if you encounter problems building the library,
+because some platforms do not support shared libraries.
+
+For compilation problems on specific platforms see the MACHINES file.
+
+An extensive test suite is available.  It can be invoked with "make
+check" in each directory.  All tests can be run together with "make
+check" at the top level.  The test output should be directed to a file
+rather than a terminal, with the command,
+
+   make check > log 2>&1
+
+since it is several megabytes in size.
+
+If you run "make check" and get some failures, please see the
+KNOWN-PROBLEMS file.  This file lists failures we already know about.
+If you get failures that are not mentioned in the KNOWN-PROBLEMS file,
+please report them.
+
+The library can be installed using the command,
+
+  make install
+
+The default install directory prefix is /usr/local.  Consult the file
+INSTALL for information on installing the library in another location
+or changing other default compilation options.
+
+More information about GSL
+==========================
+
+The project homepage is http://sources.redhat.com/gsl/
+
+Please report bugs to the GSL discussion list gsl-discuss@sources.redhat.com
+
+See the NEWS file for recent developments.
+
+If you are interested in participating in GSL development, please send
+mail to Mark Galassi -- rosalia@lanl.gov

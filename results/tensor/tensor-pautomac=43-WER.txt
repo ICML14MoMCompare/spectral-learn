@@ -1,0 +1,4 @@
+Problem: 43
+Algorithm: size= 3, basis size=10001
+WER: 0.892738388931
+Runtime: 55.06

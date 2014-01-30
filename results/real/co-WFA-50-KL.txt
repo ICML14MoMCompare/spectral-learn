@@ -1,0 +1,4 @@
+Problem: tree
+Algorithm: WFA, tau= 1e-05, basis size=51
+KL: 4154712826.9
+Runtime: 0

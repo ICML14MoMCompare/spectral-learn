@@ -1,0 +1,38 @@
+Tue Sep  4 17:22:06 2001  Brian Gough  <bjg@network-theory.co.uk>
+
+	* added permutations of complex arrays and vectors
+
+	* permute_source.c: added permutations of complex arrays and
+ 	vectors
+
+Sat Dec 30 21:30:16 2000  Brian Gough  <bjg@network-theory.co.uk>
+
+	* test.c: added the start of a test program
+
+	* permutation.c: added gsl_permutation_next and
+ 	gsl_permutation_prev as in STL, from vattervi@msu.edu
+
+Mon Apr 24 20:54:03 2000  Brian Gough  <bjg@network-theory.co.uk>
+
+	* gsl_permutation.h: renamed gsl_permutation_invert to
+ 	gsl_permutation_inverse
+
+Mon Apr 10 14:31:01 2000  Brian Gough  <bjg@network-theory.co.uk>
+
+	* added functions for permuting data and vectors
+
+Thu Feb 24 17:53:55 2000  Brian Gough  <bjg@network-theory.co.uk>
+
+	* permutation.c (gsl_permutation_invert): add an inverse function
+ 	for permutations
+
+Sat Feb 19 12:04:32 2000  Brian Gough  <bjg@network-theory.co.uk>
+
+	* permutation.c (gsl_permutation_reverse): changed from return
+ 	type int to void, since no errors can occur.
+
+Fri Feb 18 12:06:13 2000  Brian Gough  <bjg@network-theory.co.uk>
+
+	* permutation.c: added valid and reverse methods
+	(gsl_permutation_reverse): fixed bug in reverse
+

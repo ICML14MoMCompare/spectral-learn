@@ -1,0 +1,4 @@
+Problem: 1
+Algorithm: string, size= 40, basis size=10001
+KL: 1006753044.68
+Runtime: 7.46740740741

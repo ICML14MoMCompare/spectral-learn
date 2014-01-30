@@ -1,0 +1,4 @@
+Problem: tree
+Algorithm: PNFA, tau= 0.001, basis size=201
+WER: 0.999975292577
+Runtime: 0

@@ -1,0 +1,187 @@
+@cindex license of GSL
+@cindex GNU General Public License
+The GNU Scientific Library (GSL) is a collection of routines for
+numerical computing.  The routines have been written from scratch in C,
+and are meant to present a modern Applications Programming Interface
+(API) for C programmers, while allowing wrappers to be written for very
+high level languages.  The source code is distributed under the GNU
+General Public License.
+
+@comment GSL is currently in beta-test release, for people who want to test the
+@comment library itself. When the library is complete and fully tested it will be
+@comment announced for general use.
+
+@menu
+* Routines available in GSL::   
+* GSL is Free Software::        
+* Obtaining GSL::               
+* An Example Program::          
+* No Warranty::                 
+* Further Information::         
+@end menu
+
+@node Routines available in GSL
+@section Routines available in GSL
+
+The library covers a wide range of topics in numerical computing.
+Routines are available for the following areas,
+
+@multitable @columnfractions 0.05 0.45 0.45 0.05
+@item @tab Complex Numbers            @tab Roots of Polynomials        
+@item @tab Special Functions          @tab Vectors and Matrices        
+@item @tab Permutations               @tab Sorting                    
+@item @tab BLAS Support               @tab Linear Algebra              
+@item @tab Eigensystems               @tab Fast Fourier Transforms    
+@item @tab Quadrature                 @tab Random Numbers    
+@item @tab Quasi-Random Sequences     @tab Random Distributions 
+@item @tab Statistics                 @tab Histograms                  
+@item @tab N-Tuples                   @tab Monte Carlo Integration     
+@item @tab Simulated Annealing        @tab Differential Equations  
+@item @tab Interpolation              @tab Numerical Differentiation   
+@item @tab Chebyshev Approximations   @tab Series Acceleration         
+@item @tab Discrete Hankel Transforms @tab Root-Finding   
+@item @tab Minimization               @tab Least-Squares Fitting          
+@item @tab Physical Constants         @tab IEEE Floating-Point 
+@end multitable
+@noindent
+The use of these routines is described in this manual.  Each chapter
+provides detailed definitions of the functions, followed by example
+programs and references to the articles on which the algorithms are
+based.
+
+@node GSL is Free Software
+@section GSL is Free Software
+@cindex free software, explanation of
+The subroutines in the GNU Scientific Library are ``free software'';
+this means that everyone is free to use them, and to redistribute them
+in other free programs.  The library is not in the public domain; it is
+copyrighted and there are conditions on its distribution.  These
+conditions are designed to permit everything that a good cooperating
+citizen would want to do.  What is not allowed is to try to prevent
+others from further sharing any version of the software that they might
+get from you.
+
+Specifically, we want to make sure that you have the right to give away
+copies of any programs related to the GNU Scientific Library, that you
+receive their source code or else can get it if you want it, that you
+can change these programs or use pieces of them in new free programs,
+and that you know you can do these things.  The library should not be
+redistributed in proprietary programs.
+
+To make sure that everyone has such rights, we have to forbid you to
+deprive anyone else of these rights.  For example, if you distribute
+copies of any related code, you must give the recipients all the rights
+that you have.  You must make sure that they, too, receive or can get
+the source code.  And you must tell them their rights. 
+
+Also, for our own protection, we must make certain that everyone finds
+out that there is no warranty for the GNU Scientific Library.  If these
+programs are modified by someone else and passed on, we want their
+recipients to know that what they have is not what we distributed, so
+that any problems introduced by others will not reflect on our
+reputation.
+
+The precise conditions for the distribution of software related to the
+GNU Scientific Library are found in the GNU General Public License
+(@pxref{GNU General Public License}).  Further information about this
+license is available from the GNU Project webpage @cite{Frequently Asked
+Questions about the GNU GPL},
+
+@itemize @asis
+@item 
+@url{http://www.gnu.org/copyleft/gpl-faq.html}
+@end itemize
+
+
+@node Obtaining GSL
+@section Obtaining GSL
+@cindex obtaining GSL
+@cindex downloading GSL
+@cindex mailing list for GSL announcements
+@cindex gsl-announce mailing list
+The source code for the library can be obtained in different ways, by
+copying it from a friend, purchasing it on @sc{cdrom} or downloading it
+from the internet. A list of public ftp servers which carry the source
+code can be found on the development website,
+
+@itemize @asis
+@item 
+@url{http://sources.redhat.com/gsl/}
+@end itemize
+@noindent
+The preferred platform for the library is a GNU system, which
+allows it to take advantage of additional features.  The library is
+portable and compiles on most Unix platforms. It is also available for
+Microsoft Windows.  Precompiled versions of the library can be purchased
+from commercial redistributors listed on the website.
+
+Announcements of new releases, updates and other relevant events are
+made on the @code{gsl-announce} mailing list.  To subscribe to this
+low-volume list, send an email of the following form,
+
+@example
+To: gsl-announce-request@@sources.redhat.com 
+Subject: subscribe
+@end example
+@noindent
+You will receive a response asking to you to reply in order to confirm
+your subscription.
+
+@node   An Example Program
+@section An Example Program
+
+The following short program demonstrates the use of the library by
+computing the value of the Bessel function @math{J_0(x)} for @math{x=5},
+
+@example
+#include <stdio.h>
+#include <gsl/gsl_sf_bessel.h>
+
+int
+main (void)
+@{
+  double x = 5.0;
+
+  double y = gsl_sf_bessel_J0 (x);
+
+  printf("J0(%g) = %.18e\n", x, y);
+
+  return 0;
+@}
+@end example
+@noindent
+The output is shown below, and should be correct to double-precision
+accuracy,
+
+@example
+J0(5) = -1.775967713143382920e-01
+@end example
+@noindent
+The steps needed to compile programs which use the library are described
+in the next chapter.
+
+@node  No Warranty
+@section No Warranty
+@cindex warranty (none)
+The software described in this manual has no warranty, it is provided
+"as is".  It is your responsibility to validate the behavior of the
+routines and their accuracy using the source code provided.  Consult the
+GNU General Public license for further details (@pxref{GNU General
+Public License}).
+
+@node  Further Information,  , No Warranty, Introduction
+@section Further Information
+@cindex mailing list archives
+@cindex website, developer information
+@cindex contacting the GSL developers
+Additional information, including online copies of this manual, links to
+related projects, and mailing list archives are available from the
+development website mentioned above.  The developers of the library can
+be reached via the project's public mailing list,
+
+@itemize @asis
+@code{gsl-discuss@@sources.redhat.com}
+@end itemize
+@noindent
+This mailing list can be used to report bugs or to ask questions not
+covered by this manual.

@@ -1,0 +1,557 @@
+@cindex fitting
+@cindex least squares fit
+@cindex regression, least squares
+
+This chapter describes routines for performing least squares fits to
+experimental data using linear combinations of functions. The data may
+be weighted or unweighted.  For weighted data the functions compute the
+best fit parameters and their associated covariance matrix.  For
+unweighted data the covariance matrix is estimated from the scatter of
+the points, giving a variance-covariance matrix. The functions are
+divided into separate versions for simple one- or two-parameter
+regression and multiple-parameter fits.  The functions are declared in
+the header file @file{gsl_fit.h}
+
+@menu
+* Linear regression::           
+* Linear fitting without a constant term::  
+* Multi-parameter fitting::     
+* Fitting Examples::            
+* Fitting References and Further Reading::  
+@end menu
+
+@node   Linear regression
+@section Linear regression
+
+The functions described in this section can be used to perform
+least-squares fits to a straight line model, @math{Y = c_0 + c_1 X}.
+For weighted data the best-fit is found by minimizing the weighted sum of
+squared residuals, @math{\chi^2},
+
+@tex
+\beforedisplay
+$$
+\chi^2 = \sum_i w_i (y_i - (c_0 + c_1 x_i))^2
+$$
+\afterdisplay
+@end tex
+@ifinfo
+@example
+\chi^2 = \sum_i w_i (y_i - (c_0 + c_1 x_i))^2
+@end example
+@end ifinfo
+
+@noindent
+for the parameters @math{c_0}, @math{c_1}.  For unweighted data the
+sum is computed with @math{w_i = 1}.
+
+@deftypefun int gsl_fit_linear (const double * @var{x}, const size_t @var{xstride}, const double * @var{y}, const size_t @var{ystride}, size_t @var{n}, double * @var{c0}, double * @var{c1}, double * @var{cov00}, double * @var{cov01}, double * @var{cov11}, double * @var{sumsq})
+This function computes the best-fit linear regression coefficients
+(@var{c0},@var{c1}) of the model @math{Y = c_0 + c_1 X} for the datasets
+(@var{x}, @var{y}), two vectors of length @var{n} with strides
+@var{xstride} and @var{ystride}.  The variance-covariance matrix for the
+parameters (@var{c0}, @var{c1}) is estimated from the scatter of the
+points around the best-fit line and returned via the parameters
+(@var{cov00}, @var{cov01}, @var{cov11}).  The sum of squares of the
+residuals from the best-fit line is returned in @var{sumsq}.
+@end deftypefun
+
+@deftypefun int gsl_fit_wlinear (const double * @var{x}, const size_t @var{xstride}, const double * @var{w}, const size_t @var{wstride}, const double * @var{y}, const size_t @var{ystride}, size_t @var{n}, double * @var{c0}, double * @var{c1}, double * @var{cov00}, double * @var{cov01}, double * @var{cov11}, double * @var{chisq})
+This function computes the best-fit linear regression coefficients
+(@var{c0},@var{c1}) of the model @math{Y = c_0 + c_1 X} for the weighted
+datasets (@var{x}, @var{y}), two vectors of length @var{n} with strides
+@var{xstride} and @var{ystride}.  The vector @var{w}, of length @var{n}
+and stride @var{wstride}, specifies the weight of each datapoint. The
+weight is the reciprocal of the variance for each datapoint in @var{y}.
+
+The covariance matrix for the parameters (@var{c0}, @var{c1}) is
+estimated from weighted data and returned via the parameters
+(@var{cov00}, @var{cov01}, @var{cov11}).  The weighted sum of squares of
+the residuals from the best-fit line, @math{\chi^2}, is returned in
+@var{chisq}.
+@end deftypefun
+
+@deftypefun int gsl_fit_linear_est (double @var{x}, double @var{c0}, double @var{c1}, double @var{c00}, double @var{c01}, double @var{c11}, double *@var{y}, double *@var{y_err})
+This function uses the best-fit linear regression coefficients
+@var{c0},@var{c1} and their estimated covariance
+@var{cov00},@var{cov01},@var{cov11} to compute the fitted function
+@var{y} and its standard deviation @var{y_err} for the model @math{Y =
+c_0 + c_1 X} at the point @var{x}.
+@end deftypefun
+
+@node Linear fitting without a constant term
+@section Linear fitting without a constant term
+
+The functions described in this section can be used to perform
+least-squares fits to a straight line model without a constant term,
+@math{Y = c_1 X}.  For weighted data the best-fit is found by minimizing
+the weighted sum of squared residuals, @math{\chi^2},
+
+@tex
+\beforedisplay
+$$
+\chi^2 = \sum_i w_i (y_i -  c_1 x_i)^2
+$$
+\afterdisplay
+@end tex
+@ifinfo
+@example
+\chi^2 = \sum_i w_i (y_i - c_1 x_i)^2
+@end example
+@end ifinfo
+
+@noindent
+for the parameter @math{c_1}.  For unweighted data the sum is
+computed with @math{w_i = 1}.
+
+@deftypefun int gsl_fit_mul (const double * @var{x}, const size_t @var{xstride}, const double * @var{y}, const size_t @var{ystride}, size_t @var{n}, double * @var{c1}, double * @var{cov11}, double * @var{sumsq})
+This function computes the best-fit linear regression coefficient
+@var{c1} of the model @math{Y = c_1 X} for the datasets (@var{x},
+@var{y}), two vectors of length @var{n} with strides @var{xstride} and
+@var{ystride}.  The variance of the parameter @var{c1} is estimated from
+the scatter of the points around the best-fit line and returned via the
+parameter @var{cov11}.  The sum of squares of the residuals from the
+best-fit line is returned in @var{sumsq}.
+@end deftypefun
+
+@deftypefun int gsl_fit_wmul (const double * @var{x}, const size_t @var{xstride}, const double * @var{w}, const size_t @var{wstride}, const double * @var{y}, const size_t @var{ystride}, size_t @var{n}, double * @var{c1}, double * @var{cov11}, double * @var{sumsq})
+This function computes the best-fit linear regression coefficient
+@var{c1} of the model @math{Y = c_1 X} for the weighted datasets
+(@var{x}, @var{y}), two vectors of length @var{n} with strides
+@var{xstride} and @var{ystride}.  The vector @var{w}, of length @var{n}
+and stride @var{wstride}, specifies the weight of each datapoint. The
+weight is the reciprocal of the variance for each datapoint in @var{y}.
+
+The variance of the parameter @var{c1} is estimated from the weighted
+data and returned via the parameters @var{cov11}.  The weighted sum of
+squares of the residuals from the best-fit line, @math{\chi^2}, is
+returned in @var{chisq}.
+@end deftypefun
+
+@deftypefun int gsl_fit_mul_est (double @var{x}, double @var{c1}, double @var{c11}, double *@var{y}, double *@var{y_err})
+This function uses the best-fit linear regression coefficient @var{c1}
+and its estimated covariance @var{cov11} to compute the fitted function
+@var{y} and its standard deviation @var{y_err} for the model @math{Y =
+c_1 X} at the point @var{x}.
+@end deftypefun
+
+@node Multi-parameter fitting
+@section Multi-parameter fitting
+
+The functions described in this section perform least-squares fits to a
+general linear model, @math{y = X c} where @math{y} is a vector of
+@math{n} observations, @math{X} is an @math{n} by @math{p} matrix of
+predictor variables, and @math{c} are the @math{p} unknown best-fit
+parameters, which are to be estimated.
+
+The best-fit is found by minimizing the weighted sums of squared
+residuals, @math{\chi^2},
+
+@tex
+\beforedisplay
+$$
+\chi^2 = (y - X c)^T W (y - X c)
+$$
+\afterdisplay
+@end tex
+@ifinfo
+@example
+\chi^2 = (y - X c)^T W (y - X c)
+@end example
+@end ifinfo
+@noindent
+with respect to the parameters @math{c}. The weights are specified by
+the diagonal elements of the @math{n} by @math{n} matrix @math{W}.  For
+unweighted data @math{W} is replaced by the identity matrix.
+
+This formulation can be used for fits to any number of functions and/or
+variables by preparing the @math{n}-by-@math{p} matrix @math{X}
+appropriately.  For example, to fit to a @math{p}-th order polynomial in
+@var{x}, use the following matrix,
+
+@tex
+\beforedisplay
+$$
+X_{ij} = x_i^j
+$$
+\afterdisplay
+@end tex
+@ifinfo
+@example
+X_@{ij@} = x_i^j
+@end example
+@end ifinfo
+@noindent
+where the index @math{i} runs over the observations and the index
+@math{j} runs from 0 to @math{p-1}.
+
+To fit to a set of @math{p} sinusoidal functions with fixed frequencies
+@math{\omega_1}, @math{\omega_2}, @dots{}, @math{\omega_p}, use,
+
+@tex
+\beforedisplay
+$$
+X_{ij} = \sin(\omega_j x_i)
+$$
+\afterdisplay
+@end tex
+@ifinfo
+@example
+X_@{ij@} = sin(\omega_j x_i)
+@end example
+@end ifinfo
+@noindent
+To fit to @math{p} independent variables @math{x_1}, @math{x_2}, @dots{},
+@math{x_p}, use,
+
+@tex
+\beforedisplay
+$$
+X_{ij} = x_j(i)
+$$
+\afterdisplay
+@end tex
+@ifinfo
+@example
+X_@{ij@} = x_j(i)
+@end example
+@end ifinfo
+@noindent
+where @math{x_j(i)} is the @math{i}-th value of the predictor variable
+@math{x_j}.
+
+The functions described in this section are declared in the header file
+@file{gsl_multifit.h}.
+
+The solution of the general linear least-squares system requires an
+additional working space for intermediate results, such as the singular
+value decomposition of the matrix @math{X}.
+
+@deftypefun {gsl_multifit_linear_workspace *} gsl_multifit_linear_alloc (size_t @var{n}, size_t @var{p})
+This function allocates a workspace for fitting a model to @var{n}
+observations using @var{p} parameters.
+@end deftypefun
+
+@deftypefun void gsl_multifit_linear_free (gsl_multifit_linear_workspace * @var{work})
+This function frees the memory associated with the workspace @var{w}.
+@end deftypefun
+
+@deftypefun int gsl_multifit_linear (const gsl_matrix * @var{X}, const gsl_vector * @var{y}, gsl_vector * @var{c}, gsl_matrix * @var{cov}, double * @var{chisq}, gsl_multifit_linear_workspace * @var{work})
+This function computes the best-fit parameters @var{c} of the model
+@math{y = X c} for the observations @var{y} and the matrix of predictor
+variables @var{X}.  The variance-covariance matrix of the model
+parameters @var{cov} is estimated from the scatter of the observations
+about the best-fit.  The sum of squares of the residuals from the
+best-fit, @math{\chi^2}, is returned in @var{chisq}. 
+
+The best-fit is found by singular value decomposition of the matrix
+@var{X} using the preallocated workspace provided in @var{work}. The
+modified Golub-Reinsch SVD algorithm is used, with column scaling to
+improve the accuracy of the singular values. Any components which have
+zero singular value (to machine precision) are discarded from the fit.
+@end deftypefun
+
+@deftypefun int gsl_multifit_wlinear (const gsl_matrix * @var{X}, const gsl_vector * @var{w}, const gsl_vector * @var{y}, gsl_vector * @var{c}, gsl_matrix * @var{cov}, double * @var{chisq}, gsl_multifit_linear_workspace * @var{work})
+
+This function computes the best-fit parameters @var{c} of the model
+@math{y = X c} for the observations @var{y} and the matrix of predictor
+variables @var{X}.  The covariance matrix of the model parameters
+@var{cov} is estimated from the weighted data.  The weighted sum of
+squares of the residuals from the best-fit, @math{\chi^2}, is returned
+in @var{chisq}.
+
+The best-fit is found by singular value decomposition of the matrix
+@var{X} using the preallocated workspace provided in @var{work}. Any
+components which have zero singular value (to machine precision) are
+discarded from the fit.
+@end deftypefun
+
+@node Fitting Examples
+@section Examples
+
+The following program computes a least squares straight-line fit to a
+simple (fictitious) dataset, and outputs the best-fit line and its
+associated one standard-deviation error bars.
+
+@example
+#include <stdio.h>
+#include <gsl/gsl_fit.h>
+
+int
+main (void)
+@{
+  int i, n = 4;
+  double x[4] = @{ 1970, 1980, 1990, 2000 @};
+  double y[4] = @{   12,   11,   14,   13 @};
+  double w[4] = @{  0.1,  0.2,  0.3,  0.4 @};
+
+  double c0, c1, cov00, cov01, cov11, chisq;
+
+  gsl_fit_wlinear (x, 1, w, 1, y, 1, n, 
+                   &c0, &c1, &cov00, &cov01, &cov11, 
+                   &chisq);
+
+  printf("# best fit: Y = %g + %g X\n", c0, c1);
+  printf("# covariance matrix:\n");
+  printf("# [ %g, %g\n#   %g, %g]\n", 
+         cov00, cov01, cov01, cov11);
+  printf("# chisq = %g\n", chisq);
+
+  for (i = 0; i < n; i++)
+    printf("data: %g %g %g\n", 
+                  x[i], y[i], 1/sqrt(w[i]));
+
+  printf("\n");
+
+  for (i = -30; i < 130; i++)
+    @{
+      double xf = x[0] + (i/100.0) * (x[n-1] - x[0]);
+      double yf, yf_err;
+
+      gsl_fit_linear_est (xf, 
+                          c0, c1, 
+                          cov00, cov01, cov11, 
+                          &yf, &yf_err);
+
+      printf("fit: %g %g\n", xf, yf);
+      printf("hi : %g %g\n", xf, yf + yf_err);
+      printf("lo : %g %g\n", xf, yf - yf_err);
+    @}
+  return 0;
+@}
+@end example
+@noindent
+The following commands extract the data from the output of the program
+and display it using the @sc{gnu} plotutils @code{graph} utility, 
+
+@example
+$ ./demo > tmp
+$ more tmp
+# best fit: Y = -106.6 + 0.06 X
+# covariance matrix:
+# [ 39602, -19.9
+#   -19.9, 0.01]
+# chisq = 0.8
+
+$ for n in data fit hi lo ; 
+   do 
+     grep "^$n" tmp | cut -d: -f2 > $n ; 
+   done
+$ graph -T X -X x -Y y -y 0 20 -m 0 -S 2 -Ie data 
+     -S 0 -I a -m 1 fit -m 2 hi -m 2 lo
+@end example
+
+@iftex
+@sp 1
+@center @image{fit-wlinear,4in}
+@end iftex
+
+The next program performs a quadratic fit @math{y = c_0 + c_1 x + c_2
+x^2} to a weighted dataset using the generalised linear fitting function
+@code{gsl_multifit_wlinear}.  The model matrix @math{X} for a quadratic
+fit is given by,
+
+@tex
+\beforedisplay
+$$
+X=\pmatrix{1&x_0&x_0^2\cr
+1&x_1&x_1^2\cr
+1&x_2&x_2^2\cr
+\dots&\dots&\dots\cr}
+$$
+\afterdisplay
+@end tex
+@ifinfo
+@example
+X = [ 1   , x_0  , x_0^2 ;
+      1   , x_1  , x_1^2 ;
+      1   , x_2  , x_2^2 ;
+      ... , ...  , ...   ]
+@end example
+@end ifinfo
+@noindent
+where the column of ones corresponds to the constant term @math{c_0}.
+The two remaining columns corresponds to the terms @math{c_1 x} and and
+@math{c_2 x^2}.
+
+The program reads @var{n} lines of data in the format (@var{x}, @var{y},
+@var{err}) where @var{err} is the error (standard deviation) in the
+value @var{y}.
+
+@example
+#include <stdio.h>
+#include <gsl/gsl_multifit.h>
+
+int
+main (int argc, char **argv)
+@{
+  int i, n;
+  double xi, yi, ei, chisq;
+  gsl_matrix *X, *cov;
+  gsl_vector *y, *w, *c;
+
+  if (argc != 2)
+    @{
+      fprintf(stderr,"usage: fit n < data\n");
+      exit (-1);
+    @}
+
+  n = atoi(argv[1]);
+
+  X = gsl_matrix_alloc (n, 3);
+  y = gsl_vector_alloc (n);
+  w = gsl_vector_alloc (n);
+
+  c = gsl_vector_alloc (3);
+  cov = gsl_matrix_alloc (3, 3);
+
+  for (i = 0; i < n; i++)
+    @{
+      int count = fscanf(stdin, "%lg %lg %lg",
+                         &xi, &yi, &ei);
+
+      if (count != 3)
+        @{
+          fprintf(stderr, "error reading file\n");
+          exit(-1);
+        @}
+
+      printf("%g %g +/- %g\n", xi, yi, ei);
+      
+      gsl_matrix_set (X, i, 0, 1.0);
+      gsl_matrix_set (X, i, 1, xi);
+      gsl_matrix_set (X, i, 2, xi*xi);
+      
+      gsl_vector_set (y, i, yi);
+      gsl_vector_set (w, i, 1.0/(ei*ei));
+    @}
+
+  @{
+    gsl_multifit_linear_workspace * work 
+      = gsl_multifit_linear_alloc (n, 3);
+    gsl_multifit_wlinear (X, w, y, c, cov,
+                          &chisq, work);
+    gsl_multifit_linear_free (work);
+  @}
+
+#define C(i) (gsl_vector_get(c,(i)))
+#define COV(i,j) (gsl_matrix_get(cov,(i),(j)))
+
+  @{
+    printf("# best fit: Y = %g + %g X + %g X^2\n", 
+           C(0), C(1), C(2));
+
+    printf("# covariance matrix:\n");
+    printf("[ %+.5e, %+.5e, %+.5e  \n",
+              COV(0,0), COV(0,1), COV(0,2));
+    printf("  %+.5e, %+.5e, %+.5e  \n", 
+              COV(1,0), COV(1,1), COV(1,2));
+    printf("  %+.5e, %+.5e, %+.5e ]\n", 
+              COV(2,0), COV(2,1), COV(2,2));
+    printf("# chisq = %g\n", chisq);
+  @}
+  return 0;
+@}
+@end example
+@noindent
+A suitable set of data for fitting can be generated using the following
+program.  It outputs a set of points with gaussian errors from the curve
+@math{y = e^x} in the region @math{0 < x < 2}.
+
+@example
+#include <stdio.h>
+#include <math.h>
+#include <gsl/gsl_randist.h>
+
+int
+main (void)
+@{
+  double x;
+  const gsl_rng_type * T;
+  gsl_rng * r;
+  
+  gsl_rng_env_setup();
+  
+  T = gsl_rng_default;
+  r = gsl_rng_alloc(T);
+
+  for (x = 0.1; x < 2; x+= 0.1)
+    @{
+      double y0 = exp(x);
+      double sigma = 0.1*y0;
+      double dy = gsl_ran_gaussian(r, sigma)
+
+      printf("%g %g %g\n", x, y0 + dy, sigma);
+    @}
+  return 0;
+@}
+@end example
+@noindent
+The data can be prepared by running the resulting executable program,
+
+@example
+$ ./generate > exp.dat
+$ more exp.dat
+0.1 0.97935 0.110517
+0.2 1.3359 0.12214
+0.3 1.52573 0.134986
+0.4 1.60318 0.149182
+0.5 1.81731 0.164872
+0.6 1.92475 0.182212
+....
+@end example
+@noindent
+To fit the data use the previous program, with the number of data points
+given as the first argument.  In this case there are 19 data points.
+
+@example
+$ ./fit 19 < exp.dat
+0.1 0.97935 +/- 0.110517
+0.2 1.3359 +/- 0.12214
+...
+# best fit: Y = 1.02318 + 0.956201 X + 0.876796 X^2
+# covariance matrix:
+[ +1.25612e-02, -3.64387e-02, +1.94389e-02  
+  -3.64387e-02, +1.42339e-01, -8.48761e-02  
+  +1.94389e-02, -8.48761e-02, +5.60243e-02 ]
+# chisq = 23.0987
+@end example
+@noindent
+The parameters of the quadratic fit match the coefficients of the
+expansion of @math{e^x}, taking into account the errors on the
+parameters and the @math{O(x^3)} difference between the exponential and
+quadratic functions for the larger values of @math{x}.  The errors on
+the parameters are given by the square-root of the corresponding
+diagonal elements of the covariance matrix.  The chi-squared per degree
+of freedom is 1.4, indicating a reasonable fit to the data.
+
+@iftex
+@sp 1
+@center @image{fit-wlinear2,4in}
+@end iftex
+
+@node Fitting References and Further Reading
+@section References and Further Reading
+@noindent
+A summary of formulas and techniques for least squares fitting can be
+found in the "Statistics" chapter of the Annual Review of Particle
+Physics prepared by the Particle Data Group.
+
+@itemize @asis
+@item
+@cite{Review of Particle Properties}
+R.M. Barnett et al., Physical Review D54, 1 (1996)
+@url{http://pdg.lbl.gov/}
+@end itemize
+@noindent
+The Review of Particle Physics is available online at the website given
+above.
+
+@noindent
+The tests used to prepare these routines are based on the NIST
+Statistical Reference Datasets. The datasets and their documentation are
+available from NIST at the following website,
+
+@center @url{http://www.nist.gov/itl/div898/strd/index.html}.
+
+

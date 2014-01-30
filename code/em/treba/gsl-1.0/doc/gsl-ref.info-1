@@ -1,0 +1,1304 @@
+This is gsl-ref.info, produced by makeinfo version 4.0 from
+gsl-ref.texi.
+
+INFO-DIR-SECTION Scientific software
+START-INFO-DIR-ENTRY
+* gsl-ref: (gsl-ref).                   GNU Scientific Library - Reference
+END-INFO-DIR-ENTRY
+
+   This file documents the GNU Scientific Library.
+
+   Copyright (C) 1996, 1997, 1998, 1999, 2000, 2001 The GSL Team.
+
+   Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.1 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.  A
+copy of the license is included in the section entitled "GNU Free
+Documentation License".
+
+
+File: gsl-ref.info,  Node: Top,  Next: Introduction,  Prev: (dir),  Up: (dir)
+
+GSL
+***
+
+   This file documents the GNU Scientific Library, a collection of
+numerical routines for scientific computing.  The documentation
+corresponds to version 1.0.
+
+   More information about GSL can be found at the project homepage,
+<http://sources.redhat.com/gsl/>.
+
+* Menu:
+
+* Introduction::
+* Using the library::
+* Error Handling::
+* Mathematical Functions::
+* Complex Numbers::
+* Roots of Polynomials::
+* Special Functions::
+* Vectors and Matrices::
+* Permutations::
+* Sorting::
+* BLAS Support::
+* Linear Algebra::
+* Eigensystems::
+* Fast Fourier Transforms::
+* Numerical Integration::
+* Random Number Generation::
+* Quasi-Random Sequences::
+* Random Number Distributions::
+* Statistics::
+* Histograms::
+* N-tuples::
+* Monte Carlo Integration::
+* Simulated Annealing::
+* Ordinary Differential Equations::
+* Interpolation::
+* Numerical Differentiation::
+* Chebyshev Approximations::
+* Series Acceleration::
+* Discrete Hankel Transforms::
+* One dimensional Root-Finding::
+* One dimensional Minimization::
+* Multidimensional Root-Finding::
+* Multidimensional Minimization::
+* Least-Squares Fitting::
+* Nonlinear Least-Squares Fitting::
+* Physical Constants::
+* IEEE floating-point arithmetic::
+* Debugging Numerical Programs::
+* Contributors to GSL::
+* Autoconf Macros::
+* GSL CBLAS Library::
+* GNU General Public License::
+* GNU Free Documentation License::
+* Function Index::
+* Variable Index::
+* Type Index::
+* Concept Index::
+
+
+File: gsl-ref.info,  Node: Introduction,  Next: Using the library,  Prev: Top,  Up: Top
+
+Introduction
+************
+
+   The GNU Scientific Library (GSL) is a collection of routines for
+numerical computing.  The routines have been written from scratch in C,
+and are meant to present a modern Applications Programming Interface
+(API) for C programmers, while allowing wrappers to be written for very
+high level languages.  The source code is distributed under the GNU
+General Public License.
+
+* Menu:
+
+* Routines available in GSL::
+* GSL is Free Software::
+* Obtaining GSL::
+* An Example Program::
+* No Warranty::
+* Further Information::
+
+
+File: gsl-ref.info,  Node: Routines available in GSL,  Next: GSL is Free Software,  Up: Introduction
+
+Routines available in GSL
+=========================
+
+   The library covers a wide range of topics in numerical computing.
+Routines are available for the following areas,
+
+     Complex Numbers                  Roots of Polynomials             
+     Special Functions                Vectors and Matrices             
+     Permutations                     Sorting                          
+     BLAS Support                     Linear Algebra                   
+     Eigensystems                     Fast Fourier Transforms          
+     Quadrature                       Random Numbers                   
+     Quasi-Random Sequences           Random Distributions             
+     Statistics                       Histograms                       
+     N-Tuples                         Monte Carlo Integration          
+     Simulated Annealing              Differential Equations           
+     Interpolation                    Numerical Differentiation        
+     Chebyshev Approximations         Series Acceleration              
+     Discrete Hankel Transforms       Root-Finding                     
+     Minimization                     Least-Squares Fitting            
+     Physical Constants               IEEE Floating-Point              
+
+The use of these routines is described in this manual.  Each chapter
+provides detailed definitions of the functions, followed by example
+programs and references to the articles on which the algorithms are
+based.
+
+
+File: gsl-ref.info,  Node: GSL is Free Software,  Next: Obtaining GSL,  Prev: Routines available in GSL,  Up: Introduction
+
+GSL is Free Software
+====================
+
+   The subroutines in the GNU Scientific Library are "free software";
+this means that everyone is free to use them, and to redistribute them
+in other free programs.  The library is not in the public domain; it is
+copyrighted and there are conditions on its distribution.  These
+conditions are designed to permit everything that a good cooperating
+citizen would want to do.  What is not allowed is to try to prevent
+others from further sharing any version of the software that they might
+get from you.
+
+   Specifically, we want to make sure that you have the right to give
+away copies of any programs related to the GNU Scientific Library, that
+you receive their source code or else can get it if you want it, that
+you can change these programs or use pieces of them in new free
+programs, and that you know you can do these things.  The library
+should not be redistributed in proprietary programs.
+
+   To make sure that everyone has such rights, we have to forbid you to
+deprive anyone else of these rights.  For example, if you distribute
+copies of any related code, you must give the recipients all the rights
+that you have.  You must make sure that they, too, receive or can get
+the source code.  And you must tell them their rights.
+
+   Also, for our own protection, we must make certain that everyone
+finds out that there is no warranty for the GNU Scientific Library.  If
+these programs are modified by someone else and passed on, we want their
+recipients to know that what they have is not what we distributed, so
+that any problems introduced by others will not reflect on our
+reputation.
+
+   The precise conditions for the distribution of software related to
+the GNU Scientific Library are found in the GNU General Public License
+(*note GNU General Public License::).  Further information about this
+license is available from the GNU Project webpage `Frequently Asked
+Questions about the GNU GPL',
+
+     <http://www.gnu.org/copyleft/gpl-faq.html>
+
+
+File: gsl-ref.info,  Node: Obtaining GSL,  Next: An Example Program,  Prev: GSL is Free Software,  Up: Introduction
+
+Obtaining GSL
+=============
+
+   The source code for the library can be obtained in different ways, by
+copying it from a friend, purchasing it on CDROM or downloading it from
+the internet. A list of public ftp servers which carry the source code
+can be found on the development website,
+
+     <http://sources.redhat.com/gsl/>
+
+The preferred platform for the library is a GNU system, which allows it
+to take advantage of additional features.  The library is portable and
+compiles on most Unix platforms. It is also available for Microsoft
+Windows.  Precompiled versions of the library can be purchased from
+commercial redistributors listed on the website.
+
+   Announcements of new releases, updates and other relevant events are
+made on the `gsl-announce' mailing list.  To subscribe to this
+low-volume list, send an email of the following form,
+
+     To: gsl-announce-request@sources.redhat.com
+     Subject: subscribe
+
+You will receive a response asking to you to reply in order to confirm
+your subscription.
+
+
+File: gsl-ref.info,  Node: An Example Program,  Next: No Warranty,  Prev: Obtaining GSL,  Up: Introduction
+
+An Example Program
+==================
+
+   The following short program demonstrates the use of the library by
+computing the value of the Bessel function J_0(x) for x=5,
+
+     #include <stdio.h>
+     #include <gsl/gsl_sf_bessel.h>
+     
+     int
+     main (void)
+     {
+       double x = 5.0;
+     
+       double y = gsl_sf_bessel_J0 (x);
+     
+       printf("J0(%g) = %.18e\n", x, y);
+     
+       return 0;
+     }
+
+The output is shown below, and should be correct to double-precision
+accuracy,
+
+     J0(5) = -1.775967713143382920e-01
+
+The steps needed to compile programs which use the library are described
+in the next chapter.
+
+
+File: gsl-ref.info,  Node: No Warranty,  Next: Further Information,  Prev: An Example Program,  Up: Introduction
+
+No Warranty
+===========
+
+   The software described in this manual has no warranty, it is provided
+"as is".  It is your responsibility to validate the behavior of the
+routines and their accuracy using the source code provided.  Consult the
+GNU General Public license for further details (*note GNU General
+Public License::).
+
+
+File: gsl-ref.info,  Node: Further Information,  Prev: No Warranty,  Up: Introduction
+
+Further Information
+===================
+
+   Additional information, including online copies of this manual,
+links to related projects, and mailing list archives are available from
+the development website mentioned above.  The developers of the library
+can be reached via the project's public mailing list,
+
+     `gsl-discuss@sources.redhat.com'
+
+This mailing list can be used to report bugs or to ask questions not
+covered by this manual.
+
+
+File: gsl-ref.info,  Node: Using the library,  Next: Error Handling,  Prev: Introduction,  Up: Top
+
+Using the library
+*****************
+
+   This chapter describes how to compile programs that use GSL, and
+introduces its conventions.
+
+* Menu:
+
+* ANSI C Compliance::
+* Compiling and Linking::
+* Shared Libraries::
+* Autoconf macros::
+* Inline functions::
+* Long double::
+* Portability functions::
+* Alternative optimized functions::
+* Support for different numeric types::
+* Compatibility with C++::
+* Aliasing of arrays::
+* Code Reuse::
+
+
+File: gsl-ref.info,  Node: ANSI C Compliance,  Next: Compiling and Linking,  Up: Using the library
+
+ANSI C Compliance
+=================
+
+   The library is written in ANSI C and is intended to conform to the
+ANSI C standard.  It should be portable to any system with a working
+ANSI C compiler.
+
+   The library does not rely on any non-ANSI extensions in the
+interface it exports to the user.  Programs you write using GSL can be
+ANSI compliant.  Extensions which can be used in a way compatible with
+pure ANSI C are supported, however, via conditional compilation.  This
+allows the library to take advantage of compiler extensions on those
+platforms which support them.
+
+   When an ANSI C feature is known to be broken on a particular system
+the library will exclude any related functions at compile-time.  This
+should make it impossible to link a program that would use these
+functions and give incorrect results.
+
+   To avoid namespace conflicts all exported function names and
+variables have the prefix `gsl_', while exported macros have the prefix
+`GSL_'.
+
+
+File: gsl-ref.info,  Node: Compiling and Linking,  Next: Shared Libraries,  Prev: ANSI C Compliance,  Up: Using the library
+
+Compiling and Linking
+=====================
+
+   The library header files are installed in their own `gsl' directory.
+You should write any preprocessor include statements with a `gsl/'
+directory prefix thus,
+
+     #include <gsl/gsl_math.h>
+
+If the directory is not installed on the standard search path of your
+compiler you will also need to provide its location to the preprocessor
+as a command line flag.  The default location of the `gsl' directory is
+`/usr/local/include/gsl'.
+
+   The library is installed as a single file, `libgsl.a'.  A shared
+version of the library is also installed on systems that support shared
+libraries.  The default location of these files is `/usr/local/lib'.
+To link against the library you need to specify both the main library
+and a supporting CBLAS library, which provides standard basic linear
+algebra subroutines.  A suitable CBLAS implementation is provided in
+the library `libgslcblas.a' if your system does not provide one.  The
+following example shows how to link an application with the library,
+
+     gcc app.o -lgsl -lgslcblas -lm
+
+The following command line shows how you would link the same application
+with an alternative blas library called `libcblas',
+
+     gcc app.o -lgsl -lcblas -lm
+
+For the best performance an optimized platform-specific CBLAS library
+should be used for `-lcblas'.  The library must conform to the CBLAS
+standard.  The ATLAS package provides a portable high-performance BLAS
+library with a CBLAS interface.  It is free software and should be
+installed for any work requiring fast vector and matrix operations.
+The following command line will link with the ATLAS library and its
+CBLAS interface,
+
+     gcc app.o -lgsl -lcblas -latlas -lm
+
+For more information see *Note BLAS Support::.
+
+   The program `gsl-config' provides information on the local version
+of the library.  For example, the following command shows that the
+library has been installed under the directory `/usr/local',
+
+     bash$ gsl-config --prefix
+     /usr/local
+
+Further information is available using the command `gsl-config --help'.
+
+
+File: gsl-ref.info,  Node: Shared Libraries,  Next: Autoconf macros,  Prev: Compiling and Linking,  Up: Using the library
+
+Shared Libraries
+================
+
+   To run a program linked with the shared version of the library it
+may be necessary to define the shell variable `LD_LIBRARY_PATH' to
+include the directory where the library is installed.  For example,
+
+     LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH ./app
+
+To compile a statically linked version of the program instead, use the
+`-static' flag in `gcc',
+
+     gcc -static app.o -lgsl -lgslcblas -lm
+
+
+File: gsl-ref.info,  Node: Autoconf macros,  Next: Inline functions,  Prev: Shared Libraries,  Up: Using the library
+
+Autoconf macros
+===============
+
+   For applications using `autoconf' the standard macro `AC_CHECK_LIB'
+can be used to link with the library automatically from a `configure'
+script.  The library itself depends on the presence of a CBLAS and math
+library as well, so these must also be located before linking with the
+main `libgsl' file.  The following commands should be placed in the
+`configure.in' file to perform these tests,
+
+     AC_CHECK_LIB(m,main)
+     AC_CHECK_LIB(gslcblas,main)
+     AC_CHECK_LIB(gsl,main)
+
+Assuming the libraries are found the output during the configure stage
+looks like this,
+
+     checking for main in -lm... yes
+     checking for main in -lgslcblas... yes
+     checking for main in -lgsl... yes
+
+If the library is found then the tests will define the macros
+`HAVE_LIBGSL', `HAVE_LIBGSLCBLAS', `HAVE_LIBM' and add the options
+`-lgsl -lgslcblas -lm' to the variable `LIBS'.
+
+   The tests above will find any version of the library.  They are
+suitable for general use, where the versions of the functions are not
+important.  An alternative macro is available in the file `gsl.m4' to
+test for a specific version of the library.  To use this macro simply
+add the following line to your `configure.in' file instead of the tests
+above:
+
+     AM_PATH_GSL(GSL_VERSION,
+                [action-if-found],
+                [action-if-not-found])
+
+The argument `GSL_VERSION' should be the two or three digit MAJOR.MINOR
+or MAJOR.MINOR.MICRO version number of the release you require. A
+suitable choice for `action-if-not-found' is,
+
+     AC_MSG_ERROR(could not find required version of GSL)
+
+Then you can add the variables `GSL_LIBS' and `GSL_CFLAGS' to your
+Makefile.am files to obtain the correct compiler flags.  `GSL_LIBS' is
+equal to the output of the `gsl-config --libs' command and `GSL_CFLAGS'
+is equal to `gsl-config --cflags' command. For example,
+
+     libgsdv_la_LDFLAGS =    \
+             $(GTK_LIBDIR) \
+             $(GTK_LIBS) -lgsdvgsl $(GSL_LIBS) -lgslcblas
+
+Note that the macro `AM_PATH_GSL' needs to use the C compiler so it
+should appear in the `configure.in' file before the macro
+`AC_LANG_CPLUSPLUS' for programs that use C++.
+
+
+File: gsl-ref.info,  Node: Inline functions,  Next: Long double,  Prev: Autoconf macros,  Up: Using the library
+
+Inline functions
+================
+
+   The `inline' keyword is not part of ANSI C and the library does not
+export any inline function definitions by default. However, the library
+provides optional inline versions of performance-critical functions by
+conditional compilation.  The inline versions of these functions can be
+included by defining the macro `HAVE_INLINE' when compiling an
+application.
+
+     gcc -c -DHAVE_INLINE app.c
+
+If you use `autoconf' this macro can be defined automatically.  The
+following test should be placed in your `configure.in' file,
+
+     AC_C_INLINE
+     
+     if test "$ac_cv_c_inline" != no ; then
+       AC_DEFINE(HAVE_INLINE,1)
+       AC_SUBST(HAVE_INLINE)
+     fi
+
+and the macro will then be defined in the compilation flags or by
+including the file `config.h' before any library headers.  If you do
+not define the macro `HAVE_INLINE' then the slower non-inlined versions
+of the functions will be used instead.
+
+   Note that the actual usage of the inline keyword is `extern inline',
+which eliminates unnecessary function definitions in GCC.  If the form
+`extern inline' causes problems with other compilers a stricter
+autoconf test can be used, see *Note Autoconf Macros::.
+
+
+File: gsl-ref.info,  Node: Long double,  Next: Portability functions,  Prev: Inline functions,  Up: Using the library
+
+Long double
+===========
+
+   The extended numerical type `long double' is part of the ANSI C
+standard and should be available in every modern compiler.  However, the
+precision of `long double' is platform dependent, and this should be
+considered when using it.  The IEEE standard only specifies the minimum
+precision of extended precision numbers, while the precision of
+`double' is the same on all platforms.
+
+   In some system libraries the `stdio.h' formatted input/output
+functions `printf' and `scanf' are not implemented correctly for `long
+double'.  Undefined or incorrect results are avoided by testing these
+functions during the `configure' stage of library compilation and
+eliminating certain GSL functions which depend on them if necessary.
+The corresponding line in the `configure' output looks like this,
+
+     checking whether printf works with long double... no
+
+Consequently when `long double' formatted input/output does not work on
+a given system it should be impossible to link a program which uses GSL
+functions dependent on this.
+
+   If it is necessary to work on a system which does not support
+formatted `long double' input/output then the options are to use binary
+formats or to convert `long double' results into `double' for reading
+and writing.
+
+
+File: gsl-ref.info,  Node: Portability functions,  Next: Alternative optimized functions,  Prev: Long double,  Up: Using the library
+
+Portability functions
+=====================
+
+   To help in writing portable applications GSL provides some
+implementations of functions that are found in other libraries, such as
+the BSD math library.  You can write your application to use the native
+versions of these functions, and substitute the GSL versions via a
+preprocessor macro if they are unavailable on another platform.  The
+substitution can be made automatically if you use `autoconf'. For
+example, to test whether the BSD function `hypot' is available you can
+include the following line in the configure file `configure.in' for
+your application,
+
+     AC_CHECK_FUNCS(hypot)
+
+and place the following macro definitions in the file `config.h.in',
+
+     /* Substitute gsl_hypot for missing system hypot */
+     
+     #ifndef HAVE_HYPOT
+     #define hypot gsl_hypot
+     #endif
+
+The application source files can then use the include command `#include
+<config.h>' to substitute `gsl_hypot' for each occurrence of `hypot'
+when `hypot' is not available.
+
+   In most circumstances the best strategy is to use the native
+versions of these functions when available, and fall back to GSL
+versions otherwise, since this allows your application to take
+advantage of any platform-specific optimizations in the system library.
+This is the strategy used within GSL itself.
+
+
+File: gsl-ref.info,  Node: Alternative optimized functions,  Next: Support for different numeric types,  Prev: Portability functions,  Up: Using the library
+
+Alternative optimized functions
+===============================
+
+   The main implementation of some functions in the library will not be
+optimal on all architectures.  For example, there are several ways to
+compute a Gaussian random variate and their relative speeds are
+platform-dependent.  In cases like this the library provides alternate
+implementations of these functions with the same interface.  If you
+write your application using calls to the standard implementation you
+can select an alternative version later via a preprocessor definition.
+It is also possible to introduce your own optimized functions this way
+while retaining portability.  The following lines demonstrate the use of
+a platform-dependent choice of methods for sampling from the Gaussian
+distribution,
+
+     #ifdef SPARC
+     #define gsl_ran_gaussian gsl_ran_gaussian_ratio_method
+     #endif
+     #ifdef INTEL
+     #define gsl_ran_gaussian my_gaussian
+     #endif
+
+These lines would be placed in the configuration header file `config.h'
+of the application, which should then be included by all the source
+files.  Note that the alternative implementations will not produce
+bit-for-bit identical results, and in the case of random number
+distributions will produce an entirely different stream of random
+variates.
+
+
+File: gsl-ref.info,  Node: Support for different numeric types,  Next: Compatibility with C++,  Prev: Alternative optimized functions,  Up: Using the library
+
+Support for different numeric types
+===================================
+
+   Many functions in the library are defined for different numeric
+types.  This feature is implemented by varying the name of the function
+with a type-related modifier -- a primitive form of C++ templates.  The
+modifier is inserted into the function name after the initial module
+prefix.  The following table shows the function names defined for all
+the numeric types of an imaginary module `gsl_foo' with function `fn',
+
+     gsl_foo_fn               double
+     gsl_foo_long_double_fn   long double
+     gsl_foo_float_fn         float
+     gsl_foo_long_fn          long
+     gsl_foo_ulong_fn         unsigned long
+     gsl_foo_int_fn           int
+     gsl_foo_uint_fn          unsigned int
+     gsl_foo_short_fn         short
+     gsl_foo_ushort_fn        unsigned short
+     gsl_foo_char_fn          char
+     gsl_foo_uchar_fn         unsigned char
+
+The normal numeric precision `double' is considered the default and
+does not require a suffix.  For example, the function `gsl_stats_mean'
+computes the mean of double precision numbers, while the function
+`gsl_stats_int_mean' computes the mean of integers.
+
+   A corresponding scheme is used for library defined types, such as
+`gsl_vector' and `gsl_matrix'.  In this case the modifier is appended
+to the type name.  For example, if a module defines a new
+type-dependent struct or typedef `gsl_foo' it is modified for other
+types in the following way,
+
+     gsl_foo                  double
+     gsl_foo_long_double      long double
+     gsl_foo_float            float
+     gsl_foo_long             long
+     gsl_foo_ulong            unsigned long
+     gsl_foo_int              int
+     gsl_foo_uint             unsigned int
+     gsl_foo_short            short
+     gsl_foo_ushort           unsigned short
+     gsl_foo_char             char
+     gsl_foo_uchar            unsigned char
+
+When a module contains type-dependent definitions the library provides
+individual header files for each type.  The filenames are modified as
+shown in the below.  For convenience the default header includes the
+definitions for all the types.  To include only the double precision
+header, or any other specific type, file use its individual filename.
+
+     #include <gsl/gsl_foo.h>               All types
+     #include <gsl/gsl_foo_double.h>        double
+     #include <gsl/gsl_foo_long_double.h>   long double
+     #include <gsl/gsl_foo_float.h>         float
+     #include <gsl/gsl_foo_long.h>          long
+     #include <gsl/gsl_foo_ulong.h>         unsigned long
+     #include <gsl/gsl_foo_int.h>           int
+     #include <gsl/gsl_foo_uint.h>          unsigned int
+     #include <gsl/gsl_foo_short.h>         short
+     #include <gsl/gsl_foo_ushort.h>        unsigned short
+     #include <gsl/gsl_foo_char.h>          char
+     #include <gsl/gsl_foo_uchar.h>         unsigned char
+
+
+File: gsl-ref.info,  Node: Compatibility with C++,  Next: Aliasing of arrays,  Prev: Support for different numeric types,  Up: Using the library
+
+Compatibility with C++
+======================
+
+   The library header files automatically define functions to have
+`extern "C"' linkage when included in C++ programs.
+
+
+File: gsl-ref.info,  Node: Aliasing of arrays,  Next: Code Reuse,  Prev: Compatibility with C++,  Up: Using the library
+
+Aliasing of arrays
+==================
+
+   The library assumes that arrays, vectors and matrices passed as
+modifiable arguments are not aliased and do not overlap with each other.
+This removes the need for the library to handle overlapping memory
+regions as a special case, and allows additional optimizations to be
+used.  If overlapping memory regions are passed as modifiable arguments
+then the results of such functions will be undefined.  If the arguments
+will not be modified (for example, if a function prototype declares them
+as `const' arguments) then overlapping or aliased memory regions can be
+safely used.
+
+
+File: gsl-ref.info,  Node: Code Reuse,  Prev: Aliasing of arrays,  Up: Using the library
+
+Code Reuse
+==========
+
+   Where possible the routines in the library have been written to avoid
+dependencies between modules and files.  This should make it possible to
+extract individual functions for use in your own applications, without
+needing to have the whole library installed.  You may need to define
+certain macros such as `GSL_ERROR' and remove some `#include'
+statements in order to compile the files as standalone units. Reuse of
+the library code in this way is encouraged, subject to the terms of the
+GNU General Public License.
+
+
+File: gsl-ref.info,  Node: Error Handling,  Next: Mathematical Functions,  Prev: Using the library,  Up: Top
+
+Error Handling
+**************
+
+   This chapter describes the way that GSL functions report and handle
+errors.  By examining the status information returned by every function
+you can determine whether it succeeded or failed, and if it failed you
+can find out what the precise cause of failure was.  You can also define
+your own error handling functions to modify the default behavior of the
+library.
+
+   The functions described in this section are declared in the header
+file `gsl_errno.h'.
+
+* Menu:
+
+* Error Reporting::
+* Error Handlers::
+* Using GSL error reporting in your own functions::
+
+
+File: gsl-ref.info,  Node: Error Reporting,  Next: Error Handlers,  Up: Error Handling
+
+Error Reporting
+===============
+
+   The library follows the thread-safe error reporting conventions of
+the POSIX Threads library.  Functions return a non-zero error code to
+indicate an error and `0' to indicate success.
+
+     int status = gsl_function(...)
+     
+     if (status) { /* an error occurred */
+       .....
+       /* status value specifies the type of error */
+     }
+
+   The routines report an error whenever they cannot perform the task
+requested of them.  For example, a root-finding function would return a
+non-zero error code if could not converge to the requested accuracy, or
+exceeded a limit on the number of iterations.  Situations like this are
+a normal occurrence when using any mathematical library and you should
+check the return status of the functions that you call.
+
+   Whenever a routine reports an error the return value specifies the
+type of error.  The return value is analogous to the value of the
+variable `errno' in the C library.  However, the C library's `errno' is
+a global variable, which is not thread-safe (There can be only one
+instance of a global variable per program.  Different threads of
+execution may overwrite `errno' simultaneously).  Returning the error
+number directly avoids this problem.  The caller can examine the return
+code and decide what action to take, including ignoring the error if it
+is not considered serious.
+
+   The error code numbers are defined in the file `gsl_errno.h'.  They
+all have the prefix `GSL_' and expand to non-zero constant integer
+values.  Many of the error codes use the same base name as a
+corresponding error code in C library.  Here are some of the most common
+error codes,
+
+ - Macro: int GSL_EDOM
+     Domain error; used by mathematical functions when an argument
+     value does not fall into the domain over which the function is
+     defined (like EDOM in the C library)
+
+ - Macro: int GSL_ERANGE
+     Range error; used by mathematical functions when the result value
+     is not representable because of overflow or underflow (like ERANGE
+     in the C library)
+
+ - Macro: int GSL_ENOMEM
+     No memory available.  The system cannot allocate more virtual
+     memory because its capacity is full (like ENOMEM in the C
+     library).  This error is reported when a GSL routine encounters
+     problems when trying to allocate memory with `malloc'.
+
+ - Macro: int GSL_EINVAL
+     Invalid argument.  This is used to indicate various kinds of
+     problems with passing the wrong argument to a library function
+     (like EINVAL in the C library).
+
+Here is an example of some code which checks the return value of a
+function where an error might be reported,
+
+     int status = gsl_fft_complex_radix2_forward (data, n);
+     
+     if (status) {
+       if (status == GSL_EINVAL) {
+          fprintf (stderr, "invalid argument, n=%d\n", n);
+       } else {
+          fprintf (stderr, "failed, gsl_errno=%d\n",
+                           status);
+       }
+       exit (-1);
+     }
+
+The function `gsl_fft_complex_radix2' only accepts integer lengths
+which are a power of two.  If the variable `n' is not a power of two
+then the call to the library function will return `GSL_EINVAL',
+indicating that the length argument is invalid.  The `else' clause
+catches any other possible errors.
+
+   The error codes can be converted into an error message using the
+function `gsl_strerror'.
+
+ - Function: const char * gsl_strerror (const int GSL_ERRNO)
+     This function returns a pointer to a string describing the error
+     code GSL_ERRNO. For example,
+
+          printf("error: %s\n", gsl_strerror (status));
+
+     would print an error message like `error: output range error' for a
+     status value of `GSL_ERANGE'.
+
+
+File: gsl-ref.info,  Node: Error Handlers,  Next: Using GSL error reporting in your own functions,  Prev: Error Reporting,  Up: Error Handling
+
+Error Handlers
+==============
+
+   In addition to reporting errors the library also provides an optional
+error handler.  The error handler is called by library functions when
+they report an error, just before they return to the caller.  The
+purpose of the handler is to provide a function where a breakpoint can
+be set that will catch library errors when running under the debugger.
+It is not intended for use in production programs, which should handle
+any errors using the error return codes described above.
+
+   The default behavior of the error handler is to print a short message
+and call `abort()' whenever an error is reported by the library.  If
+this default is not turned off then any program using the library will
+stop with a core-dump whenever a library routine reports an error.
+This is intended as a fail-safe default for programs which do not check
+the return status of library routines (we don't encourage you to write
+programs this way).  If you turn off the default error handler it is
+your responsibility to check the return values of the GSL routines.  You
+can customize the error behavior by providing a new error handler. For
+example, an alternative error handler could log all errors to a file,
+ignore certain error conditions (such as underflows), or start the
+debugger and attach it to the current process when an error occurs.
+
+   All GSL error handlers have the type `gsl_error_handler_t', which is
+defined in `gsl_errno.h',
+
+ - Data Type: gsl_error_handler_t
+     This is the type of GSL error handler functions.  An error handler
+     will be passed four arguments which specify the reason for the
+     error (a string), the name of the source file in which it occurred
+     (also a string), the line number in that file (an integer) and the
+     error number (an integer).  The source file and line number are
+     set at compile time using the `__FILE__' and `__LINE__' directives
+     in the preprocessor.  An error handler function returns type
+     `void'.  Error handler functions should be defined like this,
+
+          void handler (const char * reason,
+                        const char * file,
+                        int line,
+                        int gsl_errno)
+
+To request the use of your own error handler you need to call the
+function `gsl_set_error_handler' which is also declared in
+`gsl_errno.h',
+
+ - Function: gsl_error_handler_t gsl_set_error_handler
+          (gsl_error_handler_t NEW_HANDLER)
+     This functions sets a new error handler, NEW_HANDLER, for the GSL
+     library routines.  The previous handler is returned (so that you
+     can restore it later).  Note that the pointer to a user defined
+     error handler function is stored in a static variable, so there
+     can only be one error handler per program.  This function should
+     be not be used in multi-threaded programs except to set up a
+     program-wide error handler from a master thread.  The following
+     example shows how to set and restore a new error handler,
+
+          /* save original handler, install new handler */
+          old_handler = gsl_set_error_handler (&my_handler);
+          
+          /* code uses new handler */
+          .....
+          
+          /* restore original handler */
+          gsl_set_error_handler (old_handler);
+
+     To use the default behavior (`abort' on error) set the error
+     handler to `NULL',
+
+          old_handler = gsl_set_error_handler (NULL);
+
+ - Function: gsl_error_handler_t gsl_set_error_handler_off ()
+     This function turns off the error handler by defining an error
+     handler which does nothing. This will cause the program to
+     continue after any error, so the return values from any library
+     routines must be checked.  This is the recommended behavior for
+     production programs.  The previous handler is returned (so that
+     you can restore it later).
+
+   The error behavior can be changed for specific applications by
+recompiling the library with a customized definition of the `GSL_ERROR'
+macro in the file `gsl_errno.h'.
+
+
+File: gsl-ref.info,  Node: Using GSL error reporting in your own functions,  Prev: Error Handlers,  Up: Error Handling
+
+Using GSL error reporting in your own functions
+===============================================
+
+   If you are writing numerical functions in a program which also uses
+GSL code you may find it convenient to adopt the same error reporting
+conventions as in the library.
+
+   To report an error you need to call the function `gsl_error' with a
+string describing the error and then return an appropriate error code
+from `gsl_errno.h', or a special value, such as `NaN'.  For convenience
+the file `gsl_errno.h' defines two macros which carry out these steps:
+
+ - Macro: GSL_ERROR (REASON, GSL_ERRNO)
+     This macro reports an error using the GSL conventions and returns a
+     status value of `gsl_errno'.  It expands to the following code
+     fragment,
+
+          gsl_error (reason, __FILE__, __LINE__, gsl_errno);
+          return gsl_errno;
+
+     The macro definition in `gsl_errno.h' actually wraps the code in a
+     `do { ... } while (0)' block to prevent possible parsing problems.
+
+   Here is an example of how the macro could be used to report that a
+routine did not achieve a requested tolerance.  To report the error the
+routine needs to return the error code `GSL_ETOL'.
+
+     if (residual > tolerance)
+       {
+         GSL_ERROR("residual exceeds tolerance", GSL_ETOL);
+       }
+
+ - Macro: GSL_ERROR_VAL (REASON, GSL_ERRNO, VALUE)
+     This macro is the same as `GSL_ERROR' but returns a user-defined
+     status value of VALUE instead of an error code.  It can be used for
+     mathematical functions that return a floating point value.
+
+   Here is an example where a function needs to return a `NaN' because
+of a mathematical singularity,
+
+     if (x == 0)
+       {
+         GSL_ERROR_VAL("argument lies on singularity",
+                       GSL_ERANGE, GSL_NAN);
+       }
+
+
+File: gsl-ref.info,  Node: Mathematical Functions,  Next: Complex Numbers,  Prev: Error Handling,  Up: Top
+
+Mathematical Functions
+**********************
+
+   This chapter describes basic mathematical functions.  Some of these
+functions are present in system libraries, but the alternative versions
+given here can be used as a substitute when the system functions are not
+available.
+
+   The functions and macros described in this chapter are defined in the
+header file `gsl_math.h'.
+
+* Menu:
+
+* Mathematical Constants::
+* Infinities and Not-a-number::
+* Elementary Functions::
+* Small integer powers::
+* Testing the Sign of Numbers::
+* Testing for Odd and Even Numbers::
+* Maximum and Minimum functions::
+
+
+File: gsl-ref.info,  Node: Mathematical Constants,  Next: Infinities and Not-a-number,  Up: Mathematical Functions
+
+Mathematical Constants
+======================
+
+   The library ensures that the standard BSD mathematical constants are
+defined. For reference here is a list of the constants.
+
+`M_E'
+     The base of exponentials, e
+
+`M_LOG2E'
+     The base-2 logarithm of e, \log_2 (e)
+
+`M_LOG10E'
+     The base-10 logarithm of e, \log_10 (e)
+
+`M_SQRT2'
+     The square root of two, \sqrt 2
+
+`M_SQRT1_2'
+     The square root of one-half, \sqrt{1/2}
+
+`M_SQRT3'
+     The square root of three, \sqrt 3
+
+`M_PI'
+     The constant pi, \pi
+
+`M_PI_2'
+     Pi divided by two, \pi/2
+
+`M_PI_4'
+     Pi divided by four, \pi/4
+
+`M_SQRTPI'
+     The square root of pi, \sqrt\pi
+
+`M_2_SQRTPI'
+     Two divided by the square root of pi, 2/\sqrt\pi
+
+`M_1_PI'
+     The reciprocal of pi, 1/\pi
+
+`M_2_PI'
+     Twice the reciprocal of pi, 2/\pi
+
+`M_LN10'
+     The natural logarithm of ten, \ln(10)
+
+`M_LN2'
+     The natural logarithm of two, \ln(2)
+
+`M_LNPI'
+     The natural logarithm of pi, \ln(\pi)
+
+`M_EULER'
+     Euler's constant, \gamma
+
+
+File: gsl-ref.info,  Node: Infinities and Not-a-number,  Next: Elementary Functions,  Prev: Mathematical Constants,  Up: Mathematical Functions
+
+Infinities and Not-a-number
+===========================
+
+ - Macro: GSL_POSINF
+     This macro contains the IEEE representation of positive infinity,
+     +\infty. It is computed from the expression `+1.0/0.0'.
+
+ - Macro: GSL_NEGINF
+     This macro contains the IEEE representation of negative infinity,
+     -\infty. It is computed from the expression `-1.0/0.0'.
+
+ - Macro: GSL_NAN
+     This macro contains the IEEE representation of the Not-a-Number
+     symbol, `NaN'. It is computed from the ratio `0.0/0.0'.
+
+ - Function: int gsl_isnan (const double X)
+     This function returns 1 if X is not-a-number.
+
+ - Function: int gsl_isinf (const double X)
+     This function returns +1 if X is positive infinity, -1 if X is
+     negative infinity and 0 otherwise.
+
+ - Function: int gsl_finite (const double X)
+     This function returns 1 if X is a real number, and 0 if it is
+     infinite or not-a-number.
+
+
+File: gsl-ref.info,  Node: Elementary Functions,  Next: Small integer powers,  Prev: Infinities and Not-a-number,  Up: Mathematical Functions
+
+Elementary Functions
+====================
+
+   The following routines provide portable implementations of functions
+found in the BSD math library.  When native versions are not available
+the functions described here can be used instead.  The substitution can
+be made automatically if you use `autoconf' to compile your application
+(*note Portability functions::).
+
+ - Function: double gsl_log1p (const double X)
+     This function computes the value of \log(1+x) in a way that is
+     accurate for small X. It provides an alternative to the BSD math
+     function `log1p(x)'.
+
+ - Function: double gsl_expm1 (const double X)
+     This function computes the value of \exp(x)-1 in a way that is
+     accurate for small X. It provides an alternative to the BSD math
+     function `expm1(x)'.
+
+ - Function: double gsl_hypot (const double X, const double Y)
+     This function computes the value of \sqrt{x^2 + y^2} in a way that
+     avoids overflow. It provides an alternative to the BSD math
+     function `hypot(x,y)'.
+
+ - Function: double gsl_acosh (const double X)
+     This function computes the value of \arccosh(x). It provides an
+     alternative to the standard math function `acosh(x)'.
+
+ - Function: double gsl_asinh (const double X)
+     This function computes the value of \arcsinh(x). It provides an
+     alternative to the standard math function `asinh(x)'.
+
+ - Function: double gsl_atanh (const double X)
+     This function computes the value of \arctanh(x). It provides an
+     alternative to the standard math function `atanh(x)'.
+
+
+File: gsl-ref.info,  Node: Small integer powers,  Next: Testing the Sign of Numbers,  Prev: Elementary Functions,  Up: Mathematical Functions
+
+Small integer powers
+====================
+
+   A common complaint about the standard C library is its lack of a
+function for calculating (small) integer powers.  GSL provides a simple
+functions to fill this gap.  For reasons of efficiency, these functions
+do not check for overflow or underflow conditions.
+
+ - Function: double gsl_pow_int (double X, int N)
+     This routine computes the power x^n for integer N.  The power is
+     computed using the minimum number of multiplications. For example,
+     x^8 is computed as ((x^2)^2)^2, requiring only 3 multiplications.
+     A version of this function which also computes the numerical error
+     in the result is available as `gsl_sf_pow_int_e'.
+
+ - Function: double gsl_pow_2 (const double X)
+ - Function: double gsl_pow_3 (const double X)
+ - Function: double gsl_pow_4 (const double X)
+ - Function: double gsl_pow_5 (const double X)
+ - Function: double gsl_pow_6 (const double X)
+ - Function: double gsl_pow_7 (const double X)
+ - Function: double gsl_pow_8 (const double X)
+ - Function: double gsl_pow_9 (const double X)
+     These functions can be used to compute small integer powers x^2,
+     x^3, etc. efficiently. The functions will be inlined when possible
+     so that use of these functions should be as efficient as
+     explicitly writing the corresponding product expression.
+
+     #include <gsl/gsl_math.h>
+     double y = gsl_pow_4 (3.141)  /* compute 3.141**4 */
+
+
+File: gsl-ref.info,  Node: Testing the Sign of Numbers,  Next: Testing for Odd and Even Numbers,  Prev: Small integer powers,  Up: Mathematical Functions
+
+Testing the Sign of Numbers
+===========================
+
+ - Macro: GSL_SIGN (x)
+     This macro returns the sign of X. It is defined as `((x) >= 0 ? 1
+     : -1)'. Note that with this definition the sign of zero is positive
+     (regardless of its IEEE sign bit).
+
+
+File: gsl-ref.info,  Node: Testing for Odd and Even Numbers,  Next: Maximum and Minimum functions,  Prev: Testing the Sign of Numbers,  Up: Mathematical Functions
+
+Testing for Odd and Even Numbers
+================================
+
+ - Macro: GSL_IS_ODD (n)
+     This macro evaluates to 1 if N is odd and 0 if N is even. The
+     argument N must be of integer type.
+
+ - Macro: GSL_IS_EVEN (n)
+     This macro is the opposite of `GSL_IS_ODD(n)'. It evaluates to 1 if
+     N is even and 0 if N is odd. The argument N must be of integer
+     type.
+
+
+File: gsl-ref.info,  Node: Maximum and Minimum functions,  Prev: Testing for Odd and Even Numbers,  Up: Mathematical Functions
+
+Maximum and Minimum functions
+=============================
+
+ - Macro: GSL_MAX (a, b)
+     This macro returns the maximum of A and B. It is defined as `((a)
+     > (b) ? (a):(b))'.
+
+ - Macro: GSL_MIN (a, b)
+     This macro returns the minimum of A and B. It is defined as `((a)
+     < (b) ? (a):(b))'.
+
+ - Function: extern inline double GSL_MAX_DBL (double A, double B)
+     This function returns the maximum of the double precision numbers
+     A and B using an inline function. The use of a function allows for
+     type checking of the arguments as an extra safety feature. On
+     platforms where inline functions are not available the macro
+     `GSL_MAX' will be automatically substituted.
+
+ - Function: extern inline double GSL_MIN_DBL (double A, double B)
+     This function returns the minimum of the double precision numbers
+     A and B using an inline function. The use of a function allows for
+     type checking of the arguments as an extra safety feature. On
+     platforms where inline functions are not available the macro
+     `GSL_MIN' will be automatically substituted.
+
+ - Function: extern inline int GSL_MAX_INT (int A, int B)
+ - Function: extern inline int GSL_MIN_INT (int A, int B)
+     These functions return the maximum or minimum of the integers A
+     and B using an inline function.  On platforms where inline
+     functions are not available the macros `GSL_MAX' or `GSL_MIN' will
+     be automatically substituted.
+
+ - Function: extern inline long double GSL_MAX_LDBL (long double A,
+          long double B)
+ - Function: extern inline long double GSL_MIN_LDBL (long double A,
+          long double B)
+     These functions return the maximum or minimum of the long doubles A
+     and B using an inline function.  On platforms where inline
+     functions are not available the macros `GSL_MAX' or `GSL_MIN' will
+     be automatically substituted.
+
+
+File: gsl-ref.info,  Node: Complex Numbers,  Next: Roots of Polynomials,  Prev: Mathematical Functions,  Up: Top
+
+Complex Numbers
+***************
+
+   The functions described in this chapter provide support for complex
+numbers.  The algorithms take care to avoid unnecessary intermediate
+underflows and overflows, allowing the functions to evaluated over the
+as much of the complex plane as possible.
+
+   For multiple-valued functions the branch cuts have been chosen to
+follow the conventions of Abramowitz and Stegun in the `Handbook of
+Mathematical Functions'. The functions return principal values which are
+the same as those in GNU Calc, which in turn are the same as those in
+`Common Lisp, The Language (Second Edition)' (n.b. The second edition
+uses different definitions from the first edition) and the HP-28/48
+series of calculators.
+
+   The complex types are defined in the header file `gsl_complex.h',
+while the corresponding complex functions and arithmetic operations are
+defined in `gsl_complex_math.h'.
+
+* Menu:
+
+* Complex numbers::
+* Properties of complex numbers::
+* Complex arithmetic operators::
+* Elementary Complex Functions::
+* Complex Trigonometric Functions::
+* Inverse Complex Trigonometric Functions::
+* Complex Hyperbolic Functions::
+* Inverse Complex Hyperbolic Functions::
+* Complex Number References and Further Reading::
+
+
+File: gsl-ref.info,  Node: Complex numbers,  Next: Properties of complex numbers,  Up: Complex Numbers
+
+Complex numbers
+===============
+
+   Complex numbers are represented using the type `gsl_complex'. The
+internal representation of this type may vary across platforms and
+should not be accessed directly. The functions and macros described
+below allow complex numbers to be manipulated in a portable way.
+
+   For reference, the default form of the `gsl_complex' type is given
+by the following struct,
+
+     typedef struct
+     {
+       double dat[2];
+     } gsl_complex;
+
+The real and imaginary part are stored in contiguous elements of a two
+element array. This eliminates any padding between the real and
+imaginary parts, `dat[0]' and `dat[1]', allowing the struct to be
+mapped correctly onto packed complex arrays.
+
+ - Function: gsl_complex gsl_complex_rect (double X, double Y)
+     This function uses the rectangular cartesian components (X,Y) to
+     return the complex number z = x + i y.
+
+ - Function: gsl_complex gsl_complex_polar (double R, double THETA)
+     This function returns the complex number z = r \exp(i \theta) = r
+     (\cos(\theta) + i \sin(\theta)) from the polar representation
+     (R,THETA).
+
+ - Macro: GSL_REAL (Z)
+ - Macro: GSL_IMAG (Z)
+     These macros return the real and imaginary parts of the complex
+     number Z.
+
+ - Macro: GSL_SET_COMPLEX (ZP, X, Y)
+     This macro uses the cartesian components (X,Y) to set the real and
+     imaginary parts of the complex number pointed to by ZP.  For
+     example,
+
+          GSL_SET_COMPLEX(&z, 3, 4)
+
+     sets Z to be 3 + 4i.
+
+ - Macro: GSL_SET_REAL (ZP,X)
+ - Macro: GSL_SET_IMAG (ZP,Y)
+     These macros allow the real and imaginary parts of the complex
+     number pointed to by ZP to be set independently.
+
+
+File: gsl-ref.info,  Node: Properties of complex numbers,  Next: Complex arithmetic operators,  Prev: Complex numbers,  Up: Complex Numbers
+
+Properties of complex numbers
+=============================
+
+ - Function: double gsl_complex_arg (gsl_complex Z)
+     This function returns the argument of the complex number Z,
+     \arg(z), where -\pi < \arg(z) <= \pi.
+
+ - Function: double gsl_complex_abs (gsl_complex Z)
+     This function returns the magnitude of the complex number Z, |z|.
+
+ - Function: double gsl_complex_abs2 (gsl_complex Z)
+     This function returns the squared magnitude of the complex number
+     Z, |z|^2.
+
+ - Function: double gsl_complex_logabs (gsl_complex Z)
+     This function returns the natural logarithm of the magnitude of the
+     complex number Z, \log|z|.  It allows an accurate evaluation of
+     \log|z| when |z| is close to one. The direct evaluation of
+     `log(gsl_complex_abs(z))' would lead to a loss of precision in
+     this case.
+

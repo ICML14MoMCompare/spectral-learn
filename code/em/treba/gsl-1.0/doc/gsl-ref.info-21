@@ -1,0 +1,1549 @@
+This is gsl-ref.info, produced by makeinfo version 4.0 from
+gsl-ref.texi.
+
+INFO-DIR-SECTION Scientific software
+START-INFO-DIR-ENTRY
+* gsl-ref: (gsl-ref).                   GNU Scientific Library - Reference
+END-INFO-DIR-ENTRY
+
+   This file documents the GNU Scientific Library.
+
+   Copyright (C) 1996, 1997, 1998, 1999, 2000, 2001 The GSL Team.
+
+   Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.1 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.  A
+copy of the license is included in the section entitled "GNU Free
+Documentation License".
+
+
+File: gsl-ref.info,  Node: Function Index,  Next: Variable Index,  Prev: GNU Free Documentation License,  Up: Top
+
+Function Index
+**************
+
+* Menu:
+
+* cblas_caxpy:                           Level 1 CBLAS Functions.
+* cblas_ccopy:                           Level 1 CBLAS Functions.
+* cblas_cdotc_sub:                       Level 1 CBLAS Functions.
+* cblas_cdotu_sub:                       Level 1 CBLAS Functions.
+* cblas_cgbmv:                           Level 2 CBLAS Functions.
+* cblas_cgemm:                           Level 3 CBLAS Functions.
+* cblas_cgemv:                           Level 2 CBLAS Functions.
+* cblas_cgerc:                           Level 2 CBLAS Functions.
+* cblas_cgeru:                           Level 2 CBLAS Functions.
+* cblas_chbmv:                           Level 2 CBLAS Functions.
+* cblas_chemm:                           Level 3 CBLAS Functions.
+* cblas_chemv:                           Level 2 CBLAS Functions.
+* cblas_cher:                            Level 2 CBLAS Functions.
+* cblas_cher2:                           Level 2 CBLAS Functions.
+* cblas_cher2k:                          Level 3 CBLAS Functions.
+* cblas_cherk:                           Level 3 CBLAS Functions.
+* cblas_chpmv:                           Level 2 CBLAS Functions.
+* cblas_chpr:                            Level 2 CBLAS Functions.
+* cblas_chpr2:                           Level 2 CBLAS Functions.
+* cblas_cscal:                           Level 1 CBLAS Functions.
+* cblas_csscal:                          Level 1 CBLAS Functions.
+* cblas_cswap:                           Level 1 CBLAS Functions.
+* cblas_csymm:                           Level 3 CBLAS Functions.
+* cblas_csyr2k:                          Level 3 CBLAS Functions.
+* cblas_csyrk:                           Level 3 CBLAS Functions.
+* cblas_ctbmv:                           Level 2 CBLAS Functions.
+* cblas_ctbsv:                           Level 2 CBLAS Functions.
+* cblas_ctpmv:                           Level 2 CBLAS Functions.
+* cblas_ctpsv:                           Level 2 CBLAS Functions.
+* cblas_ctrmm:                           Level 3 CBLAS Functions.
+* cblas_ctrmv:                           Level 2 CBLAS Functions.
+* cblas_ctrsm:                           Level 3 CBLAS Functions.
+* cblas_ctrsv:                           Level 2 CBLAS Functions.
+* cblas_dasum:                           Level 1 CBLAS Functions.
+* cblas_daxpy:                           Level 1 CBLAS Functions.
+* cblas_dcopy:                           Level 1 CBLAS Functions.
+* cblas_ddot:                            Level 1 CBLAS Functions.
+* cblas_dgbmv:                           Level 2 CBLAS Functions.
+* cblas_dgemm:                           Level 3 CBLAS Functions.
+* cblas_dgemv:                           Level 2 CBLAS Functions.
+* cblas_dger:                            Level 2 CBLAS Functions.
+* cblas_dnrm2:                           Level 1 CBLAS Functions.
+* cblas_drot:                            Level 1 CBLAS Functions.
+* cblas_drotg:                           Level 1 CBLAS Functions.
+* cblas_drotm:                           Level 1 CBLAS Functions.
+* cblas_drotmg:                          Level 1 CBLAS Functions.
+* cblas_dsbmv:                           Level 2 CBLAS Functions.
+* cblas_dscal:                           Level 1 CBLAS Functions.
+* cblas_dsdot:                           Level 1 CBLAS Functions.
+* cblas_dspmv:                           Level 2 CBLAS Functions.
+* cblas_dspr:                            Level 2 CBLAS Functions.
+* cblas_dspr2:                           Level 2 CBLAS Functions.
+* cblas_dswap:                           Level 1 CBLAS Functions.
+* cblas_dsymm:                           Level 3 CBLAS Functions.
+* cblas_dsymv:                           Level 2 CBLAS Functions.
+* cblas_dsyr:                            Level 2 CBLAS Functions.
+* cblas_dsyr2:                           Level 2 CBLAS Functions.
+* cblas_dsyr2k:                          Level 3 CBLAS Functions.
+* cblas_dsyrk:                           Level 3 CBLAS Functions.
+* cblas_dtbmv:                           Level 2 CBLAS Functions.
+* cblas_dtbsv:                           Level 2 CBLAS Functions.
+* cblas_dtpmv:                           Level 2 CBLAS Functions.
+* cblas_dtpsv:                           Level 2 CBLAS Functions.
+* cblas_dtrmm:                           Level 3 CBLAS Functions.
+* cblas_dtrmv:                           Level 2 CBLAS Functions.
+* cblas_dtrsm:                           Level 3 CBLAS Functions.
+* cblas_dtrsv:                           Level 2 CBLAS Functions.
+* cblas_dzasum:                          Level 1 CBLAS Functions.
+* cblas_dznrm2:                          Level 1 CBLAS Functions.
+* cblas_icamax:                          Level 1 CBLAS Functions.
+* cblas_idamax:                          Level 1 CBLAS Functions.
+* cblas_isamax:                          Level 1 CBLAS Functions.
+* cblas_izamax:                          Level 1 CBLAS Functions.
+* cblas_sasum:                           Level 1 CBLAS Functions.
+* cblas_saxpy:                           Level 1 CBLAS Functions.
+* cblas_scasum:                          Level 1 CBLAS Functions.
+* cblas_scnrm2:                          Level 1 CBLAS Functions.
+* cblas_scopy:                           Level 1 CBLAS Functions.
+* cblas_sdot:                            Level 1 CBLAS Functions.
+* cblas_sdsdot:                          Level 1 CBLAS Functions.
+* cblas_sgbmv:                           Level 2 CBLAS Functions.
+* cblas_sgemm:                           Level 3 CBLAS Functions.
+* cblas_sgemv:                           Level 2 CBLAS Functions.
+* cblas_sger:                            Level 2 CBLAS Functions.
+* cblas_snrm2:                           Level 1 CBLAS Functions.
+* cblas_srot:                            Level 1 CBLAS Functions.
+* cblas_srotg:                           Level 1 CBLAS Functions.
+* cblas_srotm:                           Level 1 CBLAS Functions.
+* cblas_srotmg:                          Level 1 CBLAS Functions.
+* cblas_ssbmv:                           Level 2 CBLAS Functions.
+* cblas_sscal:                           Level 1 CBLAS Functions.
+* cblas_sspmv:                           Level 2 CBLAS Functions.
+* cblas_sspr:                            Level 2 CBLAS Functions.
+* cblas_sspr2:                           Level 2 CBLAS Functions.
+* cblas_sswap:                           Level 1 CBLAS Functions.
+* cblas_ssymm:                           Level 3 CBLAS Functions.
+* cblas_ssymv:                           Level 2 CBLAS Functions.
+* cblas_ssyr:                            Level 2 CBLAS Functions.
+* cblas_ssyr2:                           Level 2 CBLAS Functions.
+* cblas_ssyr2k:                          Level 3 CBLAS Functions.
+* cblas_ssyrk:                           Level 3 CBLAS Functions.
+* cblas_stbmv:                           Level 2 CBLAS Functions.
+* cblas_stbsv:                           Level 2 CBLAS Functions.
+* cblas_stpmv:                           Level 2 CBLAS Functions.
+* cblas_stpsv:                           Level 2 CBLAS Functions.
+* cblas_strmm:                           Level 3 CBLAS Functions.
+* cblas_strmv:                           Level 2 CBLAS Functions.
+* cblas_strsm:                           Level 3 CBLAS Functions.
+* cblas_strsv:                           Level 2 CBLAS Functions.
+* cblas_xerbla:                          Level 3 CBLAS Functions.
+* cblas_zaxpy:                           Level 1 CBLAS Functions.
+* cblas_zcopy:                           Level 1 CBLAS Functions.
+* cblas_zdotc_sub:                       Level 1 CBLAS Functions.
+* cblas_zdotu_sub:                       Level 1 CBLAS Functions.
+* cblas_zdscal:                          Level 1 CBLAS Functions.
+* cblas_zgbmv:                           Level 2 CBLAS Functions.
+* cblas_zgemm:                           Level 3 CBLAS Functions.
+* cblas_zgemv:                           Level 2 CBLAS Functions.
+* cblas_zgerc:                           Level 2 CBLAS Functions.
+* cblas_zgeru:                           Level 2 CBLAS Functions.
+* cblas_zhbmv:                           Level 2 CBLAS Functions.
+* cblas_zhemm:                           Level 3 CBLAS Functions.
+* cblas_zhemv:                           Level 2 CBLAS Functions.
+* cblas_zher:                            Level 2 CBLAS Functions.
+* cblas_zher2:                           Level 2 CBLAS Functions.
+* cblas_zher2k:                          Level 3 CBLAS Functions.
+* cblas_zherk:                           Level 3 CBLAS Functions.
+* cblas_zhpmv:                           Level 2 CBLAS Functions.
+* cblas_zhpr:                            Level 2 CBLAS Functions.
+* cblas_zhpr2:                           Level 2 CBLAS Functions.
+* cblas_zscal:                           Level 1 CBLAS Functions.
+* cblas_zswap:                           Level 1 CBLAS Functions.
+* cblas_zsymm:                           Level 3 CBLAS Functions.
+* cblas_zsyr2k:                          Level 3 CBLAS Functions.
+* cblas_zsyrk:                           Level 3 CBLAS Functions.
+* cblas_ztbmv:                           Level 2 CBLAS Functions.
+* cblas_ztbsv:                           Level 2 CBLAS Functions.
+* cblas_ztpmv:                           Level 2 CBLAS Functions.
+* cblas_ztpsv:                           Level 2 CBLAS Functions.
+* cblas_ztrmm:                           Level 3 CBLAS Functions.
+* cblas_ztrmv:                           Level 2 CBLAS Functions.
+* cblas_ztrsm:                           Level 3 CBLAS Functions.
+* cblas_ztrsv:                           Level 2 CBLAS Functions.
+* gsl_acosh:                             Elementary Functions.
+* gsl_asinh:                             Elementary Functions.
+* gsl_atanh:                             Elementary Functions.
+* gsl_blas_caxpy:                        Level 1 GSL BLAS Interface.
+* gsl_blas_ccopy:                        Level 1 GSL BLAS Interface.
+* gsl_blas_cdotc:                        Level 1 GSL BLAS Interface.
+* gsl_blas_cdotu:                        Level 1 GSL BLAS Interface.
+* gsl_blas_cgemm:                        Level 3 GSL BLAS Interface.
+* gsl_blas_cgemv:                        Level 2 GSL BLAS Interface.
+* gsl_blas_cgerc:                        Level 2 GSL BLAS Interface.
+* gsl_blas_cgeru:                        Level 2 GSL BLAS Interface.
+* gsl_blas_chemm:                        Level 3 GSL BLAS Interface.
+* gsl_blas_chemv:                        Level 2 GSL BLAS Interface.
+* gsl_blas_cher:                         Level 2 GSL BLAS Interface.
+* gsl_blas_cher2:                        Level 2 GSL BLAS Interface.
+* gsl_blas_cher2k:                       Level 3 GSL BLAS Interface.
+* gsl_blas_cherk:                        Level 3 GSL BLAS Interface.
+* gsl_blas_cscal:                        Level 1 GSL BLAS Interface.
+* gsl_blas_csscal:                       Level 1 GSL BLAS Interface.
+* gsl_blas_cswap:                        Level 1 GSL BLAS Interface.
+* gsl_blas_csymm:                        Level 3 GSL BLAS Interface.
+* gsl_blas_csyr2k:                       Level 3 GSL BLAS Interface.
+* gsl_blas_csyrk:                        Level 3 GSL BLAS Interface.
+* gsl_blas_ctrmm:                        Level 3 GSL BLAS Interface.
+* gsl_blas_ctrmv:                        Level 2 GSL BLAS Interface.
+* gsl_blas_ctrsm:                        Level 3 GSL BLAS Interface.
+* gsl_blas_ctrsv:                        Level 2 GSL BLAS Interface.
+* gsl_blas_dasum:                        Level 1 GSL BLAS Interface.
+* gsl_blas_daxpy:                        Level 1 GSL BLAS Interface.
+* gsl_blas_dcopy:                        Level 1 GSL BLAS Interface.
+* gsl_blas_ddot:                         Level 1 GSL BLAS Interface.
+* gsl_blas_dgemm:                        Level 3 GSL BLAS Interface.
+* gsl_blas_dgemv:                        Level 2 GSL BLAS Interface.
+* gsl_blas_dger:                         Level 2 GSL BLAS Interface.
+* gsl_blas_dnrm2:                        Level 1 GSL BLAS Interface.
+* gsl_blas_drot:                         Level 1 GSL BLAS Interface.
+* gsl_blas_drotg:                        Level 1 GSL BLAS Interface.
+* gsl_blas_drotm:                        Level 1 GSL BLAS Interface.
+* gsl_blas_drotmg:                       Level 1 GSL BLAS Interface.
+* gsl_blas_dscal:                        Level 1 GSL BLAS Interface.
+* gsl_blas_dsdot:                        Level 1 GSL BLAS Interface.
+* gsl_blas_dswap:                        Level 1 GSL BLAS Interface.
+* gsl_blas_dsymm:                        Level 3 GSL BLAS Interface.
+* gsl_blas_dsymv:                        Level 2 GSL BLAS Interface.
+* gsl_blas_dsyr:                         Level 2 GSL BLAS Interface.
+* gsl_blas_dsyr2:                        Level 2 GSL BLAS Interface.
+* gsl_blas_dsyr2k:                       Level 3 GSL BLAS Interface.
+* gsl_blas_dsyrk:                        Level 3 GSL BLAS Interface.
+* gsl_blas_dtrmm:                        Level 3 GSL BLAS Interface.
+* gsl_blas_dtrmv:                        Level 2 GSL BLAS Interface.
+* gsl_blas_dtrsm:                        Level 3 GSL BLAS Interface.
+* gsl_blas_dtrsv:                        Level 2 GSL BLAS Interface.
+* gsl_blas_dzasum:                       Level 1 GSL BLAS Interface.
+* gsl_blas_dznrm2:                       Level 1 GSL BLAS Interface.
+* gsl_blas_icamax:                       Level 1 GSL BLAS Interface.
+* gsl_blas_idamax:                       Level 1 GSL BLAS Interface.
+* gsl_blas_isamax:                       Level 1 GSL BLAS Interface.
+* gsl_blas_izamax:                       Level 1 GSL BLAS Interface.
+* gsl_blas_sasum:                        Level 1 GSL BLAS Interface.
+* gsl_blas_saxpy:                        Level 1 GSL BLAS Interface.
+* gsl_blas_scasum:                       Level 1 GSL BLAS Interface.
+* gsl_blas_scnrm2:                       Level 1 GSL BLAS Interface.
+* gsl_blas_scopy:                        Level 1 GSL BLAS Interface.
+* gsl_blas_sdot:                         Level 1 GSL BLAS Interface.
+* gsl_blas_sdsdot:                       Level 1 GSL BLAS Interface.
+* gsl_blas_sgemm:                        Level 3 GSL BLAS Interface.
+* gsl_blas_sgemv:                        Level 2 GSL BLAS Interface.
+* gsl_blas_sger:                         Level 2 GSL BLAS Interface.
+* gsl_blas_snrm2:                        Level 1 GSL BLAS Interface.
+* gsl_blas_srot:                         Level 1 GSL BLAS Interface.
+* gsl_blas_srotg:                        Level 1 GSL BLAS Interface.
+* gsl_blas_srotm:                        Level 1 GSL BLAS Interface.
+* gsl_blas_srotmg:                       Level 1 GSL BLAS Interface.
+* gsl_blas_sscal:                        Level 1 GSL BLAS Interface.
+* gsl_blas_sswap:                        Level 1 GSL BLAS Interface.
+* gsl_blas_ssymm:                        Level 3 GSL BLAS Interface.
+* gsl_blas_ssymv:                        Level 2 GSL BLAS Interface.
+* gsl_blas_ssyr:                         Level 2 GSL BLAS Interface.
+* gsl_blas_ssyr2:                        Level 2 GSL BLAS Interface.
+* gsl_blas_ssyr2k:                       Level 3 GSL BLAS Interface.
+* gsl_blas_ssyrk:                        Level 3 GSL BLAS Interface.
+* gsl_blas_strmm:                        Level 3 GSL BLAS Interface.
+* gsl_blas_strmv:                        Level 2 GSL BLAS Interface.
+* gsl_blas_strsm:                        Level 3 GSL BLAS Interface.
+* gsl_blas_strsv:                        Level 2 GSL BLAS Interface.
+* gsl_blas_zaxpy:                        Level 1 GSL BLAS Interface.
+* gsl_blas_zcopy:                        Level 1 GSL BLAS Interface.
+* gsl_blas_zdotc:                        Level 1 GSL BLAS Interface.
+* gsl_blas_zdotu:                        Level 1 GSL BLAS Interface.
+* gsl_blas_zdscal:                       Level 1 GSL BLAS Interface.
+* gsl_blas_zgemm:                        Level 3 GSL BLAS Interface.
+* gsl_blas_zgemv:                        Level 2 GSL BLAS Interface.
+* gsl_blas_zgerc:                        Level 2 GSL BLAS Interface.
+* gsl_blas_zgeru:                        Level 2 GSL BLAS Interface.
+* gsl_blas_zhemm:                        Level 3 GSL BLAS Interface.
+* gsl_blas_zhemv:                        Level 2 GSL BLAS Interface.
+* gsl_blas_zher:                         Level 2 GSL BLAS Interface.
+* gsl_blas_zher2:                        Level 2 GSL BLAS Interface.
+* gsl_blas_zher2k:                       Level 3 GSL BLAS Interface.
+* gsl_blas_zherk:                        Level 3 GSL BLAS Interface.
+* gsl_blas_zscal:                        Level 1 GSL BLAS Interface.
+* gsl_blas_zswap:                        Level 1 GSL BLAS Interface.
+* gsl_blas_zsymm:                        Level 3 GSL BLAS Interface.
+* gsl_blas_zsyr2k:                       Level 3 GSL BLAS Interface.
+* gsl_blas_zsyrk:                        Level 3 GSL BLAS Interface.
+* gsl_blas_ztrmm:                        Level 3 GSL BLAS Interface.
+* gsl_blas_ztrmv:                        Level 2 GSL BLAS Interface.
+* gsl_blas_ztrsm:                        Level 3 GSL BLAS Interface.
+* gsl_blas_ztrsv:                        Level 2 GSL BLAS Interface.
+* gsl_block_alloc:                       Block allocation.
+* gsl_block_calloc:                      Block allocation.
+* gsl_block_fprintf:                     Reading and writing blocks.
+* gsl_block_fread:                       Reading and writing blocks.
+* gsl_block_free:                        Block allocation.
+* gsl_block_fscanf:                      Reading and writing blocks.
+* gsl_block_fwrite:                      Reading and writing blocks.
+* gsl_cheb_alloc:                        Creation and Calculation of Chebyshev Series.
+* gsl_cheb_calc_deriv:                   Derivatives and Integrals.
+* gsl_cheb_calc_integ:                   Derivatives and Integrals.
+* gsl_cheb_eval:                         Chebyshev Series Evaluation.
+* gsl_cheb_eval_err:                     Chebyshev Series Evaluation.
+* gsl_cheb_eval_n:                       Chebyshev Series Evaluation.
+* gsl_cheb_eval_n_err:                   Chebyshev Series Evaluation.
+* gsl_cheb_free:                         Creation and Calculation of Chebyshev Series.
+* gsl_cheb_init:                         Creation and Calculation of Chebyshev Series.
+* gsl_complex_abs:                       Properties of complex numbers.
+* gsl_complex_abs2:                      Properties of complex numbers.
+* gsl_complex_add:                       Complex arithmetic operators.
+* gsl_complex_add_imag:                  Complex arithmetic operators.
+* gsl_complex_add_real:                  Complex arithmetic operators.
+* gsl_complex_arccos:                    Inverse Complex Trigonometric Functions.
+* gsl_complex_arccos_real:               Inverse Complex Trigonometric Functions.
+* gsl_complex_arccosh:                   Inverse Complex Hyperbolic Functions.
+* gsl_complex_arccosh_real:              Inverse Complex Hyperbolic Functions.
+* gsl_complex_arccot:                    Inverse Complex Trigonometric Functions.
+* gsl_complex_arccoth:                   Inverse Complex Hyperbolic Functions.
+* gsl_complex_arccsc:                    Inverse Complex Trigonometric Functions.
+* gsl_complex_arccsc_real:               Inverse Complex Trigonometric Functions.
+* gsl_complex_arccsch:                   Inverse Complex Hyperbolic Functions.
+* gsl_complex_arcsec:                    Inverse Complex Trigonometric Functions.
+* gsl_complex_arcsec_real:               Inverse Complex Trigonometric Functions.
+* gsl_complex_arcsech:                   Inverse Complex Hyperbolic Functions.
+* gsl_complex_arcsin:                    Inverse Complex Trigonometric Functions.
+* gsl_complex_arcsin_real:               Inverse Complex Trigonometric Functions.
+* gsl_complex_arcsinh:                   Inverse Complex Hyperbolic Functions.
+* gsl_complex_arctan:                    Inverse Complex Trigonometric Functions.
+* gsl_complex_arctanh:                   Inverse Complex Hyperbolic Functions.
+* gsl_complex_arctanh_real:              Inverse Complex Hyperbolic Functions.
+* gsl_complex_arg:                       Properties of complex numbers.
+* gsl_complex_conjugate:                 Complex arithmetic operators.
+* gsl_complex_cos:                       Complex Trigonometric Functions.
+* gsl_complex_cosh:                      Complex Hyperbolic Functions.
+* gsl_complex_cot:                       Complex Trigonometric Functions.
+* gsl_complex_coth:                      Complex Hyperbolic Functions.
+* gsl_complex_csc:                       Complex Trigonometric Functions.
+* gsl_complex_csch:                      Complex Hyperbolic Functions.
+* gsl_complex_div:                       Complex arithmetic operators.
+* gsl_complex_div_imag:                  Complex arithmetic operators.
+* gsl_complex_div_real:                  Complex arithmetic operators.
+* gsl_complex_exp:                       Elementary Complex Functions.
+* gsl_complex_inverse:                   Complex arithmetic operators.
+* gsl_complex_linalg_LU_invert:          LU Decomposition.
+* gsl_complex_log:                       Elementary Complex Functions.
+* gsl_complex_log10:                     Elementary Complex Functions.
+* gsl_complex_log_b:                     Elementary Complex Functions.
+* gsl_complex_logabs:                    Properties of complex numbers.
+* gsl_complex_mul:                       Complex arithmetic operators.
+* gsl_complex_mul_imag:                  Complex arithmetic operators.
+* gsl_complex_mul_real:                  Complex arithmetic operators.
+* gsl_complex_negative:                  Complex arithmetic operators.
+* gsl_complex_polar:                     Complex numbers.
+* gsl_complex_pow:                       Elementary Complex Functions.
+* gsl_complex_pow_real:                  Elementary Complex Functions.
+* gsl_complex_rect:                      Complex numbers.
+* gsl_complex_sec:                       Complex Trigonometric Functions.
+* gsl_complex_sech:                      Complex Hyperbolic Functions.
+* gsl_complex_sin:                       Complex Trigonometric Functions.
+* gsl_complex_sinh:                      Complex Hyperbolic Functions.
+* gsl_complex_sqrt:                      Elementary Complex Functions.
+* gsl_complex_sqrt_real:                 Elementary Complex Functions.
+* gsl_complex_sub:                       Complex arithmetic operators.
+* gsl_complex_sub_imag:                  Complex arithmetic operators.
+* gsl_complex_sub_real:                  Complex arithmetic operators.
+* gsl_complex_tan:                       Complex Trigonometric Functions.
+* gsl_complex_tanh:                      Complex Hyperbolic Functions.
+* gsl_dht_alloc:                         Discrete Hankel Transform Functions.
+* gsl_dht_apply:                         Discrete Hankel Transform Functions.
+* gsl_dht_free:                          Discrete Hankel Transform Functions.
+* gsl_dht_init:                          Discrete Hankel Transform Functions.
+* gsl_dht_k_sample:                      Discrete Hankel Transform Functions.
+* gsl_dht_new:                           Discrete Hankel Transform Functions.
+* gsl_dht_x_sample:                      Discrete Hankel Transform Functions.
+* gsl_diff_backward:                     Numerical Differentiation functions.
+* gsl_diff_central:                      Numerical Differentiation functions.
+* gsl_diff_forward:                      Numerical Differentiation functions.
+* GSL_EDOM:                              Error Reporting.
+* gsl_eigen_herm:                        Complex Hermitian Matrices.
+* gsl_eigen_herm_alloc:                  Complex Hermitian Matrices.
+* gsl_eigen_herm_free:                   Complex Hermitian Matrices.
+* gsl_eigen_hermv:                       Complex Hermitian Matrices.
+* gsl_eigen_hermv_alloc:                 Complex Hermitian Matrices.
+* gsl_eigen_hermv_free:                  Complex Hermitian Matrices.
+* gsl_eigen_hermv_sort:                  Sorting Eigenvalues and Eigenvectors.
+* gsl_eigen_symm:                        Real Symmetric Matrices.
+* gsl_eigen_symm_alloc:                  Real Symmetric Matrices.
+* gsl_eigen_symm_free:                   Real Symmetric Matrices.
+* gsl_eigen_symmv:                       Real Symmetric Matrices.
+* gsl_eigen_symmv_alloc:                 Real Symmetric Matrices.
+* gsl_eigen_symmv_free:                  Real Symmetric Matrices.
+* gsl_eigen_symmv_sort:                  Sorting Eigenvalues and Eigenvectors.
+* GSL_EINVAL:                            Error Reporting.
+* GSL_ENOMEM:                            Error Reporting.
+* GSL_ERANGE:                            Error Reporting.
+* GSL_ERROR:                             Using GSL error reporting in your own functions.
+* GSL_ERROR_VAL:                         Using GSL error reporting in your own functions.
+* gsl_expm1:                             Elementary Functions.
+* gsl_fft_complex_backward:              Mixed-radix FFT routines for complex data.
+* gsl_fft_complex_forward:               Mixed-radix FFT routines for complex data.
+* gsl_fft_complex_inverse:               Mixed-radix FFT routines for complex data.
+* gsl_fft_complex_radix2_backward:       Radix-2 FFT routines for complex data.
+* gsl_fft_complex_radix2_dif_backward:   Radix-2 FFT routines for complex data.
+* gsl_fft_complex_radix2_dif_forward:    Radix-2 FFT routines for complex data.
+* gsl_fft_complex_radix2_dif_inverse:    Radix-2 FFT routines for complex data.
+* gsl_fft_complex_radix2_dif_transform:  Radix-2 FFT routines for complex data.
+* gsl_fft_complex_radix2_forward:        Radix-2 FFT routines for complex data.
+* gsl_fft_complex_radix2_inverse:        Radix-2 FFT routines for complex data.
+* gsl_fft_complex_radix2_transform:      Radix-2 FFT routines for complex data.
+* gsl_fft_complex_transform:             Mixed-radix FFT routines for complex data.
+* gsl_fft_complex_wavetable_alloc:       Mixed-radix FFT routines for complex data.
+* gsl_fft_complex_wavetable_free:        Mixed-radix FFT routines for complex data.
+* gsl_fft_complex_workspace_alloc:       Mixed-radix FFT routines for complex data.
+* gsl_fft_complex_workspace_free:        Mixed-radix FFT routines for complex data.
+* gsl_fft_halfcomplex_radix2_backward:   Radix-2 FFT routines for real data.
+* gsl_fft_halfcomplex_radix2_inverse:    Radix-2 FFT routines for real data.
+* gsl_fft_halfcomplex_transform:         Mixed-radix FFT routines for real data.
+* gsl_fft_halfcomplex_unpack:            Mixed-radix FFT routines for real data.
+* gsl_fft_halfcomplex_wavetable_alloc:   Mixed-radix FFT routines for real data.
+* gsl_fft_halfcomplex_wavetable_free:    Mixed-radix FFT routines for real data.
+* gsl_fft_real_radix2_transform:         Radix-2 FFT routines for real data.
+* gsl_fft_real_transform:                Mixed-radix FFT routines for real data.
+* gsl_fft_real_unpack:                   Mixed-radix FFT routines for real data.
+* gsl_fft_real_wavetable_alloc:          Mixed-radix FFT routines for real data.
+* gsl_fft_real_wavetable_free:           Mixed-radix FFT routines for real data.
+* gsl_fft_real_workspace_alloc:          Mixed-radix FFT routines for real data.
+* gsl_fft_real_workspace_free:           Mixed-radix FFT routines for real data.
+* gsl_finite:                            Infinities and Not-a-number.
+* gsl_fit_linear:                        Linear regression.
+* gsl_fit_linear_est:                    Linear regression.
+* gsl_fit_mul:                           Linear fitting without a constant term.
+* gsl_fit_mul_est:                       Linear fitting without a constant term.
+* gsl_fit_wlinear:                       Linear regression.
+* gsl_fit_wmul:                          Linear fitting without a constant term.
+* gsl_heapsort:                          Sorting objects.
+* gsl_heapsort_index:                    Sorting objects.
+* gsl_histogram2d_accumulate:            Updating and accessing 2D histogram elements.
+* gsl_histogram2d_add:                   2D Histogram Operations.
+* gsl_histogram2d_alloc:                 2D Histogram allocation.
+* gsl_histogram2d_clone:                 Copying 2D Histograms.
+* gsl_histogram2d_div:                   2D Histogram Operations.
+* gsl_histogram2d_equal_bins_p:          2D Histogram Operations.
+* gsl_histogram2d_find:                  Searching 2D histogram ranges.
+* gsl_histogram2d_fprintf:               Reading and writing 2D histograms.
+* gsl_histogram2d_fread:                 Reading and writing 2D histograms.
+* gsl_histogram2d_free:                  2D Histogram allocation.
+* gsl_histogram2d_fscanf:                Reading and writing 2D histograms.
+* gsl_histogram2d_fwrite:                Reading and writing 2D histograms.
+* gsl_histogram2d_get:                   Updating and accessing 2D histogram elements.
+* gsl_histogram2d_get_xrange:            Updating and accessing 2D histogram elements.
+* gsl_histogram2d_get_yrange:            Updating and accessing 2D histogram elements.
+* gsl_histogram2d_increment:             Updating and accessing 2D histogram elements.
+* gsl_histogram2d_max_bin:               2D Histogram Statistics.
+* gsl_histogram2d_max_val:               2D Histogram Statistics.
+* gsl_histogram2d_memcpy:                Copying 2D Histograms.
+* gsl_histogram2d_min_bin:               2D Histogram Statistics.
+* gsl_histogram2d_min_val:               2D Histogram Statistics.
+* gsl_histogram2d_mul:                   2D Histogram Operations.
+* gsl_histogram2d_nx:                    Updating and accessing 2D histogram elements.
+* gsl_histogram2d_ny:                    Updating and accessing 2D histogram elements.
+* gsl_histogram2d_pdf_alloc:             Resampling from 2D histograms.
+* gsl_histogram2d_pdf_free:              Resampling from 2D histograms.
+* gsl_histogram2d_pdf_init:              Resampling from 2D histograms.
+* gsl_histogram2d_pdf_sample:            Resampling from 2D histograms.
+* gsl_histogram2d_reset:                 Updating and accessing 2D histogram elements.
+* gsl_histogram2d_scale:                 2D Histogram Operations.
+* gsl_histogram2d_set_ranges:            2D Histogram allocation.
+* gsl_histogram2d_set_ranges_uniform:    2D Histogram allocation.
+* gsl_histogram2d_shift:                 2D Histogram Operations.
+* gsl_histogram2d_sub:                   2D Histogram Operations.
+* gsl_histogram2d_xmax:                  Updating and accessing 2D histogram elements.
+* gsl_histogram2d_xmin:                  Updating and accessing 2D histogram elements.
+* gsl_histogram2d_ymax:                  Updating and accessing 2D histogram elements.
+* gsl_histogram2d_ymin:                  Updating and accessing 2D histogram elements.
+* gsl_histogram_accumulate:              Updating and accessing histogram elements.
+* gsl_histogram_add:                     Histogram Operations.
+* gsl_histogram_alloc:                   Histogram allocation.
+* gsl_histogram_bins:                    Updating and accessing histogram elements.
+* gsl_histogram_clone:                   Copying Histograms.
+* gsl_histogram_div:                     Histogram Operations.
+* gsl_histogram_equal_bins_p:            Histogram Operations.
+* gsl_histogram_find:                    Searching histogram ranges.
+* gsl_histogram_fprintf:                 Reading and writing histograms.
+* gsl_histogram_fread:                   Reading and writing histograms.
+* gsl_histogram_free:                    Histogram allocation.
+* gsl_histogram_fscanf:                  Reading and writing histograms.
+* gsl_histogram_fwrite:                  Reading and writing histograms.
+* gsl_histogram_get:                     Updating and accessing histogram elements.
+* gsl_histogram_get_range:               Updating and accessing histogram elements.
+* gsl_histogram_increment:               Updating and accessing histogram elements.
+* gsl_histogram_max:                     Updating and accessing histogram elements.
+* gsl_histogram_max_bin:                 Histogram Statistics.
+* gsl_histogram_max_val:                 Histogram Statistics.
+* gsl_histogram_mean:                    Histogram Statistics.
+* gsl_histogram_memcpy:                  Copying Histograms.
+* gsl_histogram_min:                     Updating and accessing histogram elements.
+* gsl_histogram_min_bin:                 Histogram Statistics.
+* gsl_histogram_min_val:                 Histogram Statistics.
+* gsl_histogram_mul:                     Histogram Operations.
+* gsl_histogram_pdf_alloc:               The histogram probability distribution struct.
+* gsl_histogram_pdf_free:                The histogram probability distribution struct.
+* gsl_histogram_pdf_init:                The histogram probability distribution struct.
+* gsl_histogram_pdf_sample:              The histogram probability distribution struct.
+* gsl_histogram_reset:                   Updating and accessing histogram elements.
+* gsl_histogram_scale:                   Histogram Operations.
+* gsl_histogram_set_ranges:              Histogram allocation.
+* gsl_histogram_set_ranges_uniform:      Histogram allocation.
+* gsl_histogram_shift:                   Histogram Operations.
+* gsl_histogram_sigma:                   Histogram Statistics.
+* gsl_histogram_sub:                     Histogram Operations.
+* gsl_hypot:                             Elementary Functions.
+* gsl_ieee_env_setup:                    Setting up your IEEE environment.
+* gsl_ieee_fprintf_double:               Representation of floating point numbers.
+* gsl_ieee_fprintf_float:                Representation of floating point numbers.
+* gsl_ieee_printf_double:                Representation of floating point numbers.
+* gsl_ieee_printf_float:                 Representation of floating point numbers.
+* GSL_IMAG:                              Complex numbers.
+* gsl_integration_qag:                   QAG adaptive integration.
+* gsl_integration_qagi:                  QAGI adaptive integration on infinite intervals.
+* gsl_integration_qagil:                 QAGI adaptive integration on infinite intervals.
+* gsl_integration_qagiu:                 QAGI adaptive integration on infinite intervals.
+* gsl_integration_qagp:                  QAGP adaptive integration with known singular points.
+* gsl_integration_qags:                  QAGS adaptive integration with singularities.
+* gsl_integration_qawc:                  QAWC adaptive integration for Cauchy principal values.
+* gsl_integration_qawf:                  QAWF adaptive integration for Fourier integrals.
+* gsl_integration_qawo:                  QAWO adaptive integration for oscillatory functions.
+* gsl_integration_qawo_table_alloc:      QAWO adaptive integration for oscillatory functions.
+* gsl_integration_qawo_table_free:       QAWO adaptive integration for oscillatory functions.
+* gsl_integration_qawo_table_set:        QAWO adaptive integration for oscillatory functions.
+* gsl_integration_qawo_table_set_length: QAWO adaptive integration for oscillatory functions.
+* gsl_integration_qaws:                  QAWS adaptive integration for singular functions.
+* gsl_integration_qaws_table_alloc:      QAWS adaptive integration for singular functions.
+* gsl_integration_qaws_table_free:       QAWS adaptive integration for singular functions.
+* gsl_integration_qaws_table_set:        QAWS adaptive integration for singular functions.
+* gsl_integration_qng:                   QNG non-adaptive Gauss-Kronrod integration.
+* gsl_integration_workspace_alloc:       QAG adaptive integration.
+* gsl_integration_workspace_free:        QAG adaptive integration.
+* gsl_interp_accel_alloc:                Index Look-up and Acceleration.
+* gsl_interp_accel_find:                 Index Look-up and Acceleration.
+* gsl_interp_accel_free:                 Index Look-up and Acceleration.
+* gsl_interp_akima:                      Interpolation Types.
+* gsl_interp_akima_periodic:             Interpolation Types.
+* gsl_interp_alloc:                      Interpolation Functions.
+* gsl_interp_bsearch:                    Index Look-up and Acceleration.
+* gsl_interp_cspline:                    Interpolation Types.
+* gsl_interp_cspline_periodic:           Interpolation Types.
+* gsl_interp_eval:                       Evaluation of interpolating functions.
+* gsl_interp_eval_deriv:                 Evaluation of interpolating functions.
+* gsl_interp_eval_deriv2:                Evaluation of interpolating functions.
+* gsl_interp_eval_deriv2_e:              Evaluation of interpolating functions.
+* gsl_interp_eval_deriv_e:               Evaluation of interpolating functions.
+* gsl_interp_eval_e:                     Evaluation of interpolating functions.
+* gsl_interp_eval_integ:                 Evaluation of interpolating functions.
+* gsl_interp_eval_integ_e:               Evaluation of interpolating functions.
+* gsl_interp_free:                       Interpolation Functions.
+* gsl_interp_init:                       Interpolation Functions.
+* gsl_interp_linear:                     Interpolation Types.
+* gsl_interp_min_size:                   Interpolation Types.
+* gsl_interp_name:                       Interpolation Types.
+* gsl_interval:                          Minimization Iteration.
+* GSL_IS_EVEN:                           Testing for Odd and Even Numbers.
+* GSL_IS_ODD:                            Testing for Odd and Even Numbers.
+* gsl_isinf:                             Infinities and Not-a-number.
+* gsl_isnan:                             Infinities and Not-a-number.
+* gsl_linalg_bidiag_decomp:              Bidiagonalization.
+* gsl_linalg_bidiag_unpack:              Bidiagonalization.
+* gsl_linalg_bidiag_unpack2:             Bidiagonalization.
+* gsl_linalg_bidiag_unpack_B:            Bidiagonalization.
+* gsl_linalg_cholesky_decomp:            Cholesky Decomposition.
+* gsl_linalg_cholesky_solve:             Cholesky Decomposition.
+* gsl_linalg_cholesky_svx:               Cholesky Decomposition.
+* gsl_linalg_complex_LU_decomp:          LU Decomposition.
+* gsl_linalg_complex_LU_det:             LU Decomposition.
+* gsl_linalg_complex_LU_lndet:           LU Decomposition.
+* gsl_linalg_complex_LU_refine:          LU Decomposition.
+* gsl_linalg_complex_LU_sgndet:          LU Decomposition.
+* gsl_linalg_complex_LU_solve:           LU Decomposition.
+* gsl_linalg_complex_LU_svx:             LU Decomposition.
+* gsl_linalg_hermtd_decomp:              Tridiagonal Decomposition of Hermitian Matrices.
+* gsl_linalg_hermtd_unpack:              Tridiagonal Decomposition of Hermitian Matrices.
+* gsl_linalg_hermtd_unpack_dsd:          Tridiagonal Decomposition of Hermitian Matrices.
+* gsl_linalg_HH_solve:                   Householder solver for linear systems.
+* gsl_linalg_HH_svx:                     Householder solver for linear systems.
+* gsl_linalg_LU_decomp:                  LU Decomposition.
+* gsl_linalg_LU_det:                     LU Decomposition.
+* gsl_linalg_LU_invert:                  LU Decomposition.
+* gsl_linalg_LU_lndet:                   LU Decomposition.
+* gsl_linalg_LU_refine:                  LU Decomposition.
+* gsl_linalg_LU_sgndet:                  LU Decomposition.
+* gsl_linalg_LU_solve:                   LU Decomposition.
+* gsl_linalg_LU_svx:                     LU Decomposition.
+* gsl_linalg_QR_decomp:                  QR Decomposition.
+* gsl_linalg_QR_lssolve:                 QR Decomposition.
+* gsl_linalg_QR_QRsolve:                 QR Decomposition.
+* gsl_linalg_QR_QTvec:                   QR Decomposition.
+* gsl_linalg_QR_Qvec:                    QR Decomposition.
+* gsl_linalg_QR_Rsolve:                  QR Decomposition.
+* gsl_linalg_QR_Rsvx:                    QR Decomposition.
+* gsl_linalg_QR_solve:                   QR Decomposition.
+* gsl_linalg_QR_svx:                     QR Decomposition.
+* gsl_linalg_QR_unpack:                  QR Decomposition.
+* gsl_linalg_QR_update:                  QR Decomposition.
+* gsl_linalg_QRPT_decomp:                QR Decomposition with Column Pivoting.
+* gsl_linalg_QRPT_decomp2:               QR Decomposition with Column Pivoting.
+* gsl_linalg_QRPT_QRsolve:               QR Decomposition with Column Pivoting.
+* gsl_linalg_QRPT_Rsolve:                QR Decomposition with Column Pivoting.
+* gsl_linalg_QRPT_Rsvx:                  QR Decomposition with Column Pivoting.
+* gsl_linalg_QRPT_solve:                 QR Decomposition with Column Pivoting.
+* gsl_linalg_QRPT_svx:                   QR Decomposition with Column Pivoting.
+* gsl_linalg_QRPT_update:                QR Decomposition with Column Pivoting.
+* gsl_linalg_R_solve:                    QR Decomposition.
+* gsl_linalg_R_svx:                      QR Decomposition.
+* gsl_linalg_solve_symm_cyc_tridiag:     Tridiagonal Systems.
+* gsl_linalg_solve_symm_tridiag:         Tridiagonal Systems.
+* gsl_linalg_SV_decomp:                  Singular Value Decomposition.
+* gsl_linalg_SV_decomp_jacobi:           Singular Value Decomposition.
+* gsl_linalg_SV_decomp_mod:              Singular Value Decomposition.
+* gsl_linalg_SV_solve:                   Singular Value Decomposition.
+* gsl_linalg_symmtd_decomp:              Tridiagonal Decomposition of Real Symmetric Matrices.
+* gsl_linalg_symmtd_unpack:              Tridiagonal Decomposition of Real Symmetric Matrices.
+* gsl_linalg_symmtd_unpack_dsd:          Tridiagonal Decomposition of Real Symmetric Matrices.
+* gsl_log1p:                             Elementary Functions.
+* gsl_matrix_add:                        Matrix operations.
+* gsl_matrix_add_constant:               Matrix operations.
+* gsl_matrix_alloc:                      Matrix allocation.
+* gsl_matrix_calloc:                     Matrix allocation.
+* gsl_matrix_column:                     Creating row and column views.
+* gsl_matrix_const_column:               Creating row and column views.
+* gsl_matrix_const_diagonal:             Creating row and column views.
+* gsl_matrix_const_row:                  Creating row and column views.
+* gsl_matrix_const_subdiagonal:          Creating row and column views.
+* gsl_matrix_const_submatrix:            Matrix views.
+* gsl_matrix_const_superdiagonal:        Creating row and column views.
+* gsl_matrix_const_view_array:           Matrix views.
+* gsl_matrix_const_view_array_with_tda:  Matrix views.
+* gsl_matrix_const_view_vector:          Matrix views.
+* gsl_matrix_const_view_vector_with_tda: Matrix views.
+* gsl_matrix_diagonal:                   Creating row and column views.
+* gsl_matrix_div_elements:               Matrix operations.
+* gsl_matrix_fprintf:                    Reading and writing matrices.
+* gsl_matrix_fread:                      Reading and writing matrices.
+* gsl_matrix_free:                       Matrix allocation.
+* gsl_matrix_fscanf:                     Reading and writing matrices.
+* gsl_matrix_fwrite:                     Reading and writing matrices.
+* gsl_matrix_get:                        Accessing matrix elements.
+* gsl_matrix_get_col:                    Copying rows and columns.
+* gsl_matrix_get_row:                    Copying rows and columns.
+* gsl_matrix_isnull:                     Matrix properties.
+* gsl_matrix_max:                        Finding maximum and minimum elements of matrices.
+* gsl_matrix_max_index:                  Finding maximum and minimum elements of matrices.
+* gsl_matrix_memcpy:                     Copying matrices.
+* gsl_matrix_min:                        Finding maximum and minimum elements of matrices.
+* gsl_matrix_min_index:                  Finding maximum and minimum elements of matrices.
+* gsl_matrix_minmax:                     Finding maximum and minimum elements of matrices.
+* gsl_matrix_minmax_index:               Finding maximum and minimum elements of matrices.
+* gsl_matrix_mul_elements:               Matrix operations.
+* gsl_matrix_ptr:                        Accessing matrix elements.
+* gsl_matrix_row:                        Creating row and column views.
+* gsl_matrix_scale:                      Matrix operations.
+* gsl_matrix_set:                        Accessing matrix elements.
+* gsl_matrix_set_all:                    Initializing matrix elements.
+* gsl_matrix_set_col:                    Copying rows and columns.
+* gsl_matrix_set_identity:               Initializing matrix elements.
+* gsl_matrix_set_row:                    Copying rows and columns.
+* gsl_matrix_set_zero:                   Initializing matrix elements.
+* gsl_matrix_sub:                        Matrix operations.
+* gsl_matrix_subdiagonal:                Creating row and column views.
+* gsl_matrix_submatrix:                  Matrix views.
+* gsl_matrix_superdiagonal:              Creating row and column views.
+* gsl_matrix_swap:                       Copying matrices.
+* gsl_matrix_swap_columns:               Exchanging rows and columns.
+* gsl_matrix_swap_rowcol:                Exchanging rows and columns.
+* gsl_matrix_swap_rows:                  Exchanging rows and columns.
+* gsl_matrix_transpose:                  Exchanging rows and columns.
+* gsl_matrix_transpose_memcpy:           Exchanging rows and columns.
+* gsl_matrix_view_array:                 Matrix views.
+* gsl_matrix_view_array_with_tda:        Matrix views.
+* gsl_matrix_view_vector:                Matrix views.
+* gsl_matrix_view_vector_with_tda:       Matrix views.
+* GSL_MAX:                               Maximum and Minimum functions.
+* GSL_MAX_DBL:                           Maximum and Minimum functions.
+* GSL_MAX_INT:                           Maximum and Minimum functions.
+* GSL_MAX_LDBL:                          Maximum and Minimum functions.
+* GSL_MIN:                               Maximum and Minimum functions.
+* GSL_MIN_DBL:                           Maximum and Minimum functions.
+* gsl_min_fminimizer_alloc:              Initializing the Minimizer.
+* gsl_min_fminimizer_brent:              Minimization Algorithms.
+* gsl_min_fminimizer_free:               Initializing the Minimizer.
+* gsl_min_fminimizer_goldensection:      Minimization Algorithms.
+* gsl_min_fminimizer_iterate:            Minimization Iteration.
+* gsl_min_fminimizer_minimum:            Minimization Iteration.
+* gsl_min_fminimizer_name:               Initializing the Minimizer.
+* gsl_min_fminimizer_set:                Initializing the Minimizer.
+* gsl_min_fminimizer_set_with_values:    Initializing the Minimizer.
+* GSL_MIN_INT:                           Maximum and Minimum functions.
+* GSL_MIN_LDBL:                          Maximum and Minimum functions.
+* gsl_min_test_interval:                 Minimization Stopping Parameters.
+* gsl_monte_miser_alloc:                 MISER.
+* gsl_monte_miser_free:                  MISER.
+* gsl_monte_miser_init:                  MISER.
+* gsl_monte_miser_integrate:             MISER.
+* gsl_monte_plain_alloc:                 PLAIN Monte Carlo.
+* gsl_monte_plain_free:                  PLAIN Monte Carlo.
+* gsl_monte_plain_init:                  PLAIN Monte Carlo.
+* gsl_monte_plain_integrate:             PLAIN Monte Carlo.
+* gsl_monte_vegas_alloc:                 VEGAS.
+* gsl_monte_vegas_free:                  VEGAS.
+* gsl_monte_vegas_init:                  VEGAS.
+* gsl_monte_vegas_integrate:             VEGAS.
+* gsl_multifit_covar:                    Computing the covariance matrix of best fit parameters.
+* gsl_multifit_fdfsolver_alloc:          Initializing the Nonlinear Least-Squares Solver.
+* gsl_multifit_fdfsolver_free:           Initializing the Nonlinear Least-Squares Solver.
+* gsl_multifit_fdfsolver_iterate:        Iteration of the Minimization Algorithm.
+* gsl_multifit_fdfsolver_lmder:          Minimization Algorithms using Derivatives.
+* gsl_multifit_fdfsolver_lmsder:         Minimization Algorithms using Derivatives.
+* gsl_multifit_fdfsolver_name:           Initializing the Nonlinear Least-Squares Solver.
+* gsl_multifit_fdfsolver_position:       Iteration of the Minimization Algorithm.
+* gsl_multifit_fdfsolver_set:            Initializing the Nonlinear Least-Squares Solver.
+* gsl_multifit_fsolver_alloc:            Initializing the Nonlinear Least-Squares Solver.
+* gsl_multifit_fsolver_free:             Initializing the Nonlinear Least-Squares Solver.
+* gsl_multifit_fsolver_iterate:          Iteration of the Minimization Algorithm.
+* gsl_multifit_fsolver_name:             Initializing the Nonlinear Least-Squares Solver.
+* gsl_multifit_fsolver_position:         Iteration of the Minimization Algorithm.
+* gsl_multifit_fsolver_set:              Initializing the Nonlinear Least-Squares Solver.
+* gsl_multifit_gradient:                 Search Stopping Parameters for Minimization Algorithms.
+* gsl_multifit_linear:                   Multi-parameter fitting.
+* gsl_multifit_linear_alloc:             Multi-parameter fitting.
+* gsl_multifit_linear_free:              Multi-parameter fitting.
+* gsl_multifit_test_delta:               Search Stopping Parameters for Minimization Algorithms.
+* gsl_multifit_test_gradient:            Search Stopping Parameters for Minimization Algorithms.
+* gsl_multifit_wlinear:                  Multi-parameter fitting.
+* gsl_multimin_fdfminimizer_alloc:       Initializing the Multidimensional Minimizer.
+* gsl_multimin_fdfminimizer_conjugate_fr: Multimin Algorithms.
+* gsl_multimin_fdfminimizer_conjugate_pr: Multimin Algorithms.
+* gsl_multimin_fdfminimizer_free:        Initializing the Multidimensional Minimizer.
+* gsl_multimin_fdfminimizer_iterate:     Multimin Iteration.
+* gsl_multimin_fdfminimizer_name:        Initializing the Multidimensional Minimizer.
+* gsl_multimin_fdfminimizer_restart:     Multimin Iteration.
+* gsl_multimin_fdfminimizer_set:         Initializing the Multidimensional Minimizer.
+* gsl_multimin_fdfminimizer_steepest_descent: Multimin Algorithms.
+* gsl_multimin_fdfminimizer_vector_bfgs: Multimin Algorithms.
+* gsl_multimin_test_gradient:            Multimin Stopping Criteria.
+* gsl_multiroot_fdfsolver_alloc:         Initializing the Multidimensional Solver.
+* gsl_multiroot_fdfsolver_free:          Initializing the Multidimensional Solver.
+* gsl_multiroot_fdfsolver_gnewton:       Algorithms using Derivatives.
+* gsl_multiroot_fdfsolver_gradient:      Multimin Iteration.
+* gsl_multiroot_fdfsolver_hybridj:       Algorithms using Derivatives.
+* gsl_multiroot_fdfsolver_hybridsj:      Algorithms using Derivatives.
+* gsl_multiroot_fdfsolver_iterate:       Iteration of the multidimensional solver.
+* gsl_multiroot_fdfsolver_minimum:       Multimin Iteration.
+* gsl_multiroot_fdfsolver_name:          Initializing the Multidimensional Solver.
+* gsl_multiroot_fdfsolver_newton:        Algorithms using Derivatives.
+* gsl_multiroot_fdfsolver_root:          Iteration of the multidimensional solver.
+* gsl_multiroot_fdfsolver_set:           Initializing the Multidimensional Solver.
+* gsl_multiroot_fdfsolver_x:             Multimin Iteration.
+* gsl_multiroot_fsolver_alloc:           Initializing the Multidimensional Solver.
+* gsl_multiroot_fsolver_broyden:         Algorithms without Derivatives.
+* gsl_multiroot_fsolver_dnewton:         Algorithms without Derivatives.
+* gsl_multiroot_fsolver_free:            Initializing the Multidimensional Solver.
+* gsl_multiroot_fsolver_hybrid:          Algorithms without Derivatives.
+* gsl_multiroot_fsolver_hybrids:         Algorithms without Derivatives.
+* gsl_multiroot_fsolver_iterate:         Iteration of the multidimensional solver.
+* gsl_multiroot_fsolver_name:            Initializing the Multidimensional Solver.
+* gsl_multiroot_fsolver_root:            Iteration of the multidimensional solver.
+* gsl_multiroot_fsolver_set:             Initializing the Multidimensional Solver.
+* gsl_multiroot_test_delta:              Search Stopping Parameters for the multidimensional solver.
+* gsl_multiroot_test_residual:           Search Stopping Parameters for the multidimensional solver.
+* GSL_NAN:                               Infinities and Not-a-number.
+* GSL_NEGINF:                            Infinities and Not-a-number.
+* gsl_ntuple_bookdata:                   Writing ntuples.
+* gsl_ntuple_close:                      Closing an ntuple file.
+* gsl_ntuple_create:                     Creating ntuples.
+* gsl_ntuple_open:                       Opening an existing ntuple file.
+* gsl_ntuple_project:                    Histogramming ntuple values.
+* gsl_ntuple_read:                       Reading ntuples.
+* gsl_ntuple_write:                      Writing ntuples.
+* gsl_odeiv_control_alloc:               Adaptive Step-size Control.
+* gsl_odeiv_control_free:                Adaptive Step-size Control.
+* gsl_odeiv_control_hadjust:             Adaptive Step-size Control.
+* gsl_odeiv_control_init:                Adaptive Step-size Control.
+* gsl_odeiv_control_name:                Adaptive Step-size Control.
+* gsl_odeiv_control_standard_new:        Adaptive Step-size Control.
+* gsl_odeiv_control_y_new:               Adaptive Step-size Control.
+* gsl_odeiv_control_yp_new:              Adaptive Step-size Control.
+* gsl_odeiv_evolve_alloc:                Evolution.
+* gsl_odeiv_evolve_apply:                Evolution.
+* gsl_odeiv_evolve_free:                 Evolution.
+* gsl_odeiv_evolve_reset:                Evolution.
+* gsl_odeiv_step_alloc:                  Stepping Functions.
+* gsl_odeiv_step_apply:                  Stepping Functions.
+* gsl_odeiv_step_bsimp:                  Stepping Functions.
+* gsl_odeiv_step_free:                   Stepping Functions.
+* gsl_odeiv_step_gear1:                  Stepping Functions.
+* gsl_odeiv_step_gear2:                  Stepping Functions.
+* gsl_odeiv_step_name:                   Stepping Functions.
+* gsl_odeiv_step_order:                  Stepping Functions.
+* gsl_odeiv_step_reset:                  Stepping Functions.
+* gsl_odeiv_step_rk2:                    Stepping Functions.
+* gsl_odeiv_step_rk2imp:                 Stepping Functions.
+* gsl_odeiv_step_rk4:                    Stepping Functions.
+* gsl_odeiv_step_rk4imp:                 Stepping Functions.
+* gsl_odeiv_step_rk8pd:                  Stepping Functions.
+* gsl_odeiv_step_rkck:                   Stepping Functions.
+* gsl_odeiv_step_rkf45:                  Stepping Functions.
+* gsl_permutation_alloc:                 Permutation allocation.
+* gsl_permutation_calloc:                Permutation allocation.
+* gsl_permutation_data:                  Permutation properties.
+* gsl_permutation_fprintf:               Reading and writing permutations.
+* gsl_permutation_fread:                 Reading and writing permutations.
+* gsl_permutation_free:                  Permutation allocation.
+* gsl_permutation_fscanf:                Reading and writing permutations.
+* gsl_permutation_fwrite:                Reading and writing permutations.
+* gsl_permutation_get:                   Accessing permutation elements.
+* gsl_permutation_init:                  Permutation allocation.
+* gsl_permutation_inverse:               Permutation functions.
+* gsl_permutation_next:                  Permutation functions.
+* gsl_permutation_prev:                  Permutation functions.
+* gsl_permutation_reverse:               Permutation functions.
+* gsl_permutation_size:                  Permutation properties.
+* gsl_permutation_swap:                  Accessing permutation elements.
+* gsl_permutation_valid:                 Permutation properties.
+* gsl_permute:                           Applying Permutations.
+* gsl_permute_inverse:                   Applying Permutations.
+* gsl_permute_vector:                    Applying Permutations.
+* gsl_permute_vector_inverse:            Applying Permutations.
+* gsl_poly_complex_solve:                General polynomial equations.
+* gsl_poly_complex_solve_cubic:          Cubic equations.
+* gsl_poly_complex_solve_quadratic:      Quadratic equations.
+* gsl_poly_complex_workspace_alloc:      General polynomial equations.
+* gsl_poly_complex_workspace_free:       General polynomial equations.
+* gsl_poly_eval:                         Polynomial evaluation.
+* gsl_poly_solve_cubic:                  Cubic equations.
+* gsl_poly_solve_quadratic:              Quadratic equations.
+* GSL_POSINF:                            Infinities and Not-a-number.
+* gsl_pow_2:                             Small integer powers.
+* gsl_pow_3:                             Small integer powers.
+* gsl_pow_4:                             Small integer powers.
+* gsl_pow_5:                             Small integer powers.
+* gsl_pow_6:                             Small integer powers.
+* gsl_pow_7:                             Small integer powers.
+* gsl_pow_8:                             Small integer powers.
+* gsl_pow_9:                             Small integer powers.
+* gsl_pow_int:                           Small integer powers.
+* gsl_qrng_alloc:                        Quasi-random number generator initialization.
+* gsl_qrng_clone:                        Saving and resorting quasi-random number generator state.
+* gsl_qrng_free:                         Quasi-random number generator initialization.
+* gsl_qrng_get:                          Sampling from a quasi-random number generator.
+* gsl_qrng_init:                         Quasi-random number generator initialization.
+* gsl_qrng_memcpy:                       Saving and resorting quasi-random number generator state.
+* gsl_qrng_name:                         Auxiliary quasi-random number generator functions.
+* gsl_qrng_niederreiter_2:               Quasi-random number generator algorithms.
+* gsl_qrng_size:                         Auxiliary quasi-random number generator functions.
+* gsl_qrng_sobol:                        Quasi-random number generator algorithms.
+* gsl_qrng_state:                        Auxiliary quasi-random number generator functions.
+* gsl_ran_bernoulli:                     The Bernoulli Distribution.
+* gsl_ran_bernoulli_pdf:                 The Bernoulli Distribution.
+* gsl_ran_beta:                          The Beta Distribution.
+* gsl_ran_beta_pdf:                      The Beta Distribution.
+* gsl_ran_binomial:                      The Binomial Distribution.
+* gsl_ran_binomial_pdf:                  The Binomial Distribution.
+* gsl_ran_bivariate_gaussian:            The Bivariate Gaussian Distribution.
+* gsl_ran_bivariate_gaussian_pdf:        The Bivariate Gaussian Distribution.
+* gsl_ran_cauchy:                        The Cauchy Distribution.
+* gsl_ran_cauchy_pdf:                    The Cauchy Distribution.
+* gsl_ran_chisq:                         The Chi-squared Distribution.
+* gsl_ran_chisq_pdf:                     The Chi-squared Distribution.
+* gsl_ran_choose:                        Shuffling and Sampling.
+* gsl_ran_dir_2d:                        The Spherical Distribution (2D & 3D).
+* gsl_ran_dir_2d_trig_method:            The Spherical Distribution (2D & 3D).
+* gsl_ran_dir_3d:                        The Spherical Distribution (2D & 3D).
+* gsl_ran_dir_nd:                        The Spherical Distribution (2D & 3D).
+* gsl_ran_discrete:                      General Discrete Distributions.
+* gsl_ran_discrete_free:                 General Discrete Distributions.
+* gsl_ran_discrete_pdf:                  General Discrete Distributions.
+* gsl_ran_discrete_preproc:              General Discrete Distributions.
+* gsl_ran_exponential:                   The Exponential Distribution.
+* gsl_ran_exponential_pdf:               The Exponential Distribution.
+* gsl_ran_exppow:                        The Exponential Power Distribution.
+* gsl_ran_exppow_pdf:                    The Exponential Power Distribution.
+* gsl_ran_fdist:                         The F-distribution.
+* gsl_ran_fdist_pdf:                     The F-distribution.
+* gsl_ran_flat:                          The Flat (Uniform) Distribution.
+* gsl_ran_flat_pdf:                      The Flat (Uniform) Distribution.
+* gsl_ran_gamma:                         The Gamma Distribution.
+* gsl_ran_gamma_pdf:                     The Gamma Distribution.
+* gsl_ran_gaussian:                      The Gaussian Distribution.
+* gsl_ran_gaussian_pdf:                  The Gaussian Distribution.
+* gsl_ran_gaussian_ratio_method:         The Gaussian Distribution.
+* gsl_ran_gaussian_tail:                 The Gaussian Tail Distribution.
+* gsl_ran_gaussian_tail_pdf:             The Gaussian Tail Distribution.
+* gsl_ran_geometric:                     The Geometric Distribution.
+* gsl_ran_geometric_pdf:                 The Geometric Distribution.
+* gsl_ran_gumbel1:                       The Type-1 Gumbel Distribution.
+* gsl_ran_gumbel1_pdf:                   The Type-1 Gumbel Distribution.
+* gsl_ran_gumbel2:                       The Type-2 Gumbel Distribution.
+* gsl_ran_gumbel2_pdf:                   The Type-2 Gumbel Distribution.
+* gsl_ran_hypergeometric:                The Hypergeometric Distribution.
+* gsl_ran_hypergeometric_pdf:            The Hypergeometric Distribution.
+* gsl_ran_landau:                        The Landau Distribution.
+* gsl_ran_landau_pdf:                    The Landau Distribution.
+* gsl_ran_laplace:                       The Laplace Distribution.
+* gsl_ran_laplace_pdf:                   The Laplace Distribution.
+* gsl_ran_levy:                          The Levy alpha-Stable Distributions.
+* gsl_ran_levy_skew:                     The Levy skew alpha-Stable Distribution.
+* gsl_ran_logarithmic:                   The Logarithmic Distribution.
+* gsl_ran_logarithmic_pdf:               The Logarithmic Distribution.
+* gsl_ran_logistic:                      The Logistic Distribution.
+* gsl_ran_logistic_pdf:                  The Logistic Distribution.
+* gsl_ran_lognormal:                     The Lognormal Distribution.
+* gsl_ran_lognormal_pdf:                 The Lognormal Distribution.
+* gsl_ran_negative_binomial:             The Negative Binomial Distribution.
+* gsl_ran_negative_binomial_pdf:         The Negative Binomial Distribution.
+* gsl_ran_pareto:                        The Pareto Distribution.
+* gsl_ran_pareto_pdf:                    The Pareto Distribution.
+* gsl_ran_pascal:                        The Pascal Distribution.
+* gsl_ran_pascal_pdf:                    The Pascal Distribution.
+* gsl_ran_poisson:                       The Poisson Distribution.
+* gsl_ran_poisson_pdf:                   The Poisson Distribution.
+* gsl_ran_rayleigh:                      The Rayleigh Distribution.
+* gsl_ran_rayleigh_pdf:                  The Rayleigh Distribution.
+* gsl_ran_rayleigh_tail:                 The Rayleigh Tail Distribution.
+* gsl_ran_rayleigh_tail_pdf:             The Rayleigh Tail Distribution.
+* gsl_ran_sample:                        Shuffling and Sampling.
+* gsl_ran_shuffle:                       Shuffling and Sampling.
+* gsl_ran_tdist:                         The t-distribution.
+* gsl_ran_tdist_pdf:                     The t-distribution.
+* gsl_ran_ugaussian:                     The Gaussian Distribution.
+* gsl_ran_ugaussian_pdf:                 The Gaussian Distribution.
+* gsl_ran_ugaussian_ratio_method:        The Gaussian Distribution.
+* gsl_ran_ugaussian_tail:                The Gaussian Tail Distribution.
+* gsl_ran_ugaussian_tail_pdf:            The Gaussian Tail Distribution.
+* gsl_ran_weibull:                       The Weibull Distribution.
+* gsl_ran_weibull_pdf:                   The Weibull Distribution.
+* GSL_REAL:                              Complex numbers.
+* gsl_rng_alloc:                         Random number generator initialization.
+* gsl_rng_clone:                         Saving and restoring random number generator state.
+* gsl_rng_cmrg:                          Random number generator algorithms.
+* gsl_rng_env_setup:                     Random number environment variables.
+* gsl_rng_free:                          Random number generator initialization.
+* gsl_rng_get:                           Sampling from a random number generator.
+* gsl_rng_gfsr4:                         Random number generator algorithms.
+* gsl_rng_max:                           Auxiliary random number generator functions.
+* gsl_rng_memcpy:                        Saving and restoring random number generator state.
+* gsl_rng_min:                           Auxiliary random number generator functions.
+* gsl_rng_minstd:                        Other random number generators.
+* gsl_rng_mrg:                           Random number generator algorithms.
+* gsl_rng_mt19937:                       Random number generator algorithms.
+* gsl_rng_name:                          Auxiliary random number generator functions.
+* gsl_rng_print_state:                   Saving and restoring random number generator state.
+* gsl_rng_r250:                          Other random number generators.
+* gsl_rng_ran0:                          Numerical Recipes generators.
+* gsl_rng_ran1:                          Numerical Recipes generators.
+* gsl_rng_ran2:                          Numerical Recipes generators.
+* gsl_rng_ran3:                          Numerical Recipes generators.
+* gsl_rng_rand:                          Unix random number generators.
+* gsl_rng_rand48:                        Unix random number generators.
+* gsl_rng_random_bsd:                    Unix random number generators.
+* gsl_rng_random_glibc2:                 Unix random number generators.
+* gsl_rng_random_libc5:                  Unix random number generators.
+* gsl_rng_randu:                         Other random number generators.
+* gsl_rng_ranf:                          Other random number generators.
+* gsl_rng_ranlux:                        Random number generator algorithms.
+* gsl_rng_ranlux389:                     Random number generator algorithms.
+* gsl_rng_ranlxd1:                       Random number generator algorithms.
+* gsl_rng_ranlxd2:                       Random number generator algorithms.
+* gsl_rng_ranlxs0:                       Random number generator algorithms.
+* gsl_rng_ranlxs1:                       Random number generator algorithms.
+* gsl_rng_ranlxs2:                       Random number generator algorithms.
+* gsl_rng_ranmar:                        Other random number generators.
+* gsl_rng_set:                           Random number generator initialization.
+* gsl_rng_size:                          Auxiliary random number generator functions.
+* gsl_rng_slatec:                        Other random number generators.
+* gsl_rng_state:                         Auxiliary random number generator functions.
+* gsl_rng_taus:                          Random number generator algorithms.
+* gsl_rng_transputer:                    Other random number generators.
+* gsl_rng_tt800:                         Other random number generators.
+* gsl_rng_types_setup:                   Auxiliary random number generator functions.
+* gsl_rng_uni:                           Other random number generators.
+* gsl_rng_uni32:                         Other random number generators.
+* gsl_rng_uniform:                       Sampling from a random number generator.
+* gsl_rng_uniform_int:                   Sampling from a random number generator.
+* gsl_rng_uniform_pos:                   Sampling from a random number generator.
+* gsl_rng_vax:                           Other random number generators.
+* gsl_rng_zuf:                           Other random number generators.
+* gsl_root_fdfsolver_alloc:              Initializing the Solver.
+* gsl_root_fdfsolver_free:               Initializing the Solver.
+* gsl_root_fdfsolver_iterate:            Root Finding Iteration.
+* gsl_root_fdfsolver_name:               Initializing the Solver.
+* gsl_root_fdfsolver_newton:             Root Finding Algorithms using Derivatives.
+* gsl_root_fdfsolver_root:               Root Finding Iteration.
+* gsl_root_fdfsolver_secant:             Root Finding Algorithms using Derivatives.
+* gsl_root_fdfsolver_set:                Initializing the Solver.
+* gsl_root_fdfsolver_steffenson:         Root Finding Algorithms using Derivatives.
+* gsl_root_fsolver_alloc:                Initializing the Solver.
+* gsl_root_fsolver_bisection:            Root Bracketing Algorithms.
+* gsl_root_fsolver_brent:                Root Bracketing Algorithms.
+* gsl_root_fsolver_falsepos:             Root Bracketing Algorithms.
+* gsl_root_fsolver_free:                 Initializing the Solver.
+* gsl_root_fsolver_iterate:              Root Finding Iteration.
+* gsl_root_fsolver_name:                 Initializing the Solver.
+* gsl_root_fsolver_root:                 Root Finding Iteration.
+* gsl_root_fsolver_set:                  Initializing the Solver.
+* gsl_root_fsolver_x_lower:              Root Finding Iteration.
+* gsl_root_fsolver_x_upper:              Root Finding Iteration.
+* gsl_root_test_delta:                   Search Stopping Parameters.
+* gsl_root_test_interval:                Search Stopping Parameters.
+* gsl_root_test_residual:                Search Stopping Parameters.
+* GSL_SET_COMPLEX:                       Complex numbers.
+* gsl_set_error_handler:                 Error Handlers.
+* gsl_set_error_handler_off:             Error Handlers.
+* GSL_SET_IMAG:                          Complex numbers.
+* GSL_SET_REAL:                          Complex numbers.
+* gsl_sf_airy_Ai:                        Airy Functions.
+* gsl_sf_airy_Ai_deriv:                  Derivatives of Airy Functions.
+* gsl_sf_airy_Ai_deriv_e:                Derivatives of Airy Functions.
+* gsl_sf_airy_Ai_deriv_scaled:           Derivatives of Airy Functions.
+* gsl_sf_airy_Ai_deriv_scaled_e:         Derivatives of Airy Functions.
+* gsl_sf_airy_Ai_e:                      Airy Functions.
+* gsl_sf_airy_Ai_scaled:                 Airy Functions.
+* gsl_sf_airy_Ai_scaled_e:               Airy Functions.
+* gsl_sf_airy_Bi:                        Airy Functions.
+* gsl_sf_airy_Bi_deriv:                  Derivatives of Airy Functions.
+* gsl_sf_airy_Bi_deriv_e:                Derivatives of Airy Functions.
+* gsl_sf_airy_Bi_deriv_scaled:           Derivatives of Airy Functions.
+* gsl_sf_airy_Bi_deriv_scaled_e:         Derivatives of Airy Functions.
+* gsl_sf_airy_Bi_e:                      Airy Functions.
+* gsl_sf_airy_Bi_scaled:                 Airy Functions.
+* gsl_sf_airy_Bi_scaled_e:               Airy Functions.
+* gsl_sf_airy_zero_Ai:                   Zeros of Airy Functions.
+* gsl_sf_airy_zero_Ai_deriv:             Zeros of Derivatives of Airy Functions.
+* gsl_sf_airy_zero_Ai_deriv_e:           Zeros of Derivatives of Airy Functions.
+* gsl_sf_airy_zero_Ai_e:                 Zeros of Airy Functions.
+* gsl_sf_airy_zero_Bi:                   Zeros of Airy Functions.
+* gsl_sf_airy_zero_Bi_deriv:             Zeros of Derivatives of Airy Functions.
+* gsl_sf_airy_zero_Bi_deriv_e:           Zeros of Derivatives of Airy Functions.
+* gsl_sf_airy_zero_Bi_e:                 Zeros of Airy Functions.
+* gsl_sf_angle_restrict_pos:             Restriction Functions.
+* gsl_sf_angle_restrict_pos_e:           Restriction Functions.
+* gsl_sf_angle_restrict_symm:            Restriction Functions.
+* gsl_sf_angle_restrict_symm_e:          Restriction Functions.
+* gsl_sf_atanint:                        Arctangent Integral.
+* gsl_sf_atanint_e:                      Arctangent Integral.
+* gsl_sf_bessel_I0:                      Regular Modified Cylindrical Bessel Functions.
+* gsl_sf_bessel_I0_e:                    Regular Modified Cylindrical Bessel Functions.
+* gsl_sf_bessel_i0_scaled:               Regular Modified Spherical Bessel Functions.
+* gsl_sf_bessel_I0_scaled:               Regular Modified Cylindrical Bessel Functions.
+* gsl_sf_bessel_i0_scaled_e:             Regular Modified Spherical Bessel Functions.
+* gsl_sf_bessel_I0_scaled_e:             Regular Modified Cylindrical Bessel Functions.
+* gsl_sf_bessel_I1:                      Regular Modified Cylindrical Bessel Functions.
+* gsl_sf_bessel_I1_e:                    Regular Modified Cylindrical Bessel Functions.
+* gsl_sf_bessel_i1_scaled:               Regular Modified Spherical Bessel Functions.
+* gsl_sf_bessel_I1_scaled:               Regular Modified Cylindrical Bessel Functions.
+* gsl_sf_bessel_i1_scaled_e:             Regular Modified Spherical Bessel Functions.
+* gsl_sf_bessel_I1_scaled_e:             Regular Modified Cylindrical Bessel Functions.
+* gsl_sf_bessel_i2_scaled:               Regular Modified Spherical Bessel Functions.
+* gsl_sf_bessel_i2_scaled_e:             Regular Modified Spherical Bessel Functions.
+* gsl_sf_bessel_il_scaled:               Regular Modified Spherical Bessel Functions.
+* gsl_sf_bessel_il_scaled_array:         Regular Modified Spherical Bessel Functions.
+* gsl_sf_bessel_il_scaled_e:             Regular Modified Spherical Bessel Functions.
+* gsl_sf_bessel_In:                      Regular Modified Cylindrical Bessel Functions.
+* gsl_sf_bessel_In_array:                Regular Modified Cylindrical Bessel Functions.
+* gsl_sf_bessel_In_e:                    Regular Modified Cylindrical Bessel Functions.
+* gsl_sf_bessel_In_scaled:               Regular Modified Cylindrical Bessel Functions.
+* gsl_sf_bessel_In_scaled_array:         Regular Modified Cylindrical Bessel Functions.
+* gsl_sf_bessel_In_scaled_e:             Regular Modified Cylindrical Bessel Functions.
+* gsl_sf_bessel_Inu:                     Regular Modified Bessel Functions - Fractional Order.
+* gsl_sf_bessel_Inu_e:                   Regular Modified Bessel Functions - Fractional Order.
+* gsl_sf_bessel_Inu_scaled:              Regular Modified Bessel Functions - Fractional Order.
+* gsl_sf_bessel_Inu_scaled_e:            Regular Modified Bessel Functions - Fractional Order.
+* gsl_sf_bessel_j0:                      Regular Spherical Bessel Functions.
+* gsl_sf_bessel_J0:                      Regular Cylindrical Bessel Functions.
+* gsl_sf_bessel_j0_e:                    Regular Spherical Bessel Functions.
+* gsl_sf_bessel_J0_e:                    Regular Cylindrical Bessel Functions.
+* gsl_sf_bessel_j1:                      Regular Spherical Bessel Functions.
+* gsl_sf_bessel_J1:                      Regular Cylindrical Bessel Functions.
+* gsl_sf_bessel_j1_e:                    Regular Spherical Bessel Functions.
+* gsl_sf_bessel_J1_e:                    Regular Cylindrical Bessel Functions.
+* gsl_sf_bessel_j2:                      Regular Spherical Bessel Functions.
+* gsl_sf_bessel_j2_e:                    Regular Spherical Bessel Functions.
+* gsl_sf_bessel_jl:                      Regular Spherical Bessel Functions.
+* gsl_sf_bessel_jl_array:                Regular Spherical Bessel Functions.
+* gsl_sf_bessel_jl_e:                    Regular Spherical Bessel Functions.
+* gsl_sf_bessel_jl_steed_array:          Regular Spherical Bessel Functions.
+* gsl_sf_bessel_Jn:                      Regular Cylindrical Bessel Functions.
+* gsl_sf_bessel_Jn_array:                Regular Cylindrical Bessel Functions.
+* gsl_sf_bessel_Jn_e:                    Regular Cylindrical Bessel Functions.
+* gsl_sf_bessel_Jnu:                     Regular Bessel Function - Fractional Order.
+* gsl_sf_bessel_Jnu_e:                   Regular Bessel Function - Fractional Order.
+* gsl_sf_bessel_K0:                      Irregular Modified Cylindrical Bessel Functions.
+* gsl_sf_bessel_K0_e:                    Irregular Modified Cylindrical Bessel Functions.
+* gsl_sf_bessel_k0_scaled:               Irregular Modified Spherical Bessel Functions.
+* gsl_sf_bessel_K0_scaled:               Irregular Modified Cylindrical Bessel Functions.
+* gsl_sf_bessel_k0_scaled_e:             Irregular Modified Spherical Bessel Functions.
+* gsl_sf_bessel_K0_scaled_e:             Irregular Modified Cylindrical Bessel Functions.
+* gsl_sf_bessel_K1:                      Irregular Modified Cylindrical Bessel Functions.
+* gsl_sf_bessel_K1_e:                    Irregular Modified Cylindrical Bessel Functions.
+* gsl_sf_bessel_k1_scaled:               Irregular Modified Spherical Bessel Functions.
+* gsl_sf_bessel_K1_scaled:               Irregular Modified Cylindrical Bessel Functions.
+* gsl_sf_bessel_k1_scaled_e:             Irregular Modified Spherical Bessel Functions.
+* gsl_sf_bessel_K1_scaled_e:             Irregular Modified Cylindrical Bessel Functions.
+* gsl_sf_bessel_k2_scaled:               Irregular Modified Spherical Bessel Functions.
+* gsl_sf_bessel_k2_scaled_e:             Irregular Modified Spherical Bessel Functions.
+* gsl_sf_bessel_kl_scaled:               Irregular Modified Spherical Bessel Functions.
+* gsl_sf_bessel_kl_scaled_array:         Irregular Modified Spherical Bessel Functions.
+* gsl_sf_bessel_kl_scaled_e:             Irregular Modified Spherical Bessel Functions.
+* gsl_sf_bessel_Kn:                      Irregular Modified Cylindrical Bessel Functions.
+* gsl_sf_bessel_Kn_array:                Irregular Modified Cylindrical Bessel Functions.
+* gsl_sf_bessel_Kn_e:                    Irregular Modified Cylindrical Bessel Functions.
+* gsl_sf_bessel_Kn_scaled:               Irregular Modified Cylindrical Bessel Functions.
+* gsl_sf_bessel_Kn_scaled_array:         Irregular Modified Cylindrical Bessel Functions.
+* gsl_sf_bessel_Kn_scaled_e:             Irregular Modified Cylindrical Bessel Functions.
+* gsl_sf_bessel_Knu:                     Irregular Modified Bessel Functions - Fractional Order.
+* gsl_sf_bessel_Knu_e:                   Irregular Modified Bessel Functions - Fractional Order.
+* gsl_sf_bessel_Knu_scaled:              Irregular Modified Bessel Functions - Fractional Order.
+* gsl_sf_bessel_Knu_scaled_e:            Irregular Modified Bessel Functions - Fractional Order.
+* gsl_sf_bessel_lnKnu:                   Irregular Modified Bessel Functions - Fractional Order.
+* gsl_sf_bessel_lnKnu_e:                 Irregular Modified Bessel Functions - Fractional Order.
+* gsl_sf_bessel_sequence_Jnu_e:          Regular Bessel Function - Fractional Order.
+* gsl_sf_bessel_y0:                      Irregular Spherical Bessel Functions.
+* gsl_sf_bessel_Y0:                      Irregular Cylindrical Bessel Functions.
+* gsl_sf_bessel_y0_e:                    Irregular Spherical Bessel Functions.
+* gsl_sf_bessel_Y0_e:                    Irregular Cylindrical Bessel Functions.
+* gsl_sf_bessel_y1:                      Irregular Spherical Bessel Functions.
+* gsl_sf_bessel_Y1:                      Irregular Cylindrical Bessel Functions.
+* gsl_sf_bessel_y1_e:                    Irregular Spherical Bessel Functions.
+* gsl_sf_bessel_Y1_e:                    Irregular Cylindrical Bessel Functions.
+* gsl_sf_bessel_y2:                      Irregular Spherical Bessel Functions.
+* gsl_sf_bessel_y2_e:                    Irregular Spherical Bessel Functions.
+* gsl_sf_bessel_yl:                      Irregular Spherical Bessel Functions.
+* gsl_sf_bessel_yl_array:                Irregular Spherical Bessel Functions.
+* gsl_sf_bessel_yl_e:                    Irregular Spherical Bessel Functions.
+* gsl_sf_bessel_Yn:                      Irregular Cylindrical Bessel Functions.
+* gsl_sf_bessel_Yn_array:                Irregular Cylindrical Bessel Functions.
+* gsl_sf_bessel_Yn_e:                    Irregular Cylindrical Bessel Functions.
+* gsl_sf_bessel_Ynu:                     Irregular Bessel Functions - Fractional Order.
+* gsl_sf_bessel_Ynu_e:                   Irregular Bessel Functions - Fractional Order.
+* gsl_sf_bessel_zero_J0:                 Zeros of Regular Bessel Functions.
+* gsl_sf_bessel_zero_J0_e:               Zeros of Regular Bessel Functions.
+* gsl_sf_bessel_zero_J1:                 Zeros of Regular Bessel Functions.
+* gsl_sf_bessel_zero_J1_e:               Zeros of Regular Bessel Functions.
+* gsl_sf_bessel_zero_Jnu:                Zeros of Regular Bessel Functions.
+* gsl_sf_bessel_zero_Jnu_e:              Zeros of Regular Bessel Functions.
+* gsl_sf_beta:                           Gamma Function.
+* gsl_sf_beta_e:                         Gamma Function.
+* gsl_sf_beta_inc:                       Gamma Function.
+* gsl_sf_beta_inc_e:                     Gamma Function.
+* gsl_sf_Chi:                            Hyperbolic Integrals.
+* gsl_sf_Chi_e:                          Hyperbolic Integrals.
+* gsl_sf_choose:                         Gamma Function.
+* gsl_sf_choose_e:                       Gamma Function.
+* gsl_sf_Ci:                             Trigonometric Integrals.
+* gsl_sf_Ci_e:                           Trigonometric Integrals.
+* gsl_sf_clausen:                        Clausen Functions.
+* gsl_sf_clausen_e:                      Clausen Functions.
+* gsl_sf_complex_cos_e:                  Trigonometric Functions for Complex Arguments.
+* gsl_sf_complex_dilog_e:                Complex Argument.
+* gsl_sf_complex_log_e:                  Logarithm and Related Functions.
+* gsl_sf_complex_logsin_e:               Trigonometric Functions for Complex Arguments.
+* gsl_sf_complex_sin_e:                  Trigonometric Functions for Complex Arguments.
+* gsl_sf_conicalP_0:                     Conical Functions.
+* gsl_sf_conicalP_0_e:                   Conical Functions.
+* gsl_sf_conicalP_1:                     Conical Functions.
+* gsl_sf_conicalP_1_e:                   Conical Functions.
+* gsl_sf_conicalP_cyl_reg:               Conical Functions.
+* gsl_sf_conicalP_cyl_reg_e:             Conical Functions.
+* gsl_sf_conicalP_half:                  Conical Functions.
+* gsl_sf_conicalP_half_e:                Conical Functions.
+* gsl_sf_conicalP_mhalf:                 Conical Functions.
+* gsl_sf_conicalP_mhalf_e:               Conical Functions.
+* gsl_sf_conicalP_sph_reg:               Conical Functions.
+* gsl_sf_conicalP_sph_reg_e:             Conical Functions.
+* gsl_sf_cos:                            Circular Trigonometric Functions.
+* gsl_sf_cos_e:                          Circular Trigonometric Functions.
+* gsl_sf_cos_err:                        Trigonometric Functions With Error Estimates.
+* gsl_sf_cos_err_e:                      Trigonometric Functions With Error Estimates.
+* gsl_sf_coulomb_CL_array:               Coulomb Wave Function Normalization Constant.
+* gsl_sf_coulomb_CL_e:                   Coulomb Wave Function Normalization Constant.
+* gsl_sf_coulomb_wave_F_array:           Coulomb Wave Functions.
+* gsl_sf_coulomb_wave_FG_array:          Coulomb Wave Functions.
+* gsl_sf_coulomb_wave_FG_e:              Coulomb Wave Functions.
+* gsl_sf_coulomb_wave_FGp_array:         Coulomb Wave Functions.
+* gsl_sf_coulomb_wave_sphF_array:        Coulomb Wave Functions.
+* gsl_sf_coupling_3j:                    3-j Symbols.
+* gsl_sf_coupling_3j_e:                  3-j Symbols.
+* gsl_sf_coupling_6j:                    6-j Symbols.
+* gsl_sf_coupling_6j_e:                  6-j Symbols.
+* gsl_sf_coupling_9j:                    9-j Symbols.
+* gsl_sf_coupling_9j_e:                  9-j Symbols.
+* gsl_sf_dawson:                         Dawson Function.
+* gsl_sf_dawson_e:                       Dawson Function.
+* gsl_sf_debye_1:                        Debye Functions.
+* gsl_sf_debye_1_e:                      Debye Functions.
+* gsl_sf_debye_2:                        Debye Functions.
+* gsl_sf_debye_2_e:                      Debye Functions.
+* gsl_sf_debye_3:                        Debye Functions.
+* gsl_sf_debye_3_e:                      Debye Functions.
+* gsl_sf_debye_4:                        Debye Functions.
+* gsl_sf_debye_4_e:                      Debye Functions.
+* gsl_sf_dilog:                          Real Argument.
+* gsl_sf_dilog_e:                        Real Argument.
+* gsl_sf_doublefact:                     Gamma Function.
+* gsl_sf_doublefact_e:                   Gamma Function.
+* gsl_sf_ellint_D:                       Legendre Form of Incomplete Elliptic Integrals.
+* gsl_sf_ellint_D_e:                     Legendre Form of Incomplete Elliptic Integrals.
+* gsl_sf_ellint_E:                       Legendre Form of Incomplete Elliptic Integrals.
+* gsl_sf_ellint_E_e:                     Legendre Form of Incomplete Elliptic Integrals.
+* gsl_sf_ellint_Ecomp:                   Legendre Form of Complete Elliptic Integrals.
+* gsl_sf_ellint_Ecomp_e:                 Legendre Form of Complete Elliptic Integrals.
+* gsl_sf_ellint_F:                       Legendre Form of Incomplete Elliptic Integrals.
+* gsl_sf_ellint_F_e:                     Legendre Form of Incomplete Elliptic Integrals.
+* gsl_sf_ellint_Kcomp:                   Legendre Form of Complete Elliptic Integrals.
+* gsl_sf_ellint_Kcomp_e:                 Legendre Form of Complete Elliptic Integrals.
+* gsl_sf_ellint_P:                       Legendre Form of Incomplete Elliptic Integrals.
+* gsl_sf_ellint_P_e:                     Legendre Form of Incomplete Elliptic Integrals.
+* gsl_sf_ellint_RC:                      Carlson Forms.
+* gsl_sf_ellint_RC_e:                    Carlson Forms.
+* gsl_sf_ellint_RD:                      Carlson Forms.
+* gsl_sf_ellint_RD_e:                    Carlson Forms.
+* gsl_sf_ellint_RF:                      Carlson Forms.
+* gsl_sf_ellint_RF_e:                    Carlson Forms.
+* gsl_sf_ellint_RJ:                      Carlson Forms.
+* gsl_sf_ellint_RJ_e:                    Carlson Forms.
+* gsl_sf_elljac_e:                       Elliptic Functions (Jacobi).
+* gsl_sf_erf:                            Error Function.
+* gsl_sf_erf_e:                          Error Function.
+* gsl_sf_erf_Q:                          Probability functions.
+* gsl_sf_erf_Q_e:                        Probability functions.
+* gsl_sf_erf_Z:                          Probability functions.
+* gsl_sf_erf_Z_e:                        Probability functions.
+* gsl_sf_erfc:                           Complementary Error Function.
+* gsl_sf_erfc_e:                         Complementary Error Function.
+* gsl_sf_eta:                            Eta Function.
+* gsl_sf_eta_e:                          Eta Function.
+* gsl_sf_eta_int:                        Eta Function.
+* gsl_sf_eta_int_e:                      Eta Function.
+* gsl_sf_exp:                            Exponential Function.
+* gsl_sf_exp_e:                          Exponential Function.
+* gsl_sf_exp_e10_e:                      Exponential Function.
+* gsl_sf_exp_err_e:                      Exponentiation With Error Estimate.
+* gsl_sf_exp_err_e10_e:                  Exponentiation With Error Estimate.
+* gsl_sf_exp_mult:                       Exponential Function.
+* gsl_sf_exp_mult_e:                     Exponential Function.
+* gsl_sf_exp_mult_e10_e:                 Exponential Function.
+* gsl_sf_exp_mult_err_e:                 Exponentiation With Error Estimate.
+* gsl_sf_exp_mult_err_e10_e:             Exponentiation With Error Estimate.
+* gsl_sf_expint_3:                       Ei_3(x).
+* gsl_sf_expint_3_e:                     Ei_3(x).
+* gsl_sf_expint_E1:                      Exponential Integral.
+* gsl_sf_expint_E1_e:                    Exponential Integral.
+* gsl_sf_expint_E2:                      Exponential Integral.
+* gsl_sf_expint_E2_e:                    Exponential Integral.
+* gsl_sf_expint_Ei:                      Ei(x).
+* gsl_sf_expint_Ei_e:                    Ei(x).
+* gsl_sf_expm1:                          Relative Exponential Functions.
+* gsl_sf_expm1_e:                        Relative Exponential Functions.
+* gsl_sf_exprel:                         Relative Exponential Functions.
+* gsl_sf_exprel_2:                       Relative Exponential Functions.
+* gsl_sf_exprel_2_e:                     Relative Exponential Functions.
+* gsl_sf_exprel_e:                       Relative Exponential Functions.
+* gsl_sf_exprel_n:                       Relative Exponential Functions.
+* gsl_sf_exprel_n_e:                     Relative Exponential Functions.
+* gsl_sf_fact:                           Gamma Function.
+* gsl_sf_fact_e:                         Gamma Function.
+* gsl_sf_fermi_dirac_0:                  Complete Fermi-Dirac Integrals.
+* gsl_sf_fermi_dirac_0_e:                Complete Fermi-Dirac Integrals.
+* gsl_sf_fermi_dirac_1:                  Complete Fermi-Dirac Integrals.
+* gsl_sf_fermi_dirac_1_e:                Complete Fermi-Dirac Integrals.
+* gsl_sf_fermi_dirac_2:                  Complete Fermi-Dirac Integrals.
+* gsl_sf_fermi_dirac_2_e:                Complete Fermi-Dirac Integrals.
+* gsl_sf_fermi_dirac_3half:              Complete Fermi-Dirac Integrals.
+* gsl_sf_fermi_dirac_3half_e:            Complete Fermi-Dirac Integrals.
+* gsl_sf_fermi_dirac_half:               Complete Fermi-Dirac Integrals.
+* gsl_sf_fermi_dirac_half_e:             Complete Fermi-Dirac Integrals.
+* gsl_sf_fermi_dirac_inc_0:              Incomplete Fermi-Dirac Integrals.
+* gsl_sf_fermi_dirac_inc_0_e:            Incomplete Fermi-Dirac Integrals.
+* gsl_sf_fermi_dirac_int:                Complete Fermi-Dirac Integrals.
+* gsl_sf_fermi_dirac_int_e:              Complete Fermi-Dirac Integrals.
+* gsl_sf_fermi_dirac_m1:                 Complete Fermi-Dirac Integrals.
+* gsl_sf_fermi_dirac_m1_e:               Complete Fermi-Dirac Integrals.
+* gsl_sf_fermi_dirac_mhalf:              Complete Fermi-Dirac Integrals.
+* gsl_sf_fermi_dirac_mhalf_e:            Complete Fermi-Dirac Integrals.
+* gsl_sf_gamma:                          Gamma Function.
+* gsl_sf_gamma_e:                        Gamma Function.
+* gsl_sf_gamma_inc_P:                    Gamma Function.
+* gsl_sf_gamma_inc_P_e:                  Gamma Function.
+* gsl_sf_gamma_inc_Q:                    Gamma Function.
+* gsl_sf_gamma_inc_Q_e:                  Gamma Function.
+* gsl_sf_gammainv:                       Gamma Function.
+* gsl_sf_gammainv_e:                     Gamma Function.
+* gsl_sf_gammastar:                      Gamma Function.
+* gsl_sf_gammastar_e:                    Gamma Function.
+* gsl_sf_gegenpoly_1:                    Gegenbauer Functions.
+* gsl_sf_gegenpoly_1_e:                  Gegenbauer Functions.
+* gsl_sf_gegenpoly_2:                    Gegenbauer Functions.
+* gsl_sf_gegenpoly_2_e:                  Gegenbauer Functions.
+* gsl_sf_gegenpoly_3:                    Gegenbauer Functions.
+* gsl_sf_gegenpoly_3_e:                  Gegenbauer Functions.
+* gsl_sf_gegenpoly_array:                Gegenbauer Functions.
+* gsl_sf_gegenpoly_n:                    Gegenbauer Functions.
+* gsl_sf_gegenpoly_n_e:                  Gegenbauer Functions.
+* gsl_sf_hydrogenicR:                    Normalized Hydrogenic Bound States.
+* gsl_sf_hydrogenicR_1:                  Normalized Hydrogenic Bound States.
+* gsl_sf_hydrogenicR_1_e:                Normalized Hydrogenic Bound States.
+* gsl_sf_hydrogenicR_e:                  Normalized Hydrogenic Bound States.
+* gsl_sf_hyperg_0F1:                     Hypergeometric Functions.
+* gsl_sf_hyperg_0F1_e:                   Hypergeometric Functions.
+* gsl_sf_hyperg_1F1:                     Hypergeometric Functions.
+* gsl_sf_hyperg_1F1_e:                   Hypergeometric Functions.
+* gsl_sf_hyperg_1F1_int:                 Hypergeometric Functions.
+* gsl_sf_hyperg_1F1_int_e:               Hypergeometric Functions.
+* gsl_sf_hyperg_2F0:                     Hypergeometric Functions.
+* gsl_sf_hyperg_2F0_e:                   Hypergeometric Functions.
+* gsl_sf_hyperg_2F1:                     Hypergeometric Functions.
+* gsl_sf_hyperg_2F1_conj:                Hypergeometric Functions.
+* gsl_sf_hyperg_2F1_conj_e:              Hypergeometric Functions.
+* gsl_sf_hyperg_2F1_conj_renorm:         Hypergeometric Functions.
+* gsl_sf_hyperg_2F1_conj_renorm_e:       Hypergeometric Functions.
+* gsl_sf_hyperg_2F1_e:                   Hypergeometric Functions.
+* gsl_sf_hyperg_2F1_renorm:              Hypergeometric Functions.
+* gsl_sf_hyperg_2F1_renorm_e:            Hypergeometric Functions.
+* gsl_sf_hyperg_U:                       Hypergeometric Functions.
+* gsl_sf_hyperg_U_e:                     Hypergeometric Functions.
+* gsl_sf_hyperg_U_e10_e:                 Hypergeometric Functions.
+* gsl_sf_hyperg_U_int:                   Hypergeometric Functions.
+* gsl_sf_hyperg_U_int_e:                 Hypergeometric Functions.
+* gsl_sf_hyperg_U_int_e10_e:             Hypergeometric Functions.
+* gsl_sf_hypot:                          Circular Trigonometric Functions.
+* gsl_sf_hypot_e:                        Circular Trigonometric Functions.
+* gsl_sf_hzeta:                          Hurwitz Zeta Function.
+* gsl_sf_hzeta_e:                        Hurwitz Zeta Function.
+* gsl_sf_laguerre_1:                     Laguerre Functions.
+* gsl_sf_laguerre_1_e:                   Laguerre Functions.
+* gsl_sf_laguerre_2:                     Laguerre Functions.
+* gsl_sf_laguerre_2_e:                   Laguerre Functions.
+* gsl_sf_laguerre_3:                     Laguerre Functions.
+* gsl_sf_laguerre_3_e:                   Laguerre Functions.
+* gsl_sf_laguerre_n:                     Laguerre Functions.
+* gsl_sf_laguerre_n_e:                   Laguerre Functions.
+* gsl_sf_lambert_W0:                     Lambert W Functions.
+* gsl_sf_lambert_W0_e:                   Lambert W Functions.
+* gsl_sf_lambert_Wm1:                    Lambert W Functions.
+* gsl_sf_lambert_Wm1_e:                  Lambert W Functions.
+* gsl_sf_legendre_array_size:            Associated Legendre Polynomials and Spherical Harmonics.
+* gsl_sf_legendre_H3d:                   Radial Functions for Hyperbolic Space.
+* gsl_sf_legendre_H3d_0:                 Radial Functions for Hyperbolic Space.
+* gsl_sf_legendre_H3d_0_e:               Radial Functions for Hyperbolic Space.
+* gsl_sf_legendre_H3d_1:                 Radial Functions for Hyperbolic Space.
+* gsl_sf_legendre_H3d_1_e:               Radial Functions for Hyperbolic Space.
+* gsl_sf_legendre_H3d_array:             Radial Functions for Hyperbolic Space.
+* gsl_sf_legendre_H3d_e:                 Radial Functions for Hyperbolic Space.
+* gsl_sf_legendre_P1:                    Legendre Polynomials.
+* gsl_sf_legendre_P1_e:                  Legendre Polynomials.
+* gsl_sf_legendre_P2:                    Legendre Polynomials.
+* gsl_sf_legendre_P2_e:                  Legendre Polynomials.
+* gsl_sf_legendre_P3:                    Legendre Polynomials.
+* gsl_sf_legendre_P3_e:                  Legendre Polynomials.
+* gsl_sf_legendre_Pl:                    Legendre Polynomials.
+* gsl_sf_legendre_Pl_array:              Legendre Polynomials.
+* gsl_sf_legendre_Pl_e:                  Legendre Polynomials.
+* gsl_sf_legendre_Plm:                   Associated Legendre Polynomials and Spherical Harmonics.
+* gsl_sf_legendre_Plm_array:             Associated Legendre Polynomials and Spherical Harmonics.
+* gsl_sf_legendre_Plm_e:                 Associated Legendre Polynomials and Spherical Harmonics.
+* gsl_sf_legendre_Q0:                    Legendre Polynomials.
+* gsl_sf_legendre_Q0_e:                  Legendre Polynomials.
+* gsl_sf_legendre_Q1:                    Legendre Polynomials.
+* gsl_sf_legendre_Q1_e:                  Legendre Polynomials.
+* gsl_sf_legendre_Ql:                    Legendre Polynomials.
+* gsl_sf_legendre_Ql_e:                  Legendre Polynomials.
+* gsl_sf_legendre_sphPlm:                Associated Legendre Polynomials and Spherical Harmonics.
+* gsl_sf_legendre_sphPlm_array:          Associated Legendre Polynomials and Spherical Harmonics.
+* gsl_sf_legendre_sphPlm_e:              Associated Legendre Polynomials and Spherical Harmonics.
+* gsl_sf_lnbeta:                         Gamma Function.
+* gsl_sf_lnbeta_e:                       Gamma Function.
+* gsl_sf_lnchoose:                       Gamma Function.
+* gsl_sf_lnchoose_e:                     Gamma Function.
+* gsl_sf_lncosh:                         Hyperbolic Trigonometric Functions.
+* gsl_sf_lncosh_e:                       Hyperbolic Trigonometric Functions.
+* gsl_sf_lndoublefact:                   Gamma Function.
+* gsl_sf_lndoublefact_e:                 Gamma Function.
+* gsl_sf_lnfact:                         Gamma Function.
+* gsl_sf_lnfact_e:                       Gamma Function.
+* gsl_sf_lngamma:                        Gamma Function.
+* gsl_sf_lngamma_complex_e:              Gamma Function.
+* gsl_sf_lngamma_e:                      Gamma Function.
+* gsl_sf_lngamma_sgn_e:                  Gamma Function.
+* gsl_sf_lnpoch:                         Gamma Function.
+* gsl_sf_lnpoch_e:                       Gamma Function.
+* gsl_sf_lnpoch_sgn_e:                   Gamma Function.
+* gsl_sf_lnsinh:                         Hyperbolic Trigonometric Functions.
+* gsl_sf_lnsinh_e:                       Hyperbolic Trigonometric Functions.
+* gsl_sf_log:                            Logarithm and Related Functions.
+* gsl_sf_log_1plusx:                     Logarithm and Related Functions.
+* gsl_sf_log_1plusx_e:                   Logarithm and Related Functions.
+* gsl_sf_log_1plusx_mx:                  Logarithm and Related Functions.
+* gsl_sf_log_1plusx_mx_e:                Logarithm and Related Functions.
+* gsl_sf_log_abs:                        Logarithm and Related Functions.
+* gsl_sf_log_abs_e:                      Logarithm and Related Functions.
+* gsl_sf_log_e:                          Logarithm and Related Functions.
+* gsl_sf_log_erfc:                       Log Complementary Error Function.
+* gsl_sf_log_erfc_e:                     Log Complementary Error Function.
+* gsl_sf_multiply_e:                     Elementary Operations.
+* gsl_sf_multiply_err_e:                 Elementary Operations.
+* gsl_sf_poch:                           Gamma Function.
+* gsl_sf_poch_e:                         Gamma Function.
+* gsl_sf_pochrel:                        Gamma Function.
+* gsl_sf_pochrel_e:                      Gamma Function.
+* gsl_sf_polar_to_rect:                  Conversion Functions.
+* gsl_sf_pow_int:                        Power Function.
+* gsl_sf_pow_int_e:                      Power Function.
+* gsl_sf_psi:                            Digamma Function.
+* gsl_sf_psi_1_int:                      Trigamma Function.
+* gsl_sf_psi_1_int_e:                    Trigamma Function.
+* gsl_sf_psi_1piy:                       Digamma Function.
+* gsl_sf_psi_1piy_e:                     Digamma Function.
+* gsl_sf_psi_e:                          Digamma Function.
+* gsl_sf_psi_int:                        Digamma Function.
+* gsl_sf_psi_int_e:                      Digamma Function.
+* gsl_sf_psi_n:                          Polygamma Function.
+* gsl_sf_psi_n_e:                        Polygamma Function.
+* gsl_sf_rect_to_polar:                  Conversion Functions.
+* gsl_sf_Shi:                            Hyperbolic Integrals.
+* gsl_sf_Shi_e:                          Hyperbolic Integrals.
+* gsl_sf_Si:                             Trigonometric Integrals.
+* gsl_sf_Si_e:                           Trigonometric Integrals.
+* gsl_sf_sin:                            Circular Trigonometric Functions.
+* gsl_sf_sin_e:                          Circular Trigonometric Functions.
+* gsl_sf_sin_err:                        Trigonometric Functions With Error Estimates.
+* gsl_sf_sin_err_e:                      Trigonometric Functions With Error Estimates.
+* gsl_sf_sinc:                           Circular Trigonometric Functions.
+* gsl_sf_sinc_e:                         Circular Trigonometric Functions.
+* gsl_sf_synchrotron_1:                  Synchrotron Functions.
+* gsl_sf_synchrotron_1_e:                Synchrotron Functions.
+* gsl_sf_synchrotron_2:                  Synchrotron Functions.
+* gsl_sf_synchrotron_2_e:                Synchrotron Functions.
+* gsl_sf_taylorcoeff:                    Gamma Function.
+* gsl_sf_taylorcoeff_e:                  Gamma Function.
+* gsl_sf_transport_2:                    Transport Functions.
+* gsl_sf_transport_2_e:                  Transport Functions.
+* gsl_sf_transport_3:                    Transport Functions.
+* gsl_sf_transport_3_e:                  Transport Functions.
+* gsl_sf_transport_4:                    Transport Functions.
+* gsl_sf_transport_4_e:                  Transport Functions.
+* gsl_sf_transport_5:                    Transport Functions.
+* gsl_sf_transport_5_e:                  Transport Functions.
+* gsl_sf_zeta:                           Riemann Zeta Function.
+* gsl_sf_zeta_e:                         Riemann Zeta Function.
+* gsl_sf_zeta_int:                       Riemann Zeta Function.
+* gsl_sf_zeta_int_e:                     Riemann Zeta Function.
+* GSL_SIGN:                              Testing the Sign of Numbers.
+* gsl_siman_solve:                       Simulated Annealing functions.
+* gsl_sort:                              Sorting vectors.
+* gsl_sort_index:                        Sorting vectors.
+* gsl_sort_largest:                      Selecting the k-th smallest or largest elements.
+* gsl_sort_largest_index:                Selecting the k-th smallest or largest elements.
+* gsl_sort_smallest:                     Selecting the k-th smallest or largest elements.
+* gsl_sort_smallest_index:               Selecting the k-th smallest or largest elements.
+* gsl_sort_vector:                       Sorting vectors.
+* gsl_sort_vector_index:                 Sorting vectors.
+* gsl_sort_vector_largest:               Selecting the k-th smallest or largest elements.
+* gsl_sort_vector_largest_index:         Selecting the k-th smallest or largest elements.
+* gsl_sort_vector_smallest:              Selecting the k-th smallest or largest elements.
+* gsl_sort_vector_smallest_index:        Selecting the k-th smallest or largest elements.
+* gsl_spline_alloc:                      Higher-level interface.
+* gsl_spline_eval:                       Higher-level interface.
+* gsl_spline_eval_deriv:                 Higher-level interface.
+* gsl_spline_eval_deriv2:                Higher-level interface.
+* gsl_spline_eval_deriv2_e:              Higher-level interface.
+* gsl_spline_eval_deriv_e:               Higher-level interface.
+* gsl_spline_eval_e:                     Higher-level interface.
+* gsl_spline_eval_integ:                 Higher-level interface.
+* gsl_spline_eval_integ_e:               Higher-level interface.
+* gsl_spline_free:                       Higher-level interface.
+* gsl_spline_init:                       Higher-level interface.
+* gsl_stats_absdev:                      Absolute deviation.
+* gsl_stats_absdev_m:                    Absolute deviation.
+* gsl_stats_covariance:                  Covariance.
+* gsl_stats_covariance_m:                Covariance.
+* gsl_stats_kurtosis:                    Higher moments (skewness and kurtosis).
+* gsl_stats_kurtosis_m_sd:               Higher moments (skewness and kurtosis).
+* gsl_stats_lag1_autocorrelation:        Autocorrelation.
+* gsl_stats_lag1_autocorrelation_m:      Autocorrelation.
+* gsl_stats_max:                         Maximum and Minimum values.
+* gsl_stats_max_index:                   Maximum and Minimum values.
+* gsl_stats_mean:                        Mean and standard deviation and variance.
+* gsl_stats_median_from_sorted_data:     Median and Percentiles.
+* gsl_stats_min:                         Maximum and Minimum values.
+* gsl_stats_min_index:                   Maximum and Minimum values.
+* gsl_stats_minmax:                      Maximum and Minimum values.
+* gsl_stats_minmax_index:                Maximum and Minimum values.
+* gsl_stats_quantile_from_sorted_data:   Median and Percentiles.
+* gsl_stats_sd:                          Mean and standard deviation and variance.
+* gsl_stats_sd_m:                        Mean and standard deviation and variance.
+* gsl_stats_sd_with_fixed_mean:          Mean and standard deviation and variance.
+* gsl_stats_skew:                        Higher moments (skewness and kurtosis).
+* gsl_stats_skew_m_sd:                   Higher moments (skewness and kurtosis).
+* gsl_stats_variance:                    Mean and standard deviation and variance.
+* gsl_stats_variance_m:                  Mean and standard deviation and variance.
+* gsl_stats_variance_with_fixed_mean:    Mean and standard deviation and variance.
+* gsl_stats_wabsdev:                     Weighted Samples.
+* gsl_stats_wabsdev_m:                   Weighted Samples.
+* gsl_stats_wkurtosis:                   Weighted Samples.
+* gsl_stats_wkurtosis_m_sd:              Weighted Samples.
+* gsl_stats_wmean:                       Weighted Samples.
+* gsl_stats_wsd:                         Weighted Samples.
+* gsl_stats_wsd_m:                       Weighted Samples.
+* gsl_stats_wsd_with_fixed_mean:         Weighted Samples.
+* gsl_stats_wskew:                       Weighted Samples.
+* gsl_stats_wskew_m_sd:                  Weighted Samples.
+* gsl_stats_wvariance:                   Weighted Samples.
+* gsl_stats_wvariance_m:                 Weighted Samples.
+* gsl_stats_wvariance_with_fixed_mean:   Weighted Samples.
+* gsl_strerror:                          Error Reporting.
+* gsl_sum_levin_u_accel:                 Acceleration functions.
+* gsl_sum_levin_u_alloc:                 Acceleration functions.
+* gsl_sum_levin_u_free:                  Acceleration functions.
+* gsl_sum_levin_utrunc_accel:            Acceleration functions without error estimation.
+* gsl_sum_levin_utrunc_alloc:            Acceleration functions without error estimation.
+* gsl_sum_levin_utrunc_free:             Acceleration functions without error estimation.
+* gsl_vector_add:                        Vector operations.
+* gsl_vector_add_constant:               Vector operations.
+* gsl_vector_alloc:                      Vector allocation.
+* gsl_vector_calloc:                     Vector allocation.
+* gsl_vector_complex_const_imag:         Vector views.
+* gsl_vector_complex_const_real:         Vector views.
+* gsl_vector_complex_imag:               Vector views.
+* gsl_vector_complex_real:               Vector views.
+* gsl_vector_const_subvector:            Vector views.
+* gsl_vector_const_subvector_with_stride: Vector views.
+* gsl_vector_const_view_array:           Vector views.
+* gsl_vector_const_view_array_with_stride: Vector views.
+* gsl_vector_div:                        Vector operations.
+* gsl_vector_fprintf:                    Reading and writing vectors.
+* gsl_vector_fread:                      Reading and writing vectors.
+* gsl_vector_free:                       Vector allocation.
+* gsl_vector_fscanf:                     Reading and writing vectors.
+* gsl_vector_fwrite:                     Reading and writing vectors.
+* gsl_vector_get:                        Accessing vector elements.
+* gsl_vector_isnull:                     Vector properties.
+* gsl_vector_max:                        Finding maximum and minimum elements of vectors.
+* gsl_vector_max_index:                  Finding maximum and minimum elements of vectors.
+* gsl_vector_memcpy:                     Copying vectors.
+* gsl_vector_min:                        Finding maximum and minimum elements of vectors.
+* gsl_vector_min_index:                  Finding maximum and minimum elements of vectors.
+* gsl_vector_minmax:                     Finding maximum and minimum elements of vectors.
+* gsl_vector_minmax_index:               Finding maximum and minimum elements of vectors.
+* gsl_vector_mul:                        Vector operations.
+* gsl_vector_ptr:                        Accessing vector elements.
+* gsl_vector_reverse:                    Exchanging elements.
+* gsl_vector_scale:                      Vector operations.
+* gsl_vector_set:                        Accessing vector elements.
+* gsl_vector_set_all:                    Initializing vector elements.
+* gsl_vector_set_basis:                  Initializing vector elements.
+* gsl_vector_set_zero:                   Initializing vector elements.
+* gsl_vector_sub:                        Vector operations.
+* gsl_vector_subvector:                  Vector views.
+* gsl_vector_subvector_with_stride:      Vector views.
+* gsl_vector_swap:                       Copying vectors.
+* gsl_vector_swap_elements:              Exchanging elements.
+* gsl_vector_view_array:                 Vector views.
+* gsl_vector_view_array_with_stride:     Vector views.
+

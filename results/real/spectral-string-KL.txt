@@ -1,0 +1,4 @@
+Problem: tree
+Algorithm: string, size= 70, basis size=501
+KL: 4.02871513748e+15
+Runtime: 0

@@ -1,0 +1,18 @@
+Fri Aug 24 19:18:23 2001  Brian Gough  <bjg@network-theory.co.uk>
+
+	* test.c (main): renamed fsin to f_sin to avoid conflicts with
+ 	irix math libs.
+
+Sun May  6 09:49:28 2001  Brian Gough  <bjg@network-theory.co.uk>
+
+	* eval.c (gsl_cheb_eval_err): take roundoff into account when
+ 	computing evaluation error (important when result is near zero).
+	(gsl_cheb_eval_n_err): ditto
+
+Tue Apr 24 17:08:29 2001  Brian Gough  <bjg@network-theory.co.uk>
+
+	* made deriv/integ functions thread safe
+
+	* split out from specfunc directory
+	
+

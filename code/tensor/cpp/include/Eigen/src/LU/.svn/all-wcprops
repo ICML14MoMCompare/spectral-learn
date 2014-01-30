@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/LU
+END
+Determinant.h
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/LU/Determinant.h
+END
+Inverse.h
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/LU/Inverse.h
+END
+PartialPivLU.h
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/LU/PartialPivLU.h
+END
+PartialPivLU_MKL.h
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/LU/PartialPivLU_MKL.h
+END
+FullPivLU.h
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/LU/FullPivLU.h
+END
+CMakeLists.txt
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/LU/CMakeLists.txt
+END

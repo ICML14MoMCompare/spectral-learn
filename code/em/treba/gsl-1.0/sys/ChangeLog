@@ -1,0 +1,48 @@
+Tue Aug 21 22:54:08 2001  Brian Gough  <bjg@network-theory.co.uk>
+
+	* test.c (main): use inf/inf to generate a nan, because MSVC
+ 	optimizes inf-inf to zero
+
+Sun May  6 14:28:57 2001  Brian Gough  <bjg@network-theory.co.uk>
+
+	* infnan.c: added gsl_isnan, gsl_isinf, gsl_isreal
+
+Sun Feb 25 11:54:21 2001  Brian Gough  <bjg@network-theory.co.uk>
+
+	* invhyp.c: added gsl_acosh, gsl_asinh, gsl_atanh
+
+Mon Jan 29 10:53:06 2001  Brian Gough  <bjg@network-theory.co.uk>
+
+	* hypot.c: removed the inline from gsl_hypot, since this is the
+ 	static version of the function
+
+	* test.c (main): added an underflow test for gsl_hypot
+
+Thu Nov 16 19:28:38 2000  Brian Gough  <bjg@network-theory.co.uk>
+
+	* coerce.c: added functions for coercing values out of registers
+ 	so they are correctly rounded
+
+Sun Oct 22 15:00:24 2000  Brian Gough  <bjg@network-theory.co.uk>
+
+	* expm1.c (gsl_expm1): added gsl_expm1, a substitute for BSD's expm1
+
+Mon Apr  3 16:58:53 2000  Brian Gough  <bjg@network-theory.co.uk>
+
+	* params.c (main): added parentheses around negative output values
+
+Tue Mar 21 12:44:07 2000  Brian Gough  <bjg@network-theory.co.uk>
+
+	* hypot.c: added a quick gsl_hypot function for sqrt(x^2+y^2)
+
+1999-07-14  Mark Galassi  <rosalia@cygnus.com>
+
+	* prec.c (GSL_MODE_PREC): surrounded this with function with an
+	#ifndef, since it might already be defined as a macro.  In truth,
+	this function might be completely unnecessary, since the logic in
+	../gsl_mode.h seems to cover all cases.
+
+Fri Nov 20 17:41:35 1998  Brian Gough  <bjg@vvv.lanl.gov>
+
+	* params.c: added program for printing ieee parameters
+

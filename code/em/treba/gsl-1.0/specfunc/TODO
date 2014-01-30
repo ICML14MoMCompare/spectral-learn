@@ -1,0 +1,529 @@
+*-text-*-
+RCS: $Id: TODO,v 1.21 1999/05/16 16:58:43 jungman Exp $
+
+
+----------------------------------------------------------------------
+
+The following should be finished before a 1.0 level release.
+
+* Implement the conicalP_sph_reg() functions.
+  DONE: Fri Nov  6 23:33:53 MST 1998 [GJ]
+
+* Irregular (Q) Legendre functions, at least
+  the integer order ones. More general cases
+  can probably wait.
+  DONE: Sat Nov  7 15:47:35 MST 1998 [GJ]
+
+* Make hyperg_1F1() work right.
+  This is the last remaining source of test failures.
+  The problem is with an unstable recursion in certain cases.
+  Look for the recursion with the variable named "start_pair";
+  this is stupid hack to keep track of when the recursion
+  result is going the wrong way for awhile by remembering the
+  minimum value. An error estimate is amde from that. But it
+  is just a hack. Somethign must be done abou that case.
+
+* Clean-up Coulomb wave functions. This does not
+  mean completing a fully controlled low-energy
+  evaluation, which is a larger project.
+  DONE: Sun May 16 13:49:47 MDT 1999 [GJ]
+
+* Clean-up the Fermi-Dirac code. The full Fermi-Dirac
+  functions can probably wait until a later release,
+  but we should have at least the common j = integer and
+  j = 1/2-integer cases for the 1.0 release. These
+  are not too hard.
+  DONE: Sat Nov  7 19:46:27 MST 1998 [GJ]
+
+* Go over the tests and make sure nothing is left out.
+
+* Sanitize all the error-checking, error-estimation,
+  algorithm tuning, etc.
+
+* Fill out our scorecard, working from Lozier's
+  "Software Needs in Special Functions" paper.
+
+* Final Seal of Approval
+  This section has itself gone through several
+  revisions (sigh), proving that the notion of
+  done-ness is ill-defined. So it is worth
+  stating the criteria for done-ness explicitly:
+  o interfaces stabilized
+  o error-estimation in place
+  o all deprecated constructs removed
+  o passes tests
+
+
+  - airy.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS: 
+
+  - airy_der.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS: 
+
+  - airy_zero.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS:
+
+  - atanint.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS: 
+
+  - bessel.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS:
+
+  - bessel_I0.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS: 
+
+  - bessel_I1.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS: 
+
+  - bessel_In.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS:
+
+  - bessel_Inu.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS:
+
+  - bessel_J0.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS: 
+    
+  - bessel_J1.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS: 
+    
+  - bessel_Jn.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS:
+
+  - bessel_Jnu.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS:
+
+  - bessel_K0.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS: 
+
+  - bessel_K1.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS: 
+
+  - bessel_Kn.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS: 
+
+  - bessel_Knu.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS:
+
+  - bessel_Y0.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS: 
+    
+  - bessel_Y1.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS: 
+    
+  - bessel_Yn.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS:
+
+  - bessel_Ynu.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS:
+
+  - bessel_amp_phase.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS:
+
+  - bessel_i.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS:
+
+  - bessel_j.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS:
+
+  - bessel_k.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS: 
+
+  - bessel_olver.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS:
+
+  - bessel_sequence.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS:
+
+  - bessel_temme.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS:
+
+  - bessel_y.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS:
+
+  - bessel_zero.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS:
+
+  - beta.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS: 
+
+  - chebyshev.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS:
+
+  - clausen.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS: 
+
+  - coulomb.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS:
+
+  - coulomb_bound.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS:
+
+  - coupling.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS:
+
+  - dawson.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS: 
+
+  - debye.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS: 
+
+  - dilog.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS: 
+
+  - elementary.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS: 
+
+  - ellint.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS: 
+
+  - elljac.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS: 
+
+  - erfc.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS: 
+
+  - exp.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS:
+
+  - expint.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS: 
+
+  - expint3.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS: 
+
+  - fermi_dirac.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS:
+
+  - gamma.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS:
+
+  - gamma_inc.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS:
+
+  - gegenbauer.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS:
+
+  - hyperg.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS:
+
+  - hyperg_0F1.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS:
+
+  - hyperg_1F1.c
+
+  - hyperg_2F0.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS:
+
+  - hyperg_2F1.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS:
+
+  - hyperg_U.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS:
+
+  - laguerre.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS:
+
+  - legendre_H3d.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS:
+
+  - legendre_Qn.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS:
+
+  - legendre_con.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS:
+
+  - legendre_poly.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS:
+
+  - log.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS: 
+
+  - poch.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS:
+
+  - poly.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS:
+
+  - pow_int.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS: 
+
+  - psi.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS:
+
+  - result.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS:
+
+  - shint.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS: 
+
+  - sinint.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS: 
+
+  - synchrotron.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS: 
+
+  - transport.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS: 
+
+  - trig.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS:
+
+  - zeta.c
+    INTERFACES:
+    ERRORESTIM:
+    DEPRECATED:
+    PASSTESTS:
+
+
+
+----------------------------------------------------------------------
+
+The following are important but probably will
+not see completion before a 1.0 level release.
+
+* Incomplete Fermi-Dirac functions.
+  Other Fermi-Dirac functions, including the
+  generic 1/2-integer case, which was not done.
+
+* Implement the low-energy regime for the Coulomb
+  wave functions. This is fairly well understood in
+  the recent literature but will require some
+  detailed work. Specifically this means creating
+  a drop-in replacement for coulomb_jwkb() which
+  is controlled and extensible.
+
+* General Legendre functions (at least on the cut).
+  This subsumes the toroidal functions, so we need not
+  consider those separately. SLATEC code exists (originally
+  due to Olver+Smith).
+
+* Characterize the algorithms. A significant fraction of
+  the code is home-grown and it should be reviewed by
+  other parties.
+
+
+----------------------------------------------------------------------
+
+The following are extra features which need not
+be implemented for a version 1.0 release.
+
+* Spheroidal wave functions.
+
+* Mathieu functions.
+
+* Weierstrass elliptic functions.
+

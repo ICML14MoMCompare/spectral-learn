@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/OrderingMethods
+END
+Ordering.h
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/OrderingMethods/Ordering.h
+END
+Amd.h
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/OrderingMethods/Amd.h
+END
+Eigen_Colamd.h
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/OrderingMethods/Eigen_Colamd.h
+END
+CMakeLists.txt
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/OrderingMethods/CMakeLists.txt
+END

@@ -1,0 +1,962 @@
+This is gsl-ref.info, produced by makeinfo version 4.0 from
+gsl-ref.texi.
+
+INFO-DIR-SECTION Scientific software
+START-INFO-DIR-ENTRY
+* gsl-ref: (gsl-ref).                   GNU Scientific Library - Reference
+END-INFO-DIR-ENTRY
+
+   This file documents the GNU Scientific Library.
+
+   Copyright (C) 1996, 1997, 1998, 1999, 2000, 2001 The GSL Team.
+
+   Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.1 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.  A
+copy of the license is included in the section entitled "GNU Free
+Documentation License".
+
+
+File: gsl-ref.info,  Node: Numerical Integration Introduction,  Next: QNG non-adaptive Gauss-Kronrod integration,  Up: Numerical Integration
+
+Introduction
+============
+
+   Each algorithm computes an approximation to a definite integral of
+the form,
+
+     I = \int_a^b f(x) w(x) dx
+
+where w(x) is a weight function (for general integrands w(x)=1).  The
+user provides absolute and relative error bounds (epsabs, epsrel) which
+specify the following accuracy requirement,
+
+     |RESULT - I|  <= max(epsabs, epsrel |I|)
+
+where RESULT is the numerical approximation obtained by the algorithm.
+The algorithms attempt to estimate the absolute error ABSERR = |RESULT
+- I| in such a way that the following inequality holds,
+
+     |RESULT - I| <= ABSERR <= max(epsabs, epsrel |I|)
+
+The routines will fail to converge if the error bounds are too
+stringent, but always return the best approximation obtained up to that
+stage.
+
+   The algorithms in QUADPACK use a naming convention based on the
+following letters,
+
+     `Q' - quadrature routine
+     
+     `N' - non-adaptive integrator
+     `A' - adaptive integrator
+     
+     `G' - general integrand (user-defined)
+     `W' - weight function with integrand
+     
+     `S' - singularities can be more readily integrated
+     `P' - points of special difficulty can be supplied
+     `I' - infinite range of integration
+     `O' - oscillatory weight function, cos or sin
+     `F' - Fourier integral
+     `C' - Cauchy principal value
+
+The algorithms are built on pairs of quadrature rules, a higher order
+rule and a lower order rule.  The higher order rule is used to compute
+the best approximation to an integral over a small range.  The
+difference between the results of the higher order rule and the lower
+order rule gives an estimate of the error in the approximation.
+
+   The algorithms for general functions (without a weight function) are
+based on Gauss-Kronrod rules. A Gauss-Kronrod rule begins with a
+classical Gaussian quadrature rule of order m.  This is extended with
+additional points between each of the abscissae to give a higher order
+Kronrod rule of order 2m+1.  The Kronrod rule is efficient because it
+reuses existing function evaluations from the Gaussian rule.  The
+higher order Kronrod rule is used as the best approximation to the
+integral, and the difference between the two rules is used as an
+estimate of the error in the approximation.
+
+   For integrands with weight functions the algorithms use
+Clenshaw-Curtis quadrature rules.  A Clenshaw-Curtis rule begins with
+an n-th order Chebyschev polynomial approximation to the integrand.
+This polynomial can be integrated exactly to give an approximation to
+the integral of the original function.  The Chebyschev expansion can be
+extended to higher orders to improve the approximation.  The presence of
+singularities (or other behavior) in the integrand can cause slow
+convergence in the Chebyschev approximation.  The modified
+Clenshaw-Curtis rules used in QUADPACK separate out several common
+weight functions which cause slow convergence.  These weight functions
+are integrated analytically against the Chebyschev polynomials to
+precompute "modified Chebyschev moments".  Combining the moments with
+the Chebyschev approximation to the function gives the desired
+integral.  The use of analytic integration for the singular part of the
+function allows exact cancellations and substantially improves the
+overall convergence behavior of the integration.
+
+
+File: gsl-ref.info,  Node: QNG non-adaptive Gauss-Kronrod integration,  Next: QAG adaptive integration,  Prev: Numerical Integration Introduction,  Up: Numerical Integration
+
+QNG non-adaptive Gauss-Kronrod integration
+==========================================
+
+   The QNG algorithm is non-adaptive procedure which uses fixed
+Gauss-Kronrod abscissae to sample the integrand at a maximum of 87
+points.  It is provided for fast integration of smooth functions.
+
+ - Function: int gsl_integration_qng (const gsl_function *F, double A,
+          double B, double EPSABS, double EPSREL, double * RESULT,
+          double * ABSERR, size_t * NEVAL)
+     This function applies the Gauss-Kronrod 10-point, 21-point,
+     43-point and 87-point integration rules in succession until an
+     estimate of the integral of f over (a,b) is achieved within the
+     desired absolute and relative error limits, EPSABS and EPSREL.  The
+     function returns the final approximation, RESULT, an estimate of
+     the absolute error, ABSERR and the number of function evaluations
+     used, NEVAL.  The Gauss-Kronrod rules are designed in such a way
+     that each rule uses all the results of its predecessors, in order
+     to minimize the total number of function evaluations.
+
+
+File: gsl-ref.info,  Node: QAG adaptive integration,  Next: QAGS adaptive integration with singularities,  Prev: QNG non-adaptive Gauss-Kronrod integration,  Up: Numerical Integration
+
+QAG adaptive integration
+========================
+
+   The QAG algorithm is a simple adaptive integration procedure.  The
+integration region is divided into subintervals, and on each iteration
+the subinterval with the largest estimated error is bisected.  This
+reduces the overall error rapidly, as the subintervals become
+concentrated around local difficulties in the integrand.  These
+subintervals are managed by a `gsl_integration_workspace' struct, which
+handles the memory for the subinterval ranges, results and error
+estimates.
+
+ - Function: gsl_integration_workspace *
+          gsl_integration_workspace_alloc (size_t N)
+     This function allocates a workspace sufficient to hold N double
+     precision intervals, their integration results and error estimates.
+
+ - Function: void gsl_integration_workspace_free
+          (gsl_integration_workspace * W)
+     This function frees the memory associated with the workspace W.
+
+ - Function: int gsl_integration_qag (const gsl_function *F, double A,
+          double B, double EPSABS, double EPSREL, size_t LIMIT, int
+          KEY, gsl_integration_workspace * WORKSPACE, double * RESULT,
+          double * ABSERR)
+     This function applies an integration rule adaptively until an
+     estimate of the integral of f over (a,b) is achieved within the
+     desired absolute and relative error limits, EPSABS and EPSREL.
+     The function returns the final approximation, RESULT, and an
+     estimate of the absolute error, ABSERR.  The integration rule is
+     determined by the value of KEY, which should be chosen from the
+     following symbolic names,
+
+          GSL_INTEG_GAUSS15  (key = 1)
+          GSL_INTEG_GAUSS21  (key = 2)
+          GSL_INTEG_GAUSS31  (key = 3)
+          GSL_INTEG_GAUSS41  (key = 4)
+          GSL_INTEG_GAUSS51  (key = 5)
+          GSL_INTEG_GAUSS61  (key = 6)
+
+     corresponding to the 15, 21, 31, 41, 51 and 61 point Gauss-Kronrod
+     rules.  The higher-order rules give better accuracy for smooth
+     functions, while lower-order rules save time when the function
+     contains local difficulties, such as discontinuities.
+
+     On each iteration the adaptive integration strategy bisects the
+     interval with the largest error estimate.  The subintervals and
+     their results are stored in the memory provided by WORKSPACE.  The
+     maximum number of subintervals is given by LIMIT, which may not
+     exceed the allocated size of the workspace.
+
+
+File: gsl-ref.info,  Node: QAGS adaptive integration with singularities,  Next: QAGP adaptive integration with known singular points,  Prev: QAG adaptive integration,  Up: Numerical Integration
+
+QAGS adaptive integration with singularities
+============================================
+
+   The presence of an integrable singularity in the integration region
+causes an adaptive routine to concentrate new subintervals around the
+singularity.  As the subintervals decrease in size the successive
+approximations to the integral converge in a limiting fashion.  This
+approach to the limit can be accelerated using an extrapolation
+procedure.  The QAGS algorithm combines adaptive bisection with the Wynn
+epsilon-algorithm to speed up the integration of many types of
+integrable singularities.
+
+ - Function: int gsl_integration_qags (const gsl_function * F, double
+          A, double B, double EPSABS, double EPSREL, size_t LIMIT,
+          gsl_integration_workspace * WORKSPACE, double *RESULT, double
+          *ABSERR)
+     This function applies the Gauss-Kronrod 21-point integration rule
+     adaptively until an estimate of the integral of f over (a,b) is
+     achieved within the desired absolute and relative error limits,
+     EPSABS and EPSREL.  The results are extrapolated using the
+     epsilon-algorithm, which accelerates the convergence of the
+     integral in the presence of discontinuities and integrable
+     singularities.  The function returns the final approximation from
+     the extrapolation, RESULT, and an estimate of the absolute error,
+     ABSERR.  The subintervals and their results are stored in the
+     memory provided by WORKSPACE.  The maximum number of subintervals
+     is given by LIMIT, which may not exceed the allocated size of the
+     workspace.
+
+
+
+File: gsl-ref.info,  Node: QAGP adaptive integration with known singular points,  Next: QAGI adaptive integration on infinite intervals,  Prev: QAGS adaptive integration with singularities,  Up: Numerical Integration
+
+QAGP adaptive integration with known singular points
+====================================================
+
+ - Function: int gsl_integration_qagp (const gsl_function * F, double
+          *PTS, size_t NPTS, double EPSABS, double EPSREL, size_t
+          LIMIT, gsl_integration_workspace * WORKSPACE, double *RESULT,
+          double *ABSERR)
+     This function applies the adaptive integration algorithm QAGS
+     taking account of the user-supplied locations of singular points.
+     The array PTS of length NPTS should contain the endpoints of the
+     integration ranges defined by the integration region and locations
+     of the singularities.  For example, to integrate over the region
+     (a,b) with break-points at x_1, x_2, x_3 (where a < x_1 < x_2 <
+     x_3 < b) the following PTS array should be used
+
+          pts[0] = a
+          pts[1] = x_1
+          pts[2] = x_2
+          pts[3] = x_3
+          pts[4] = b
+
+     with NPTS = 5.
+
+     If you know the locations of the singular points in the integration
+     region then this routine will be faster than `QAGS'.
+
+
+
+File: gsl-ref.info,  Node: QAGI adaptive integration on infinite intervals,  Next: QAWC adaptive integration for Cauchy principal values,  Prev: QAGP adaptive integration with known singular points,  Up: Numerical Integration
+
+QAGI adaptive integration on infinite intervals
+===============================================
+
+ - Function: int gsl_integration_qagi (gsl_function * F, double EPSABS,
+          double EPSREL, size_t LIMIT, gsl_integration_workspace *
+          WORKSPACE, double *RESULT, double *ABSERR)
+     This function computes the integral of the function F over the
+     infinite interval (-\infty,+\infty).  The integral is mapped onto
+     the interval (0,1] using the transformation x = (1-t)/t,
+
+          \int_{-\infty}^{+\infty} dx f(x) =
+               \int_0^1 dt (f((1-t)/t) + f((-1+t)/t))/t^2.
+
+     It is then integrated using the QAGS algorithm.  The normal
+     21-point Gauss-Kronrod rule of QAGS is replaced by a 15-point
+     rule, because the transformation can generate an integrable
+     singularity at the origin.  In this case a lower-order rule is
+     more efficient.
+
+ - Function: int gsl_integration_qagiu (gsl_function * F, double A,
+          double EPSABS, double EPSREL, size_t LIMIT,
+          gsl_integration_workspace * WORKSPACE, double *RESULT, double
+          *ABSERR)
+     This function computes the integral of the function F over the
+     semi-infinite interval (a,+\infty).  The integral is mapped onto
+     the interval (0,1] using the transformation x = a + (1-t)/t,
+
+          \int_{a}^{+\infty} dx f(x) =
+               \int_0^1 dt f(a + (1-t)/t)/t^2
+
+     and then integrated using the QAGS algorithm.
+
+ - Function: int gsl_integration_qagil (gsl_function * F, double B,
+          double EPSABS, double EPSREL, size_t LIMIT,
+          gsl_integration_workspace * WORKSPACE, double *RESULT, double
+          *ABSERR)
+     This function computes the integral of the function F over the
+     semi-infinite interval (-\infty,b).  The integral is mapped onto
+     the region (0,1] using the transformation x = b - (1-t)/t,
+
+          \int_{+\infty}^{b} dx f(x) =
+               \int_0^1 dt f(b - (1-t)/t)/t^2
+
+     and then integrated using the QAGS algorithm.
+
+
+File: gsl-ref.info,  Node: QAWC adaptive integration for Cauchy principal values,  Next: QAWS adaptive integration for singular functions,  Prev: QAGI adaptive integration on infinite intervals,  Up: Numerical Integration
+
+QAWC adaptive integration for Cauchy principal values
+=====================================================
+
+ - Function: int gsl_integration_qawc (gsl_function *F, double A,
+          double B, double C, double EPSABS, double EPSREL, size_t
+          LIMIT, gsl_integration_workspace * WORKSPACE, double *
+          RESULT, double * ABSERR)
+     This function computes the Cauchy principal value of the integral
+     of f over (a,b), with a singularity at C,
+
+          I = \int_a^b dx f(x) / (x - c)
+
+     The adaptive bisection algorithm of QAG is used, with
+     modifications to ensure that subdivisions do not occur at the
+     singular point x = c.  When a subinterval contains the point x = c
+     or is close to it then a special 25-point modified Clenshaw-Curtis
+     rule is used to control the singularity.  Further away from the
+     singularity the algorithm uses an ordinary 15-point Gauss-Kronrod
+     integration rule.
+
+
+
+File: gsl-ref.info,  Node: QAWS adaptive integration for singular functions,  Next: QAWO adaptive integration for oscillatory functions,  Prev: QAWC adaptive integration for Cauchy principal values,  Up: Numerical Integration
+
+QAWS adaptive integration for singular functions
+================================================
+
+   The QAWS algorithm is designed for integrands with
+algebraic-logarithmic singularities at the end-points of an integration
+region.  In order to work efficiently the algorithm requires a
+precomputed table of Chebyschev moments.
+
+ - Function: gsl_integration_qaws_table *
+gsl_integration_qaws_table_alloc (double ALPHA, double BETA, int MU,
+          int NU)
+     This function allocates space for a `gsl_integration_qaws_table'
+     struct and associated workspace describing a singular weight
+     function W(x) with the parameters (\alpha, \beta, \mu, \nu),
+
+          W(x) = (x-a)^alpha (b-x)^beta log^mu (x-a) log^nu (b-x)
+
+     where \alpha < -1, \beta < -1, and \mu = 0, 1, \nu = 0, 1.  The
+     weight function can take four different forms depending on the
+     values of \mu and \nu,
+
+          W(x) = (x-a)^alpha (b-x)^beta                   (mu = 0, nu = 0)
+          W(x) = (x-a)^alpha (b-x)^beta log(x-a)          (mu = 1, nu = 0)
+          W(x) = (x-a)^alpha (b-x)^beta log(b-x)          (mu = 0, nu = 1)
+          W(x) = (x-a)^alpha (b-x)^beta log(x-a) log(b-x) (mu = 1, nu = 1)
+
+     The singular points (a,b) do not have to be specified until the
+     integral is computed, where they are the endpoints of the
+     integration range.
+
+     The function returns a pointer to the newly allocated
+     `gsl_integration_qaws_table' if no errors were detected, and 0 in
+     the case of error.
+
+ - Function: int gsl_integration_qaws_table_set
+          (gsl_integration_qaws_table * T, double ALPHA, double BETA,
+          int MU, int NU)
+     This function modifies the parameters (\alpha, \beta, \mu, \nu) of
+     an existing `gsl_integration_qaws_table' struct T.
+
+ - Function: void gsl_integration_qaws_table_free
+          (gsl_integration_qaws_table * T)
+     This function frees all the memory associated with the
+     `gsl_integration_qaws_table' struct T.
+
+ - Function: int gsl_integration_qaws (gsl_function * F, const double
+          A, const double B, gsl_integration_qaws_table * T, const
+          double EPSABS, const double EPSREL, const size_t LIMIT,
+          gsl_integration_workspace * WORKSPACE, double *RESULT, double
+          *ABSERR)
+     This function computes the integral of the function f(x) over the
+     interval (a,b) with the singular weight function (x-a)^\alpha
+     (b-x)^\beta \log^\mu (x-a) \log^\nu (b-x).  The parameters of the
+     weight function (\alpha, \beta, \mu, \nu) are taken from the table
+     T.  The integral is,
+
+          I = \int_a^b dx f(x) (x-a)^alpha (b-x)^beta log^mu (x-a) log^nu (b-x).
+
+     The adaptive bisection algorithm of QAG is used.  When a
+     subinterval contains one of the endpoints then a special 25-point
+     modified Clenshaw-Curtis rule is used to control the
+     singularities.  For subintervals which do not include the
+     endpoints an ordinary 15-point Gauss-Kronrod integration rule is
+     used.
+
+
+
+File: gsl-ref.info,  Node: QAWO adaptive integration for oscillatory functions,  Next: QAWF adaptive integration for Fourier integrals,  Prev: QAWS adaptive integration for singular functions,  Up: Numerical Integration
+
+QAWO adaptive integration for oscillatory functions
+===================================================
+
+   The QAWO algorithm is designed for integrands with an oscillatory
+factor, \sin(\omega x) or \cos(\omega x).  In order to work efficiently
+the algorithm requires a table of Chebyschev moments which must be
+pre-computed with calls to the functions below.
+
+ - Function: gsl_integration_qawo_table *
+gsl_integration_qawo_table_alloc (double OMEGA, double L, enum
+          gsl_integration_qawo_enum SINE, size_t N)
+     This function allocates space for a `gsl_integration_qawo_table'
+     struct and its associated workspace describing a sine or cosine
+     weight function W(x) with the parameters (\omega, L),
+
+          W(x) = sin(omega x)
+          W(x) = cos(omega x)
+
+     The parameter L must be the length of the interval over which the
+     function will be integrated L = b - a.  The choice of sine or
+     cosine is made with the parameter SINE which should be chosen from
+     one of the two following symbolic values:
+
+          GSL_INTEG_COSINE
+          GSL_INTEG_SINE
+
+     The `gsl_integration_qawo_table' is a table of the trigonometric
+     coefficients required in the integration process.  The parameter N
+     determines the number of levels of coefficients that are computed.
+     Each level corresponds to one bisection of the interval L, so that
+     N levels are sufficient for subintervals down to the length L/2^n.
+     The integration routine `gsl_integration_qawo' returns the error
+     `GSL_ETABLE' if the number of levels is insufficient for the
+     requested accuracy.
+
+
+ - Function: int gsl_integration_qawo_table_set
+          (gsl_integration_qawo_table * T, double OMEGA, double L, enum
+          gsl_integration_qawo_enum SINE)
+     This function changes the parameters OMEGA, L and SINE of the
+     existing workspace T.
+
+ - Function: int gsl_integration_qawo_table_set_length
+          (gsl_integration_qawo_table * T, double L)
+     This function allows the length parameter L of the workspace T to
+     be changed.
+
+ - Function: void gsl_integration_qawo_table_free
+          (gsl_integration_qawo_table * T)
+     This function frees all the memory associated with the workspace T.
+
+ - Function: int gsl_integration_qawo (gsl_function * F, const double
+          A, const double EPSABS, const double EPSREL, const size_t
+          LIMIT, gsl_integration_workspace * WORKSPACE,
+          gsl_integration_qawo_table * WF, double *RESULT, double
+          *ABSERR)
+     This function uses an adaptive algorithm to compute the integral of
+     f over (a,b) with the weight function \sin(\omega x) or
+     \cos(\omega x) defined by the table WF.
+
+          I = \int_a^b dx f(x) sin(omega x)
+          I = \int_a^b dx f(x) cos(omega x)
+
+     The results are extrapolated using the epsilon-algorithm to
+     accelerate the convergence of the integral.  The function returns
+     the final approximation from the extrapolation, RESULT, and an
+     estimate of the absolute error, ABSERR.  The subintervals and
+     their results are stored in the memory provided by WORKSPACE.  The
+     maximum number of subintervals is given by LIMIT, which may not
+     exceed the allocated size of the workspace.
+
+     Those subintervals with "large" widths d, d\omega > 4 are computed
+     using a 25-point Clenshaw-Curtis integration rule, which handles
+     the oscillatory behavior.  Subintervals with a "small" width
+     d\omega < 4 are computed using a 15-point Gauss-Kronrod
+     integration.
+
+
+
+File: gsl-ref.info,  Node: QAWF adaptive integration for Fourier integrals,  Next: Numerical integration error codes,  Prev: QAWO adaptive integration for oscillatory functions,  Up: Numerical Integration
+
+QAWF adaptive integration for Fourier integrals
+===============================================
+
+ - Function: int gsl_integration_qawf (gsl_function * F, const double
+          A, const double EPSABS, const size_t LIMIT,
+          gsl_integration_workspace * WORKSPACE,
+          gsl_integration_workspace * CYCLE_WORKSPACE,
+          gsl_integration_qawo_table * WF, double *RESULT, double
+          *ABSERR)
+     This function attempts to compute a Fourier integral of the
+     function F over the semi-infinite interval [a,+\infty).
+
+          I = \int_a^{+\infty} dx f(x) sin(omega x)
+          I = \int_a^{+\infty} dx f(x) cos(omega x)
+
+     The parameter \omega is taken from the table WF (the length L can
+     take any value, since it is overridden by this function to a value
+     appropriate for the fourier integration).  The integral is computed
+     using the QAWO algorithm over each of the subintervals,
+
+          C_1 = [a, a + c]
+          C_2 = [a + c, a + 2 c]
+          ... = ...
+          C_k = [a + (k-1) c, a + k c]
+
+     where c = (2 floor(|\omega|) + 1) \pi/|\omega|.  The width c is
+     chosen to cover an odd number of periods so that the contributions
+     from the intervals alternate in sign and are monotonically
+     decreasing when F is positive and monotonically decreasing.  The
+     sum of this sequence of contributions is accelerated using the
+     epsilon-algorithm.
+
+     This function works to an overall absolute tolerance of ABSERR.
+     The following strategy is used: on each interval C_k the algorithm
+     tries to achieve the tolerance
+
+          TOL_k = u_k abserr
+
+     where u_k = (1 - p)p^{k-1} and p = 9/10.  The sum of the geometric
+     series of contributions from each interval gives an overall
+     tolerance of ABSERR.
+
+     If the integration of a subinterval leads to difficulties then the
+     accuracy requirement for subsequent intervals is relaxed,
+
+          TOL_k = u_k max(abserr, max_{i<k}{E_i})
+
+     where E_k is the estimated error on the interval C_k.
+
+     The subintervals and their results are stored in the memory
+     provided by WORKSPACE.  The maximum number of subintervals is
+     given by LIMIT, which may not exceed the allocated size of the
+     workspace.  The integration over each subinterval uses the memory
+     provided by CYCLE_WORKSPACE as workspace for the QAWO algorithm.
+
+
+
+File: gsl-ref.info,  Node: Numerical integration error codes,  Next: Numerical integration examples,  Prev: QAWF adaptive integration for Fourier integrals,  Up: Numerical Integration
+
+Error codes
+===========
+
+   In addition to the standard error codes for invalid arguments the
+functions can return the following values,
+
+`GSL_EMAXITER'
+     the maximum number of subdivisions was exceeded.
+
+`GSL_EROUND'
+     cannot reach tolerance because of roundoff error, or roundoff
+     error was detected in the extrapolation table.
+
+`GSL_ESING'
+     a non-integrable singularity or other bad integrand behavior was
+     found in the integration interval.
+
+`GSL_EDIVERGE'
+     the integral is divergent, or too slowly convergent to be
+     integrated numerically.
+
+
+File: gsl-ref.info,  Node: Numerical integration examples,  Next: Numerical integration References and Further Reading,  Prev: Numerical integration error codes,  Up: Numerical Integration
+
+Examples
+========
+
+   The integrator `QAGS' will handle a large class of definite
+integrals.  For example, consider the following integral, which has a
+algebraic-logarithmic singularity at the origin,
+
+     \int_0^1 x^{-1/2} log(x) dx = -4
+
+The program below computes this integral to a relative accuracy bound of
+`1e-7'.
+
+     #include <stdio.h>
+     #include <math.h>
+     #include <gsl/gsl_integration.h>
+     
+     double f (double x, void * params) {
+       double alpha = *(double *) params;
+       double f = log(alpha*x) / sqrt(x);
+       return f;
+     }
+     
+     int
+     main (void)
+     {
+       gsl_integration_workspace * w
+         = gsl_integration_workspace_alloc(1000);
+     
+       double result, error;
+       double expected = -4.0;
+       double alpha = 1.0;
+     
+       gsl_function F;
+       F.function = &f;
+       F.params = &alpha;
+     
+       gsl_integration_qags (&F, 0, 1, 0, 1e-7, 1000,
+                             w, &result, &error);
+     
+       printf("result          = % .18f\n", result);
+       printf("exact result    = % .18f\n", expected);
+       printf("estimated error = % .18f\n", error);
+       printf("actual error    = % .18f\n", result - expected);
+       printf("intervals =  %d\n", w->size);
+     
+       return 0;
+     }
+
+The results below show that the desired accuracy is achieved after 8
+subdivisions.
+
+     bash$ ./a.out
+     result          = -3.999999999999973799
+     exact result    = -4.000000000000000000
+     estimated error =  0.000000000000246025
+     actual error    =  0.000000000000026201
+     intervals =  8
+
+In fact, the extrapolation procedure used by `QAGS' produces an
+accuracy of almost twice as many digits.  The error estimate returned by
+the extrapolation procedure is larger than the actual error, giving a
+margin of safety of one order of magnitude.
+
+
+File: gsl-ref.info,  Node: Numerical integration References and Further Reading,  Prev: Numerical integration examples,  Up: Numerical Integration
+
+References and Further Reading
+==============================
+
+The following book is the definitive reference for QUADPACK, and was
+written by the original authors.  It provides descriptions of the
+algorithms, program listings, test programs and examples.  It also
+includes useful advice on numerical integration and many references to
+the numerical integration literature used in developing QUADPACK.
+
+     R. Piessens, E. de Doncker-Kapenga, C.W. Uberhuber, D.K. Kahaner.
+     `QUADPACK A subroutine package for automatic integration' Springer
+     Verlag, 1983.
+
+
+File: gsl-ref.info,  Node: Random Number Generation,  Next: Quasi-Random Sequences,  Prev: Numerical Integration,  Up: Top
+
+Random Number Generation
+************************
+
+The library provides a large collection of random number generators
+which can be accessed through a uniform interface.  Environment
+variables allow you to select different generators and seeds at runtime,
+so that you can easily switch between generators without needing to
+recompile your program.  Each instance of a generator keeps track of its
+own state, allowing the generators to be used in multi-threaded
+programs.  Additional functions are available for transforming uniform
+random numbers into samples from continuous or discrete probability
+distributions such as the Gaussian, log-normal or Poisson distributions.
+
+   These functions are declared in the header file `gsl_rng.h'.
+
+* Menu:
+
+* General comments on random numbers::
+* The Random Number Generator Interface::
+* Random number generator initialization::
+* Sampling from a random number generator::
+* Auxiliary random number generator functions::
+* Random number environment variables::
+* Saving and restoring random number generator state::
+* Random number generator algorithms::
+* Unix random number generators::
+* Numerical Recipes generators::
+* Other random number generators::
+* Random Number Generator Performance::
+* Random Number References and Further Reading::
+* Random Number Acknowledgements::
+
+
+File: gsl-ref.info,  Node: General comments on random numbers,  Next: The Random Number Generator Interface,  Up: Random Number Generation
+
+General comments on random numbers
+==================================
+
+   In 1988, Park and Miller wrote a paper entitled "Random number
+generators: good ones are hard to find." [Commun. ACM, 31, 1192-1201].
+Fortunately, some excellent random number generators are available,
+though poor ones are still in common use.  You may be happy with the
+system-supplied random number generator on your computer, but you should
+be aware that as computers get faster, requirements on random number
+generators increase.  Nowadays, a simulation that calls a random number
+generator millions of times can often finish before you can make it down
+the hall to the coffee machine and back.
+
+   A very nice review of random number generators was written by Pierre
+L'Ecuyer, as Chapter 4 of the book: Handbook on Simulation, Jerry Banks,
+ed. (Wiley, 1997).  The chapter is available in postscript from from
+L'Ecuyer's ftp site (see references).  Knuth's volume on Seminumerical
+Algorithms (originally published in 1968) devotes 170 pages to random
+number generators, and has recently been updated in its 3rd edition
+(1997).  It is brilliant, a classic.  If you don't own it, you should
+stop reading right now, run to the nearest bookstore, and buy it.
+
+   A good random number generator will satisfy both theoretical and
+statistical properties.  Theoretical properties are often hard to obtain
+(they require real math!), but one prefers a random number generator
+with a long period, low serial correlation, and a tendency _not_ to
+"fall mainly on the planes."  Statistical tests are performed with
+numerical simulations.  Generally, a random number generator is used to
+estimate some quantity for which the theory of probability provides an
+exact answer.  Comparison to this exact answer provides a measure of
+"randomness".
+
+
+File: gsl-ref.info,  Node: The Random Number Generator Interface,  Next: Random number generator initialization,  Prev: General comments on random numbers,  Up: Random Number Generation
+
+The Random Number Generator Interface
+=====================================
+
+   It is important to remember that a random number generator is not a
+"real" function like sine or cosine.  Unlike real functions, successive
+calls to a random number generator yield different return values.  Of
+course that is just what you want for a random number generator, but to
+achieve this effect, the generator must keep track of some kind of
+"state" variable.  Sometimes this state is just an integer (sometimes
+just the value of the previously generated random number), but often it
+is more complicated than that and may involve a whole array of numbers,
+possibly with some indices thrown in.  To use the random number
+generators, you do not need to know the details of what comprises the
+state, and besides that varies from algorithm to algorithm.
+
+   The random number generator library uses two special structs,
+`gsl_rng_type' which holds static information about each type of
+generator and `gsl_rng' which describes an instance of a generator
+created from a given `gsl_rng_type'.
+
+   The functions described in this section are declared in the header
+file `gsl_rng.h'.
+
+
+File: gsl-ref.info,  Node: Random number generator initialization,  Next: Sampling from a random number generator,  Prev: The Random Number Generator Interface,  Up: Random Number Generation
+
+Random number generator initialization
+======================================
+
+ - Random: gsl_rng * gsl_rng_alloc (const gsl_rng_type * T)
+     This function returns a pointer to a newly-created instance of a
+     random number generator of type T.  For example, the following
+     code creates an instance of the Tausworthe generator,
+
+          gsl_rng * r = gsl_rng_alloc (gsl_rng_taus);
+
+     If there is insufficient memory to create the generator then the
+     function returns a null pointer and the error handler is invoked
+     with an error code of `GSL_ENOMEM'.
+
+     The generator is automatically initialized with the default seed,
+     `gsl_rng_default_seed'.  This is zero by default but can be changed
+     either directly or by using the environment variable `GSL_RNG_SEED'
+     (*note Random number environment variables::).
+
+     The details of the available generator types are described later
+     in this chapter.
+
+ - Random: void gsl_rng_set (const gsl_rng * R, unsigned long int S)
+     This function initializes (or `seeds') the random number
+     generator.  If the generator is seeded with the same value of S on
+     two different runs, the same stream of random numbers will be
+     generated by successive calls to the routines below.  If different
+     values of S are supplied, then the generated streams of random
+     numbers should be completely different.  If the seed S is zero
+     then the standard seed from the original implementation is used
+     instead.  For example, the original Fortran source code for the
+     `ranlux' generator used a seed of 314159265, and so choosing S
+     equal to zero reproduces this when using `gsl_rng_ranlux'.
+
+ - Random: void gsl_rng_free (gsl_rng * R)
+     This function frees all the memory associated with the generator R.
+
+
+File: gsl-ref.info,  Node: Sampling from a random number generator,  Next: Auxiliary random number generator functions,  Prev: Random number generator initialization,  Up: Random Number Generation
+
+Sampling from a random number generator
+=======================================
+
+   The following functions return uniformly distributed random numbers,
+either as integers or double precision floating point numbers.  To
+obtain non-uniform distributions *note Random Number Distributions::.
+
+ - Random: unsigned long int gsl_rng_get (const gsl_rng * R)
+     This function returns a random integer from the generator R.  The
+     minimum and maximum values depend on the algorithm used, but all
+     integers in the range [MIN,MAX] are equally likely.  The values of
+     MIN and MAX can determined using the auxiliary functions
+     `gsl_rng_max (r)' and `gsl_rng_min (r)'.
+
+ - Random: double gsl_rng_uniform (const gsl_rng * R)
+     This function returns a double precision floating point number
+     uniformly distributed in the range [0,1).  The range includes 0.0
+     but excludes 1.0.  The value is typically obtained by dividing the
+     result of `gsl_rng_get(r)' by `gsl_rng_max(r) + 1.0' in double
+     precision.  Some generators compute this ratio internally so that
+     they can provide floating point numbers with more than 32 bits of
+     randomness (the maximum number of bits that can be portably
+     represented in a single `unsigned long int').
+
+ - Random: double gsl_rng_uniform_pos (const gsl_rng * R)
+     This function returns a positive double precision floating point
+     number uniformly distributed in the range (0,1), excluding both
+     0.0 and 1.0.  The number is obtained by sampling the generator
+     with the algorithm of `gsl_rng_uniform' until a non-zero value is
+     obtained.  You can use this function if you need to avoid a
+     singularity at 0.0.
+
+ - Random: unsigned long int gsl_rng_uniform_int (const gsl_rng * R,
+          unsigned long int N)
+     This function returns a random integer from 0 to N-1 inclusive.
+     All integers in the range [0,N-1] are equally likely, regardless
+     of the generator used.  An offset correction is applied so that
+     zero is always returned with the correct probability, for any
+     minimum value of the underlying generator.
+
+     If N is larger than the range of the generator then the function
+     calls the error handler with an error code of `GSL_EINVAL' and
+     returns zero.
+
+
+File: gsl-ref.info,  Node: Auxiliary random number generator functions,  Next: Random number environment variables,  Prev: Sampling from a random number generator,  Up: Random Number Generation
+
+Auxiliary random number generator functions
+===========================================
+
+   The following functions provide information about an existing
+generator.  You should use them in preference to hard-coding the
+generator parameters into your own code.
+
+ - Random: const char * gsl_rng_name (const gsl_rng * R)
+     This function returns a pointer to the name of the generator.  For
+     example,
+
+          printf("r is a '%s' generator\n",
+                 gsl_rng_name (r));
+
+     would print something like `r is a 'taus' generator'.
+
+ - Random: unsigned long int gsl_rng_max (const gsl_rng * R)
+     `gsl_rng_max' returns the largest value that `gsl_rng_get' can
+     return.
+
+ - Random: unsigned long int gsl_rng_min (const gsl_rng * R)
+     `gsl_rng_min' returns the smallest value that `gsl_rng_get' can
+     return.  Usually this value is zero.  There are some generators
+     with algorithms that cannot return zero, and for these generators
+     the minimum value is 1.
+
+ - Random: void * gsl_rng_state (const gsl_rng * R)
+ - Random: size_t gsl_rng_size (const gsl_rng * R)
+     These function return a pointer to the state of generator R and
+     its size.  You can use this information to access the state
+     directly.  For example, the following code will write the state of
+     a generator to a stream,
+
+          void * state = gsl_rng_state (r);
+          size_t n = gsl_rng_size (r);
+          fwrite (state, n, 1, stream);
+
+ - Random: const gsl_rng_type ** gsl_rng_types_setup (void)
+     This function returns a pointer to an array of all the available
+     generator types, terminated by a null pointer. The function should
+     be called once at the start of the program, if needed.  The
+     following code fragment shows how to iterate over the array of
+     generator types to print the names of the available algorithms,
+
+          const gsl_rng_type **t, **t0;
+          
+          t0 = gsl_rng_types_setup ();
+          
+          printf("Available generators:\n");
+          
+          for (t = t0; *t != 0; t++)
+            {
+              printf("%s\n", (*t)->name);
+            }
+
+
+File: gsl-ref.info,  Node: Random number environment variables,  Next: Saving and restoring random number generator state,  Prev: Auxiliary random number generator functions,  Up: Random Number Generation
+
+Random number environment variables
+===================================
+
+   The library allows you to choose a default generator and seed from
+the environment variables `GSL_RNG_TYPE' and `GSL_RNG_SEED' and the
+function `gsl_rng_env_setup'.  This makes it easy try out different
+generators and seeds without having to recompile your program.
+
+ - Function: const gsl_rng_type * gsl_rng_env_setup (void)
+     This function reads the environment variables `GSL_RNG_TYPE' and
+     `GSL_RNG_SEED' and uses their values to set the corresponding
+     library variables `gsl_rng_default' and `gsl_rng_default_seed'.
+     These global variables are defined as follows,
+
+          extern const gsl_rng_type *gsl_rng_default
+          extern unsigned long int gsl_rng_default_seed
+
+     The environment variable `GSL_RNG_TYPE' should be the name of a
+     generator, such as `taus' or `mt19937'.  The environment variable
+     `GSL_RNG_SEED' should contain the desired seed value.  It is
+     converted to an `unsigned long int' using the C library function
+     `strtoul'.
+
+     If you don't specify a generator for `GSL_RNG_TYPE' then
+     `gsl_rng_mt19937' is used as the default.  The initial value of
+     `gsl_rng_default_seed' is zero.
+
+
+Here is a short program which shows how to create a global generator
+using the environment variables `GSL_RNG_TYPE' and `GSL_RNG_SEED',
+
+     #include <stdio.h>
+     #include <gsl/gsl_rng.h>
+     
+     gsl_rng * r;  /* global generator */
+     
+     int
+     main (void)
+     {
+       const gsl_rng_type * T;
+     
+       gsl_rng_env_setup();
+     
+       T = gsl_rng_default;
+       r = gsl_rng_alloc (T);
+     
+       printf("generator type: %s\n", gsl_rng_name (r));
+       printf("seed = %u\n", gsl_rng_default_seed);
+       printf("first value = %u\n", gsl_rng_get (r));
+       return 0;
+     }
+
+Running the program without any environment variables uses the initial
+defaults, an `mt19937' generator with a seed of 0,
+
+     bash$ ./a.out
+     generator type: mt19937
+     seed = 0
+     first value = 2867219139
+
+By setting the two variables on the command line we can change the
+default generator and the seed,
+
+     bash$ GSL_RNG_TYPE="taus" GSL_RNG_SEED=123 ./a.out
+     GSL_RNG_TYPE=taus
+     GSL_RNG_SEED=123
+     generator type: taus
+     seed = 123
+     first value = 2720986350
+
+
+File: gsl-ref.info,  Node: Saving and restoring random number generator state,  Next: Random number generator algorithms,  Prev: Random number environment variables,  Up: Random Number Generation
+
+Saving and restoring random number generator state
+==================================================
+
+   The above methods ignore the random number `state' which changes from
+call to call.  It is often useful to be able to save and restore the
+state.  To permit these practices, a few somewhat more advanced
+functions are supplied.  These include:
+
+ - Random: int gsl_rng_memcpy (gsl_rng * DEST, const gsl_rng * SRC)
+     This function copies the random number generator SRC into the
+     pre-existing generator DEST, making DEST into an exact copy of
+     SRC.  The two generators must be of the same type.
+
+ - Random: gsl_rng * gsl_rng_clone (const gsl_rng * R)
+     This function returns a pointer to a newly created generator which
+     is an exact copy of the generator R.
+
+ - Random: void gsl_rng_print_state (const gsl_rng * R)
+     This function prints a hex-dump of the state of the generator R to
+     `stdout'.  At the moment its only use is for debugging.
+

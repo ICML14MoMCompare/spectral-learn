@@ -1,0 +1,4 @@
+Problem: 33
+Algorithm: substring, size= 4, basis size=501
+KL: 49.2165288057
+Runtime: 0.077037037037

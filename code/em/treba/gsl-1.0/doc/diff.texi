@@ -1,0 +1,117 @@
+@cindex differentiation of functions, numeric
+@cindex functions, numerical differentiation
+@cindex derivatives, calculating numerically
+@cindex numerical derivatives
+
+The functions described in this chapter compute numerical derivatives by
+finite differencing.  An adaptive algorithm is used to find the best
+choice of finite difference and to estimate the error in the derivative.
+These functions are declared in the header file @file{gsl_diff.h}
+
+@menu
+* Numerical Differentiation functions::  
+* Numerical Differentiation Example::  
+* Numerical Differentiation References::  
+@end menu
+
+@node Numerical Differentiation functions
+@section Functions
+
+@deftypefun int gsl_diff_central (const gsl_function *@var{f}, double @var{x}, double *@var{result}, double *@var{abserr})
+This function computes the numerical derivative of the function @var{f}
+at the point @var{x} using an adaptive central difference algorithm.
+The derivative is returned in @var{result} and an estimate of its
+absolute error is returned in @var{abserr}.  
+@end deftypefun
+
+
+@deftypefun int gsl_diff_forward (const gsl_function *@var{f}, double @var{x}, double *@var{result}, double *@var{abserr})
+This function computes the numerical derivative of the function @var{f}
+at the point @var{x} using an adaptive forward difference algorithm. The
+function is evaluated only at points greater than @var{x} and at @var{x}
+itself.  The derivative is returned in @var{result} and an estimate of
+its absolute error is returned in @var{abserr}.  This function should be
+used if @math{f(x)} has a singularity or is undefined for values less
+than @var{x}.
+@end deftypefun
+
+
+@deftypefun int gsl_diff_backward (const gsl_function *@var{f}, double @var{x}, double *@var{result}, double *@var{abserr})
+This function computes the numerical derivative of the function @var{f}
+at the point @var{x} using an adaptive backward difference
+algorithm. The function is evaluated only at points less than @var{x}
+and at @var{x} itself.  The derivative is returned in @var{result} and
+an estimate of its absolute error is returned in @var{abserr}.  This
+function should be used if @math{f(x)} has a singularity or is undefined
+for values greater than @var{x}.
+@end deftypefun
+
+@node Numerical Differentiation Example
+@section Example
+
+The following code estimates the derivative of the function 
+@c{$f(x) = x^{3/2}$}
+@math{f(x) = x^@{3/2@}} 
+at @math{x=2} and at @math{x=0}.  The function @math{f(x)} is
+undefined for @math{x<0} so the derivative at @math{x=0} is computed
+using @code{gsl_diff_forward}.
+
+@example
+#include <stdio.h>
+#include <gsl/gsl_math.h>
+#include <gsl/gsl_diff.h>
+
+double f (double x, void * params)
+@{
+  return pow (x, 1.5);
+@}
+
+int
+main (void)
+@{
+  gsl_function F;
+  double result, abserr;
+
+  F.function = &f;
+  F.params = 0;
+
+  printf("f(x) = x^(3/2)\n");
+
+  gsl_diff_central (&F, 2.0, &result, &abserr);
+  printf("x = 2.0\n");
+  printf("f'(x) = %.10f +/- %.5f\n", result, abserr);
+  printf("exact = %.10f\n\n", 1.5 * sqrt(2.0));
+
+  gsl_diff_forward (&F, 0.0, &result, &abserr);
+  printf("x = 0.0\n");
+  printf("f'(x) = %.10f +/- %.5f\n", result, abserr);
+  printf("exact = %.10f\n", 0.0);
+
+  return 0;
+@}
+@end example
+@noindent
+Here is the output of the program,
+@example
+$ ./demo 
+f(x) = x^(3/2)
+
+x = 2.0
+f'(x) = 2.1213203435 +/- 0.01490
+exact = 2.1213203436
+
+x = 0.0
+f'(x) = 0.0012172897 +/- 0.05028
+exact = 0.0000000000
+@end example
+
+@node Numerical Differentiation References
+@section References and Further Reading
+@noindent
+The algorithms used by these functions are described in the following book,
+
+@itemize @asis
+@item
+S.D. Conte and Carl de Boor, @cite{Elementary Numerical Analysis: An
+Algorithmic Approach}, McGraw-Hill, 1972.
+@end itemize

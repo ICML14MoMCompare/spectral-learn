@@ -1,0 +1,18 @@
+Compiling/installing treba
+-------------------------
+
+A generic Makefile that has been used to compile the Linux, win32 (with MinGW), and Mac OSX versions is included.
+
+To compile treba
+
+  make; sudo make install
+
+should work on most UNIX systems.  The default installation target /usr/local can be changed in the Makefile.
+
+If you have the CUDA development files installed, you can build with
+
+  make CUDA=1
+
+to enable the --cuda flag.
+
+Some pre-built binaries are available in the bin/ directory in the tarball releases.

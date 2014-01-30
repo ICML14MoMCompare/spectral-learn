@@ -1,0 +1,140 @@
+10
+
+dir
+763
+http://svn-rdlab.lsi.upc.edu/subversion/bballe/convex/src/icml_pnfa_admm/include/Eigen/src
+http://svn-rdlab.lsi.upc.edu/subversion/bballe
+
+
+
+2014-01-09T16:14:24.139249Z
+723
+bballe
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+b028c75e-88f5-4207-9ce1-f26934b3c0b3
+
+LU
+dir
+
+Householder
+dir
+
+Cholesky
+dir
+
+plugins
+dir
+
+CholmodSupport
+dir
+
+QR
+dir
+
+SPQRSupport
+dir
+
+UmfPackSupport
+dir
+
+Jacobi
+dir
+
+Core
+dir
+
+misc
+dir
+
+Geometry
+dir
+
+SuperLUSupport
+dir
+
+SVD
+dir
+
+OrderingMethods
+dir
+
+PardisoSupport
+dir
+
+SparseLU
+dir
+
+SparseCholesky
+dir
+
+StlSupport
+dir
+
+SparseQR
+dir
+
+IterativeLinearSolvers
+dir
+
+PaStiXSupport
+dir
+
+Eigen2Support
+dir
+
+SparseCore
+dir
+
+Eigenvalues
+dir
+
+CMakeLists.txt
+file
+
+
+
+
+2014-01-09T16:12:23.000000Z
+2ebef3f13165f24e7bc3f09b782f73b2
+2014-01-09T16:14:24.139249Z
+723
+bballe
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+308
+
+MetisSupport
+dir
+

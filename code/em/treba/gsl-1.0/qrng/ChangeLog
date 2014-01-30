@@ -1,0 +1,5 @@
+Mon Oct 23 19:59:46 2000  Brian Gough  <bjg@network-theory.co.uk>
+
+	* qrng.c (gsl_qrng_get): use an array type for the array
+ 	arguments, rather than a pointer
+

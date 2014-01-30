@@ -1,0 +1,95 @@
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/Eigenvalues
+END
+Tridiagonalization.h
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/Eigenvalues/Tridiagonalization.h
+END
+RealSchur_MKL.h
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/Eigenvalues/RealSchur_MKL.h
+END
+GeneralizedEigenSolver.h
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/Eigenvalues/GeneralizedEigenSolver.h
+END
+RealQZ.h
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/Eigenvalues/RealQZ.h
+END
+SelfAdjointEigenSolver.h
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/Eigenvalues/SelfAdjointEigenSolver.h
+END
+SelfAdjointEigenSolver_MKL.h
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/Eigenvalues/SelfAdjointEigenSolver_MKL.h
+END
+ComplexEigenSolver.h
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/Eigenvalues/ComplexEigenSolver.h
+END
+ComplexSchur.h
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/Eigenvalues/ComplexSchur.h
+END
+GeneralizedSelfAdjointEigenSolver.h
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/Eigenvalues/GeneralizedSelfAdjointEigenSolver.h
+END
+ComplexSchur_MKL.h
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/Eigenvalues/ComplexSchur_MKL.h
+END
+HessenbergDecomposition.h
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/Eigenvalues/HessenbergDecomposition.h
+END
+EigenSolver.h
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/Eigenvalues/EigenSolver.h
+END
+MatrixBaseEigenvalues.h
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/Eigenvalues/MatrixBaseEigenvalues.h
+END
+CMakeLists.txt
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/Eigenvalues/CMakeLists.txt
+END
+RealSchur.h
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/Eigenvalues/RealSchur.h
+END

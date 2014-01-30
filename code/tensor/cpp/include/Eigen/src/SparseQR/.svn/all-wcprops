@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/SparseQR
+END
+SparseQR.h
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/SparseQR/SparseQR.h
+END
+CMakeLists.txt
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/subversion/bballe/!svn/ver/723/convex/src/icml_pnfa_admm/include/Eigen/src/SparseQR/CMakeLists.txt
+END

@@ -1,0 +1,109 @@
+* Simone Piccardi <piccardi@fi.infn.it> for extensions to the
+histogram routines, and providing the ntuple code
+
+* Nelson H. F. Beebe <beebe@math.utah.edu> for references and testing
+the software on many different platforms.
+
+* Tim Mooney <mooney@dogbert.cc.ndsu.nodak.edu> for IEEE support for
+Tru64, AIX, IRIX, fixes for odes, and testing
+
+* Thomas Walter <walter@pctc.chemie.uni-erlangen.de> for heapsort
+routines, cholesky decomposition, bug reports and useful suggestions
+
+* Jorma Olavi Tähtinen <jotahtin@cc.hut.fi> for complex arithmetic
+functions
+
+* Barak Pearlmutter <bap@cs.unm.edu>
+
+* Frederick W. Wheeler <wheeler@cipr.rpi.edu>
+
+* Bernd Petrovitsch <bernd@ict.tuwien.ac.at>
+
+* Jacek Pliszka <Jacek.Pliszka@fuw.edu.pl> for bug report
+
+* Michele Clark <clark@cs.unc.edu> for bug report
+
+* Jeffrey Russell Horner <jhorner@cs.utk.edu> for information on CBLAS
+
+* Rahul V. Herwadkar <RHERWADK@us.oracle.com> for testing
+
+* Trond Bo <datb@dnmi.no> for bug report
+
+* Jan Kasprzak <kas@informatics.muni.cz> for bug report
+
+* David Kaelbling <drk@sgi.com> for testing
+
+* Mark Levedahl <mlevedahl@fallschurch.esys.com> for bug report
+
+* David Billinghurst <David.Billinghurst@riotinto.com.au> for testing
+
+* Jean-Bernard ADDOR <jbaddor@sca.uqam.ca> for bug report
+
+* Fabrice Rossi <rossi@ufrmd.dauphine.fr> bug reports and suggestions
+
+* Paul Walmsley <pwalmsley@iee.org> for bug report and patch for
+  fixing matmult.
+
+* Dave Morrison <dave@bnl.gov> for advice on build procedure and
+  various patches, the diff/ numerical differentiation routines,
+  multmin documentation, and Landau distribution
+
+* Brett Viren <bviren@superk.physics.sunysb.edu> for debugging qpsrt.c.
+
+* Christopher Gabriel <cgabriel@firenze.linux.it> contributed the
+  gsl-config and gsl.m4 we use.
+
+* C M Murphy <C.M.Murphy@bath.ac.uk> patch to fix up consts in header files
+
+* Bracy H. Elton for correcting a reference in the FFT Algorithms document
+
+* Tadhg O'Meara <tadhg@net-cs.ucd.ie> for finding a bug in gsl-randist
+
+* Steve Robbins <stever@bic.mni.mcgill.ca> patch to work around FP_RND
+  problems on Tru64, testing and other patches.
+
+* John Fisher <johnfish@uclink4.berkeley.edu> testing on powerpc linux 
+  and support for fp-ppclinux.c
+
+* OKUJI Yoshinori <okuji@gnu.org> for a patch for fp-x86linux.c for libc5
+
+* Pablo Bianucci <pbian@pccp.com.ar> for patches to complex matrix/vectors
+
+* Toby White <tow@theor.ch.cam.ac.uk> for several patches and
+improvements to the design, OpenBSD support
+
+* Bill Brower <wbrower@ll.mit.edu> for bug report on gsl.m4
+
+* Vladimir Kushnir <vkushnir@Alfacom.net> for ieee support for FreeBSD
+
+* F J Franklin <MEP95JFF@sheffield.ac.uk> for test reports and debugging
+
+* Keith Briggs <briggsk@info.bt.co.uk> for bug reports and code for
+the skewed Levy alpha-stable variates gsl_ran_levy_skew
+
+* Vince <vattervi@msu.edu> for permutation iterator functions
+
+* Henry Sobotka <sobotka@axess.com> for ieee support for OS/2 and bug fixes
+
+* Remy Bruno <remy.bruno@libertysurf.fr> for bug fix
+
+* M. Lavasani <lavasani@connect.org.uk> for bug reports and testing on HPUX11
+
+* Jason Beegan <jasontd@indigo.ie> for NetBSD support
+
+* Zeger Knops <zeger@cs.uu.nl> for bug fix
+
+* Rodney Sparapani <rsparapa@mcw.edu> for Darwin support
+
+* Ramin Nakisa <raminnakisa@yahoo.com> for bug reports
+
+* Achim Gaedke <achim@zpr.uni-koeln.de> for bug reports and
+suggestions, additional histogram code, PyGSL python interface
+
+* Eric Rose <erose@memot.unibe.ch> for bug report and useful tip on casting
+
+* M Joonas Pihlaja <jpihlaja@cc.helsinki.fi> for bug reports
+
+* Albert Chin <china@thewrittenword.com> for bug reports and patches
+
+* Asterio Gonzalez <agonzalez@udiberica.com> for a bug report for multmin

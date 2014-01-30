@@ -1,0 +1,1208 @@
+This is gsl-ref.info, produced by makeinfo version 4.0 from
+gsl-ref.texi.
+
+INFO-DIR-SECTION Scientific software
+START-INFO-DIR-ENTRY
+* gsl-ref: (gsl-ref).                   GNU Scientific Library - Reference
+END-INFO-DIR-ENTRY
+
+   This file documents the GNU Scientific Library.
+
+   Copyright (C) 1996, 1997, 1998, 1999, 2000, 2001 The GSL Team.
+
+   Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.1 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.  A
+copy of the license is included in the section entitled "GNU Free
+Documentation License".
+
+
+File: gsl-ref.info,  Node: Random number generator algorithms,  Next: Unix random number generators,  Prev: Saving and restoring random number generator state,  Up: Random Number Generation
+
+Random number generator algorithms
+==================================
+
+   The functions described above make no reference to the actual
+algorithm used.  This is deliberate so that you can switch algorithms
+without having to change any of your application source code.  The
+library provides a large number of generators of different types,
+including simulation quality generators, generators provided for
+compatibility with other libraries and historical generators from the
+past.
+
+   The following generators are recommended for use in simulation.  They
+have extremely long periods, low correlation and pass most statistical
+tests.
+
+ - Generator: gsl_rng_mt19937
+     The MT19937 generator of Makoto Matsumoto and Takuji Nishimura is a
+     variant of the twisted generalized feedback shift-register
+     algorithm, and is known as the "Mersenne Twister" generator.  It
+     has a Mersenne prime period of 2^19937 - 1 (about 10^6000) and is
+     equi-distributed in 623 dimensions.  It has passed the DIEHARD
+     statistical tests.  It uses 624 words of state per generator and is
+     comparable in speed to the other generators.  The original
+     generator used a default seed of 4357 and choosing S equal to zero
+     in `gsl_rng_set' reproduces this.
+
+     For more information see,
+          Makoto Matsumoto and Takuji Nishimura, "Mersenne Twister: A
+          623-dimensionally equidistributed uniform pseudorandom number
+          generator". `ACM Transactions on Modeling and Computer
+          Simulation', Vol. 8, No. 1 (Jan. 1998), Pages 3-30
+
+     The generator `gsl_rng_19937' uses the corrected version of the
+     seeding procedure published later by the two authors above.  The
+     original seeding procedure suffered from low-order periodicity,
+     but can be used by selecting the alternate generator
+     `gsl_rng_mt19937_1998'.
+
+ - Generator: gsl_rng_ranlxs0
+ - Generator: gsl_rng_ranlxs1
+ - Generator: gsl_rng_ranlxs2
+     The generator `ranlxs0' is a second-generation version of the
+     RANLUX algorithm of Lu"scher, which produces "luxury random
+     numbers".  This generator provides single precision output (24
+     bits) at three luxury levels `ranlxs0', `ranlxs1' and `ranlxs2'.
+     It uses double-precision floating point arithmetic internally and
+     can be significantly faster than the integer version of `ranlux',
+     particularly on 64-bit architectures.  The period of the generator
+     is about 10^171.  The algorithm has mathematically proven
+     properties and can provide truly decorrelated numbers at a known
+     level of randomness.  The higher luxury levels provide additional
+     decorrelation between samples as an additional safety margin.
+
+ - Generator: gsl_rng_ranlxd1
+ - Generator: gsl_rng_ranlxd2
+     These generators produce double precision output (48 bits) from the
+     RANLXS generator.  The library provides two luxury levels
+     `ranlxd1' and `ranlxd2'.
+
+ - Generator: gsl_rng_ranlux
+ - Generator: gsl_rng_ranlux389
+     The `ranlux' generator is an implementation of the original
+     algorithm developed by Lu"scher.  It uses a
+     lagged-fibonacci-with-skipping algorithm to produce "luxury random
+     numbers".  It is a 24-bit generator, originally designed for
+     single-precision IEEE floating point numbers.  This implementation
+     is based on integer arithmetic, while the second-generation
+     versions RANLXS and RANLXD described above provide floating-point
+     implementations which will be faster on many platforms.  The
+     period of the generator is about 10^171.  The algorithm has
+     mathematically proven properties and it can provide truly
+     decorrelated numbers at a known level of randomness.  The default
+     level of decorrelation recommended by Lu"scher is provided by
+     `gsl_rng_ranlux', while `gsl_rng_ranlux389' gives the highest
+     level of randomness, with all 24 bits decorrelated.  Both types of
+     generator use 24 words of state per generator.
+
+     For more information see,
+          M. Lu"scher, "A portable high-quality random number generator
+          for lattice field theory calculations", `Computer Physics
+          Communications', 79 (1994) 100-110.
+
+          F. James, "RANLUX: A Fortran implementation of the
+          high-quality pseudo-random number generator of Lu"scher",
+          `Computer Physics Communications', 79 (1994) 111-114
+
+ - Generator: gsl_rng_cmrg
+     This is a combined multiple recursive generator by L'Ecuyer.  Its
+     sequence is,
+
+          z_n = (x_n - y_n) mod m_1
+
+     where the two underlying generators x_n and y_n are,
+
+          x_n = (a_1 x_{n-1} + a_2 x_{n-2} + a_3 x_{n-3}) mod m_1
+          y_n = (b_1 y_{n-1} + b_2 y_{n-2} + b_3 y_{n-3}) mod m_2
+
+     with coefficients a_1 = 0, a_2 = 63308, a_3 = -183326, b_1 = 86098,
+     b_2 = 0, b_3 = -539608, and moduli m_1 = 2^31 - 1 = 2147483647 and
+     m_2 = 2145483479.
+
+     The period of this generator is 2^205 (about 10^61).  It uses 6
+     words of state per generator.  For more information see,
+
+          P. L'Ecuyer, "Combined Multiple Recursive Random Number
+          Generators," `Operations Research', 44, 5 (1996), 816-822.
+
+ - Generator: gsl_rng_mrg
+     This is a fifth-order multiple recursive generator by L'Ecuyer,
+     Blouin and Coutre.  Its sequence is,
+
+          x_n = (a_1 x_{n-1} + a_5 x_{n-5}) mod m
+
+     with a_1 = 107374182, a_2 = a_3 = a_4 = 0, a_5 = 104480 and m =
+     2^31 - 1.
+
+     The period of this generator is about 10^46.  It uses 5 words of
+     state per generator.  More information can be found in the
+     following paper,
+          P. L'Ecuyer, F. Blouin, and R. Coutre, "A search for good
+          multiple recursive random number generators", `ACM
+          Transactions on Modeling and Computer Simulation' 3, 87-98
+          (1993).
+
+ - Generator: gsl_rng_taus
+     This is a maximally equidistributed combined Tausworthe generator
+     by L'Ecuyer.  The sequence is,
+
+          x_n = (s1_n ^^ s2_n ^^ s3_n)
+
+     where,
+
+          s1_{n+1} = (((s1_n&4294967294)<<12)^^(((s1_n<<13)^^s1_n)>>19))
+          s2_{n+1} = (((s2_n&4294967288)<< 4)^^(((s2_n<< 2)^^s2_n)>>25))
+          s3_{n+1} = (((s3_n&4294967280)<<17)^^(((s3_n<< 3)^^s3_n)>>11))
+
+     computed modulo 2^32.  In the formulas above ^^ denotes
+     "exclusive-or".  Note that the algorithm relies on the properties
+     of 32-bit unsigned integers and has been implemented using a
+     bitmask of `0xFFFFFFFF' to make it work on 64 bit machines.
+
+     The period of this generator is 2^88 (about 10^26).  It uses 3
+     words of state per generator.  For more information see,
+
+          P. L'Ecuyer, "Maximally Equidistributed Combined Tausworthe
+          Generators", `Mathematics of Computation', 65, 213 (1996),
+          203-213.
+
+ - Generator: gsl_rng_gfsr4
+     The `gfsr4' generator is like a lagged-fibonacci generator, and
+     produces each number as an `xor''d sum of four previous values.
+
+          r_n = r_{n-A} ^^ r_{n-B} ^^ r_{n-C} ^^ r_{n-D}
+
+     Ziff (ref below) notes that "it is now widely known" that two-tap
+     registers (such as R250, which is described below) have serious
+     flaws, the most obvious one being the three-point correlation that
+     comes from the definition of the generator.  Nice mathematical
+     properties can be derived for GFSR's, and numerics bears out the
+     claim that 4-tap GFSR's with appropriately chosen offsets are as
+     random as can be measured, using the author's test.
+
+     This implementation uses the values suggested the the example on
+     p392 of Ziff's article: A=471, B=1586, C=6988, D=9689.
+
+     If the offsets are appropriately chosen (such the one ones in this
+     implementation), then the sequence is said to be maximal.  I'm not
+     sure what that means, but I would guess that means all states are
+     part of the same cycle, which would mean that the period for this
+     generator is astronomical; it is (2^K)^D \approx 10^{93334} where
+     K=32 is the number of bits in the word, and D is the longest lag.
+     This would also mean that any one random number could easily be
+     zero; ie 0 <= r < 2^32.
+
+     Ziff doesn't say so, but it seems to me that the bits are
+     completely independent here, so one could use this as an efficient
+     bit generator; each number supplying 32 random bits.  The quality
+     of the generated bits depends on the underlying seeding procedure,
+     which may need to be improved in some circumstances.
+
+     For more information see,
+          Robert M. Ziff, "Four-tap shift-register-sequence
+          random-number generators", `Computers in Physics', 12(4),
+          Jul/Aug 1998, pp 385-392.
+
+
+File: gsl-ref.info,  Node: Unix random number generators,  Next: Numerical Recipes generators,  Prev: Random number generator algorithms,  Up: Random Number Generation
+
+Unix random number generators
+=============================
+
+   The standard Unix random number generators `rand', `random' and
+`rand48' are provided as part of GSL. Although these generators are
+widely available individually often they aren't all available on the
+same platform.  This makes it difficult to write portable code using
+them and so we have included the complete set of Unix generators in GSL
+for convenience.  Note that these generators don't produce high-quality
+randomness and aren't suitable for work requiring accurate statistics.
+However, if you won't be measuring statistical quantities and just want
+to introduce some variation into your program then these generators are
+quite acceptable.
+
+ - Generator: gsl_rng_rand
+     This is the BSD `rand()' generator.  Its sequence is
+
+          x_{n+1} = (a x_n + c) mod m
+
+     with a = 1103515245, c = 12345 and m = 2^31.  The seed specifies
+     the initial value, x_1.  The period of this generator is 2^31, and
+     it uses 1 word of storage per generator.
+
+ - Generator: gsl_rng_random_bsd
+ - Generator: gsl_rng_random_libc5
+ - Generator: gsl_rng_random_glibc2
+     These generators implement the `random()' family of functions, a
+     set of linear feedback shift register generators originally used
+     in BSD Unix.  There are several versions of `random()' in use
+     today: the original BSD version (e.g. on SunOS4), a libc5 version
+     (found on older GNU/Linux systems) and a glibc2 version.  Each
+     version uses a different seeding procedure, and thus produces
+     different sequences.
+
+     The original BSD routines accepted a variable length buffer for the
+     generator state, with longer buffers providing higher-quality
+     randomness.  The `random()' function implemented algorithms for
+     buffer lengths of 8, 32, 64, 128 and 256 bytes, and the algorithm
+     with the largest length that would fit into the user-supplied
+     buffer was used.  To support these algorithms additional
+     generators are available with the following names,
+
+          gsl_rng_random8_bsd
+          gsl_rng_random32_bsd
+          gsl_rng_random64_bsd
+          gsl_rng_random128_bsd
+          gsl_rng_random256_bsd
+
+     where the numeric suffix indicates the buffer length.  The
+     original BSD `random' function used a 128-byte default buffer and
+     so `gsl_rng_random_bsd' has been made equivalent to
+     `gsl_rng_random128_bsd'.  Corresponding versions of the `libc5'
+     and `glibc2' generators are also available, with the names
+     `gsl_rng_random8_libc5', `gsl_rng_random8_glibc2', etc.
+
+ - Generator: gsl_rng_rand48
+     This is the Unix `rand48' generator.  Its sequence is
+
+          x_{n+1} = (a x_n + c) mod m
+
+     defined on 48-bit unsigned integers with a = 25214903917, c = 11
+     and m = 2^48.  The seed specifies the upper 32 bits of the initial
+     value, x_1, with the lower 16 bits set to `0x330E'.  The function
+     `gsl_rng_get' returns the upper 32 bits from each term of the
+     sequence.  This does not have a direct parallel in the original
+     `rand48' functions, but forcing the result to type `long int'
+     reproduces the output of `mrand48'.  The function
+     `gsl_rng_uniform' uses the full 48 bits of internal state to return
+     the double precision number x_n/m, which is equivalent to the
+     function `drand48'.  Note that some versions of the GNU C Library
+     contained a bug in `mrand48' function which caused it to produce
+     different results (only the lower 16-bits of the return value were
+     set).
+
+
+File: gsl-ref.info,  Node: Numerical Recipes generators,  Next: Other random number generators,  Prev: Unix random number generators,  Up: Random Number Generation
+
+Numerical Recipes generators
+============================
+
+   The following generators are provided for compatibility with
+`Numerical Recipes'.  Note that the original Numerical Recipes
+functions used single precision while we use double precision.  This
+will lead to minor discrepancies, but only at the level of
+single-precision rounding error.  If necessary you can force the
+returned values to single precision by storing them in a `volatile
+float', which prevents the value being held in a register with double
+or extended precision.  Apart from this difference the underlying
+algorithms for the integer part of the generators are the same.
+
+ - Generator: gsl_rng_ran0
+     Numerical recipes `ran0' implements Park and Miller's MINSTD
+     algorithm with a modified seeding procedure.
+
+ - Generator: gsl_rng_ran1
+     Numerical recipes `ran1' implements Park and Miller's MINSTD
+     algorithm with a 32-element Bayes-Durham shuffle box.
+
+ - Generator: gsl_rng_ran2
+     Numerical recipes `ran2' implements a L'Ecuyer combined recursive
+     generator with a 32-element Bayes-Durham shuffle-box.
+
+ - Generator: gsl_rng_ran3
+     Numerical recipes `ran3' implements Knuth's portable subtractive
+     generator.
+
+
+File: gsl-ref.info,  Node: Other random number generators,  Next: Random Number Generator Performance,  Prev: Numerical Recipes generators,  Up: Random Number Generation
+
+Other random number generators
+==============================
+
+   The generators in this section are provided for compatibility with
+existing libraries.  If you are converting an existing program to use
+GSL then you can select these generators to check your new
+implementation against the original one, using the same random number
+generator.  After verifying that your new program reproduces the
+original results you can then switch to a higher-quality generator.
+
+   Note that most of the generators in this section are based on single
+linear congruence relations, which are the least sophisticated type of
+generator.  In particular, linear congruences have poor properties when
+used with a non-prime modulus, as several of these routines do (e.g.
+with a power of two modulus, 2^31 or 2^32).  This leads to periodicity
+in the least significant bits of each number, with only the higher bits
+having any randomness.  Thus if you want to produce a random bitstream
+it is best to avoid using the least significant bits.
+
+ - Generator: gsl_rng_ranf
+     This is the CRAY random number generator `RANF'.  Its sequence is
+
+          x_{n+1} = (a x_n) mod m
+
+     defined on 48-bit unsigned integers with a = 44485709377909 and m
+     = 2^48.  The seed specifies the lower 32 bits of the initial value,
+     x_1, with the lowest bit set to prevent the seed taking an even
+     value.  The upper 16 bits of x_1 are set to 0. A consequence of
+     this procedure is that the pairs of seeds 2 and 3, 4 and 5, etc
+     produce the same sequences.
+
+     The generator compatibile with the CRAY MATHLIB routine RANF. It
+     produces double precision floating point numbers which should be
+     identical to those from the original RANF.
+
+     There is a subtlety in the implementation of the seeding.  The
+     initial state is reversed through one step, by multiplying by the
+     modular inverse of a mod m.  This is done for compatibility with
+     the original CRAY implementation.
+
+     Note that you can only seed the generator with integers up to
+     2^32, while the original CRAY implementation uses non-portable
+     wide integers which can cover all 2^48 states of the generator.
+
+     The function `gsl_rng_get' returns the upper 32 bits from each term
+     of the sequence.  The function `gsl_rng_uniform' uses the full 48
+     bits to return the double precision number x_n/m.
+
+     The period of this generator is 2^46.
+
+ - Generator: gsl_rng_ranmar
+     This is the RANMAR lagged-fibonacci generator of Marsaglia, Zaman
+     and Tsang.  It is a 24-bit generator, originally designed for
+     single-precision IEEE floating point numbers.  It was included in
+     the CERNLIB high-energy physics library.
+
+ - Generator: gsl_rng_r250
+     This is the shift-register generator of Kirkpatrick and Stoll.  The
+     sequence is
+
+          x_n = x_{n-103} ^^ x_{n-250}
+
+     where ^^ denote "exclusive-or", defined on 32-bit words.  The
+     period of this generator is about 2^250 and it uses 250 words of
+     state per generator.
+
+     For more information see,
+          S. Kirkpatrick and E. Stoll, "A very fast shift-register
+          sequence random number generator", `Journal of Computational
+          Physics', 40, 517-526 (1981)
+
+ - Generator: gsl_rng_tt800
+     This is an earlier version of the twisted generalized feedback
+     shift-register generator, and has been superseded by the
+     development of MT19937.  However, it is still an acceptable
+     generator in its own right.  It has a period of 2^800 and uses 33
+     words of storage per generator.
+
+     For more information see,
+          Makoto Matsumoto and Yoshiharu Kurita, "Twisted GFSR
+          Generators II", `ACM Transactions on Modelling and Computer
+          Simulation', Vol. 4, No. 3, 1994, pages 254-266.
+
+ - Generator: gsl_rng_vax
+     This is the VAX generator `MTH$RANDOM'.  Its sequence is,
+
+          x_{n+1} = (a x_n + c) mod m
+
+     with a = 69069, c = 1 and m = 2^32.  The seed specifies the
+     initial value, x_1.  The period of this generator is 2^32 and it
+     uses 1 word of storage per generator.
+
+ - Generator: gsl_rng_transputer
+     This is the random number generator from the INMOS Transputer
+     Development system.  Its sequence is,
+
+          x_{n+1} = (a x_n) mod m
+
+     with a = 1664525 and m = 2^32.  The seed specifies the initial
+     value, x_1.
+
+ - Generator: gsl_rng_randu
+     This is the IBM `RANDU' generator.  Its sequence is
+
+          x_{n+1} = (a x_n) mod m
+
+     with a = 65539 and m = 2^31.  The seed specifies the initial value,
+     x_1.  The period of this generator was only 2^29.  It has become a
+     textbook example of a poor generator.
+
+ - Generator: gsl_rng_minstd
+     This is Park and Miller's "minimal standard" MINSTD generator, a
+     simple linear congruence which takes care to avoid the major
+     pitfalls of such algorithms.  Its sequence is,
+
+          x_{n+1} = (a x_n) mod m
+
+     with a = 16807 and m = 2^31 - 1 = 2147483647.  The seed specifies
+     the initial value, x_1.  The period of this generator is about
+     2^31.
+
+     This generator is used in the IMSL Library (subroutine RNUN) and in
+     MATLAB (the RAND function).  It is also sometimes known by the
+     acronym "GGL" (I'm not sure what that stands for).
+
+     For more information see,
+          Park and Miller, "Random Number Generators: Good ones are
+          hard to find", `Communications of the ACM', October 1988,
+          Volume 31, No 10, pages 1192-1201.
+
+ - Generator: gsl_rng_uni
+ - Generator: gsl_rng_uni32
+     This is a reimplementation of the 16-bit SLATEC random number
+     generator RUNIF. A generalization of the generator to 32 bits is
+     provided by `gsl_rng_uni32'.  The original source code is
+     available from NETLIB.
+
+ - Generator: gsl_rng_slatec
+     This is the SLATEC random number generator RAND. It is ancient.
+     The original source code is available from NETLIB.
+
+ - Generator: gsl_rng_zuf
+     This is the ZUFALL lagged Fibonacci series generator of Peterson.
+     Its sequence is,
+
+          t = u_{n-273} + u_{n-607}
+          u_n  = t - floor(t)
+
+     The original source code is available from NETLIB.  For more
+     information see,
+          W. Petersen, "Lagged Fibonacci Random Number Generators for
+          the NEC SX-3", `International Journal of High Speed
+          Computing' (1994).
+
+
+File: gsl-ref.info,  Node: Random Number Generator Performance,  Next: Random Number References and Further Reading,  Prev: Other random number generators,  Up: Random Number Generation
+
+Random Number Generator Performance
+===================================
+
+   The following table shows the relative performance of a selection the
+available random number generators.  The simulation quality generators
+which offer the best performance are `taus', `gfsr4' and `mt19937'.
+
+     1754 k ints/sec,    870 k doubles/sec, taus
+     1613 k ints/sec,    855 k doubles/sec, gfsr4
+     1370 k ints/sec,    769 k doubles/sec, mt19937
+      565 k ints/sec,    571 k doubles/sec, ranlxs0
+      400 k ints/sec,    405 k doubles/sec, ranlxs1
+      490 k ints/sec,    389 k doubles/sec, mrg
+      407 k ints/sec,    297 k doubles/sec, ranlux
+      243 k ints/sec,    254 k doubles/sec, ranlxd1
+      251 k ints/sec,    253 k doubles/sec, ranlxs2
+      238 k ints/sec,    215 k doubles/sec, cmrg
+      247 k ints/sec,    198 k doubles/sec, ranlux389
+      141 k ints/sec,    140 k doubles/sec, ranlxd2
+     
+     1852 k ints/sec,    935 k doubles/sec, ran3
+      813 k ints/sec,    575 k doubles/sec, ran0
+      787 k ints/sec,    476 k doubles/sec, ran1
+      379 k ints/sec,    292 k doubles/sec, ran2
+
+
+File: gsl-ref.info,  Node: Random Number References and Further Reading,  Next: Random Number Acknowledgements,  Prev: Random Number Generator Performance,  Up: Random Number Generation
+
+References and Further Reading
+==============================
+
+The subject of random number generation and testing is reviewed
+extensively in Knuth's `Seminumerical Algorithms'.
+
+     Donald E. Knuth, `The Art of Computer Programming: Seminumerical
+     Algorithms' (Vol 2, 3rd Ed, 1997), Addison-Wesley, ISBN 0201896842.
+
+Further information is available in the review paper written by Pierre
+L'Ecuyer,
+
+     P. L'Ecuyer, "Random Number Generation", Chapter 4 of the Handbook
+     on Simulation, Jerry Banks Ed., Wiley, 1998, 93-137.
+
+     <http://www.iro.umontreal.ca/~lecuyer/papers.html> in the file
+     `handsim.ps'.
+
+On the World Wide Web, see the pLab home page
+(<http://random.mat.sbg.ac.at/>) for a lot of information on the
+state-of-the-art in random number generation, and for numerous links to
+various "random" WWW sites.
+
+The source code for the DIEHARD random number generator tests is also
+available online.
+
+     `DIEHARD source code' G. Marsaglia,
+
+     <http://stat.fsu.edu/pub/diehard/>
+
+
+File: gsl-ref.info,  Node: Random Number Acknowledgements,  Prev: Random Number References and Further Reading,  Up: Random Number Generation
+
+Acknowledgements
+================
+
+Thanks to Makoto Matsumoto, Takuji Nishimura and Yoshiharu Kurita for
+making the source code to their generators (MT19937, MM&TN; TT800,
+MM&YK) available under the GNU General Public License.  Thanks to Martin
+Lu"scher for providing notes and source code for the RANLXS and RANLXD
+generators.
+
+
+File: gsl-ref.info,  Node: Quasi-Random Sequences,  Next: Random Number Distributions,  Prev: Random Number Generation,  Up: Top
+
+Quasi-Random Sequences
+**********************
+
+   This chapter describes functions for generating quasi-random
+sequences in arbitrary dimensions.  A quasi-random sequence
+progressively covers a d-dimensional space with a set of points that
+are uniformly distributed.  Quasi-random sequences are also known as
+low-discrepancy sequences.  The quasi-random sequence generators use an
+interface that is similar to the interface for random number generators.
+
+   The functions described in this section are declared in the header
+file `gsl_qrng.h'.
+
+* Menu:
+
+* Quasi-random number generator initialization::
+* Sampling from a quasi-random number generator::
+* Auxiliary quasi-random number generator functions::
+* Saving and resorting quasi-random number generator state::
+* Quasi-random number generator algorithms::
+* Quasi-random number generator examples::
+* Quasi-random number references::
+
+
+File: gsl-ref.info,  Node: Quasi-random number generator initialization,  Next: Sampling from a quasi-random number generator,  Up: Quasi-Random Sequences
+
+Quasi-random number generator initialization
+============================================
+
+ - Function: gsl_qrng * gsl_qrng_alloc (const gsl_qrng_type * T,
+          unsigned int D)
+     This function returns a pointer to a newly-created instance of a
+     quasi-random sequence generator of type T and dimension D.  If
+     there is insufficient memory to create the generator then the
+     function returns a null pointer and the error handler is invoked
+     with an error code of `GSL_ENOMEM'.
+
+ - Function: void gsl_qrng_free (gsl_qrng * Q)
+     This function frees all the memory associated with the generator Q.
+
+ - Function: void gsl_qrng_init (const gsl_qrng * Q)
+     This function reinitializes the generator Q to its starting point.
+
+
+File: gsl-ref.info,  Node: Sampling from a quasi-random number generator,  Next: Auxiliary quasi-random number generator functions,  Prev: Quasi-random number generator initialization,  Up: Quasi-Random Sequences
+
+Sampling from a quasi-random number generator
+=============================================
+
+ - Function: int gsl_qrng_get (const gsl_qrng * Q, double X[])
+     This function returns the next point X from the sequence generator
+     Q.  The space available for X must match the dimension of the
+     generator.  The point X will lie in the range 0 < x_i < 1 for each
+     x_i.
+
+
+File: gsl-ref.info,  Node: Auxiliary quasi-random number generator functions,  Next: Saving and resorting quasi-random number generator state,  Prev: Sampling from a quasi-random number generator,  Up: Quasi-Random Sequences
+
+Auxiliary quasi-random number generator functions
+=================================================
+
+ - Function: const char * gsl_qrng_name (const gsl_qrng * Q)
+     This function returns a pointer to the name of the generator.
+
+ - Function: size_t gsl_qrng_size (const gsl_qrng * Q)
+ - Function: void * gsl_qrng_state (const gsl_qrng * Q)
+     These function return a pointer to the state of generator R and
+     its size.  You can use this information to access the state
+     directly.  For example, the following code will write the state of
+     a generator to a stream,
+
+          void * state = gsl_qrng_state (q);
+          size_t n = gsl_qrng_size (q);
+          fwrite (state, n, 1, stream);
+
+
+File: gsl-ref.info,  Node: Saving and resorting quasi-random number generator state,  Next: Quasi-random number generator algorithms,  Prev: Auxiliary quasi-random number generator functions,  Up: Quasi-Random Sequences
+
+Saving and resorting quasi-random number generator state
+========================================================
+
+ - Function: int gsl_qrng_memcpy (gsl_qrng * DEST, const gsl_qrng * SRC)
+     This function copies the quasi-random sequence generator SRC into
+     the pre-existing generator DEST, making DEST into an exact copy of
+     SRC.  The two generators must be of the same type.
+
+ - Function: gsl_qrng * gsl_qrng_clone (const gsl_qrng * Q)
+     This function returns a pointer to a newly created generator which
+     is an exact copy of the generator R.
+
+
+File: gsl-ref.info,  Node: Quasi-random number generator algorithms,  Next: Quasi-random number generator examples,  Prev: Saving and resorting quasi-random number generator state,  Up: Quasi-Random Sequences
+
+Quasi-random number generator algorithms
+========================================
+
+   The following quasi-random sequence algorithms are available,
+
+ - Generator: gsl_qrng_niederreiter_2
+     This generator uses the algorithm described in Bratley, Fox,
+     Niederreiter, `ACM Trans. Model. Comp. Sim.' 2, 195 (1992). It is
+     valid up to 12 dimensions.
+
+ - Generator: gsl_qrng_sobol
+     This generator uses the Sobol sequence described in Antonov,
+     Saleev, `USSR Comput. Maths. Math. Phys.' 19, 252 (1980). It is
+     valid up to 40 dimensions.
+
+
+File: gsl-ref.info,  Node: Quasi-random number generator examples,  Next: Quasi-random number references,  Prev: Quasi-random number generator algorithms,  Up: Quasi-Random Sequences
+
+Examples
+========
+
+   The following program prints the first 1024 points of the
+2-dimensional Sobol sequence.
+
+     #include <stdio.h>
+     #include <gsl/gsl_qrng.h>
+     
+     int
+     main (void)
+     {
+       int i;
+       gsl_qrng * q = gsl_qrng_alloc (gsl_qrng_sobol, 2);
+     
+       for (i = 0; i < 1024; i++)
+         {
+           double v[2];
+           gsl_qrng_get(q, v);
+           printf("%.5f %.5f\n", v[0], v[1]);
+         }
+     
+       gsl_qrng_free(q);
+       return 0;
+     }
+
+Here is the output from the program,
+
+     $ ./a.out
+     0.50000 0.50000
+     0.75000 0.25000
+     0.25000 0.75000
+     0.37500 0.37500
+     0.87500 0.87500
+     0.62500 0.12500
+     0.12500 0.62500
+     ....
+
+It can be seen that successive points progressively fill-in the spaces
+between previous points.
+
+
+File: gsl-ref.info,  Node: Quasi-random number references,  Prev: Quasi-random number generator examples,  Up: Quasi-Random Sequences
+
+References
+==========
+
+   The implementations of the quasi-random sequence routines are based
+on the algorithms described in the following paper,
+
+     P. Bratley and B.L. Fox and H. Niederreiter, "Algorithm 738:
+     Programs to Generate Niederreiter's Low-discrepancy Sequences",
+     Transactions on Mathematical Software, Vol. 20, No. 4, December,
+     1994, p. 494-495.
+
+
+File: gsl-ref.info,  Node: Random Number Distributions,  Next: Statistics,  Prev: Quasi-Random Sequences,  Up: Top
+
+Random Number Distributions
+***************************
+
+   This chapter describes functions for generating random variates and
+computing their probability distributions.  Samples from the
+distributions described in this chapter can be obtained using any of the
+random number generators in the library as an underlying source of
+randomness.  In the simplest cases a non-uniform distribution can be
+obtained analytically from the uniform distribution of a random number
+generator by applying an appropriate transformation.  This method uses
+one call to the random number generator.
+
+   More complicated distributions are created by the
+"acceptance-rejection" method, which compares the desired distribution
+against a distribution which is similar and known analytically.  This
+usually requires several samples from the generator.
+
+   The functions described in this section are declared in
+`gsl_randist.h'.
+
+* Menu:
+
+* The Gaussian Distribution::
+* The Gaussian Tail Distribution::
+* The Bivariate Gaussian Distribution::
+* The Exponential Distribution::
+* The Laplace Distribution::
+* The Exponential Power Distribution::
+* The Cauchy Distribution::
+* The Rayleigh Distribution::
+* The Rayleigh Tail Distribution::
+* The Landau Distribution::
+* The Levy alpha-Stable Distributions::
+* The Levy skew alpha-Stable Distribution::
+* The Gamma Distribution::
+* The Flat (Uniform) Distribution::
+* The Lognormal Distribution::
+* The Chi-squared Distribution::
+* The F-distribution::
+* The t-distribution::
+* The Beta Distribution::
+* The Logistic Distribution::
+* The Pareto Distribution::
+* The Spherical Distribution (2D & 3D)::
+* The Weibull Distribution::
+* The Type-1 Gumbel Distribution::
+* The Type-2 Gumbel Distribution::
+* General Discrete Distributions::
+* The Poisson Distribution::
+* The Bernoulli Distribution::
+* The Binomial Distribution::
+* The Negative Binomial Distribution::
+* The Pascal Distribution::
+* The Geometric Distribution::
+* The Hypergeometric Distribution::
+* The Logarithmic Distribution::
+* Shuffling and Sampling::
+* Random Number Distribution Examples::
+* Random Number Distribution References and Further Reading::
+
+
+File: gsl-ref.info,  Node: The Gaussian Distribution,  Next: The Gaussian Tail Distribution,  Up: Random Number Distributions
+
+The Gaussian Distribution
+=========================
+
+ - Random: double gsl_ran_gaussian (const gsl_rng * R, double SIGMA)
+     This function returns a Gaussian random variate, with mean zero and
+     standard deviation SIGMA.  The probability distribution for
+     Gaussian random variates is,
+
+          p(x) dx = {1 \over \sqrt{2 \pi \sigma^2}} \exp (-x^2 / 2\sigma^2) dx
+
+     for x in the range -\infty to +\infty.  Use the transformation z =
+     \mu + x on the numbers returned by `gsl_ran_gaussian' to obtain a
+     Gaussian distribution with mean \mu.  This function uses the
+     Box-Mueller algorithm which requires two calls the random number
+     generator R.
+
+ - Function: double gsl_ran_gaussian_pdf (double X, double SIGMA)
+     This function computes the probability density p(x) at X for a
+     Gaussian distribution with standard deviation SIGMA, using the
+     formula given above.
+
+
+ - Function: double gsl_ran_gaussian_ratio_method (const gsl_rng * R,
+          const double SIGMA)
+     This function computes a gaussian random variate using the
+     Kinderman-Monahan ratio method.
+
+ - Random: double gsl_ran_ugaussian (const gsl_rng * R)
+ - Random: double gsl_ran_ugaussian_pdf (double X)
+ - Random: double gsl_ran_ugaussian_ratio_method (const gsl_rng * R,
+          const double SIGMA)
+     These functions compute results for the unit Gaussian
+     distribution.  They are equivalent to the functions above with a
+     standard deviation of one, SIGMA = 1.
+
+
+File: gsl-ref.info,  Node: The Gaussian Tail Distribution,  Next: The Bivariate Gaussian Distribution,  Prev: The Gaussian Distribution,  Up: Random Number Distributions
+
+The Gaussian Tail Distribution
+==============================
+
+ - Random: double gsl_ran_gaussian_tail (const gsl_rng * R, double A,
+          double SIGMA)
+     This function provides random variates from the upper tail of a
+     Gaussian distribution with standard deviation SIGMA.  The values
+     returned are larger than the lower limit A, which must be
+     positive.  The method is based on Marsaglia's famous
+     rectangle-wedge-tail algorithm (Ann Math Stat 32, 894-899 (1961)),
+     with this aspect explained in Knuth, v2, 3rd ed, p139,586
+     (exercise 11).
+
+     The probability distribution for Gaussian tail random variates is,
+
+          p(x) dx = {1 \over N(a;\sigma)} \exp (- x^2/(2 \sigma^2)) dx
+
+     for x > a where N(a;\sigma) is the normalization constant,
+
+          N(a;\sigma) = (1/2) erfc(a / sqrt(2 sigma^2)).
+
+
+ - Function: double gsl_ran_gaussian_tail_pdf (double X, double A,
+          double SIGMA)
+     This function computes the probability density p(x) at X for a
+     Gaussian tail distribution with standard deviation SIGMA and lower
+     limit A, using the formula given above.
+
+
+ - Random: double gsl_ran_ugaussian_tail (const gsl_rng * R, double A)
+ - Random: double gsl_ran_ugaussian_tail_pdf (double X, double A)
+     These functions compute results for the tail of a unit Gaussian
+     distribution.  They are equivalent to the functions above with a
+     standard deviation of one, SIGMA = 1.
+
+
+File: gsl-ref.info,  Node: The Bivariate Gaussian Distribution,  Next: The Exponential Distribution,  Prev: The Gaussian Tail Distribution,  Up: Random Number Distributions
+
+The Bivariate Gaussian Distribution
+===================================
+
+ - Random: void gsl_ran_bivariate_gaussian (const gsl_rng * R, double
+          SIGMA_X, double SIGMA_Y, double RHO, double * X, double * Y)
+     This function generates a pair of correlated gaussian variates,
+     with mean zero, correlation coefficient RHO and standard deviations
+     SIGMA_X and SIGMA_Y in the x and y directions.  The probability
+     distribution for bivariate gaussian random variates is,
+
+          p(x,y) dx dy = {1 \over 2 \pi \sigma_x \sigma_y \sqrt{1-\rho^2}} \exp (-(x^2 + y^2 - 2 \rho x y)/2\sigma_x^2\sigma_y^2 (1-\rho^2)) dx dy
+
+     for x,y in the range -\infty to +\infty.  The correlation
+     coefficient RHO should lie between 1 and -1.
+
+ - Function: double gsl_ran_bivariate_gaussian_pdf (double X, double Y,
+          double SIGMA_X, double SIGMA_Y, double RHO)
+     This function computes the probability density p(x,y) at (X,Y) for
+     a bivariate gaussian distribution with standard deviations
+     SIGMA_X, SIGMA_Y and correlation coefficient RHO, using the
+     formula given above.
+
+
+
+File: gsl-ref.info,  Node: The Exponential Distribution,  Next: The Laplace Distribution,  Prev: The Bivariate Gaussian Distribution,  Up: Random Number Distributions
+
+The Exponential Distribution
+============================
+
+ - Random: double gsl_ran_exponential (const gsl_rng * R, double MU)
+     This function returns a random variate from the exponential
+     distribution with mean MU. The distribution is,
+
+          p(x) dx = {1 \over \mu} \exp(-x/\mu) dx
+
+     for x >= 0.
+
+ - Function: double gsl_ran_exponential_pdf (double X, double MU)
+     This function computes the probability density p(x) at X for an
+     exponential distribution with mean MU, using the formula given
+     above.
+
+
+
+File: gsl-ref.info,  Node: The Laplace Distribution,  Next: The Exponential Power Distribution,  Prev: The Exponential Distribution,  Up: Random Number Distributions
+
+The Laplace Distribution
+========================
+
+ - Random: double gsl_ran_laplace (const gsl_rng * R, double A)
+     This function returns a random variate from the the Laplace
+     distribution with width A.  The distribution is,
+
+          p(x) dx = {1 \over 2 a}  \exp(-|x/a|) dx
+
+     for -\infty < x < \infty.
+
+ - Function: double gsl_ran_laplace_pdf (double X, double A)
+     This function computes the probability density p(x) at X for a
+     Laplace distribution with mean A, using the formula given above.
+
+
+
+File: gsl-ref.info,  Node: The Exponential Power Distribution,  Next: The Cauchy Distribution,  Prev: The Laplace Distribution,  Up: Random Number Distributions
+
+The Exponential Power Distribution
+==================================
+
+ - Random: double gsl_ran_exppow (const gsl_rng * R, double A, double B)
+     This function returns a random variate from the exponential power
+     distribution with scale parameter A and exponent B.  The
+     distribution is,
+
+          p(x) dx = {1 \over 2 a \Gamma(1+1/b)} \exp(-|x/a|^b) dx
+
+     for x >= 0.  For b = 1 this reduces to the Laplace distribution.
+     For b = 2 it has the same form as a gaussian distribution, but
+     with a = \sqrt{2} \sigma.
+
+ - Function: double gsl_ran_exppow_pdf (double X, double A, double B)
+     This function computes the probability density p(x) at X for an
+     exponential power distribution with scale parameter A and exponent
+     B, using the formula given above.
+
+
+
+File: gsl-ref.info,  Node: The Cauchy Distribution,  Next: The Rayleigh Distribution,  Prev: The Exponential Power Distribution,  Up: Random Number Distributions
+
+The Cauchy Distribution
+=======================
+
+ - Random: double gsl_ran_cauchy (const gsl_rng * R, double A)
+     This function returns a random variate from the Cauchy
+     distribution with scale parameter A.  The probability distribution
+     for Cauchy random variates is,
+
+          p(x) dx = {1 \over a\pi (1 + (x/a)^2) } dx
+
+     for x in the range -\infty to +\infty.  The Cauchy distribution is
+     also known as the Lorentz distribution.
+
+ - Function: double gsl_ran_cauchy_pdf (double X, double A)
+     This function computes the probability density p(x) at X for a
+     Cauchy distribution with scale parameter A, using the formula
+     given above.
+
+
+
+File: gsl-ref.info,  Node: The Rayleigh Distribution,  Next: The Rayleigh Tail Distribution,  Prev: The Cauchy Distribution,  Up: Random Number Distributions
+
+The Rayleigh Distribution
+=========================
+
+ - Random: double gsl_ran_rayleigh (const gsl_rng * R, double SIGMA)
+     This function returns a random variate from the Rayleigh
+     distribution with scale parameter SIGMA.  The distribution is,
+
+          p(x) dx = {x \over \sigma^2} \exp(- x^2/(2 \sigma^2)) dx
+
+     for x > 0.
+
+ - Function: double gsl_ran_rayleigh_pdf (double X, double SIGMA)
+     This function computes the probability density p(x) at X for a
+     Rayleigh distribution with scale parameter SIGMA, using the
+     formula given above.
+
+
+
+File: gsl-ref.info,  Node: The Rayleigh Tail Distribution,  Next: The Landau Distribution,  Prev: The Rayleigh Distribution,  Up: Random Number Distributions
+
+The Rayleigh Tail Distribution
+==============================
+
+ - Random: double gsl_ran_rayleigh_tail (const gsl_rng * R, double A
+          double SIGMA)
+     This function returns a random variate from the tail of the
+     Rayleigh distribution with scale parameter SIGMA and a lower limit
+     of A.  The distribution is,
+
+          p(x) dx = {x \over \sigma^2} \exp ((a^2 - x^2) /(2 \sigma^2)) dx
+
+     for x > a.
+
+ - Function: double gsl_ran_rayleigh_tail_pdf (double X, double A,
+          double SIGMA)
+     This function computes the probability density p(x) at X for a
+     Rayleigh tail distribution with scale parameter SIGMA and lower
+     limit A, using the formula given above.
+
+
+
+File: gsl-ref.info,  Node: The Landau Distribution,  Next: The Levy alpha-Stable Distributions,  Prev: The Rayleigh Tail Distribution,  Up: Random Number Distributions
+
+The Landau Distribution
+=======================
+
+ - Random: double gsl_ran_landau (const gsl_rng * R)
+     This function returns a random variate from the Landau
+     distribution.  The probability distribution for Landau random
+     variates is defined analytically by the complex integral,
+
+          p(x) = (1/(2 \pi i)) \int_{c-i\infty}^{c+i\infty} ds exp(s log(s) + x s)
+     For numerical purposes it is more convenient to use the following
+     equivalent form of the integral,
+          p(x) = (1/\pi) \int_0^\infty dt \exp(-t \log(t) - x t) \sin(\pi t).
+
+ - Function: double gsl_ran_landau_pdf (double X)
+     This function computes the probability density p(x) at X for the
+     Landau distribution using an approximation to the formula given
+     above.
+
+
+
+File: gsl-ref.info,  Node: The Levy alpha-Stable Distributions,  Next: The Levy skew alpha-Stable Distribution,  Prev: The Landau Distribution,  Up: Random Number Distributions
+
+The Levy alpha-Stable Distributions
+===================================
+
+ - Random: double gsl_ran_levy (const gsl_rng * R, double C, double
+          ALPHA)
+     This function returns a random variate from the Levy symmetric
+     stable distribution with scale C and exponent ALPHA.  The symmetric
+     stable probability distribution is defined by a fourier transform,
+
+          p(x) = {1 \over 2 \pi} \int_{-\infty}^{+\infty} dt \exp(-it x - |c t|^alpha)
+
+     There is no explicit solution for the form of p(x) and the library
+     does not define a corresponding `pdf' function.  For \alpha = 1
+     the distribution reduces to the Cauchy distribution.  For \alpha =
+     2 it is a Gaussian distribution with \sigma = \sqrt{2} c.  For
+     \alpha < 1 the tails of the distribution become extremely wide.
+
+     The algorithm only works for 0 < alpha <= 2.
+
+
+
+File: gsl-ref.info,  Node: The Levy skew alpha-Stable Distribution,  Next: The Gamma Distribution,  Prev: The Levy alpha-Stable Distributions,  Up: Random Number Distributions
+
+The Levy skew alpha-Stable Distribution
+=======================================
+
+ - Random: double gsl_ran_levy_skew (const gsl_rng * R, double C,
+          double ALPHA, double BETA)
+     This function returns a random variate from the Levy skew stable
+     distribution with scale C, exponent ALPHA and skewness parameter
+     BETA.  The skewness parameter must lie in the range [-1,1].  The
+     Levy skew stable probability distribution is defined by a fourier
+     transform,
+
+          p(x) = {1 \over 2 \pi} \int_{-\infty}^{+\infty} dt \exp(-it x - |c t|^alpha (1-i beta sign(t) tan(pi alpha/2)))
+
+     When \alpha = 1 the term \tan(\pi \alpha/2) is replaced by
+     -(2/\pi)\log|t|.  There is no explicit solution for the form of
+     p(x) and the library does not define a corresponding `pdf'
+     function.  For \alpha = 2 the distribution reduces to a Gaussian
+     distribution with \sigma = \sqrt{2} c and the skewness parameter
+     has no effect.  For \alpha < 1 the tails of the distribution
+     become extremely wide.  The symmetric distribution corresponds to
+     \beta = 0.
+
+     The algorithm only works for 0 < alpha <= 2.
+
+   The Levy alpha-stable distributions have the property that if N
+alpha-stable variates are drawn from the distribution p(c, \alpha,
+\beta) then the sum Y = X_1 + X_2 + \dots + X_N will also be
+distributed as an alpha-stable variate, p(N^(1/\alpha) c, \alpha,
+\beta).
+
+
+
+File: gsl-ref.info,  Node: The Gamma Distribution,  Next: The Flat (Uniform) Distribution,  Prev: The Levy skew alpha-Stable Distribution,  Up: Random Number Distributions
+
+The Gamma Distribution
+======================
+
+ - Random: double gsl_ran_gamma (const gsl_rng * R, double A, double B)
+     This function returns a random variate from the gamma
+     distribution.  The distribution function is,
+
+          p(x) dx = {1 \over \Gamma(a) b^a} x^{a-1} e^{-x/b} dx
+
+     for x > 0.
+
+ - Function: double gsl_ran_gamma_pdf (double X, double A, double B)
+     This function computes the probability density p(x) at X for a
+     gamma distribution with parameters A and B, using the formula
+     given above.
+
+
+
+File: gsl-ref.info,  Node: The Flat (Uniform) Distribution,  Next: The Lognormal Distribution,  Prev: The Gamma Distribution,  Up: Random Number Distributions
+
+The Flat (Uniform) Distribution
+===============================
+
+ - Random: double gsl_ran_flat (const gsl_rng * R, double A, double B)
+     This function returns a random variate from the flat (uniform)
+     distribution from A to B. The distribution is,
+
+          p(x) dx = {1 \over (b-a)} dx
+
+     if a <= x < b and 0 otherwise.
+
+ - Function: double gsl_ran_flat_pdf (double X, double A, double B)
+     This function computes the probability density p(x) at X for a
+     uniform distribution from A to B, using the formula given above.
+
+
+
+File: gsl-ref.info,  Node: The Lognormal Distribution,  Next: The Chi-squared Distribution,  Prev: The Flat (Uniform) Distribution,  Up: Random Number Distributions
+
+The Lognormal Distribution
+==========================
+
+ - Random: double gsl_ran_lognormal (const gsl_rng * R, double ZETA,
+          double SIGMA)
+     This function returns a random variate from the lognormal
+     distribution.  The distribution function is,
+
+          p(x) dx = {1 \over x \sqrt{2 \pi \sigma^2} } \exp(-(\ln(x) - \zeta)^2/2 \sigma^2) dx
+
+     for x > 0.
+
+ - Function: double gsl_ran_lognormal_pdf (double X, double ZETA,
+          double SIGMA)
+     This function computes the probability density p(x) at X for a
+     lognormal distribution with parameters ZETA and SIGMA, using the
+     formula given above.
+
+
+
+File: gsl-ref.info,  Node: The Chi-squared Distribution,  Next: The F-distribution,  Prev: The Lognormal Distribution,  Up: Random Number Distributions
+
+The Chi-squared Distribution
+============================
+
+   The chi-squared distribution arises in statistics If Y_i are n
+independent gaussian random variates with unit variance then the
+sum-of-squares,
+
+     X_i = \sum_i Y_i^2
+
+has a chi-squared distribution with n degrees of freedom.
+
+ - Random: double gsl_ran_chisq (const gsl_rng * R, double NU)
+     This function returns a random variate from the chi-squared
+     distribution with NU degrees of freedom. The distribution function
+     is,
+
+          p(x) dx = {1 \over \Gamma(\nu/2) } (x/2)^{\nu/2 - 1} \exp(-x/2) dx
+
+     for x >= 0.
+
+ - Function: double gsl_ran_chisq_pdf (double X, double NU)
+     This function computes the probability density p(x) at X for a
+     chi-squared distribution with NU degrees of freedom, using the
+     formula given above.
+
+
+
+File: gsl-ref.info,  Node: The F-distribution,  Next: The t-distribution,  Prev: The Chi-squared Distribution,  Up: Random Number Distributions
+
+The F-distribution
+==================
+
+   The F-distribution arises in statistics.  If Y_1 and Y_2 are
+chi-squared deviates with \nu_1 and \nu_2 degrees of freedom then the
+ratio,
+
+     X = { (Y_1 / \nu_1) \over (Y_2 / \nu_2) }
+
+has an F-distribution F(x;\nu_1,\nu_2).
+
+ - Random: double gsl_ran_fdist (const gsl_rng * R, double NU1, double
+          NU2)
+     This function returns a random variate from the F-distribution
+     with degrees of freedom NU1 and NU2. The distribution function is,
+
+          p(x) dx =
+             { \Gamma((\nu_1 + \nu_2)/2)
+                  \over \Gamma(\nu_1/2) \Gamma(\nu_2/2) }
+             \nu_1^{\nu_1/2} \nu_2^{\nu_2/2}
+             x^{\nu_1/2 - 1} (\nu_2 + \nu_1 x)^{-\nu_1/2 -\nu_2/2}
+
+     for x >= 0.
+
+ - Function: double gsl_ran_fdist_pdf (double X, double NU1, double NU2)
+     This function computes the probability density p(x) at X for an
+     F-distribution with NU1 and NU2 degrees of freedom, using the
+     formula given above.
+
