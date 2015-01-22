@@ -39,29 +39,29 @@ For all methods:
   Modify the PAUTOMACPATH, RESULTSPATH, etc. variables at the start of the main methods sections as necessary.
   
 For the spectral method:
-  Navigate to the spectral directory.
-  Run "python wfaspectrallearn [esttype] [metric] [problem-id] [n-symbols] [basissize]
-    estype is either "string" or "substring"
-    metric is either "WER" or "KL" (perplexity)
-    problem-id is the PAutomaC problem id number or "tree" for the Treebank2 dataset.
-    n-symbols is the number of symbols in the target alphabet.
-    basissize is the number of prefixes/suffixes to use in estimation.
+  * Navigate to the spectral directory.
+  * Run `python wfaspectrallearn [esttype] [metric] [problem-id] [n-symbols] [basissize]`
+    * estype is either "string" or "substring"
+    * metric is either "WER" or "KL" (perplexity)
+    * problem-id is the PAutomaC problem id number or "tree" for the Treebank2 dataset.
+    * n-symbols is the number of symbols in the target alphabet.
+    * basissize is the number of prefixes/suffixes to use in estimation.
 
 For the convex optimization method:
-  Navigate to the co directory.
-  Run "python wfacolearn.py [modeltype] [metric] [problem-id] [n-symbols] [basissize]
-    modeltype should be set to "WFA" (other settings not used in the paper).
-    other args same as above.
+  * Navigate to the co directory.
+  * Run `python wfacolearn.py [modeltype] [metric] [problem-id] [n-symbols] [basissize]`
+    * modeltype should be set to "WFA" (other settings not used in the paper).
+    * other args same as above.
     
 For the tensor method:
-  Navigate to the tensor directory.
-  Run "python wfatensorlearn.py [metric] [problem-id] [n-symbols] [basisize]
-  *this method automatically outputs a model description in the directory specified by MODELDIR in the main method.
+  * Navigate to the tensor directory.
+  * Run `python wfatensorlearn.py [metric] [problem-id] [n-symbols] [basisize]`
+  this method automatically outputs a model description in the directory specified by MODELDIR in the main method.
 
 For the EM wrapper code:
-  Navigate to the em directory:
-  Run "python wfaemlearn.py [problem-id] [n-symbols]
+  * Navigate to the em directory:
+  * Run `python wfaemlearn.py [problem-id] [n-symbols]`
 
 For the tensor-initialized EM:
-  Navigate to the em directory:
-  Run "python wfamominitlearn.py [metric] [problem-id] [numsymbols] [path-to-tensor-model-file]
+  * Navigate to the em directory:
+  * Run `python wfamominitlearn.py [metric] [problem-id] [numsymbols] [path-to-tensor-model-file]`
