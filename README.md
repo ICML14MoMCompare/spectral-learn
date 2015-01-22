@@ -1,5 +1,4 @@
-MoMs-for-StochasticLanguages
-============================
+# MoMs-for-StochasticLanguages
 
 Collection of three method of moments based algorithms for learning stochastic languages.
 Accompaniment to the ICML 2014 paper "Methods of Moments for Learning Stochastic Languages: Unified Presentation and Empirical Comparison",
@@ -7,7 +6,7 @@ by Borja Balle, William L. Hamilton, and Joelle Pineau.
 The learning algorithms produce weighted finite automata that can be used to make predictions over string.
 For more details, the paper can be found here: http://www.cs.upc.edu/~bballe/papers/icml14-mom.pdf
 
-Includes: 
+### Includes: 
   Spectral learning algorithm (using both string and substring estimates).
   Convex optimization learning algorithm.
   Tensor decomposition based learning algorithm.
@@ -15,13 +14,13 @@ Includes:
   12 synthetic datasets from the PAutomac competition (http://ai.cs.umbc.edu/icgi2012/challenge/Pautomac/download.php).
   One real-world NLP dataset from the parts-of-speech tags in the Penn-Treebank2 dataset (http://www.cis.upenn.edu/~treebank/).
 
-Prerequisites:
+### Prerequisites:
 
 The code requires Python 2.7, SciPy (http://scipy.org/), the Python SpPy (http://pythonhosted.org/sppy/).
 Necessary C++ libraries are provided.
 The latest GCC compiler is recommended.
 
-Installation:
+## Installation:
 
 For the spectral methods:
   No installation required.
